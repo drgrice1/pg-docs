@@ -10,20 +10,54 @@ on:
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
-  copy-pg-docs:
+  create-sample-problems:
     # The type of runner that the job will run on
     runs-on: ubuntu-22.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
+      - name: Checkout pg-docs code
+        uses: actions/checkout@v3
+        with:
+          persist-credentials: false
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - uses: actions/checkout@v3
+      - name: Checkout PG code
+        uses: actions/checkout@v3
         with:
           repository: pstaabp/pg
           ref: sample-problems-doc
           path: pg
+          persist-credentials: false
+      - name: Install Ubuntu dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends --no-install-suggests \
+            libtext-multimarkdown-perl \
+            libmojolicious-perl
 
       # Runs a set of commands using the runners shell
-      - name: list files
+      - name: parse sample problems
         run: |
-          ls pg
+          pwd
+          ls -l pg/doc/sample-problems/Algebra
+          ls -l pg/doc/sample-problems/Precalc
+          ls -l pg/doc/sample-problems/Sequences
+          ls -l pg/doc/sample-problems/Trig
+          ls -l pg/doc/sample-problems/Misc
+          perl pg/bin/parse-prob-doc.pl  \
+            --problem_dir=/home/runner/work/pg-docs/pg-docs/pg/doc/sample-problems \
+            --out_dir=/home/runner/work/pg-docs/pg-docs/sample-problems
+          ls -l sample-problems
+      - name: remove pg code
+        run: |
+          rm -rf pg
+          ls -l
+          git status
+      - name: Commit and push changes
+        uses: devops-infra/action-commit-push@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          commit_message: Updated sample problem docs
+          target_branch: sample_probs
+          force: true
+
