@@ -58,6 +58,5 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           commit_message: Updated sample problem docs
-          target_branch: sample_probs
           force: true
 
