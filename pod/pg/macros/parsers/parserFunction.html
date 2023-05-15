@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserFunction.pl</title>
+</head>
+<body>
+<h1>parsers/parserFunction.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Function--D">($Function)-&gt;D</a>
+        <ul>
+          <li><a href="#NameForNumber-number">NameForNumber($number)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserFunction.pl - An easy way of adding new functions to the current context.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements an easy way of creating new functions that are added to the current Parser context. (This avoids having to do the complicated procedure outlined in the docs/parser/extensions samples.)</p>
+
+<p>To create a function that can be used in Formula() calls (and by students in their answers), use the parserFunction() routine, as in the following examples:</p>
+
+<pre><code>        parserFunction(f =&gt; &quot;sqrt(x+1)-2&quot;);
+
+        $x = Formula(&#39;x&#39;);
+        parserFunction(f =&gt; sqrt($x+1)-2);
+
+        parserFunction(&quot;f(x)&quot; =&gt; &quot;sqrt(x+1)-2&quot;);
+
+        parserFunction(&quot;f(x,y)&quot; =&gt; &quot;sqrt(x*y)&quot;);</code></pre>
+
+<p>The first parameter to parserFunction is the name of the function or the name with its argument list. In the first case, the names of the variables are taken from the formula for the function, and are listed in alphabetical order.</p>
+
+<p>The second argument is the formula used to compute the value of the function. It can be either a string or a Parser Formula object.</p>
+
+<h2 id="Function--D">($Function)-&gt;D</h2>
+
+<pre><code> #
+ #  Compute the derivative of (single-variable) functions
+ #    using the chain rule.
+ #</code></pre>
+
+<h3 id="NameForNumber-number">NameForNumber($number)</h3>
+
+<p># # Get the name for a number #</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

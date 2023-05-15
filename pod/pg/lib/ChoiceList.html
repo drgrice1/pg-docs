@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ChoiceList</title>
+</head>
+<body>
+<h1>ChoiceList</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Variables-and-methods-available-to-sub-classes">Variables and methods available to sub-classes</a>
+        <ul>
+          <li><a href="#Variables">Variables</a></li>
+          <li><a href="#Methods">Methods</a></li>
+        </ul>
+      </li>
+      <li><a href="#Usage">Usage</a>
+        <ul>
+          <li><a href="#qa-Usage:-ml-qa-qw-question1-answer1-question2-answer2">qa Usage: $ml-&gt;qa( qw( question1 answer1 question2 answer2 ) );</a></li>
+          <li><a href="#cmp">cmp</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        ChoiceList.pm  -- super-class for all ChoiceList structures</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>ChoiceList.pm is not intended to be used as a stand alone object.</p>
+
+<p>It is a super-class designed to be inherited by sub-classes that, through small changes, can be used for a variety of different questions that involve some sort of list of questions and/or answers.</p>
+
+<p>ChoiceList.pm has been used to construct Match.pm, Select.pm, and Multiple.pm.</p>
+
+<p>These three classes are objects that can be used to create the following question types:</p>
+
+<p><b>Matching list:</b> Given a list of questions and answers, match the correct answers to the questions. Some answers may be used more than once and some may not be used at all. The order of the answers is usually random but some answers can be appended to the end in a set order (i.e. &#39;None of the above&#39;). Answers are given corresponding letters as shortcuts to typing in the full answer. (i.e. the answer to #1 is A).</p>
+
+<p><b>Select list:</b> Given a list of questions and (usually) implied answers, give the correct answer to each question. This is intended mainly for true/false questions or other types of questions where the answers are short and can therefore be typed in by the user easily. If a select list is desired but the answers are too long to really type in, a popup-list of the answers can be used.</p>
+
+<p><b>Multiple choice:</b> Given a single question and a list of answers, select the single correct answer. This structure creates a standard multiple choice question as would be seen on a standardize test. Extra answers are entered along with the question in a simple format and (as with Match.pm), if necessary, can be appended in order at the end (i.e. &#39;None of the above&#39;)</p>
+
+
+<P>See <a href="Match">Match.pm</a>, <a href="Select">Select.pm</a>, <a href="Multiple">Multiple.pm</a>, and <a href="PGchoicemacros">PGchoicemacros.pl</a>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<h2 id="Variables-and-methods-available-to-sub-classes">Variables and methods available to sub-classes</h2>
+
+<h3 id="Variables">Variables</h3>
+
+<pre><code>        questions                               # array of questions as entered using qa()
+        answers                                 # array of answers as entered using qa()
+        extras                                  # array of extras as entered using extra()
+
+        selected_q                              # randomly selected subset of &quot;questions&quot;
+        selected_a                              # the answers for the selected questions
+        selected_e                              # randomly selected subset of &quot;extras&quot;
+
+        ans_rule_len                    # determines the length of the answer blanks
+                                                        # default is 4
+
+        slice                                   # index used to select specific questions
+        shuffle                                 # permutation array which can be applied to slice
+                                                        # to shuffle the answers
+
+        inverted_shuffle                # the inverse permutation array
+
+        rf_print_q                              # reference to any subroutine which should
+                                                        # take ($self, @questions) as parameters and
+                                                        # output the questions in a formatted string.
+                                                        # If you want to change the way questions are
+                                                        # printed, write your own print method and set
+                                                        # this equal to a reference to to that method
+                                                        # (i.e. $sl-&gt;rf_print_q = ~~&amp;printing_routine_q)
+
+        rf_print_a                              # reference to any subroutine which should
+                                                        # take ($self, @answers) as parameters and
+                                                        # output the answers in a formatted string.
+                                                        # If you want to change the way answers are
+                                                        # printed, write your own print method and set
+                                                        # this equal to a reference to to that method
+                                                        # (i.e. $sl-&gt;rf_print_a = ~~&amp;printing_routine_a)
+
+        ra_pop_up_list              # Field used in sub classes that use pop_up_list_print_q
+                                                        # to format the questions. (Placing a pop_up_list next to
+                                                        # each question instead of an answer blank.
+                                                        # It is initialized to
+                                                        # =&gt; [no_answer =&gt;&#39;  ?&#39;, T =&gt; &#39;True&#39;, F =&gt; &#39;False&#39;]
+
+        ans_rule_len                    # field which can be used in the question printing routines
+                                                        # to determine the length of the answer blanks before the questions.</code></pre>
+
+<h3 id="Methods">Methods</h3>
+
+<pre><code>        qa( array )                             # accepts an array of strings which can be used
+                                                        # for questions and answers
+
+        extra( array )                  # accepts an array of strings which can be used
+                                                        # as extra answers
+
+        print_q                                 # yields a formatted string of question to be
+                                                        # matched with answer blanks
+        print_a                                 # yields a formatted string of answers
+
+        choose([3, 4], 1)               # chooses questions indexed 3 and 4 and one other
+                                                        # randomly
+        choose_extra([3, 4], 1) # choooses extra answers indexed 3 and 4 and one
+                                                        # other
+        makeLast( array )               # accepts an array of strings (like qa) which will
+                                                        # be forced to the end of the list of answers.
+
+        ra_correct_ans                  # outputs a reference to the array of correct answers
+        correct_ans                             # outputs a concatenated string of correct answers (only for Multiple)</code></pre>
+
+<h2 id="Usage">Usage</h2>
+
+<pre><code>        None -- see SYNOPSIS above</code></pre>
+
+<h3 id="qa-Usage:-ml-qa-qw-question1-answer1-question2-answer2">qa Usage: $ml-&gt;qa( qw( question1 answer1 question2 answer2 ) );</h3>
+
+<h3 id="cmp">cmp</h3>
+
+<pre><code>        Usage    ANS($ml -&gt; cmp);
+        </code></pre>
+
+<p>provides a MathObject like comparison method returns a string of comparison methods for checking the list object</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Authen::Shibboleth</title>
+</head>
+<body>
+<h1>WeBWorK::Authen::Shibboleth</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Authen::Shibboleth - Authentication plug in for Shibboleth. This is basd on Cosign.pm</p>
+
+<p>For documentation, please refer to http://webwork.maa.org/wiki/External_(Shibboleth)_Authentication</p>
+
+<p>to use: include in localOverrides.conf or course.conf $authen{user_module} = &quot;WeBWorK::Authen::Shibboleth&quot;; and add /webwork2/courseName as a Shibboleth Protected Location or enable lazy session.</p>
+
+<p>if $c-&gt;ce-&gt;{shiboff} is set for a course, authentication reverts to standard WeBWorK authentication.</p>
+
+<p>add the following to localOverrides.conf to setup the Shibboleth</p>
+
+<p>$shibboleth{login_script} = &quot;/Shibboleth.sso/Login&quot;; # login handler $shibboleth{logout_script} = &quot;/Shibboleth.sso/Logout?return=&quot;.$server_root_url.$webwork_url; # return URL after logout $shibboleth{session_header} = &quot;Shib-Session-ID&quot;; # the header to identify if there is an existing shibboleth session $shibboleth{manage_session_timeout} = 1; # allow shib to manage session time instead of webwork $shibboleth{hash_user_id_method} = &quot;MD5&quot;; # possible values none, MD5. Use it when you want to hide real user_ids from showing in url. $shibboleth{hash_user_id_salt} = &quot;&quot;; # salt for hash function #define mapping between shib and webwork $shibboleth{mapping}{user_id} = &quot;username&quot;;</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ui/source.pl</title>
+</head>
+<body>
+<h1>ui/source.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#sourceButton">sourceButton</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="sourceButton">sourceButton</h3>
+
+<p>activating the source button</p>
+
+<p>In order for this button to work the course needs to have a link from</p>
+
+<pre><code>        myCourse/html/show-source.cgi to webwork2/htdocs/show-source.cgi</code></pre>
+
+<p>in the directory myCourse/html. To create this link execute the following command (you will need command line access to the server to do this)</p>
+
+<pre><code>        ln -s /opt/webwork/webwork2/htdocs/show-source.cgi    show-source.cgi
+ </code></pre>
+
+<p>You need to make sure that the file webwork2/htdocs/show-source.cgi is executable by the apache webserver.</p>
+
+<p>To accomplish this you need to uncomment this line in webwork.apache2-config</p>
+
+<pre><code>        ScriptAliasMatch /webwork2_course_files/([^/]*)/show-source.cgi/(.*) /opt/webwork/courses/$1/html/show-source.cgi/$2</code></pre>
+
+<p>The show-source.cgi script may also have to be customized to set <code>$root</code> to the webwork2 directory</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>core/externalData.pl</title>
+</head>
+<body>
+<h1>core/externalData.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a>
+    <ul>
+      <li><a href="#store_number_list">store_number_list</a>
+        <ul>
+          <li><a href="#Example">Example</a></li>
+        </ul>
+      </li>
+      <li><a href="#store_string">store_string</a>
+        <ul>
+          <li><a href="#Example1">Example</a></li>
+        </ul>
+      </li>
+      <li><a href="#store_number">store_number</a>
+        <ul>
+          <li><a href="#Example2">Example</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p><code>externalData.pl</code> - Macro that provides some parsing and way to send data from a problem to the database. This is useful for using data common to multiple problems.</p>
+
+<h2 id="store_number_list">store_number_list</h2>
+
+<p>This is a answer checker that checks only that there are a list of real number values and the purpose is to store in the database.</p>
+
+<h3 id="Example">Example</h3>
+
+<p>Make a List object, but the contents doesn&#39;t matter.</p>
+
+<pre><code>  $ans = List(0);</code></pre>
+
+<p>Then in the visible problem block add the following</p>
+
+<pre><code>  BEGIN_PGML
+  Enter a list of values as a vector.
+
+  [_____]{$ans-&gt;cmp(list_checker =&gt; store_number_list(&#39;my_list&#39;)}
+  END_PGML</code></pre>
+
+<p>Note that you will need to add a key as an argument to the <code>store_number_list</code> (this should be unique for the problem set)</p>
+
+<h2 id="store_string">store_string</h2>
+
+<p>This is a answer checker that checks for a string to be saved in the database.</p>
+
+<h3 id="Example1">Example</h3>
+
+<p>If you are storing a string, the student will probably enter in an arbitrary string, either use the contextArbitraryString macro or add possible strings to the current context.</p>
+
+<pre><code>  loadMacros(&#39;contextArbitraryString.pl&#39;);
+  Context(&#39;ArbitraryString&#39;);</code></pre>
+
+<p>Make a String object, but the contents doesn&#39;t matter.</p>
+
+<pre><code>  $ans = String(&#39;&#39;);</code></pre>
+
+<p>Then in the visible problem block add the following</p>
+
+<pre><code>  BEGIN_PGML
+  Enter a string
+  [_____]{$ans-&gt;cmp(checker =&gt; store_string(&#39;my_string&#39;)}
+  END_PGML</code></pre>
+
+<p>Note that you will need to add a key as an argument to <code>store_string</code> and it should be unique for the set.</p>
+
+<h2 id="store_number">store_number</h2>
+
+<p>This is a answer checker that checks for a number to be saved in the database.</p>
+
+<h3 id="Example2">Example</h3>
+
+<p>To store a number, create a <code>Real</code> MathObject with any value</p>
+
+<pre><code>  $num = Real(0);</code></pre>
+
+<p>Then in the visible problem block add the following</p>
+
+<pre><code>  BEGIN_PGML
+  Enter a number
+  [_____]{$num-&gt;cmp(checker =&gt; store_real(&#39;my_string&#39;)}
+  END_PGML</code></pre>
+
+<p>Note that you will need to add a key as an argument to <code>store_number</code> and it should be unique for the set.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextInteger.pl</title>
+</head>
+<body>
+<h1>contexts/contextInteger.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextInteger.pl - adds integer related functions primeFactorization, phi, tau, isPrime, randomPrime, lcm, and gcd.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser context that adds integer related functions. This forces students to only enter integers as their answers.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        Context(&quot;Integer&quot;)
+
+  # generates an array of each prime factor
+  @a = primeFactorization(1000);
+  ANS(List(@a)-&gt;cmp);
+
+  # get the gcd
+  $b = gcd(5, 2);
+  ANS($b-&gt;cmp);
+
+  # get lcm
+  $c = lcm(36, 90);
+  ANS($c-&gt;cmp);
+
+  # get phi
+  $d = phi(365);
+  ANS($d-&gt;cmp);
+        
+  # get tau
+  $e = tau(365);
+  ANS($e-&gt;cmp);
+
+  # check if prime
+  $f = isPrime(10); #False
+  $h = isPrime(5); #True
+
+  # get a random prime in a range
+  $randomPrime = randomPrime(100, 1000);</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

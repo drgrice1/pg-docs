@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextLimitedComplex.pl</title>
+</head>
+<body>
+<h1>contexts/contextLimitedComplex.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextLimitedComplex.pl - Allow complex numbers but not complex operations.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Implements a context in which complex numbers can be entered, but no complex operations are permitted. So students will be able to perform operations within the real and imaginary parts of the complex numbers, but not between complex numbers.</p>
+
+<pre><code>        Context(&quot;LimitedComplex&quot;)</code></pre>
+
+<p>Complex Numbers can still be entered in a+bi or a*e^(bt) form. The e and i are allowed to be entered only once, so we have to keep track of that, and allow SOME complex operations, but only when one term is one of these constants (or an expression involving it that we&#39;ve already OKed).</p>
+
+<p>You control which format to use by setting the complex_format context flag to &#39;cartesian&#39;, &#39;polar&#39; or &#39;either&#39;. E.g.,</p>
+
+<pre><code>        Context()-&gt;flags-&gt;set(complex_format =&gt; &#39;polar&#39;);</code></pre>
+
+<p>The default is &#39;either&#39;. There are predefined contexts that already have these values set:</p>
+
+<pre><code>        Context(&quot;LimitedComplex-cartesian&quot;);
+        Context(&quot;LimitedComplex-polar&quot;);</code></pre>
+
+<p>You can require that the a and b used in these forms be strictly numbers (not expressions) by setting the strict_numeric flag and disabling all the functions:</p>
+
+<pre><code>        Context()-&gt;flags-&gt;set(strict_numeric=&gt;1);
+        Context()-&gt;functions-&gt;disable(&#39;All&#39;);</code></pre>
+
+<p>There are predefined contexts that already have these values set:</p>
+
+<pre><code>        Context(&quot;LimitedComplex-cartesian-strict&quot;);
+        Context(&quot;LimitedComplex-polar-strict&quot;);
+        Context(&quot;LimitedComplex-strict&quot;);</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

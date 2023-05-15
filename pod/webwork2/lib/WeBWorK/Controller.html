@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Controller</title>
+</head>
+<body>
+<h1>WeBWorK::Controller</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#METHODS">METHODS</a></li>
+  <li><a href="#ERROR-OUTPUT-FUNCTIONS">ERROR OUTPUT FUNCTIONS</a></li>
+  <li><a href="#POD-ERRORS">POD ERRORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Controller - a controller for the WeBWorK Mojolicious app. It is a subclass of the Mojolicious::Controller class with additional WeBWorK-specific fields.</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<dl>
+
+<dt>$c-&gt;ce([$new])</dt>
+<dd>
+
+<p>Return the course environment (WeBWorK::CourseEnvironment) associated with this request. If $new is specified, set the course environment to $new before returning the value. In this case the value of $new is also saved to the stash as &#39;ce&#39;. This means that this value is available as $ce in the templates.</p>
+
+</dd>
+<dt>$c-&gt;db([$new])</dt>
+<dd>
+
+<p>Return the database (WeBWorK::DB) associated with this request. If $new is specified, set the database to $new before returning the value. In this case the value of $new is also saved to the stash as &#39;db&#39;. This means that this is available as $db in the templates.</p>
+
+</dd>
+<dt>$c-&gt;authen([$new])</dt>
+<dd>
+
+<p>Return the authenticator (WeBWorK::Authen) associated with this request. If $new is specified, set the authenticator to $new before returning the value. In this case the value of $new is also saved to the stash as &#39;authen&#39;. This means that this value is available as $authen in the templates.</p>
+
+</dd>
+<dt>$c-&gt;authz([$new])</dt>
+<dd>
+
+<p>Return the authorizer (WeBWorK::Authz) associated with this request. If $new is specified, set the authorizer to $new before returning the value. In this case the value of $new is also saved to the stash as &#39;authz&#39;. This means that this value is available as $authz in the templates.</p>
+
+</dd>
+<dt>$c-&gt;submitTime([$new])</dt>
+<dd>
+
+<p>Return the time this request was received for processing, which we refer to as the submitTime. The time is recorded very early on in the processing of the request. If $new is specified, set submitTime to $new before returning the value.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="ERROR-OUTPUT-FUNCTIONS">ERROR OUTPUT FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>textMessage($c, $exception, $uuid, $time)</dt>
+<dd>
+
+<p>Format a message for HTML output reporting an exception and any associated warnings.</p>
+
+</dd>
+<dt>jsonMessage($c, $uuid, $time)</dt>
+<dd>
+
+<p>Format a JSON message for log output reporting an exception and any associated warnings.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="POD-ERRORS">POD ERRORS</h1></a>
+
+<p>Hey! <b>The above document had some coding errors, which are explained below:</b></p>
+
+<dl>
+
+<dt>Around line 141:</dt>
+<dd>
+
+<p>You forgot a &#39;=back&#39; before &#39;=head1&#39;</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

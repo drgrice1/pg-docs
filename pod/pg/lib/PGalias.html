@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>PGalias</title>
+</head>
+<body>
+<h1>PGalias</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#new">new</a></li>
+      <li><a href="#make_alias">make_alias</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="new">new</h2>
+
+<pre><code>  Create one alias object per question (and per PGcore object since there is a unique PGcore per question.)
+  Check that information is intact
+  Construct unique id stub seeds -- the id stub seed is for this PGalias object which is
+       attached to all the resource files (except equations) for this question.
+  Maintain list of links to external resources</code></pre>
+
+<h2 id="make_alias">make_alias</h2>
+
+<p>This is the workhorse of the PGalias module. It&#39;s front end is alias() in PG.pl.</p>
+
+<p>make_alias magically takes a name of an external resource ( html file, png file, etc.) and creates full directory addresses and uri&#39;s appropriate to the current displayMode. It also does any necessary conversions behind the scenes.</p>
+
+<p>Returns the uri of the resource.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

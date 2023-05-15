@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/PGmatrixmacros.pl</title>
+</head>
+<body>
+<h1>math/PGmatrixmacros.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#display_matrix">display_matrix</a></li>
+              <li><a href="#side_labels">side_labels</a></li>
+              <li><a href="#mbox">mbox</a></li>
+              <li><a href="#ra_flatten_matrix">ra_flatten_matrix</a></li>
+              <li><a href="#apl_matrix_mult">apl_matrix_mult()</a></li>
+              <li><a href="#create2d_matrix">create2d_matrix</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#convert_to_array_ref">convert_to_array_ref {</a>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#check_matrix_from_ans_box_cmp">check_matrix_from_ans_box_cmp</a></li>
+              <li><a href="#zero_check-deprecated----use-MathObjects-matrices-and-vectors">zero_check (deprecated -- use MathObjects matrices and vectors)</a></li>
+              <li><a href="#vec_dot-deprecated----use-MathObjects-vectors-and-matrices">vec_dot() (deprecated -- use MathObjects vectors and matrices)</a></li>
+              <li><a href="#proj_vect-deprecated----use-MathObjects-vectors-and-matrices">proj_vect (deprecated -- use MathObjects vectors and matrices)</a></li>
+              <li><a href="#vec_cmp-deprecated----use-MathObjects-vectors-and-matrices">vec_cmp (deprecated -- use MathObjects vectors and matrices)</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        Matrix macros for the PG language</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>These macros are fairly old. The most useful is display_matrix and its variants.</p>
+
+<p>Frequently it will be most useful to use the MathObjects Matrix (defined in Value::Matrix.pm) and Vector types which have more capabilities and more error checking than the subroutines in this file. These macros have no object orientation and work with vectors and matrices stored as perl anonymous arrays.</p>
+
+<p>There are also Matrix objects defined in RealMatrix.pm and Matrix.pm but in almost all cases the MathObjects Matrix types are preferable.</p>
+
+<h4 id="display_matrix">display_matrix</h4>
+
+<pre><code>        Usage  
+               \{ display_matrix( [ [1, &#39;\(\sin x\)&#39;], [ans_rule(5), 6] ]) \}
+               \{ display_matrix($A, align=&gt;&#39;crvl&#39;) \}
+               \[ \{   display_matrix_mm($A)  \} \]
+               \[ \{ display_matrix_mm([ [1, 3], [4, 6] ])  \} \]</code></pre>
+
+<p>display_matrix produces a matrix for display purposes. It checks whether it is producing LaTeX output, or if it is displaying on a web page in one of the various modes. The input can either be of type Matrix, Value::Matrix (mathobject) or a reference to an array.</p>
+
+<p>Entries can be numbers, Fraction objects, bits of math mode, or answer boxes. An entire row can be replaced by the string &#39;hline&#39; to produce a horizontal line in the matrix.</p>
+
+<p>display_matrix_mm functions similarly, except that it should be inside math mode. display_matrix_mm cannot contain answer boxes in its entries. Entries to display_matrix_mm should assume that they are already in math mode.</p>
+
+<p>Both functions take an optional alignment string, similar to ones in LaTeX tabulars and arrays. Here c for centered columns, l for left flushed columns, and r for right flushed columns.</p>
+
+<p>The alignment string can also specify vertical rules to be placed in the matrix. Here s or | denote a solid line, d is a dashed line, and v requests the default vertical line. This can be set on a system-wide or course-wide basis via the variable $defaultDisplayMatrixStyle, and it can default to solid, dashed, or no vertical line (n for none).</p>
+
+<p>The matrix has left and right delimiters also specified by $defaultDisplayMatrixStyle. They can be parentheses, square brackets, braces, vertical bars, or none. The default can be overridden in an individual problem with optional arguments such as left=&gt;&quot;|&quot;, or right=&gt;&quot;]&quot;.</p>
+
+<p>You can specify an optional argument of &#39;top_labels&#39;=&gt; [&#39;a&#39;, &#39;b&#39;, &#39;c&#39;]. These are placed above the columns of the matrix (as is typical for linear programming tableau, for example). The entries will be typeset in math mode.</p>
+
+<p>Top labels require a bit of care. For image modes, they look better with display_matrix_mm where it is all one big image, but they work with display_matrix. With tth, you pretty much have to use display_matrix since tth can&#39;t handle the TeX tricks used to get the column headers up there if it gets the whole matrix at once.</p>
+
+<h4 id="side_labels">side_labels</h4>
+
+<p>Produces an array that can be used to add labels outside a matrix. useful for presenting tableaus. Entries are set in mathmode</p>
+
+<pre><code>        side_labels( @array );
+
+        \( \{lp_display_mm([$matrix3-&gt;value],
+              top_labels=&gt;[qw(x_1 x_2 x_3 x_4 obj b)] )
+           \}
+        \{side_labels(  qw(\text{cash} \text{hours} \text{profits} ) )
+        \}
+    \)</code></pre>
+
+<h4 id="mbox">mbox</h4>
+
+<pre><code>                Usage        \{ mbox(thing1, thing2, thing3) \}
+          \{ mbox([thing1, thing2, thing3], valign=&gt;&#39;top&#39;) \}
+
+    mbox takes a list of constructs, such as strings, or outputs of
+          display_matrix, and puts them together on a line.  Without mbox, the
+          output of display_matrix would always start a new line.
+
+          The inputs can be just listed, or given as a reference to an array.
+          With the latter, optional arguments can be given.
+
+          Optional arguments are allowbreaks=&gt;&#39;yes&#39; to allow line breaks in TeX
+          output; and valign which sets vertical alignment on web page output.</code></pre>
+
+<h4 id="ra_flatten_matrix">ra_flatten_matrix</h4>
+
+<pre><code>                Usage:   ra_flatten_matrix($A)
+                        returns:  [a11, a12,a21,a22]
+
+                        where $A is a matrix object
+                        The output is a reference to an array.  The matrix is placed in the array by iterating
+                        over  columns on the inside
+                        loop, then over the rows. (e.g right to left and then down, as one reads text)</code></pre>
+
+<h4 id="apl_matrix_mult">apl_matrix_mult()</h4>
+
+<pre><code>        # This subroutine is probably obsolete and not generally useful.  
+        # It was patterned after the APL
+        # constructs for multiplying matrices. It might come in handy 
+        # for non-standard multiplication of
+        # of matrices (e.g. mod 2) for indice matrices.</code></pre>
+
+<h4 id="create2d_matrix">create2d_matrix</h4>
+
+<p>This can be a useful method for quickly entering small matrices by hand. --MEG</p>
+
+<pre><code>        create2d_matrix(&quot;1 2 4, 5 6 8&quot;); or
+        create2d_matrix(&quot;1 2 4; 5 6 8&quot;);
+        produces the anonymous array
+        [[1,2,4],[5,6,8] ]
+
+        Matrix(create2d_matrix($string));</code></pre>
+
+<h2 id="convert_to_array_ref">convert_to_array_ref {</h2>
+
+<pre><code>        $output_matrix = convert_to_array_ref($input_matrix)</code></pre>
+
+<p>Converts a MathObject matrix (ref($input_matrix) eq &#39;Value::Matrix&#39;) or a MatrixReal1 matrix (ref($input_matrix) eq &#39;Matrix&#39;) to a reference to an array (e.g [[4,6],[3,2]]). This adaptor allows all of the LinearProgramming.pl subroutines to be used with MathObject arrays.</p>
+
+<p>$mathobject_matrix-&gt;value outputs an array (usually an array of array references) so placing it inside square bracket produces and array reference (of array references) which is what lp_display_mm() is seeking.</p>
+
+<h4 id="check_matrix_from_ans_box_cmp">check_matrix_from_ans_box_cmp</h4>
+
+<p>An answer checker factory built on create2d_matrix. This still needs work. It is not feature complete, particularly with regard to error messages for incorrect input. --MEG</p>
+
+<pre><code>        $matrix = Matrix(&quot;[[1,4],[2,3]&quot;);
+        ANS( check_matrix_from_ans_box($matrix) );</code></pre>
+
+<h4 id="zero_check-deprecated----use-MathObjects-matrices-and-vectors">zero_check (deprecated -- use MathObjects matrices and vectors)</h4>
+
+<pre><code>        # this subroutine zero_check is not very well designed below -- if it is used much it should receive
+        # more work -- particularly for checking relative tolerance.  More work needs to be done if this is
+        # actually used.</code></pre>
+
+<h4 id="vec_dot-deprecated----use-MathObjects-vectors-and-matrices">vec_dot() (deprecated -- use MathObjects vectors and matrices)</h4>
+
+<p>sub vec_dot{ my $vec1 = shift; my $vec2 = shift; warn &quot;vectors must have the same length&quot; unless @$vec1 == @$vec2; # the vectors must have the same length. my @vec1=@$vec1; my @vec2=@$vec2; my $sum = 0;</p>
+
+<pre><code>        while(@vec1) {
+                $sum += shift(@vec1)*shift(@vec2);
+        }
+        $sum;
+}</code></pre>
+
+<h4 id="proj_vect-deprecated----use-MathObjects-vectors-and-matrices">proj_vect (deprecated -- use MathObjects vectors and matrices)</h4>
+
+<h4 id="vec_cmp-deprecated----use-MathObjects-vectors-and-matrices">vec_cmp (deprecated -- use MathObjects vectors and matrices)</h4>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

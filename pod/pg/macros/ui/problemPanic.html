@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ui/problemPanic.pl</title>
+</head>
+<body>
+<h1>ui/problemPanic.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>problemPanic.pl - Allow for a PANIC button that gives additional hints, possibly costing some points.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a mechanism for you to provide one or more &quot;panic button&quot; that your students can use to get additional hints, at the cost of a portion of their score.</p>
+
+<p>To include the button, use the command Panic::Button command within a BEGIN_TEXT/END_TEXT block. E.g.,</p>
+
+<pre><code>    BEGIN_TEXT
+    \{Panic::Button(label =&gt; &quot;Request a Hint&quot;, penalty =&gt; .25)\}
+    (you will lose 25% of your points if you do)
+    END_TEXT</code></pre>
+
+<p>When the student presses the hint button, the button will not longer be available, and the &quot;panic level&quot; will be increased. This sets the variable $panicked, which you can use to determine whether to include the hints or not. For example</p>
+
+<pre><code>    if ($panicked) {
+      BEGIN_TEXT
+        Hint:  You should factor the numerator and cancel
+        one of the factors with the denominator.
+      END_TEXT
+    }</code></pre>
+
+<p>Note that you can create a &quot;cascade&quot; of hints by including a second panic button in the hint received from the first button. This will set $panic to 2 (panic level 2) and you can use that to include the second hint.</p>
+
+<pre><code>    if ($panicked) {
+      BEGIN_TEXT
+        Hint:  You should factor the numerator and cancel
+        one of the factors with the denominator.
+        $PAR
+        \{Panic::Button(label =&gt; &quot;Another Hint&quot;, penalty =&gt; .25)\}
+        (costing an additional 25%)
+      END_TEXT
+      
+      if ($panicked &gt; 1) {
+        BEGIN_TEXT
+        Additional Hint: one of the factors is \(x+$a)\).
+        END_TEXT
+      }
+    }</code></pre>
+
+<p>You can add more buttons in a similar way. You can not have separate buttons for separate hints that are NOT cascaded, however. (That may be possible in future versions.)</p>
+
+<p>The Panic::Button command takes two optional parameters:</p>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>label =&gt; &quot;text&quot;</code></span></dt>
+<dd>
+
+<p>Sets the text to use for the button. The default is &quot;Request a Hint&quot;.</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>penalty =&gt; percent</code></span></dt>
+<dd>
+
+<p>Specifies the number points to lose (as a number from 0 to 1) if this hint is displayed. When more than one panic button is used, the penalties are cumulative. That is, two penalties of .25 would produce a total penalty of .5, so the student would lose half his points if both hints were given.</p>
+
+</dd>
+</dl>
+
+<p>Once a hint is displayed, the panic button for that hint will no longer be shown, and the hint will continue to be displayed as the student submits new answers.</p>
+
+<p>A professor will be given a &quot;Reset problem hints&quot; checkbox at the bottom of the problem, and can use that to request that the panic level be reset back to 0. This also sets the score and the number of attempts back to 0 as well, so this effectively resets the problem to its original state. This is intended for use primarily during problem development, but can be used to allow a student to get full credit for a problem even after he or she has asked for a hint.</p>
+
+<p>To allow the grading penalties to work, you must include the command</p>
+
+<pre><code>    Panic::GradeWithPenalty();</code></pre>
+
+<p>in order to install the panic-button grader. You should do this afer setting the grader that you want to use for the problem itself, as the panic grader will use the one that is installed at the time the Panic::GradWithPenalty command is issued.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

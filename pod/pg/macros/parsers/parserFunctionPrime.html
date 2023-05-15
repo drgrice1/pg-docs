@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserFunctionPrime.pl</title>
+</head>
+<body>
+<h1>parsers/parserFunctionPrime.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#parser::FunctionPrime-Enable-context">parser::FunctionPrime-&gt;Enable($context)</a></li>
+      <li><a href="#parser::FunctionPrime-Disable-context">parser::FunctionPrime-&gt;Disable($context)</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserFunctionPrime.pl - Allow f&#39; notation for parserFunction objects.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements prime notation for derivatives for functions added to the Context via a parserFunction() call. For example, if you have done</p>
+
+<pre><code>    parserFunction(&quot;f(x)&quot; =&gt; &quot;3x^2+x-2&quot;);</code></pre>
+
+<p>then you can use</p>
+
+<pre><code>    $f = Formula(&quot;f&#39;(x)&quot;);</code></pre>
+
+<p>to get the equivalent of Formula(&quot;6x+1&quot;), and</p>
+
+<pre><code>    $f = Formula(&quot;f&#39;&#39;(x)&quot;);</code></pre>
+
+<p>for the equivalent of Formula(&quot;6&quot;). Students can also type primes in their answers, so if you define parserFunction&#39;s for f and g, you can ask &quot;What is the derivative of f(g(x))&quot; and expect them to answer &quot;f&#39;(g(x))g&#39;(x)&quot; (and you can also type the same thing as the correct answer for the problem).</p>
+
+<p>To enable prime notation, first load the parserFunctionPrime.pl file, and then call parser::FunctionPrime-&gt;Enable() command after having selected the Context that you want to use. For example:</p>
+
+<pre><code>    loadMacros(
+      &quot;PGstandard.pl&quot;,
+      &quot;parserFunctionPrime.pl&quot;,
+      &quot;PGcourse.pl&quot;,
+    );
+    
+    Context(&quot;Numeric&quot;);
+    parser::FunctionPrime-&gt;Enable();</code></pre>
+
+<p>Note that parserFunctionPrime.pl loads parserFunction.pl automatically, so you don&#39;t have to load both.</p>
+
+<h2 id="parser::FunctionPrime-Enable-context">parser::FunctionPrime-&gt;Enable($context)</h2>
+
+<p>This enables prime notation for parserFunction objects in the given context (or if no context is given, in the current context).</p>
+
+<h2 id="parser::FunctionPrime-Disable-context">parser::FunctionPrime-&gt;Disable($context)</h2>
+
+<p>This disables prime notation for parserFunction objects in the given context (or if no context is given, in the current context).</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

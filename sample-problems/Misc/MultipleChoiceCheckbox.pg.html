@@ -47,7 +47,26 @@
 
 <div class="container">
 	<div class="row pb-3">
+		<h1>MultipleChoiceCheckbox</h1>
+	</div>
+	<div class="row pb-3">
+		<div class="col">
 		Multiple choice template
+		</div>
+		<div class="col">
+			<h2>POD for macro files</h2>
+			<ul>
+			
+					<li style="color: red">PGstandard.pl</li>
+			
+					<li style="color: red">PGML.pl</li>
+			
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserCheckboxList.html">parserCheckboxList.pl</a></li>
+
+					<li style="color: red">PGcourse.pl</li>
+			
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col header">
@@ -68,15 +87,13 @@
 				</button>
 				<pre><code class="language-perl">DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGML.pl',
-  'parserCheckboxList.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','parserCheckboxList.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </code></pre>
 				<div class="hidden-code" style="display: none"> DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGML.pl',
-  'parserCheckboxList.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','parserCheckboxList.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </div>
@@ -152,7 +169,7 @@ where the <code>correct_choices</code> can either match those in <code>choices</
 
 <p>If we nest <code>choices</code> in another arrayref, then the choices will be shown randomly.</p>
 
-<p>Using the option <code>separator</code> and setting to <code>&amp;nbsp;</code>, the HMTL space, results in
+<p>Using the option <code>separator</code> and setting to <code>&amp;nbsp;</code>, the HTML space, results in
 a horizontal checklist.</p>
 
 <p>Lastly, see the POD for more options.</p>

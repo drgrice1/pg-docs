@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextLimitedPowers.pl</title>
+</head>
+<body>
+<h1>contexts/contextLimitedPowers.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextLimitedPowers.pl - Restrict the base or power allowed in exponentials.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Implements subclasses of the &quot;^&quot; operator that restrict the base or power that is allowed. There are four available restrictions:</p>
+
+<pre><code>        No raising e to a power
+        Only allowing integer powers (positive or negative)
+        Only allowing positive integer powers
+        Only allowing positive integer powers (and 0)</code></pre>
+
+<p>You install these via one of the commands:</p>
+
+<pre><code>        LimitedPowers::NoBaseE();
+        LimitedPowers::OnlyIntegers();
+        LimitedPowers::OnlyPositiveIntegers();
+        LimitedPowers::OnlyNonNegativeIntegers();</code></pre>
+
+<p>Only one of the three can be in effect at a time; setting a second one overrides the first.</p>
+
+<p>These function affect the current context, or you can pass a context reference, as in</p>
+
+<pre><code>        $context = Context(&quot;Numeric&quot;)-&gt;copy;
+        LimitedPowers::OnlyIntegers($context);</code></pre>
+
+<p>For the integer power functions, you can pass additional parameters that control the range of values that are allowed for the powers. The oprtions include:</p>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>minPower =&gt; m</code></span></dt>
+<dd>
+
+<p>only integer powers bigger than or equal to m are allowed. (If m is undef, then there is no minimum power.)</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>maxPower =&gt; M</code></span></dt>
+<dd>
+
+<p>only integer powers less than or equal to M are allowed. (If M is undef, then there is no maximum power.)</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>message =&gt; &quot;text&quot;</code></span></dt>
+<dd>
+
+<p>a description of the type of power allowed (e.g., &quot;positive integer constants&quot;);</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>checker =&gt; code</code></span></dt>
+<dd>
+
+<p>a reference to a subroutine that will be used to check if the powers are acceptable. It should accept a reference to the BOP::power structure and return 1 or 0 depending on whether the power is OK or not.</p>
+
+</dd>
+</dl>
+
+<p>For example:</p>
+
+<pre><code>    LimitedPowers::OnlyIntegers(
+        minPower =&gt; -5, maxPower =&gt; 5,
+        message =&gt; &quot;integer constants between -5 and 5&quot;,
+    );</code></pre>
+
+<p>would accept only powers between -5 and 5, while</p>
+
+<pre><code>    LimitedPowers::OnlyIntegers(
+        checker =&gt; sub {
+            return 0 unless LimitedPowers::isInteger(@_);
+            my $self = shift; my $p = shift; # the power as a constant
+            return $p != 0 &amp;&amp; $p != 1;
+        },
+        message =&gt; &quot;integer constants other than 0 or 1&quot;,
+    );</code></pre>
+
+<p>would accept any integer power other than 0 and 1.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

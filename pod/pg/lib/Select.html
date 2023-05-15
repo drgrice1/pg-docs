@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Select</title>
+</head>
+<body>
+<h1>Select</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Variables-and-methods-available-to-Select">Variables and methods available to Select</a>
+        <ul>
+          <li><a href="#Variables">Variables</a></li>
+          <li><a href="#Methods">Methods</a></li>
+        </ul>
+      </li>
+      <li><a href="#Usage">Usage</a>
+        <ul>
+          <li><a href="#Regualar-Select-List">Regualar Select List</a></li>
+          <li><a href="#Pop-Up-Select-List">Pop-Up Select List</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        Select.pm -- sub-class of ChoiceList that implements a select list.
+
+        All items accessed by $out = $sl -&gt; item( $in );</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Select.pm is intended to be used to create standard true/false questions or questions where all the questions have the same set of short one to two word answers as possible answers. Unlike a matching list, where answers are indicated by typing in the corresponding letter, in a select list the actual answer is typed in. A select list also has the option of having a pop-up list of the answers so that the correct answer can just be selected instead of typed. But like match lists, students can be given different sets of questions (to avoid students sharing answers) by entering many questions and then having each student only receive a sub-set of those questions by using choose.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<h2 id="Variables-and-methods-available-to-Select">Variables and methods available to Select</h2>
+
+<h3 id="Variables">Variables</h3>
+
+<pre><code>        questions                       # array of questions as entered using qa()
+        answers                         # array of answers as entered using qa()
+
+        selected_q                      # randomly selected subset of &quot;questions&quot;
+        selected_a                      # the answers for the selected questions
+
+        ans_rule_len            # determines the length of the answer blanks
+                                                # default is 4
+
+        slice                           # index used to select specific questions
+        shuffle                         # permutation array which can be applied to slice
+                                                # to shuffle the answers
+
+        inverted_shuffle        # the inverse permutation array
+
+        rf_print_q                      # reference to any subroutine which should
+                                                # take ($self, @questions) as parameters and
+                                                # output the questions in a formatted string.
+                                                # If you want to change the way questions are
+                                                # printed, write your own print method and set
+                                                # this equal to a reference to to that method
+                                                # (i.e. $sl-&gt;rf_print_q = ~~&amp;printing_routine_q)
+
+        rf_print_a                      # reference to any subroutine which should
+                                                # take ($self, @answers) as parameters and
+                                                # output the answers in a formatted string.
+                                                # If you want to change the way answers are
+                                                # printed, write your own print method and set
+                                                # this equal to a reference to to that method
+                                                # (i.e. $sl-&gt;rf_print_a = ~~&amp;printing_routine_a)</code></pre>
+
+<h3 id="Methods">Methods</h3>
+
+<pre><code>        qa( array )                     # accepts an array of strings which can be used
+                                                # for questions and answers
+
+        print_q                         # yields a formatted string of question to be
+                                                # matched with answer blanks
+
+        choose([3, 4], 1)       # chooses questions indexed 3 and 4 and one other
+                                                # randomly
+
+        ra_correct_ans          # outputs a reference to the array of correct answers</code></pre>
+
+<h2 id="Usage">Usage</h2>
+
+<h3 id="Regualar-Select-List">Regualar Select List</h3>
+
+<p>Create a select list using the new_select_list call.</p>
+
+
+	<PRE>
+	<I>$sl = new_select_list;</I>
+	</PRE>
+
+<p>Use qa() to enter questions and answers in alternating pairs.</p>
+
+
+	 <PRE>
+	 <I>$sl->qa(
+		'\( y = x^2 \) is increasing to the right',
+		'T',
+		'\( y = x^3 \) is decreasing to the right',
+		'F',
+		'\( y = -x^2 + x^3 + 2 \) is decreasing to the right',
+		'F',
+		'\( y = -x^2 + x - 15 \) is decreasing to the left',
+		'F',
+		'\( y = 2^x \) is decreasing to the left',
+		'T',
+	);</I></PRE>
+
+<p>After calling qa, use choose to select which questions and/or how many each student sees. A list of numbers in brackets indicates which questions every student sees (counting starts with 0) and the final number outside of brackets is how many more questions should be randomly picked for each student.</p>
+
+
+	<PRE>
+	<I>$sl->choose([0], 1);</I></PRE>
+
+<p>would show the first question and a random question while</p>
+
+
+	<PRE>
+	<I>$sl->choose(3);</I></PRE>
+
+<p>would show 3 random questions (but never call choose more than once).</p>
+
+<p>If you want you can change the size of the answer boxes at any time (the default is 4).</p>
+
+
+	<PRE>
+	<I>$sl->ans_rule_len = 10;</I></PRE>
+
+<p>Now you would start your problem with a BEGIN_TEXT tag and print the questions with the print_q() command. Within the BEGIN_TEXT/END_TEXT block, all calls to objects must be enclosed in \( \). (The $PAR start a new paragraph by printing a blank line).</p>
+
+
+	<PRE>
+	<I>BEGIN_TEXT
+		$PAR
+		\{ $sl->print_q() \}
+	END_TEXT</I></PRE>
+
+<p>Now all that&#39;&#39;s left is sending the students answers to the answer evaluator along with the correct answers so that the students answers can be checked and a score can be given. This is done using ANS, an answer evaluator and the ra_correct_ans variable.</p>
+
+
+	<PRE>
+	<I>ANS(str_cmp($sl->ra_correct_ans));</I></PRE>
+
+<h3 id="Pop-Up-Select-List">Pop-Up Select List</h3>
+
+<p>A Pop-up select list problem is identical to a regular select list problem with only a few exceptions.</p>
+
+<p>First, you would create a pop-up select list using the new_pop_up_select_list call.</p>
+
+
+	<PRE>
+	<I>$sl = new_pop_up_select_list;</I>
+	</PRE>
+
+<p>Then you would use qa() and choose() (and optionally ans_rule_len) as normal but before writing the actual problem within the BEGIN_TEXT/END_TEXT headers, you could optionally specify value=&gt;label pairs for the pop-up list where you first specify the value of an answer to one of your questions and you link it to a label (using =&gt;) that will be shown to the students. For example,</p>
+
+
+	<PRE>
+	<I>$sl->ra_pop_up_list([no_answer => '  ?', T => 'True', F => 'False']);</I></PRE>
+
+<p>indicates that instead of seeing the letter T (which was used as the actual answer), the student will see the word &#39;True&#39;. Also, before they choose their answer the student will first see a question mark in each pop-up list indicating that they have not yet selected an answer there because the special variable no_answer has been selected. This is optional, however, because if no $sl-&gt;ra_pop_up_list is specified, it will default to the one shown above. So if this is want you want, you don&#39;t need to do any of this, but if you use ra_pop_up_list at all, these defaults will be lost and &#39;T&#39; will just be &#39;T&#39;. Also, if you don&#39;t specify a label for a particular answer, the label for that answer will be the answer (like I just said, &#39;T&#39; will be &#39;T&#39;).</p>
+
+<p>Other than those two differences, a pop-up select list problem is exactly the same as a regular select list problem as described above.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

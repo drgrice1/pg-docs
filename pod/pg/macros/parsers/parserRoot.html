@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserRoot.pl</title>
+</head>
+<body>
+<h1>parsers/parserRoot.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserRoot.pl - defines a <code>root(n,x)</code> function for n-th root of x.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file defines the code necessary to add to any context a <code>root(n,x)</code> function that performs the n-th root of x. For example, <code>Compute(&quot;root(3,27)&quot;)</code> would return the equivalent of <code>Real(3)</code>.</p>
+
+<p>To accomplish this, put the line</p>
+
+<pre><code>        loadMacros(&quot;parserRoot.pl&quot;);</code></pre>
+
+<p>at the beginning of your problem file, then set the Context to the one you wish to use in the problem. Then use the command:</p>
+
+<pre><code>        parser::Root-&gt;Enable;</code></pre>
+
+<p>(You can also pass the Enable command a pointer to a context if you wish to alter a context other than the current one.)</p>
+
+<p>Once that is done, you (and students) can enter roots by using the <code>root()</code> function. You can use <code>root()</code> both within <code>Formula()</code> and <code>Compute()</code> calls, and in Perl expressions, such as</p>
+
+<pre><code>        $n = root(3,27);</code></pre>
+
+<p>to obtain n-th roots. Note that <code>root()</code> will properly handle odd roots of negative numbers, so</p>
+
+<pre><code>        $n = root(3,-8);</code></pre>
+
+<p>will produce the equivalent of <code>$n = Real(-2)</code>, but even roots of negative numbers will produce an error message.</p>
+
+<p>If you enable <code>root()</code> in a context that allows complex numbers, you may want to allow even roots of negative numbers. To do this, use</p>
+
+<pre><code>        parser::Root-&gt;EnableComplex;</code></pre>
+
+<p>(again, you can pass a context to be altered, if you wish). This will force negative values to be promoted to complex numbers before an even root is taken. So</p>
+
+<pre><code>        parser::Root-&gt;EnableComplex;
+        $z = root(2,-9);</code></pre>
+
+<p>would produce the equivalent of <code>$z = 3*i;</code></p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

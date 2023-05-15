@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/PGdiffeqmacros.pl</title>
+</head>
+<body>
+<h1>math/PGdiffeqmacros.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#PGdiffeqmacros.pl-DESCRIPTION">PGdiffeqmacros.pl DESCRIPTION</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#addtwo-1stAddend-1stIndicator-2ndAddend-2ndIndicator">addtwo($1stAddend,$1stIndicator,$2ndAddend,$2ndIndicator)</a></li>
+          <li><a href="#add-1stAddend-1stIndicator-2ndAddend-2ndIndicator">add($1stAddend,$1stIndicator,$2ndAddend,$2ndIndicator,...)</a></li>
+          <li><a href="#diffop-a-b-c">diffop($a,$b,$c)</a></li>
+          <li><a href="#rad-num1-num2-num3">rad($num1,$num2,$num3)</a></li>
+          <li><a href="#simpleexp-r-ind">simpleexp($r,$ind)</a></li>
+          <li><a href="#undeterminedSin-A-B-C-r-w-q1-q0-r1-r0">undeterminedSin($A,$B,$C,$r,$w,$q1,$q0,$r1,$r0)</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="PGdiffeqmacros.pl-DESCRIPTION">PGdiffeqmacros.pl DESCRIPTION</h1></a>
+
+<p># Macros for Prills 163 problems</p>
+
+<h3 id="addtwo-1stAddend-1stIndicator-2ndAddend-2ndIndicator">addtwo($1stAddend,$1stIndicator,$2ndAddend,$2ndIndicator)</h3>
+
+<p>########## # sub addtwo adds two strings formally # An &quot;indicator&quot; for a string is a # number ,e.g. coefficient,which indicates # whether the string is to be # added or is to be regarded as zero. # The non-zero terms are formally added as strings. # The input is an array # ($1staddend, $1stindicator,$2ndaddend,$2ndindicator) # The return is an array # (formal sum, indicator of formal sum)</p>
+
+<h3 id="add-1stAddend-1stIndicator-2ndAddend-2ndIndicator">add($1stAddend,$1stIndicator,$2ndAddend,$2ndIndicator,...)</h3>
+
+<p>######## # sub add generalizes sub addtwo to more addends. # It formally adds the nonzero terms. # The input is an array of even length # consisting of each addend,a string, # followed by its indicator.</p>
+
+<h3 id="diffop-a-b-c">diffop($a,$b,$c)</h3>
+
+<p>####### # sub diffop cleans up the typed expression # of a diff. operator. # input @diffop =($A,$B,$C) is the coefficients. # input is given as arguments viz difftop($A,$B,$C); # output is the diff. operator as a string $L in TEX</p>
+
+<h3 id="rad-num1-num2-num3">rad($num1,$num2,$num3)</h3>
+
+<p>######## # sub rad simplifies (a/b)*(sqrt(c)) # input is given as arguments on rad viz.: rad($a,$b,$c); # $a,$b,$c are integers and $c&gt;=0 and $b is not zero. # output is an array =(answer as string,new$a,new$b, new$c)</p>
+
+<h3 id="simpleexp-r-ind">simpleexp($r,$ind)</h3>
+
+<p>#### # sub exp simplifies exp($r*t) in form for writing perl # or tex. The input is exp($r,$ind); $ind indicates whether # we want perl or tex mode. $r is a string that represents # a number. # If $ind = 0 output is &quot;exp(($r)*t)&quot;, simplified if possible. # If $ind = 1 output is &quot;exp(($r)*t)&quot;, simplified if possible.</p>
+
+<h3 id="undeterminedSin-A-B-C-r-w-q1-q0-r1-r0">undeterminedSin($A,$B,$C,$r,$w,$q1,$q0,$r1,$r0)</h3>
+
+<p>################# # undeterminedSin is a subroutine to solve # undetermined coefficient problems that have # sines and cosines. # The input is an array ($A,$B,$C,$r,$w,$q1,$q0,$r1,$r0) # given as arguments on undeterminedSin # $L =$A y&#39;&#39; + $B y&#39; + $C y # $rhs = ($q1 t + $q0) cos($w t)exp($r t) + # ($r1 t + $r0) sin($w t)exp($r t) # The subroutine uses undetermined coefficients # to find a solution $y of $L = $rhs . # The output \is $y</p>
+
+<pre><code>    rungeKutta4a
+    
+        Answer checker filter for comparing to an integral curve of a vector field.
+        
+        </code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Label</title>
+</head>
+<body>
+<h1>Label</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Usage">Usage</a></li>
+      <li><a href="#Example">Example:</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        Label</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>        use Carp;
+        use GD;
+        use WWPlot;
+        use Fun;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module defines labels for the graph objects (WWPlot).</p>
+
+<h2 id="Usage">Usage</h2>
+
+<pre><code>        $label1 = new Label($x_value, $y_value, $label_string, $label_color, @options)
+        $options is an array with (*&#39;d defaults)
+        - one of &#39;left&#39;*, &#39;center&#39;, &#39;right&#39; (horizontal alignment)
+        - one of &#39;bottom&#39;, &#39;center&#39;, &#39;top&#39;* (verical alignment)
+        - one of &#39;horizontal&#39;*, &#39;vertical&#39; (orientation)
+        - one of &#39;small&#39;, &#39;large&#39;, &#39;mediumbold&#39;*, &#39;tiny&#39;, &#39;giant&#39; (which gd font to use)
+    Note the alignment specifications are relative to the English reading of the string,
+    even when the orientation is vertical.</code></pre>
+
+<h2 id="Example">Example:</h2>
+
+<pre><code>        $new_label = new Label ( 0,0, &#39;origin&#39;,&#39;red&#39;,&#39;left&#39;, &#39;top&#39;)
+        @labels    = $graph-&gt;lb($new_label);</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

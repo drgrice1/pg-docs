@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/ConditionalHint.pl</title>
+</head>
+<body>
+<h1>answers/ConditionalHint.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#ConditionalHint.pl">ConditionalHint.pl</a>
+    <ul>
+      <li><a href="#NAME">NAME</a></li>
+      <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+      <li><a href="#USAGE">USAGE</a>
+        <ul>
+          <li><a href="#Synopsis-of-ConditionalHint">Synopsis of ConditionalHint</a></li>
+          <li><a href="#Complete-Working-Example-of-ConditionalHint">Complete Working Example of ConditionalHint</a></li>
+        </ul>
+      </li>
+      <li><a href="#AUTHOR">AUTHOR</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="ConditionalHint.pl">ConditionalHint.pl</h1></a>
+
+<p>################################################################################ # WeBWorK Online Homework Delivery System # Copyright &amp;copy; 2000-2022 The WeBWorK Project, https://github.com/openwebwork # # This program is free software; you can redistribute it and/or modify it under # the terms of either: (a) the GNU General Public License as published by the # Free Software Foundation; either version 2, or (at your option) any later # version, or (b) the &quot;Artistic License&quot; which comes with this package. # # This program is distributed in the hope that it will be useful, but WITHOUT # ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS # FOR A PARTICULAR PURPOSE. See either the GNU General Public License or the # Artistic License for more details. ################################################################################</p>
+
+<h2 id="NAME">NAME</h2>
+
+<p>ConditionalHint.pl - Allows a hint to be revealed after a student has entered an answer correctly.</p>
+
+<h2 id="DESCRIPTION">DESCRIPTION</h2>
+
+<p>The subroutine ConditionalHint() allows a hint to be revealed after a student has entered an answer correctly. It is useful for multi-part questions in which a hint for answering one part should not be revealed until a previous part has been answered correctly.</p>
+
+<p>A subroutine IsAnswerCorrect() that returns 0 or 1 is also provided.</p>
+
+<h2 id="USAGE">USAGE</h2>
+
+<h3 id="Synopsis-of-ConditionalHint">Synopsis of ConditionalHint</h3>
+
+<p>loadMacros(&quot;ConditionalHint.pl&quot;);</p>
+
+<p>$ans = Compute(&quot;x^2&quot;);</p>
+
+<p>BEGIN_TEXT Enter \( x^2 \) \{ ans_rule(20) \} \{ ConditionalHint( ans_name=&gt;$ans, ans_number=&gt;1, html_hint=&gt;&quot;$BR ${BBOLD}Hint:${EBOLD} \( \displaystyle \int x^2 \, dx = \frac{x^3}{3} + C.\) $BR&quot;, tex_hint=&gt;&#39;&#39;, ); \} END_TEXT</p>
+
+<p>ANS( $ans-&gt;cmp() );</p>
+
+<h3 id="Complete-Working-Example-of-ConditionalHint">Complete Working Example of ConditionalHint</h3>
+
+<p>DOCUMENT();</p>
+
+<p>loadMacros( &quot;PGstandard.pl&quot;, &quot;MathObjects.pl&quot;, &quot;ConditionalHint.pl&quot;, );</p>
+
+<p>TEXT( beginproblem() );</p>
+
+<p>################################### # Setup</p>
+
+<p>Context(&quot;Numeric&quot;);</p>
+
+<p>@answers = (); $answers[1] = Compute(&quot;x^2&quot;); $answers[2] = Compute(&quot;4^3 / 3&quot;);</p>
+
+<p>#$hint = IsAnswerCorrect(ans_name=&gt;$answers[1],ans_number=&gt;1);</p>
+
+<p>$myhint = ConditionalHint( ans_name=&gt;$answers[1], ans_number=&gt;1, html_hint=&gt;&quot;$BR ${BBOLD}Hint:${EBOLD} \( \displaystyle \int x^2 \, dx = \frac{x^3}{3} + C.\) $BR&quot; );</p>
+
+<p>################################## # Main text</p>
+
+<p>Context()-&gt;texStrings; BEGIN_TEXT (a) Enter \( x^2 \). \{ ans_rule(30) \} $BR $BR (b) When you answer part (a) correctly, a hint will appear here with an integral formula. $BR $myhint $BR \( \displaystyle \int_0^4 \frac{x^3}{3} \, dx = \) \{ans_rule(20)\} END_TEXT Context()-&gt;normalStrings;</p>
+
+<p>################################## # Answer evaluation</p>
+
+<p>$showPartialCorrectAnswers = 1;</p>
+
+<p>ANS( $answers[1]-&gt;cmp() ); ANS( $answers[2]-&gt;cmp() );</p>
+
+<p>COMMENT(&#39;When the first answer is correct, a hint appears with an integral formula (using ConditionalHint.pl).&#39;);</p>
+
+<p>ENDDOCUMENT();</p>
+
+<h2 id="AUTHOR">AUTHOR</h2>
+
+<p>Paul Pearson</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Multiple</title>
+</head>
+<body>
+<h1>Multiple</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Variables-and-methods-available-to-Multiple">Variables and methods available to Multiple</a>
+        <ul>
+          <li><a href="#Variables">Variables</a></li>
+          <li><a href="#Methods">Methods</a></li>
+        </ul>
+      </li>
+      <li><a href="#Usage">Usage</a>
+        <ul>
+          <li><a href="#Regular-Multiple-Choice">Regular Multiple Choice</a></li>
+          <li><a href="#Checkbox-Multiple-Choice">Checkbox Multiple Choice</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>Multiple.pm -- sub-class of ChoiceList that implements a multiple choice question.</p>
+
+<p>All items accessed by $out=$mc-&gt;item($in);</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Multiple.pm is intended to be used to create one of two types of multiple choice questions. The regular multiple choice question is one question followed by a list of answers, only one of which is correct, printed in a bulleted form with radio buttons to select the correct answer. The second type of of multiple choice question consists of one question followed by several answers bulleted with check boxes so that more than one answer can be selected if more than one answer exists. Each student will receive the same set of answers in a mostly random order (some answers can be forced to be at the end of list of answers, see makeLast() below).</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<h2 id="Variables-and-methods-available-to-Multiple">Variables and methods available to Multiple</h2>
+
+<h3 id="Variables">Variables</h3>
+
+<pre><code>        questions                       # array of questions as entered using qa()
+        answers                         # array of answers as entered using qa()
+
+        selected_q                      # randomly selected subset of &quot;questions&quot;
+        selected_a                      # the answers for the selected questions
+
+        slice                           # index used to select specific questions
+        shuffle                         # permutation array which can be applied to slice
+                                                # to shuffle the answers
+
+        inverted_shuffle        # the inverse permutation array
+
+        rf_print_q                      # reference to any subroutine which should
+                                                # take ($self, @questions) as parameters and
+                                                # output the questions in a formatted string.
+                                                # If you want to change the way questions are
+                                                # printed, write your own print method and set
+                                                # this equal to a reference to to that method
+                                                # (i.e. $sl-&gt;rf_print_q = ~~&amp;printing_routine_q)
+
+        rf_print_a                      # reference to any subroutine which should
+                                                # take ($self, @answers) as parameters and
+                                                # output the answers in a formatted string.
+                                                # If you want to change the way answers are
+                                                # printed, write your own print method and set
+                                                # this equal to a reference to to that method
+                                                # (i.e. $sl-&gt;rf_print_a = ~~&amp;printing_routine_a)</code></pre>
+
+<h3 id="Methods">Methods</h3>
+
+<pre><code>        qa( array )                     # accepts an array of strings which can be used
+                                                # for the question and answers
+
+        extra( array )          # accepts an array of strings which can be used
+                                                # as extra answers
+
+        print_q                         # yields a formatted string of question to be
+                                                # matched with answer blanks
+        print_a                         # yields a formatted string of answers
+
+        choose([3, 4], 1)       # chooses questions indexed 3 and 4 and one other
+                                                # randomly
+        makeLast( array )       # accepts an array of strings (like qa) which will
+                                                # be forced to the end of the list of answers.
+
+        correct_ans                     # outputs a reference to the array of correct answers</code></pre>
+
+<h2 id="Usage">Usage</h2>
+
+<h3 id="Regular-Multiple-Choice">Regular Multiple Choice</h3>
+
+<p>Create a multiple choice question using the new_multiple_choice call.</p>
+
+
+	<PRE>
+	<I>$mc = new_multiple_choice</I>
+	</PRE>
+
+<p>Use qa() to enter the question and the correct answer. Any duplicates will be eliminated.</p>
+
+
+	 <PRE>
+	 <I>$mc->qa('\( x^2 \) is:', 'quadratic');</I></PRE>
+
+<p>After calling qa you can use extra() to add in extra incorrect answers that (along with the correct answer) will be made into a random list of answers shown to the student.</p>
+
+
+	<PRE>
+	<I>$mc->extra(
+		'cubic',
+		'logarithmic',
+		'exponential'
+	);</I></PRE>
+
+<p>If you want certain answers to be at the end of the list instead of having them be randomized you can use makeLast to add specific answers to the end of the list of answers or to force already existing answers to be moved to the end of the list. This is usually done for &#39;None of the above&#39;, or &#39;All of the above&#39; type answers. Note that if &#39;None of the above&#39; is the correct answer then you must put it in qa() and then also makeLast() but the duplicate will be eliminated. If more than one extra answer is added via makeLast, they are added in the same order they are given in makeLast.</p>
+
+
+	<PRE>
+	<I>$mc->makeLast(
+		'All of the above',
+		'None of the above'
+	);</I></PRE>
+
+<p>Now you would start your problem with a <code>BEGIN_TEXT</code> tag and print the questions and answers with the print_q() and print_a() commands. Within the <code>BEGIN_TEXT/END_TEXT block</code>, all calls to objects must be enclosed in \( \). (The $PAR start a new paragraph by printing a blank line).</p>
+
+
+	<PRE>
+	<I>BEGIN_TEXT
+		$PAR
+		\{ $mc->print_q() \}
+		$PAR
+		\{ $mc->print_a() \}
+	END_TEXT</I></PRE>
+
+<p>Now all that&#39;&#39;s left is sending the students answers to the answer evaluator along with the correct answers so that the students answers can be checked and a score can be given. This is done using <code>ANS</code>, an answer evaluator and the <code>correct_ans</code> variable.</p>
+
+
+	<PRE>
+	<I>ANS(radio_cmp($mc->correct_ans))</I></PRE>
+
+<h3 id="Checkbox-Multiple-Choice">Checkbox Multiple Choice</h3>
+
+<p>A checkbox multiple choice problem is identical to a regular multiple choice problem with only a few exceptions.</p>
+
+<p>First, you create the checkbox multiple choice object using the command:</p>
+
+
+	<PRE>
+	<I>$cmc = new_checkbox_multiple_choice</I></PRE>
+
+<p>Then you would call qa() just as in a regular multiple choice object except that this time you can provide more than one answer</p>
+
+
+	 <PRE>
+	 <I>$cmc->qa(
+	 			'Indicate all the functions that are anti-derivatives of \( 3x^2 \)',
+				'\( x^3 \)',
+				'\( x^3 - 57 \)',
+				'\( 27 + x^3 \)'
+	);</I></PRE>
+
+<p>Then you would use extra() and makeLast() and create the problem just as with a regular multiple choice. The only other difference is that at then end of the problem you would use checkbox_cmp() instead of radio_cmp().</p>
+
+
+	<PRE>
+	<I>ANS(radio_cmp($cmc->correct_ans))</I></PRE>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

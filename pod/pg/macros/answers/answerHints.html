@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/answerHints.pl</title>
+</head>
+<body>
+<h1>answers/answerHints.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#AnswerHints">AnswerHints()</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="AnswerHints">AnswerHints()</h1></a>
+
+<p>This is an answer-checker post-filter that allows you to produce additional error messages for incorrect answers. You can trigger a message for a single answer, a collection of answers, or via a subroutine that determines the condition for the message.</p>
+
+<p>Note that this filter only works for MathObjects answer checkers.</p>
+
+<p>The answer hints are given as a pair using =&gt; with the right-hand side being the answer message and the left-hand side being one of three possibilities: 1) the value that triggers the message, 2) a reference to an array of values that trigger the message, or 3) a code reference to a subtroutine that accepts the correct answer, the student&#39;s answer, and the answer hash, and returns 1 or 0 depending on whether the message should or should not be displayed. (See the examples below.)</p>
+
+<p>The right-hand side can be either the message string itself, or a referrence to an array where the first element is the message string, and the remaining elements are name-value pairs that set options for the message. These can include:</p>
+
+<dl>
+
+<dt><code><span style="white-space: nowrap;">checkCorrect =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>1 means check for messages even if the answer is correct. Default: 0</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">replaceMessage =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>1 means it&#39;s OK to repalce any message that is already in place in the answer hash. Default: 0</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">checkTypes =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>1 means only perform the test if the student answer is the same type as the correct one. Default: 1</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">processPreview =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>1 means process student answers even during answer previews. Usually, no hints are given durring previews, but only when answers are checked or submitted. The default can be controlled on an individual message basis, or by adding <code>answerHintsProcessPreview</code> to the <code>cmp()</code> arguments, or in the context&#39;s flags. Default: 0</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">score =&gt; number</span></code></dt>
+<dd>
+
+<p>Specifies the score to use if the message is triggered (so that partial credit can be given). Default: keep original score</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">cmp_options =&gt; [...]</span></code></dt>
+<dd>
+
+<p>provides options for the cmp routine used to check if the student answer matches these answers. Default: []</p>
+
+</dd>
+</dl>
+
+<p>If more than one message matches the student&#39;s answer, the first one in the list is used.</p>
+
+<p>Example:</p>
+
+<pre><code>        ANS(Vector(1,2,3)-&gt;cmp(showCoordinateHints=&gt;0)-&gt;withPostFilter(AnswerHints(
+                Vector(0,0,0) =&gt; &quot;The zero vector is not a valid solution&quot;,
+                &quot;-&lt;1,2,3&gt;&quot; =&gt; &quot;Try the opposite direction&quot;,
+                &quot;&lt;1,2,3&gt;&quot; =&gt; &quot;Well done!&quot;,
+                [&quot;&lt;1,1,1&gt;&quot;,&quot;&lt;2,2,2&gt;&quot;,&quot;&lt;3,3,3&gt;&quot;] =&gt; &quot;Don&#39;t just guess!&quot;,
+                sub {
+                        my ($correct,$student,$ans) = @_;
+                        return $correct . $student == 0;
+                } =&gt; &quot;Your answer is perpendicular to the correct one&quot;,
+                Vector(1,2,3) =&gt; [
+                        &quot;You have the right direction, but not length&quot;,
+                        cmp_options =&gt; [parallel=&gt;1],
+                ],
+                0 =&gt; [&quot;Careful, your answer should be a vector!&quot;, checkTypes =&gt; 0, replaceMessage =&gt; 1],
+                sub {
+                        my ($correct,$student,$ans) = @_;
+                        return norm($correct-$student) &lt; .1;
+                } =&gt; [&quot;Close!  Keep trying.&quot;, score =&gt; .25],
+        )));</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

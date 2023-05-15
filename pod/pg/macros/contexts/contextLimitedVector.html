@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextLimitedVector.pl</title>
+</head>
+<body>
+<h1>contexts/contextLimitedVector.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextLimitedVector.pl - Allow vector entry but no vector operations.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Implements a context in which vectors can be entered, but no vector operations are permitted. So students will be able to perform operations within the coordinates of the vectors, but not between vectors.</p>
+
+<p>Vectors can still be entered either in &lt; , , &gt; or ijk format. Most of the complication here is to handle ijk format properly. Each coordinate vector is allowed to appear only once, so we have to keep track of that, and allow SOME vector operations, but only when one term is one of the coordinate constants, or one of the formulas we&#39;ve already OKed.</p>
+
+<p>You control which format to use by setting the context to one of the following:</p>
+
+<pre><code>         Context(&quot;LimitedVector-coordinate&quot;);
+         Context(&quot;LimitedVector-ijk&quot;);
+         Context(&quot;LimitedVector&quot;);      # either one</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

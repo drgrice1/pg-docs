@@ -47,7 +47,28 @@
 
 <div class="container">
 	<div class="row pb-3">
+		<h1>EssayAnswer</h1>
+	</div>
+	<div class="row pb-3">
+		<div class="col">
 		Essay answer template
+		</div>
+		<div class="col">
+			<h2>POD for macro files</h2>
+			<ul>
+			
+					<li style="color: red">PGstandard.pl</li>
+			
+					<li style="color: red">PGML.pl</li>
+			
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
+
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/core/PGessaymacros.html">PGessaymacros.pl</a></li>
+
+					<li style="color: red">PGcourse.pl</li>
+			
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col header">
@@ -67,15 +88,15 @@
 					</svg>
 				</button>
 				<pre><code class="language-perl">DOCUMENT();
-loadMacros('PGstandard.pl','MathObjects.pl','parserPopUp.pl',
-  'PGessaymacros.pl','PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','parserPopUp.pl',
+  'PGessaymacros.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 $showPartialCorrectAnswers = 0;
 </code></pre>
 				<div class="hidden-code" style="display: none"> DOCUMENT();
-loadMacros('PGstandard.pl','MathObjects.pl','parserPopUp.pl',
-  'PGessaymacros.pl','PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','parserPopUp.pl',
+  'PGessaymacros.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 $showPartialCorrectAnswers = 0;

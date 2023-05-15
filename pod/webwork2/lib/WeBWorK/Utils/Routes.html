@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::Routes</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::Routes</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#ROUTES">ROUTES</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#Route-setup-methods">Route setup methods</a></li>
+      <li><a href="#Methods-that-return-information-about-a-route">Methods that return information about a route.</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::Routes - webwork2 route parameters and route utility methods.</p>
+
+<a href="#_podtop_"><h1 id="ROUTES">ROUTES</h1></a>
+
+<p>PLEASE FOR THE LOVE OF GOD UPDATE THIS IF YOU CHANGE THE ROUTES BELOW!!!</p>
+
+<pre><code> root                                /
+
+ course_admin                        /admin -&gt; logout, options, instructor_tools
+
+ render_rpc                          /render_rpc
+ instructor_rpc                      /instructor_rpc
+ html2xml                            /html2xml
+
+ ltiadvantage_login                  /ltiadvantage/login
+ ltiadvantage_launch                 /ltiadvantage/launch
+ ltiadvantage_keys                   /ltiadvantage/keys
+
+ set_list                            /$courseID
+
+ logout                              /$courseID/logout
+ options                             /$courseID/options
+ grades                              /$courseID/grades
+ achievements                        /$courseID/achievements
+ equation_display                    /$courseID/equation
+ feedback                            /$courseID/feedback
+ gateway_quiz                        /$courseID/test_mode/$setID
+
+ proctored_gateway_quiz              /$courseID/proctored_test_mode/$setID
+ proctored_gateway_proctor_login     /$courseID/proctored_test_mode/$setID/proctor_login
+
+ hardcopy                            /$courseID/hardcopy
+ hardcopy_preselect_set              /$courseID/hardcopy/$setID
+
+ answer_log                          /$courseID/show_answers
+
+ instructor_tools                    /$courseID/instructor
+
+ instructor_user_list                /$courseID/instructor/users
+ instructor_user_detail              /$courseID/instructor/users/$userID
+
+ instructor_set_list                 /$courseID/instructor/sets
+
+ instructor_set_detail               /$courseID/instructor/sets/$setID
+ instructor_users_assigned_to_set    /$courseID/instructor/sets/$setID/users
+
+ instructor_problem_grader           /$courseID/instructor/grader/$setID/$problemID
+
+ instructor_add_users                /$courseID/instructor/add_users
+ instructor_set_assigner             /$courseID/instructor/assigner
+
+ instructor_set_maker                /$courseID/instructor/setmaker
+ instructor_file_manager             /$courseID/instructor/file_manager
+ instructor_config                   /$courseID/instructor/config
+
+ instructor_problem_editor           /$courseID/instructor/pgProblemEditor
+ instructor_problem_editor_withset   /$courseID/instructor/pgProblemEditor/$setID
+ instructor_problem_editor_withset_withproblem
+                                     /$courseID/instructor/pgProblemEditor/$setID/$problemID
+
+ instructor_scoring                  /$courseID/instructor/scoring
+ instructor_scoring_download         /$courseID/instructor/scoringDownload
+ instructor_mail_merge               /$courseID/instructor/send_mail
+
+ instructor_statistics               /$courseID/instructor/stats
+ instructor_set_statistics           /$courseID/instructor/stats/set/$setID
+ instructor_problem_statistics       /$courseID/instructor/stats/set/$setID/$problemID
+ instructor_user_statistics          /$courseID/instructor/stats/student/$userID
+
+ instructor_progress                 /$courseID/instructor/progress
+ instructor_set_progress             /$courseID/instructor/progress/set/$setID
+ instructor_user_progress            /$courseID/instructor/progress/student/$userID
+
+ instructor_achievement_list         /$courseID/instructor/achievement_list
+ instructor_achievement_editor       /$courseID/instructor/achievement_list/$achievementID/editor
+ instructor_achievement_user_editor  /$courseID/instructor/achievement_list/$achievementID/users
+
+ instructor_lti_update               /$courseID/instructor/lti_update
+
+ problem_list                        /$courseID/$setID
+ problem_detail                      /$courseID/$setID/$problemID
+ show_me_another                     /$courseID/$setID/$problemID/show_me_another</code></pre>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<h2 id="Route-setup-methods">Route setup methods</h2>
+
+<p>These methods initialize the webwork2 app Mojolicious router for content generator routes.</p>
+
+<dl>
+
+<dt>setup_content_generator_routes</dt>
+<dd>
+
+<p>This is the actual method called by Mojolicious::WeBWorK.</p>
+
+</dd>
+<dt>setup_content_generator_routes_recursive</dt>
+<dd>
+
+<p>This is an internal utility method called by the above method. It is not exported. It recursively sets up all routes.</p>
+
+</dd>
+</dl>
+
+<h2 id="Methods-that-return-information-about-a-route">Methods that return information about a route.</h2>
+
+<dl>
+
+<dt>route_title</dt>
+<dd>
+
+<p>Returns the human-readable name of the route given by name. This displays set ids and course ids with spaces instead of underscores, and if <code>$displayHTML</code> is true, it places the set id into an ltr span so that it is displayed ltr even for rtl languages. Note that the return value of this method should never be used to determine what type of path this is or for any sort of further processing. It is a translated string.</p>
+
+</dd>
+<dt>route_navigation_is_restricted</dt>
+<dd>
+
+<p>Returns 1 if the route is restricted from being viewed by a user that does not have the navigation_allowed permission, and 0 otherwise. The allowed paths for restricted users are marked with the unrestricted flag.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

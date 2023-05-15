@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::FilterRecords</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::FilterRecords</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::FilterRecords - utilities for filtering database records.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>    use WeBWorK::Utils::FilterRecords qw/getFiltersForClass/;
+
+    # Get a list of filters
+    my $filters = getFiltersForClass(@users);
+
+    use WeBWorK::Utils::FilterRecords qw/filterRecords/;
+
+    # Start with a list of records
+    my @users = $db-&gt;getUsers($db-&gt;listUsers);
+
+    # Filter the records using a list of provided filters.
+    @filteredUsers = filterRecords([ &#39;section:1&#39;, &#39;recitation:2&#39; ], @nsers);
+
+        # Get all records (This isn&#39;t useful and just returns the passed in
+        # array of records.  So don&#39;t actually do this.)
+    @filteredUsers = filterRecords(undef, @users);</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module provides functions for filtering records from the database.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>getFiltersForClass($class)</dt>
+<dd>
+
+<p>Given a list of database records, returns the filters available for those records. For all database records from the WeBWorK::DB::Record::User class the filters are by section or recitation or no filter at all. For all other classes the only filter is no filter at all.</p>
+
+<p>The return value is a reference to a list of two element lists. The first element in each list is a a string description of the filter and the second element is the filter name. The return value is suitable for passing as the second value argument to the Mojolicious select_field tag helper method.</p>
+
+</dd>
+<dt>filterRecords($filters, @records)</dt>
+<dd>
+
+<p>Given a list of filters and a list of records, returns a list of the records after the selected filters are applied.</p>
+
+<p><code>$filters</code> should be a reference to an array of filters or be undefined.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

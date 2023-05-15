@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::CourseIntegrityCheck</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::CourseIntegrityCheck</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::CourseIntegrityCheck - check that course database tables agree with database schema and that course directory structure is correct.</p>
+
+<dl>
+
+<dt>$CIchecker-&gt;checkCourseTables($courseName);</dt>
+<dd>
+
+<p>Checks the course tables in the mysql database and ensures that they are the same as the ones specified by the databaseLayout</p>
+
+</dd>
+<dt>$CIchecker-&gt; updateCourseTables($courseName, $table_names);</dt>
+<dd>
+
+<p>Adds schema tables to the database that had been missing from the database.</p>
+
+</dd>
+<dt>$CIchecker-&gt;checkTableFields($courseName, $table);</dt>
+<dd>
+
+<p>Checks the course tables in the mysql database and insures that they are the same as the ones specified by the databaseLayout</p>
+
+</dd>
+<dt>$CIchecker-&gt;updateTableFields($courseName, $table);</dt>
+<dd>
+
+<p>Checks the fields in the table in the mysql database and insures that they are the same as the ones specified by the databaseLayout</p>
+
+</dd>
+<dt>$CIchecker-&gt;checkCourseDirectories($courseName);</dt>
+<dd>
+
+<p>Checks the course directories to make sure they exist and have the correct permissions.</p>
+
+</dd>
+<dt>$CIchecker-&gt;updateCourseDirectories($courseName);</dt>
+<dd>
+
+<p>Creates some course directories automatically.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

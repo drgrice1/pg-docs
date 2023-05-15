@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::DB::Schema</title>
+</head>
+<body>
+<h1>WeBWorK::DB::Schema</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Record-Identifiers-and-Keys">Record Identifiers and Keys</a></li>
+    </ul>
+  </li>
+  <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+  <li><a href="#TABLE-ACCESS-METHODS">TABLE ACCESS METHODS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::DB::Schema - schema superclass (to hold documentation)</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>FIXME: write synopsis</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>FIXME: write description</p>
+
+<h2 id="Record-Identifiers-and-Keys">Record Identifiers and Keys</h2>
+
+<p>Several of the tables used in the WeBWorK database have records that are identified by the values of a set of fields, rather than by the value of a single field. Because of this, when identifying a record (in calls to the <code>list</code>, <code>exists</code>, <code>get</code>, and <code>delete</code> methods), one must specify a list of values rather than a single value. This is represented in the documentation for these methods by the expression <code>@keyparts</code>. The values in <code>@keyparts</code> correspond to the fields returned by the <code>KEYFIELDS</code> method of the table&#39;s record class. If an element of <code>@keyparts</code> is undefined, then the corresponding field is not used in the match. Some methods require all elements of <code>@keyparts</code> to be defined. This is noted below.</p>
+
+<p>A &quot;record key&quot;, as in the <code>list</code> method, is a reference to a list containing values which correspond to the the fields returned by the <code>KEYFIELDS</code> method of the table&#39;s record class.</p>
+
+<a href="#_podtop_"><h1 id="CONSTRUCTOR">CONSTRUCTOR</h1></a>
+
+<dl>
+
+<dt>new($db, $driver, $table, $record, $params, $engine)</dt>
+<dd>
+
+<p>Creates a schema interface for <code>$table</code>, using the driver interface provided by <code>$driver</code> and using the record class named in <code>$record</code>. If the <code>$driver</code> does not support the driver style needed by the schema, an exception is thrown. <code>$params</code> contains extra information needed by the schema and is schema dependent. <code>$db</code> is provided so that schemas can query other schemas.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="TABLE-ACCESS-METHODS">TABLE ACCESS METHODS</h1></a>
+
+<dl>
+
+<dt>count(@keyparts)</dt>
+<dd>
+
+<p>Returns the number of records matching @keyparts is found in the table.</p>
+
+</dd>
+<dt>list(@keyparts)</dt>
+<dd>
+
+<p>Returns a list containing the key of each record in the table that matches the values in <code>@keyparts</code>. Elements of <code>@keyparts</code> may be undefined.</p>
+
+</dd>
+<dt>exists(@keyparts)</dt>
+<dd>
+
+<p>Returns a boolean value representing whether one or more records that match the values in <code>@keyparts</code> exist in the table. Elements of <code>@keyparts</code> may be undefined.</p>
+
+</dd>
+<dt>add($Record)</dt>
+<dd>
+
+<p>Attempts to add <code>$Record</code> to the table. <code>$Record</code> must be an instance of the table&#39;s record class. Returns true on success and false on failure (for example, if the database couldn&#39;t be contacted). If a record with the same key exists, an exception is thrown.</p>
+
+</dd>
+<dt>get(@keyparts)</dt>
+<dd>
+
+<p>Attempts to retrieve the record matching <code>@keyparts</code> from the table. Returns an instance of the table&#39;s record class if there is a match. Returns undef if no record matches. All elements of <code>@keyparts</code> must be defined.</p>
+
+</dd>
+<dt>gets(@keypartsRefs)</dt>
+<dd>
+
+<p>Returns a list of records matching the keyparts refered to in each element of <code>@keypartsRef</code>. Each element of the returned list will contain either a record object (if there was a match) or the value <code>undef</code> (if there was no match). All elements of <code>@keyparts</code> must be defined.</p>
+
+</dd>
+<dt>put($Record)</dt>
+<dd>
+
+<p>Attempts to replace the record in the table that matches the key of $Record. Returns true on success and false on failure (for example, if the database couldn&#39;t be contacted). If no such record exists, an exception is thrown.</p>
+
+</dd>
+<dt>delete(@keyparts)</dt>
+<dd>
+
+<p>Attempts to delete the record or records in the table that match <code>@keyparts</code>. Returns true if the record(s) was successfully deleted or did not exist, and false if deletion failed. Elements of <code>@keyparts</code> may be undefined.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

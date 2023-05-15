@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>graph/VectorField2D.pl</title>
+</head>
+<body>
+<h1>graph/VectorField2D.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>VectorField2D.pl - Adds a vector field graph to a WWPlot (from PGgraphmacros.pl) graphobject.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a single macro which creates a vector field and adds it to a graphobject created using <code>init_graph</code> from PGgraphmacros.pl. Create a vector field by first creating a graphobject.</p>
+
+<pre><code>    loadMacros(&#39;PGML.pl&#39;, &#39;PGgraphmacros.pl&#39;, &#39;VectorField2D.pl&#39;);
+    $gr = init_graph($xmin, $ymin, $xmax, $ymax, axes =&gt; [0, 0], pixels =&gt; [500, 500]);</code></pre>
+
+<p>Then use the <code>VectorField2D(options)</code> macro to add the vector field <code>F = Fx i + Fy j</code> to the graph, where <code>Fx</code> and <code>Fy</code> are MathObject formulas in two variables (you may need to add the variables to the Context):</p>
+
+<pre><code>    Context()-&gt;variables-&gt;add(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;);
+    VectorField2D(
+        graphobject     =&gt; $gr,
+        Fx              =&gt; Formula(&#39;2xy&#39;),
+        Fy              =&gt; Formula(&#39;y^2 - x^2&#39;),
+        xvar            =&gt; &#39;x&#39;,
+        yvar            =&gt; &#39;y&#39;,
+        xmin            =&gt; -5,
+        xmax            =&gt; 5,
+        ymin            =&gt; -5,
+        ymax            =&gt; 5,
+        xsamples        =&gt; 10,
+        ysamples        =&gt; 10,
+        vectorcolor     =&gt; &#39;blue&#39;,
+        vectorscale     =&gt; 0.25,
+        vectorthickness =&gt; 2,
+        vectortiplength =&gt; 0.65,
+        vectortipwidth  =&gt; 0.08,
+        xavoid          =&gt; 0,
+        yavoid          =&gt; 0,
+    );</code></pre>
+
+<p>Add the following PGML to insert the image into the problem:</p>
+
+<pre><code>    [@ image(insertGraph($gr)) @]*</code></pre>
+
+<a href="#_podtop_"><h1 id="OPTIONS">OPTIONS</h1></a>
+
+<p>The options control the domain, vector density, and arrow style of the vector field.</p>
+
+<dl>
+
+<dt>graphobject</dt>
+<dd>
+
+<p>A reference to the graphobject to add the vector field to.</p>
+
+</dd>
+<dt>Fx / Fy</dt>
+<dd>
+
+<p>The x and y coordinate functions for vector field. These can either be a MathObject Formula using two variables, or a perl subroutine, such as <code>sub { my ($x, $y) = @_; return $x - $y; }</code>.</p>
+
+</dd>
+<dt>xvar / yvar</dt>
+<dd>
+
+<p>The name of the two variables used in the MathObjects Fx and Fy. Has no effect on perl functions.</p>
+
+</dd>
+<dt>xmin / xmax / ymin / ymax</dt>
+<dd>
+
+<p>The rectangular domain to plot the vector field inside of.</p>
+
+</dd>
+<dt>xsamples / ysamples</dt>
+<dd>
+
+<p>Defines the number of subrectangles to divide the domain into, which results in <code>xsamples + 1</code> by <code>ysamples + 1</code> vectors graphed at the grid intersections.</p>
+
+</dd>
+<dt>vectorcolor / vectorscale / vectorthickness / vectortipwidth / vectortiplength</dt>
+<dd>
+
+<p>These define the color and multiple scale factors which are used to compute the length of the vector arrow and size of the vector tip.</p>
+
+</dd>
+<dt>xavoid / yavoid</dt>
+<dd>
+
+<p>Defines a single point to skip when creating the vector field.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

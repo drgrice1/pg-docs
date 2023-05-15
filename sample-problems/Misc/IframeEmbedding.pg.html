@@ -47,7 +47,24 @@
 
 <div class="container">
 	<div class="row pb-3">
+		<h1>IframeEmbedding</h1>
+	</div>
+	<div class="row pb-3">
+		<div class="col">
 		Iframe embedding template
+		</div>
+		<div class="col">
+			<h2>POD for macro files</h2>
+			<ul>
+			
+					<li style="color: red">PGstandard.pl</li>
+			
+					<li style="color: red">PGML.pl</li>
+			
+					<li style="color: red">PGcourse.pl</li>
+			
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col header">
@@ -68,7 +85,7 @@
 				</button>
 				<pre><code class="language-perl">DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','PGcourse.pl');
 TEXT(beginproblem());
 
 
@@ -77,7 +94,7 @@ TEXT(beginproblem());
 </code></pre>
 				<div class="hidden-code" style="display: none"> DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','PGcourse.pl');
 TEXT(beginproblem());
 
 

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/MatrixUnits.pl</title>
+</head>
+<body>
+<h1>math/MatrixUnits.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>MatrixUnits.pl</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Generates unimodular n x n (n=2,3,4) MathObject matrices with real entries.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This macro provides some routines for generating n x n (n=2,3,4) MathObject matrices with real entries that have determinant in the group of units of the integers Z (i.e., are Z-invertible). A matrix <code>$M = GLnZ();</code> (for det = +1 or -1) or &lt;$M = SLnZ();&gt; (for det = -1) has all integer entries, is invertible, and its inverse has all integer entries. The matrix entries are intentionally chosen to be integers close to zero (so, if you want unimodular matrices with larger integer entries, you may want to copy the source code and modify it to suit your needs). The basic idea is to multiply several elementary matrices of determinant +1 or -1 together to get a unimodular matrix (although the code below accomplishes this by elementary row operations rather than by multiplication of elementary matrices).</p>
+
+<dl>
+
+<dt>To produce a determinant +1 or -1 MathObject matrix <code>$A</code>, use <code>$A = GL2Z();</code>, <code>$A = GL3Z();</code>, <code>$A = GL4Z();</code></dt>
+<dd>
+
+</dd>
+<dt>To produce a determinant +1 MathObject matrix <code>$A</code>, use <code>$A = SL2Z();</code>, <code>$A = SL3Z();</code>, <code>$A = SL4Z();</code></dt>
+<dd>
+
+</dd>
+<dt>For determinant +1 or -1 perl arrays, use <code>@a = GL2Z_perl();</code>, <code>@a = GL3Z_perl();</code>, <code>@a = GL4Z_perl();</code></dt>
+<dd>
+
+</dd>
+<dt>For determinant +1 perl arrays, use <code>@a = SL2Z_perl();</code>, <code>@a = SL3Z_perl();</code>, <code>@a = SL4Z_perl();</code></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>Note that the indexing on MathObject matrices starts at 1, while the indexing on perl arrays starts at 0, so that <code>$A-&lt;gt</code>element(1,1);&gt; corresponds to <code>$a[0][0];</code>. The perl arrays can be made into MathObject matrices by <code>$A = Matrix(\@a);</code>, and this is, in fact, what the <code>GLnZ()</code> and <code>SLnZ()</code> subroutines do for you. The perl versions <code>@a = GLnZ_perl()</code> and <code>@a = SLnZ_perl()</code> are useful if you want to have quick access to the matrix values (as perl reals stored in <code>@a</code>) without having to pull them out of a MathObject matrix via <code>@b = $A-&lt;gt</code>value;&gt; (in which case <code>@b</code> is an array of MathObject reals).</p>
+
+<p>Note: There is overlap between MatrixUnits.pl (written after MathObject matrices were created) and MatrixUnimodular.pl (written before MathObject matrices were created). MatrixUnimodular.pl was left unchanged to provide legacy support for existing PG files.</p>
+
+<a href="#_podtop_"><h1 id="AUTHORS">AUTHORS</h1></a>
+
+<p>Paul Pearson, Hope College, Department of Mathematics</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

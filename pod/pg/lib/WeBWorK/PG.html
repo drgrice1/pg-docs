@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::PG</title>
+</head>
+<body>
+<h1>WeBWorK::PG</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+  <li><a href="#RETURN-VALUE">RETURN VALUE</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>    $pg = WeBWorK::PG-&gt;new(
+        displayMode        =&gt; &#39;MathJax&#39;,            # (images|MathJax)
+        showHints          =&gt; 1,
+        showSolutions      =&gt; 0,
+        processAnswers     =&gt; 1,
+        isInstructor       =&gt; 1,
+        useMathQuill       =&gt; 1,
+        templateDirectory  =&gt; &#39;/opt/webwork/pg/&#39;,
+        problemSeed        =&gt; 1234,
+        inputs_ref         =&gt; $formFields,
+        sourceFilePath     =&gt;
+            &#39;/opt/webwork/libraries/webwork-open-problem-library/OpenProblemLibrary/Michigan/Chap8Sec4/Q21.pg&#39;
+
+    );
+
+    $translator       = $pg-&gt;{translator};          # WeBWorK::PG::Translator
+    $body             = $pg-&gt;{body_text};           # text string
+    $header           = $pg-&gt;{head_text};           # text string
+    $post_header_text = $pg-&gt;{post_header_text};    # text string
+    $answerHash       = $pg-&gt;{answers};             # WeBWorK::PG::AnswerHash
+    $result           = $pg-&gt;{result};              # hash reference
+    $state            = $pg-&gt;{state};               # hash reference
+    $errors           = $pg-&gt;{errors};              # text string
+    $warnings         = $pg-&gt;{warnings};            # text string
+    $flags            = $pg-&gt;{flags};               # hash reference
+    $pgcore           = $pg-&gt;{pgcore}               # PGcore</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>WeBWorK::PG is a module that provides a convenient API for rendering a PG problem.</p>
+
+<a href="#_podtop_"><h1 id="OPTIONS">OPTIONS</h1></a>
+
+<p>The constructor can be passed the following options. One of the r_source or sourceFilePath options described below must be provided. In addition, any of the translator environment variables may be passed as options in this argument. Furthermore, any keys in the passed hash not documented below will be copied into the translator environment.</p>
+
+<dl>
+
+<dt>r_source (reference to string)</dt>
+<dd>
+
+<p>The source of the pg problem to render provided as a reference to a string. If this is given it will be used for the problem source instead of the sourceFilePath</p>
+
+</dd>
+<dt>sourceFilePath (string)</dt>
+<dd>
+
+<p>Location of the pg problem file to render. It must either be provided with an absoute path, or a path relative to the given templateDirectory.</p>
+
+</dd>
+<dt>templateDirectory (string, default: &#39;&#39;)</dt>
+<dd>
+
+<p>Either a readable location containing the problem file and all static assets for the problem, or the empty string. WARNING: If this is the empty string then any static assets for the problem may not be found.</p>
+
+</dd>
+<dt>problemSeed (number, default: 1234)</dt>
+<dd>
+
+<p>Seed to use for the problem.</p>
+
+</dd>
+<dt>displayMode (string, default: &#39;MathJax&#39;)</dt>
+<dd>
+
+<p>The PG display mode to use, e.g., &#39;tex&#39;, &#39;plainText&#39;, &#39;images&#39;, &#39;MathJax&#39;, or &#39;PTX&#39;.</p>
+
+</dd>
+<dt>showHints (boolean, default: 1)</dt>
+<dd>
+
+<p>This determines if hints that may be encoded in the problem will be rendered.</p>
+
+</dd>
+<dt>showSolutions (boolean, default: 0)</dt>
+<dd>
+
+<p>This determines if solutionas that may be encoded in the problem will be rendered.</p>
+
+</dd>
+<dt>forceScaffoldsOpen (boolean, default: 0)</dt>
+<dd>
+
+<p>If set to 1, then all scaffolds will be allowed to be opened.</p>
+
+</dd>
+<dt>setOpen (boolean, default: 1)</dt>
+<dd>
+
+<p>Determines if the set containing the problem is open for the user to work. (This is only used by problemPanic.pl)</p>
+
+</dd>
+<dt>pastDue (boolean, default: 0)</dt>
+<dd>
+
+<p>Determines if the problem is past due. (This is only used by answerDiscussion.pl, problemPanic.pl, and problemRandomize.pl)</p>
+
+</dd>
+<dt>answersAvailable (boolean, default: 0)</dt>
+<dd>
+
+<p>Determines if the problem answers are available. (This is only used by scaffold.pl)</p>
+
+</dd>
+<dt>problemUUID (scalar, default: 0)</dt>
+<dd>
+
+<p>This is used to generate unique identifiers for resources. The caller should ensure that this is sufficiently unique for the purposes of the system. Generally that means it should be unique for each course, user, set, and problem number.</p>
+
+</dd>
+<dt>psvn (number, default: 1)</dt>
+<dd>
+
+<p>Problem set version number. This is also incorporated into the unique identifiers used for resources.</p>
+
+</dd>
+<dt>probNum (number, default: 1, deprecated)</dt>
+<dd>
+
+<p>Problem number. This will eventually be removed from pg.</p>
+
+</dd>
+<dt>refreshMath2img (boolean, default: 0)</dt>
+<dd>
+
+<p>If 1, force images created by math2img (in &quot;images&quot; mode) to be recreated.</p>
+
+</dd>
+<dt>processAnswers (boolean, default: 0)</dt>
+<dd>
+
+<p>If 1, call answer evaluators and graders.</p>
+
+</dd>
+<dt>isInstructor (boolean, default: 0)</dt>
+<dd>
+
+<p>Determines if the user is an instructor (certain restrictions are removed for these users).</p>
+
+</dd>
+<dt>inputs_ref (hash, default: {})</dt>
+<dd>
+
+<p>Hash containing all input values in the form containing the problem. Most importantly this contains answers.</p>
+
+</dd>
+<dt>ansEvalDefaults (hash, default: taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>This may contain the following keys (example values are shown)</p>
+
+<pre><code>    functAbsTolDefault: 0.001
+    functLLimitDefault: 0.0000001
+    functMaxConstantOfIntegration: 1E8
+    functNumOfPoints: 3
+    functRelPercentTolDefault: 0.1
+    functULimitDefault: 0.9999999
+    functVarDefault: x
+    functZeroLevelDefault: 1E-14
+    functZeroLevelTolDefault: 1E-12
+    numAbsTolDefault: 0.001
+    numFormatDefault: &#39;&#39;
+    numRelPercentTolDefault: 0.1
+    numZeroLevelDefault: 1E-14
+    numZeroLevelTolDefault: 1E-12
+    useBaseTenLog: 0
+    defaultDisplayMatrixStyle: &#39;[s]&#39; # left delimiter, middle line delimiters, right delimiter</code></pre>
+
+</dd>
+<dt>answerPrefix (string, default: &#39;&#39;)</dt>
+<dd>
+
+<p>A prefix to prepend to all answer labels. Note that other prefixes may be prepended in front of this one, so it is not safe to assume that it is at the beginning of all answer labels. For example, the parserMultiAnswer.pl macro does this. Also note that in the actual PGcore environment this is QUIZ_PREFIX.</p>
+
+</dd>
+<dt>grader (string or CODE, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>The default grader to use. This can be overridden by the problem.</p>
+
+</dd>
+<dt>useMathQuill, useMathView (boolean, defaults taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Determines which entry assist method to use. If useMathQuill is 1, then MathQuill will be used. Otherwise, if useMathView is 1, then MathView will be used. If both are 0, then basic html inputs will be used.</p>
+
+</dd>
+<dt>language (string, default: &#39;en&#39;)</dt>
+<dd>
+
+<p>The language for the problem.</p>
+
+</dd>
+<dt>language_subroutine (CODE, default: sub (@args) { return $args[0]; })</dt>
+<dd>
+
+<p>Language subroutine that will be used for translations (the maketext method).</p>
+
+</dd>
+<dt>macrosPath (array, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>An array of paths to search for macros that may be loaded by the problem.</p>
+
+</dd>
+<dt>htmlPath (array, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Paths to search for auxiliary html files. Note that this array may contain the special value of &#39;.&#39; which means the directory the problem file is contained in.</p>
+
+</dd>
+<dt>imagesPath (array, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Paths to search for auxiliarly image files. Note that this array may contain the special value of &#39;.&#39; which means the directory the problem file is contained in.</p>
+
+</dd>
+<dt>htmlDirectory (string, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Html directory that may contain additional static resources that may be used in problems. Usually the course&#39;s html directory.</p>
+
+</dd>
+<dt>htmlURL (string, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Public html address of the htmlDirectory above.</p>
+
+</dd>
+<dt>tempDirectory (string, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Location to place generated resources. This directory must be writable.</p>
+
+</dd>
+<dt>tempURL (string, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Public html address of the tempDirectory above.</p>
+
+</dd>
+<dt>localHelpURL (string, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>Public html address for the PG help files.</p>
+
+</dd>
+<dt>use_site_prefix (string, default: &#39;&#39;)</dt>
+<dd>
+
+<p>Site prefix prepended to image and video url&#39;s inserted into problems by the PGbasicmacros.pl methods &quot;image&quot; and &quot;video&quot;.</p>
+
+</dd>
+<dt>use_opaque_prefix (boolean, default: 0)</dt>
+<dd>
+
+<p>If set to 1, then &quot;%%IDPREFIX%%&quot; will be prepended to answer labels.</p>
+
+</dd>
+<dt>__files__ (hash default: default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>A hash that should contain key value pairs for the keys &#39;root&#39;, &#39;pg&#39;, and &#39;tmpl&#39;. These are used to shorten filenames in error messages.</p>
+
+</dd>
+<dt>specialPGEnvironmentVars (hash, default taken from WeBWorK::PG::Environment)</dt>
+<dd>
+
+<p>A hash that can contain any of the keys described int conf/pg_config.dist.yml.</p>
+
+</dd>
+<dt>debuggingOptions (hash, default: {})</dt>
+<dd>
+
+<p>A hash that may contain key value pairs for the keys show_resource_info, view_problem_debugging_info, show_pg_info, show_answer_hash_info, show_answer_group_info. The keys enable the things describe in the key name.</p>
+
+</dd>
+<dt>courseName (string, default: &#39;pg_local&#39;, deprecated)</dt>
+<dd>
+
+</dd>
+<dt>setNumber (number, default: 1, deprecated)</dt>
+<dd>
+
+</dd>
+<dt>studentLogin (string, default: &#39;pg_local&#39;, deprecated)</dt>
+<dd>
+
+</dd>
+<dt>studentName (string, default: &#39;pg_local&#39;, deprecated)</dt>
+<dd>
+
+</dd>
+<dt>studentID (string, default: &#39;pg_local&#39;, deprecated)</dt>
+<dd>
+
+<p>These options are still used in some places in PG (mostly by macros that will eventually be deprecated and removed), but eventually that will all be fixed and these will no longer be needed. Note that webwork2 still needs to pass the courseName so the relevant course values (course html directories and urls) can be optained from the WeBWorK::CourseEnvironment.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="RETURN-VALUE">RETURN VALUE</h1></a>
+
+<p>The <code>new</code> method returns a blessed hash reference containing the following fields. More information can be found in the documentation for WeBWorK::PG::Translator.</p>
+
+<dl>
+
+<dt>translator</dt>
+<dd>
+
+<p>The WeBWorK::PG::Translator object used to render the problem.</p>
+
+</dd>
+<dt>head_text</dt>
+<dd>
+
+<p>HTML code to be injected into the &lt;head&gt; tag of the web page containing the problem.</p>
+
+</dd>
+<dt>post_header_text</dt>
+<dd>
+
+<p>HTML code to be injected into the &lt;body&gt; tag before the form containing the problem.</p>
+
+</dd>
+<dt>body_text</dt>
+<dd>
+
+<p>HTML code to be inserted into the &lt;body&gt; tag of the web page to show the problem.</p>
+
+</dd>
+<dt>answers</dt>
+<dd>
+
+<p>An <code>AnswerHash</code> object containing submitted answers, and results of answer evaluation.</p>
+
+</dd>
+<dt>result</dt>
+<dd>
+
+<p>A hash containing the results of grading the problem.</p>
+
+</dd>
+<dt>state</dt>
+<dd>
+
+<p>A hash containing the problem state.</p>
+
+</dd>
+<dt>errors</dt>
+<dd>
+
+<p>A string containing any errors encountered while rendering the problem.</p>
+
+</dd>
+<dt>warnings</dt>
+<dd>
+
+<p>A string containing any warnings encountered while rendering the problem.</p>
+
+</dd>
+<dt>flags</dt>
+<dd>
+
+<p>A hash containing PG_flags (see the Translator docs).</p>
+
+</dd>
+<dt>pgcore</dt>
+<dd>
+
+<p>The PGcore object for the problem.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

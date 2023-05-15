@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserAssignment.pl</title>
+</head>
+<body>
+<h1>parsers/parserAssignment.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserAssignment.pl - Implements assignments to variables</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements an assignment operator that allows only a single variable reference on the left and any value on the right. You can use this to require students to enter things like</p>
+
+<pre><code>        y = 3x + 1</code></pre>
+
+<p>rather than making the &quot;y = &quot; part of the text of the question. This also allows you to ask for lists of assignments more easily.</p>
+
+<p>To use it, load the macro file, select the Context you want to use, add any variables you may need, and enable the assignment operator as in the following example:</p>
+
+<pre><code>        loadMacros(
+          &quot;PGstandard.pl&quot;,
+          &quot;MathObjects.pl&quot;,
+          &quot;parserAssignment.pl&quot;,
+        );
+
+        Context(&quot;Numeric&quot;)-&gt;variables-&gt;add(y=&gt;&#39;Real&#39;);
+        parser::Assignment-&gt;Allow;</code></pre>
+
+<p>Now you can use the equal sign in Formula() objects to create assignments.</p>
+
+<pre><code>        $f = Formula(&quot;y = 3x + 1&quot;);
+        ...
+        ANS($f-&gt;cmp);</code></pre>
+
+<p>The student will have to make an assignment to the same variable in order to get credit. For example, he or she could enter y = 1+3x to get credit for the answer above.</p>
+
+<p>The left-hand side of an assignment must be a single variable, so</p>
+
+<pre><code>        $f = Formula(&quot;3y = 2x&quot;);</code></pre>
+
+<p>will produce an error. The right-hand side can not include the variable being assigned on the left, so</p>
+
+<pre><code>        $f = Formula(&quot;x = 2x+1&quot;);</code></pre>
+
+<p>also is not allowed.</p>
+
+<p>You can produce lists of assignments just as easily:</p>
+
+<pre><code>        $f = Formula(&quot;y = 3x, y = 2x-1&quot;);</code></pre>
+
+<p>and the assignment can be of any type of MathObject. For example:</p>
+
+<pre><code>        Context(&quot;Vector&quot;)-&gt;variables-&gt;add(p=&gt;&#39;Vector3D&#39;);
+        parser::Assignment-&gt;Allow;
+
+        $f = Formula(&quot;p = &lt;1,2x,1-x&gt;&quot;);</code></pre>
+
+<p>To produce a constant assignment, use Compute(), as in:</p>
+
+<pre><code>        $p = Compute(&quot;p = &lt;1,2,3&gt;&quot;);</code></pre>
+
+<p>(in fact, Compute() could be used for in place of Formula() in the examples above as well, since it returns a Formula when the value is one).</p>
+
+<p>The left-hand side of an assignment can also be a function declaration, as in</p>
+
+<pre><code>        f(x) = 3x + 1</code></pre>
+
+<p>To allow this, use</p>
+
+<pre><code>        parser::Assignment-&gt;Function(&quot;f&quot;);</code></pre>
+
+<p>You can supply more than one function name if you want. E.g.,</p>
+
+<pre><code>        parser::Assignment-&gt;Function(&quot;f&quot;,&quot;g&quot;);</code></pre>
+
+<p>The number of variables for these functions is determined by the assignment itself, so after declaring f to be a function, you can use either</p>
+
+<pre><code>        f(x) = x+1
+or
+        f(x,y) = x^2 + y^2</code></pre>
+
+<p>provided the variables are defined in the current context.</p>
+
+<p>Type-checking between the student and correct answers is performed using the right-hand values of the assignment, and a warning message will be issued if the types are not compatible. The type of the variable on the left-hand side, however, is not checked.</p>
+
+<p>For function declarations, the name of the function and the order of the variables must match the professor&#39;s answer; however, the names of the variables don&#39;t have to match, as long as the function returns the same results for the same inputs. So</p>
+
+<pre><code>        f(x) = x + 1
+and
+        f(y) = y + 1</code></pre>
+
+<p>will be marked as equal.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

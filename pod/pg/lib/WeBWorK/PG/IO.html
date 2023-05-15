@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::PG::IO</title>
+</head>
+<body>
+<h1>WeBWorK::PG::IO</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::PG::IO - Functions used by WeBWorK::PG::Translator for file IO.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code> use WeBWorK::PG::IO;
+ my %functions_to_share = %WeBWorK::PG::IO::SHARE;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module defines several functions to be shared with a safe compartment by the PG translator. All exported methods are shared.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>includePGtext($string_ref)</dt>
+<dd>
+
+<p>This is used in processing some of the sample CAPA files and in creating aliases to redirect calls to duplicate problems so that they go to the original problem instead. It is called by includePGproblem.</p>
+
+<p>It reads and evaluates the string in the same way that the Translator evaluates the string in a PG file.</p>
+
+</dd>
+<dt>read_whole_problem_file($filePath)</dt>
+<dd>
+
+<p>Don&#39;t use for huge files. The file name will have .pg appended to it if it doesn&#39;t already end in .pg. Files may become double spaced.? Check the join below. This is used in importing additional .pg files as is done in the sample problems translated from CAPA. Returns a reference to a string containing the contents of the file.</p>
+
+</dd>
+<dt>convertPath($path)</dt>
+<dd>
+
+<p>Currently a no-op. Returns $path unmodified.</p>
+
+</dd>
+<dt>fileFromPath($path)</dt>
+<dd>
+
+<p>Returns the last segment of the path (i.e. the text after the last forward slash).</p>
+
+</dd>
+<dt>directoryFromPath($path)</dt>
+<dd>
+
+<p>Returns the initial segments of the of the path (i.e. the text up to the last forward slash).</p>
+
+</dd>
+<dt>createFile($fileName, $permission, $numgid)</dt>
+<dd>
+
+<p>Creates a file with the given name, permission bits, and group ID.</p>
+
+</dd>
+<dt>createDirectory($dirName, $permission, $numgid)</dt>
+<dd>
+
+<p>Creates a directory with the given name, permission bits, and group ID.</p>
+
+</dd>
+<dt>path_is_readable_subdir($path)</dt>
+<dd>
+
+<p>Checks to see if the given path is a sub directory of the directory the caller says we are allowed to read from.</p>
+
+</dd>
+<dt>curlCommand</dt>
+<dd>
+
+<pre><code>        curl -- path to curl defined in site.conf</code></pre>
+
+</dd>
+<dt>copyCommand</dt>
+<dd>
+
+<pre><code>        copyCommand -- path to cp defined in site.conf</code></pre>
+
+</dd>
+<dt>externalCommand</dt>
+<dd>
+
+<pre><code>        returns the path to a requested external command that is defined in site.conf</code></pre>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/bizarroArithmetic.pl</title>
+</head>
+<body>
+<h1>math/bizarroArithmetic.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>bizarroArithmetic.pl - Enables bizarro arithmetic where, for example, 1+1 does not equal 2; Useful for checking the form of an answer, as with factored polynomials and reduced radicals.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The point of this technique is to catch answers in unsimplified forms. A custom answer checker is generally used in which the student answer is first checked against the correct answer via regular arithmetic. Then one or more of the bizarro arithmetic flags should be set, and the two answers should be compared again.</p>
+
+<p>The bizarro arithmetic is basically defined as:</p>
+
+<pre><code>  a bizarro+ b = f(g(a) regular+ g(b))</code></pre>
+
+<p>where f and g are inverse functions defined on all of R, and are odd functions. There is also bizarro-, bizarro*, bizarro/, and bizarro^. f(x) = x^3+3x is a good choice for f. This has been extended below to a choice for f that works with complex numbers too.</p>
+
+<p>To enable the bizarro arithmetic operators, load this file with the macros, and then use any subset of:</p>
+
+<p>Context()-&gt;operators-&gt;set( &#39;+&#39; =&gt; {class =&gt; &#39;bizarro::BOP::add&#39;, isCommand =&gt; 1}, &#39;-&#39; =&gt; {class =&gt; &#39;bizarro::BOP::subtract&#39;, isCommand =&gt; 1}, &#39;*&#39; =&gt; {class =&gt; &#39;bizarro::BOP::multiply&#39;, isCommand =&gt; 1}, &#39; *&#39; =&gt; {class =&gt; &#39;bizarro::BOP::multiply&#39;, isCommand =&gt; 1}, &#39;* &#39; =&gt; {class =&gt; &#39;bizarro::BOP::multiply&#39;, isCommand =&gt; 1}, &#39;/&#39; =&gt; {class =&gt; &#39;bizarro::BOP::divide&#39;, isCommand =&gt; 1}, &#39; /&#39; =&gt; {class =&gt; &#39;bizarro::BOP::divide&#39;, isCommand =&gt; 1}, &#39;/ &#39; =&gt; {class =&gt; &#39;bizarro::BOP::divide&#39;, isCommand =&gt; 1}, &#39;//&#39; =&gt; {class =&gt; &#39;bizarro::BOP::divide&#39;, isCommand =&gt; 1}, &#39;**&#39; =&gt; {class =&gt; &#39;bizarro::BOP::power&#39;, isCommand =&gt; 1, perl=&gt;undef}, &#39;^&#39; =&gt; {class =&gt; &#39;bizarro::BOP::power&#39;, isCommand =&gt; 1, perl=&gt;undef}, &#39;u-&#39; =&gt; {class =&gt; &#39;bizarro::UOP::minus&#39;, isCommand =&gt; 1}, );</p>
+
+<p>At this point the arithmetic operators will still be behaving as normal. Turn on the bizarro arithmetic with:</p>
+
+<p>Context()-&gt;flags-&gt;set(bizarroAdd=&gt;1); Context()-&gt;flags-&gt;set(bizarroSub=&gt;1); Context()-&gt;flags-&gt;set(bizarroMul=&gt;1); Context()-&gt;flags-&gt;set(bizarroDiv=&gt;1); Context()-&gt;flags-&gt;set(bizarroPow=&gt;1); Context()-&gt;flags-&gt;set(bizarroNeg=&gt;1);</p>
+
+<p>Sample usage</p>
+
+<p>This will check if a student has simplified according to the rules of division, for example, assuming that $ans = Formula(&quot;2x^2&quot;),</p>
+
+<pre><code>         2 x^4/x^2</code></pre>
+
+<p>will be rejected, as will</p>
+
+<pre><code>       4/2 x^2</code></pre>
+
+<p>ANS($ans -&gt; cmp( checker=&gt;sub{ my ( $correct, $student, $ansHash ) = @_; return 0 if $ansHash-&gt;{isPreview} || $correct != $student; Context()-&gt;flags-&gt;set(bizarroDiv=&gt;1); delete $correct-&gt;{test_values}; delete $student-&gt;{test_values}; my $OK = ($correct == $student); Context()-&gt;flags-&gt;set(bizarroDiv=&gt;0); Value::Error(&quot;Your answer is equivalent to the correct answer, but not in the expected form. Maybe it needs to be simplified, factored, expanded, have its denominator rationalized, etc.&quot;) unless $OK; return $OK; }));</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextTrigDegrees.pl</title>
+</head>
+<body>
+<h1>contexts/contextTrigDegrees.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextTrigDegrees.pl - for trigonometric functions evaluated in degrees.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser context that redefines existing trigonometric functions from radians to degrees. The trigonometric functions can be used by the problem author and also by students if the answer checking is done by Parser. The latter is the main purpose of this file.</p>
+
+<p><b>Note:</b> By default, webwork problems evaluate trigonometric functions in radians. Problems which evaluate trigonometric functions in degrees should alert the student in their text.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        Context(&quot;TrigDegrees&quot;)
+        
+        $a = 60;
+        $b = Compute(&quot;cos($a)&quot;);
+        ANS($b-&gt;cmp);</code></pre>
+
+<a href="#_podtop_"><h1 id="AUTHORS">AUTHORS</h1></a>
+
+<p>Davide Cervone (Union College, Schenectady, New York, USA)</p>
+
+<p>Paul Pearson (Hope College, Holland, Michigan, USA)</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

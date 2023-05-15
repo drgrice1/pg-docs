@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::CourseEnvironment</title>
+</head>
+<body>
+<h1>WeBWorK::CourseEnvironment</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#CONSTRUCTION">CONSTRUCTION</a></li>
+  <li><a href="#ACCESS">ACCESS</a></li>
+  <li><a href="#EXPERIMENTAL-ACCESS-METHODS">EXPERIMENTAL ACCESS METHODS</a>
+    <ul>
+      <li><a href="#STATUS-METHODS">STATUS METHODS</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::CourseEnvironment - Read configuration information from defaults.config and course.conf files.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code> use WeBWorK::CourseEnvironment;
+ $ce = WeBWorK::CourseEnvironment-&gt;new({
+        webwork_url         =&gt; &quot;/webwork2&quot;,
+        webwork_dir         =&gt; &quot;/opt/webwork2&quot;,
+        pg_dir              =&gt; &quot;/opt/pg&quot;,
+        webwork_htdocs_url  =&gt; &quot;/webwork2_files&quot;,
+        webwork_htdocs_dir  =&gt; &quot;/opt/webwork2/htdocs&quot;,
+        webwork_courses_url =&gt; &quot;/webwork2_course_files&quot;,
+        webwork_courses_dir =&gt; &quot;/opt/webwork2/courses&quot;,
+        courseName          =&gt; &quot;name_of_course&quot;,
+ });
+
+ my $timeout = $courseEnv-&gt;{sessionKeyTimeout};
+ my $mode    = $courseEnv-&gt;{pg}-&gt;{options}-&gt;{displayMode};
+ # etc...</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The WeBWorK::CourseEnvironment module reads the system-wide <i>defaults.config</i> and course-specific <i>course.conf</i> files used by WeBWorK to calculate and store settings needed throughout the system. The <i>.conf</i> files are perl source files that can contain any code allowed under the default safe compartment opset. After evaluation of both files, any package variables are copied out of the safe compartment into a hash. This hash becomes the course environment.</p>
+
+<a href="#_podtop_"><h1 id="CONSTRUCTION">CONSTRUCTION</h1></a>
+
+<dl>
+
+<dt>new(HASHREF)</dt>
+<dd>
+
+<p>HASHREF is a reference to a hash containing scalar variables with which to seed the course environment. It must contain at least a value for the key <code>webworkRoot</code>.</p>
+
+<p>The <code>new</code> method finds the file <i>conf/defaults.config</i> relative to the given <code>webwork_dir</code> directory. After reading this file, it uses the <code>$courseFiles{environment}</code> variable, if present, to locate the course environment file. If found, the file is read and added to the environment.</p>
+
+</dd>
+<dt>new(ROOT URLROOT PGROOT COURSENAME)</dt>
+<dd>
+
+<p>A deprecated form of the constructor in which four seed variables are given explicitly: <code>webwork_dir</code>, <code>webwork_url</code>, <code>pg_dir</code>, and <code>courseName</code>.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="ACCESS">ACCESS</h1></a>
+
+<p>There are no formal accessor methods. However, since the course environemnt is a hash of hashes and arrays, is exists as the self hash of an instance variable:</p>
+
+<pre><code>        $ce-&gt;{someKey}{someOtherKey};</code></pre>
+
+<a href="#_podtop_"><h1 id="EXPERIMENTAL-ACCESS-METHODS">EXPERIMENTAL ACCESS METHODS</h1></a>
+
+<p>This is an experiment in extending CourseEnvironment to know a little more about its contents, and perform useful operations for me.</p>
+
+<p>There is a set of operations that require certain data from the course environment. Most of these are un Utils.pm. I&#39;ve been forced to pass $ce into them, so that they can get their data out. But some things are so intrinsically linked to the course environment that they might as well be methods in this class.</p>
+
+<h2 id="STATUS-METHODS">STATUS METHODS</h2>
+
+<dl>
+
+<dt>status_abbrev_to_name($status_abbrev)</dt>
+<dd>
+
+<p>Given the abbreviation for a status, return the name. Returns undef if the abbreviation is not found.</p>
+
+</dd>
+<dt>status_name_to_abbrevs($status_name)</dt>
+<dd>
+
+<p>Returns the list of abbreviations for a given status. Returns an empty list if the status is not found.</p>
+
+</dd>
+<dt>status_has_behavior($status_name, $behavior)</dt>
+<dd>
+
+<p>Return true if $status_name lists $behavior.</p>
+
+</dd>
+<dt>status_abbrev_has_behavior($status_abbrev, $behavior)</dt>
+<dd>
+
+<p>Return true if the status abbreviated by $status_abbrev lists $behavior.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextRationalFunction.pl</title>
+</head>
+<body>
+<h1>contexts/contextRationalFunction.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextRationalFunction.pl - Only allow rational functions (and their products and powers)</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Implements a context in which students can only enter rational functions, with some control over whether a single division is allowed, or whether products of rational functions are allowed.</p>
+
+<p>Select the context using:</p>
+
+<pre><code>        Context(&quot;RationalFunction&quot;);</code></pre>
+
+<p>The RationalFunction context supports all the flags of the PolynomialFactors context, except for strictDivision, since rational functions allow division of polynomials.</p>
+
+<p>In addition, there is a singleQuotients flag that controls whether products of rational functions are allowed or not. By default, they are allowed, but you can set this flag to 1 in order to force the student answer to be as a single fraction.</p>
+
+<p>Finally, there is also a strict context that does not allow operations even within the coefficients. Select it using:</p>
+
+<pre><code>        Context(&quot;RationalFunction-Strict&quot;);</code></pre>
+
+<p>In addition to disallowing operations within the coefficients, this context does not reduce constant operations (since they are not allowed), and sets the singlePowers, singleFactors, singleQuotients, and stricPowers flags automatically. In addition, it disables all the functions, though they can be re-enabled, if needed.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

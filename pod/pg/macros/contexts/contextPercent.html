@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextPercent.pl</title>
+</head>
+<body>
+<h1>contexts/contextPercent.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p><i>contextPercent.pl</i> - Context for entering percentages using <code>%</code></p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a context in which students can enter percentage values using <code>%</code>. There are a number of options that allow you to control the number of decimal places, and whether mathematical operations are allowed.</p>
+
+<p>To use the context, put</p>
+
+<pre><code>        loadMacros(&quot;contextPercent.pl&quot;);</code></pre>
+
+<p>at the top of your problem file, and then issue the</p>
+
+<pre><code>        Context(&quot;Percent&quot;);</code></pre>
+
+<p>command to select the context. To create a Percent value, use</p>
+
+<pre><code>        $m = Compute(&quot;10%&quot;);</code></pre>
+
+<p>or</p>
+
+<pre><code>        $m = Percent(.1);</code></pre>
+
+<p>and so on. Both of these produce equivalent values (10%).</p>
+
+<p>There are also three limited contexts that can be obtained using one of the following:</p>
+
+<pre><code>        Context(&quot;LimitedPercent&quot;);
+        Context(&quot;LimitedPercent-strict&quot;);
+        Context(&quot;Percent-strict&quot;);</code></pre>
+
+<p>The <code>Percent</code> context allows you to use percentages rather freely within an expression. For example</p>
+
+<pre><code>        Compute(&quot;10% + 20%&quot;);</code></pre>
+
+<p>would produce the same result as <code>Compute(&quot;30%&quot;)</code>, and so would either of</p>
+
+<pre><code>        Compute(&quot;10% + .2&quot;);
+        Compute(&quot;(5+5)% + (2^2*ln(e**5))%&quot;);</code></pre>
+
+<p>In this way, <code>n%</code> is treated essentially as <code>(n/100)</code>.</p>
+
+<p>You can enforce more restrictive rules using the <code>LimitedPercent</code> or <code>LimitedPercent-strict</code> contexts. The first of these allows operations within the number that preceeds the percent sign, but does not allow you to combine percentages with real numbers or other percentages. In this way, <code>(5+5)%</code> is legal, but <code>5% + 5%</code> is not.</p>
+
+<p>The <code>LimitedPercent-strict</code> context disallows all computations, and only allows you to enter percentages as a single numeric constant followed by a percent sign.</p>
+
+<p>Finally, the <code>Percent-strict</code> context allows you to combine percent values, but the numeric part of the percent must be a constant, not an expression. For example, <code>10% + 5%</code> is allowed, but not <code>(10+5)%</code>.</p>
+
+<p>As with all MathObjects, you obtain an answer checker for a Percent object via the <code>cmp</code> method, e.g.,</p>
+
+<pre><code>        ANS($m-&gt;cmp);</code></pre>
+
+<p>There are a number of options that you can supply to control the details of the answer checker, listed below. These can also be set as flags within the Context so that they affect all Percent objects that you create. For example,</p>
+
+<pre><code>        ANS($m-&gt;cmp(forceDecimals=&gt;1));</code></pre>
+
+<p>or</p>
+
+<pre><code>        Context()-&gt;flags-&gt;set(forceDecimals =&gt; 1);
+        ANS($m-&gt;cmp)</code></pre>
+
+<p>would both produce answer checkers for <code>$m</code> where the student would have to enter decimals that include any trailing zeros.</p>
+
+<dl>
+
+<dt><code><span style="white-space: nowrap;">decimalPlaces =&gt; 1</span></code></dt>
+<dd>
+
+<p>This controls the number of decimal places to use in output of Percent objects, and the number that a student will be required to enter (when the appropriate flags are given, as described below). The <code>tolerance</code> is set by default to be <code>.0005</code>, so if you change the number of decimal places, you should change the <code>tolerance</code> to correspond to it (two more zeros than <code>decimalPlaces</code>). For example</p>
+
+<pre><code>        Context()-&gt;flags-&gt;set(
+          decimalPlaces =&gt; 2,
+          tolerance =&gt; .00005,
+        );</code></pre>
+
+<p>The default value is 1 decimal place.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">forceDecimals =&gt; 0</span></code></dt>
+<dd>
+
+<p>This value controls whether students are forced to enter the full number of decimals, even if there are trailing zeros. When set to 0 (the default for the <code>Percent</code>, <code>Percent-strict</code>, and <code>LimitedPercent</code> contexts), trailing zeros may be left off, so <code>Compute(&quot;10.0%&quot;)</code> could be entered as just <code>10%</code> by a student. When set to 1 (the default for the <code>LimitedPercent-strict</code> context), if <code>decimalPlaces</code> is 2, then <code>Compute(&quot;10.00%&quot;)</code> would require the student to enter <code>10.00%</code> rather than <code>10%</code> or <code>10.0%</code>. It really only makes sense to set this in the <code>LimitedPercent-strict</code> context, since in the other two, percent values can be computed, and so the number of decimal places is not really known.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">noExtraDecimals =&gt; 0</span></code></dt>
+<dd>
+
+<p>This determines whether students are allowed to enter decimals beyond the number given by the <code>decimalPlaces</code> flag. If set to 0 (the default for the <code>Percent</code>, <code>Percent-strict</code>, and <code>LimitedPercent</code> contexts), any number of decimals are allowed (but the <code>tolerance</code> determines what values are meaningfull), while if set to 1 (the default for the <code>LimitedPercent-strict</code> context), students are not allowed to enter more than the required number of decimals and receive a warning if they do.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">trimTrailingZeros =&gt; 1</span></code></dt>
+<dd>
+
+<p>This determines whether the output for Percent objects will have trailing zeros removed. When set to 1 (the default for the <code>Percent</code>, <code>Percent-strict</code>, and <code>LimitedPercent</code> contexts), if <code>decimalPlaces</code> is 2, then <code>10.00%</code> will display as <code>10%</code> and <code>10.30%</code> will display as <code>10.3%</code>. When set to 0 (the default for <code>LimitedPercent-strict</code>), trailing zeros will be retained, so the output will always have exactly <code>decimalPlaces</code> decimal values, even if they are zero.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">promoteReals =&gt; 1</span></code></dt>
+<dd>
+
+<p>This determines whether real numbers can be combined and compared with percentages. When set to 1 (the default for the <code>Percent</code> context), students could enter <code>Compute(&quot;10%&quot;)</code> as either <code>10%</code> or <code>.1</code> or <code><span style="white-space: nowrap;">5% + .05</span></code>, while when set to 0 (the default for the Limited and strict contexts), students must enter percentages using the percent symbol (<code>%</code>).</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">strictPercent =&gt; 0</span></code></dt>
+<dd>
+
+<p>This controls whether the number preceding a percent sign can be a computation or whether it must be a numeric constant. When set to 0 (the default for the <code>Percent</code> and <code>LimitedPercent</code> contexts), students can use formulas to create a percentage value, e.g., <code><span style="white-space: nowrap;">(5 + 10)%</span></code> for <code>15%</code>. When set to 1 (the default for the <code>Percent-strict</code> and <code>LimitedPercent-strict</code> context), only numeric constants can be followed by the percent sign. Note that setting this flag to 1 also requires that you set <code>reduceConstants</code> and <code>reduceConstantFunctions</code> to 0 as well.</p>
+
+</dd>
+</dl>
+
+<p>The default <code>tolerance</code> of .0005 works properly only if your original percent values have no more than 1 decimal place. If you were to do</p>
+
+<pre><code>        $m = Compute(&quot;10.15%&quot;);</code></pre>
+
+<p>for example, then $m would print as <code>10.2%</code>, but neither a student answer of <code>10.1%</code> nor of <code>10.2%</code> would be marked correct. That is because neither of these are less than .0005 away from the correct answer of <code>10.15%</code> (remember that <code>10.15%</code> is .1015). If you create percentages that have more decimal places than the usual one place, you may want to round or truncate them. Percent objects have two methods for accomplishing this: <code>round()</code> and <code>truncate()</code>, which produce rounded or truncated copies of the original Percent object:</p>
+
+<pre><code>        $m = Compute(&quot;34.127%&quot;)-&gt;round;    # produces 34.13%
+        $m = Compute(&quot;34.127%&quot;)-&gt;truncate; # produces 34.12%</code></pre>
+
+<p>These are particularly helpful if you are producing percentages via computations.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>core/problemRandomize.pl</title>
+</head>
+<body>
+<h1>core/problemRandomize.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>problemRandomize.pl - Reseed a problem so that students can do additional versions for more practice.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a mechanism for allowing a problem file to be &quot;reseeded&quot; so that the student can do additional versions of the problem. You can control when the reseed message is available, and what style to use for it.</p>
+
+<p>To use the problemRandimize library, use</p>
+
+<pre><code>        loadMacros(&quot;problemRandomize.pl&quot;);</code></pre>
+
+<p>at the top of your problem file, and then create a problemRandomize object with</p>
+
+<pre><code>        $pr = ProblemRandomize(options);</code></pre>
+
+<p>where &#39;$pr&#39; is the name of the variable you will use to refer to the randomized problem (if needed), and &#39;options&#39; can include:</p>
+
+<dl>
+
+<dt><code><span style="white-space: nowrap;">when =&gt; type</span></code></dt>
+<dd>
+
+<p>Specifies the condition on which reseeding the problem is allowed. The choices include:</p>
+
+<ul>
+
+<li><p><code>Correct</code> - only when the problem has been answered correctly.</p>
+
+</li>
+<li><p><code>Always</code> - reseeding is always allowed.</p>
+
+</li>
+</ul>
+
+<p>Default: &quot;Correct&quot;</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">onlyAfterDue =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>Specifies if the reseed option is only allowed after the due date has passed. Default: 1</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">style =&gt; type</span></code></dt>
+<dd>
+
+<p>Determines the type of interaction needed to reseed the problem. Types include:</p>
+
+<ul>
+
+<li><p><code>Button</code> - a button.</p>
+
+</li>
+<li><p><code>Checkbox</code> - a checkbox plus pressing submit.</p>
+
+</li>
+<li><p><code>Input</code> - an input box where the seed can be set explicitly.</p>
+
+</li>
+<li><p><code>HTML</code> - the HTML is given explicitly via the &quot;label&quot; option below.</p>
+
+</li>
+</ul>
+
+<p>Default: &quot;Button&quot;</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">label =&gt; &quot;text&quot;</span></code></dt>
+<dd>
+
+<p>Specifies the text used for the button name, checkbox label, input box label, or raw HTML used for the reseed mechanism.</p>
+
+</dd>
+</dl>
+
+<p>The problemRandomize library installs a special grader that handles determining when the reseed option will be available. It also redefines install_problem_grader so that it will not overwrite the one installed by the library (it is stored so that it can be called internally by the problemRandomize library&#39;s grader).</p>
+
+<p>Note that the problem will store the new problem seed only if the student can submit saved answers (i.e., only before the due date). After the due date, the student can get new versions, but the problem will revert to the original version when they come back to the problem later. Since the default is only to allow reseeding afer the due date, the reseeding will not be sticky by default. Hardcopy ALWAYS produces the original version of the problem, regardless of the seed saved by the student.</p>
+
+<p>Examples:</p>
+
+<pre><code>        ProblemRandomize();                               # use all defaults
+        ProblemRandomize(when=&gt;&quot;Always&quot;);                 # always can reseed (after due date)
+        ProblemRandomize(onlyAfterDue=&gt;0);                # can reseed whenever correct
+        ProblemRandomize(when=&gt;&quot;always&quot;,onlyAfterDue=&gt;0); # always can reseed
+        ProblemRandomize(style=&gt;&quot;Input&quot;);                 # use an input box to set the seed</code></pre>
+
+<p>For problems that include &quot;PGcourse.pl&quot; in their loadMacros() calls, you can use that file to provide reseed buttons for ALL problems simply by including</p>
+
+<pre><code>        loadMacros(&quot;problemRandomize.pl&quot;);
+        ProblemRandomize();</code></pre>
+
+<p>in PGcourse.pl. You can make the ProblemRandomize() be dependent on the set number or the set or the login ID or whatever. For example</p>
+
+<pre><code>        loadMacros(&quot;problemRandomize.pl&quot;);
+        ProblemRandomize(when=&gt;&quot;always&quot;,onlyAfterDue=&gt;0,style=&gt;&quot;Input&quot;)
+                if $studentLogin eq &quot;dpvc&quot;;</code></pre>
+
+<p>would enable reseeding at any time for the user called &quot;dpvc&quot; (presumably a professor). You can test $probNum and $setNumber to make reseeding available only for specific sets or problems within a set.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils</title>
+</head>
+<body>
+<h1>WeBWorK::Utils</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a>
+    <ul>
+      <li><a href="#Filesystem-interaction">Filesystem interaction</a></li>
+      <li><a href="#Date-time-processing">Date/time processing</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils - useful utilities used by other WeBWorK modules.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<h2 id="Filesystem-interaction">Filesystem interaction</h2>
+
+<dl>
+
+<dt>@matches = listFilesRecusive($dir, $match_qr, $prune_qr, $match_full, $prune_full)</dt>
+<dd>
+
+<p>Traverses the directory tree rooted at $dir, returning a list of files, named pipes, and sockets matching the regular expression $match_qr. Directories matching the regular expression $prune_qr are not visited.</p>
+
+<p>$match_full and $prune_full are boolean values that indicate whether $match_qr and $prune_qr, respectively, should be applied to the bare directory entry (false) or to the path to the directory entry relative to $dir.</p>
+
+<p>@matches is a list of paths relative to $dir.</p>
+
+</dd>
+<dt>path_is_subdir($path, $dir, $allow_relative)</dt>
+<dd>
+
+<p>Ensures that $path refers to a location &quot;inside&quot; $dir. If $allow_relative is true and $path is not absoulte, it is assumed to be relative to $dir.</p>
+
+<p>The method of checking is rather rudimentary at the moment. First, upreferences (&quot;..&quot;) are disallowed, in $path, then it is checked to make sure that some prefix of it matches $dir.</p>
+
+<p>If either of these checks fails, a false value is returned. Otherwise, a true value is returned.</p>
+
+</dd>
+</dl>
+
+<h2 id="Date-time-processing">Date/time processing</h2>
+
+<dl>
+
+<dt>$dateTime = parseDateTime($string, $display_tz)</dt>
+<dd>
+
+<p>Parses $string as a datetime. If $display_tz is given, $string is assumed to be in that timezone. Otherwise, the server&#39;s timezone is used. The result, $dateTime, is an integer UNIX datetime (epoch) in the server&#39;s timezone.</p>
+
+</dd>
+<dt>$string = formatDateTime($dateTime, $display_tz, $format_string, $locale)</dt>
+<dd>
+
+<p>Formats the UNIX datetime $dateTime in the custom format provided by $format_string. If $format_string is not provided, the standard WeBWorK datetime format is used. $dateTime is assumed to be in the server&#39;s time zone. If $display_tz is given, the datetime is converted from the server&#39;s timezone to the timezone specified. If $format_string is a method of the $dt-&gt;locale instance, then format_cldr is used, and otherwise strftime is used. The available patterns for $format_string can be found in the documentation for the perl DateTime package under the heading of strftime Patterns. The available methods for the $dt-&gt;locale instance are documented at <a href="https://metacpan.org/pod/DateTime::Locale::FromData">https://metacpan.org/pod/DateTime::Locale::FromData</a>. $dateTime is assumed to be in the server&#39;s time zone. If $display_tz is given, the datetime is converted from the server&#39;s timezone to the timezone specified. If $locale is provided, the string returned will be in the format of that locale, which is useful for automatically translating things like days of the week and month names. If $locale is not provided, perl defaults to en_US.</p>
+
+</dd>
+<dt>$string = textDateTime($string_or_dateTime)</dt>
+<dd>
+
+<p>Accepts a UNIX datetime or a formatted string, returns a formatted string.</p>
+
+</dd>
+<dt>$dateTIme = intDateTime($string_or_dateTime)</dt>
+<dd>
+
+<p>Accepts a UNIX datetime or a formatted string, returns a UNIX datetime.</p>
+
+</dd>
+<dt>verify_timezone($display_tz)</dt>
+<dd>
+
+<p>If $display_tz is not a legal time zone then replace it with America/New_York and issue warning.</p>
+
+</dd>
+<dt>$timeinsec = timeToSec($time)</dt>
+<dd>
+
+<p>Makes a stab at converting a time (with a possible unit) into a number of seconds.</p>
+
+</dd>
+<dt>before($time, $now)</dt>
+<dd>
+
+<p>True if $now is less than $time. If $now is not specified, the value of time() is used.</p>
+
+</dd>
+<dt>after($time, $now)</dt>
+<dd>
+
+<p>True if $now is greater than $time. If $now is not specified, the value of time() is used.</p>
+
+</dd>
+<dt>between($start, $end, $now)</dt>
+<dd>
+
+<p>True if $now is greater than or equal to $start and less than or equal to $end. If $now is not specified, the value of time() is used.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>core/RserveClient.pl</title>
+</head>
+<body>
+<h1>core/RserveClient.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#MACROS">MACROS</a></li>
+  <li><a href="#DEPENDENCIES">DEPENDENCIES</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>RserveClient.pl - Macros for evaluating R code on an Rserve server</p>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>    loadMacros(&#39;RserveClient.pl&#39;);
+    
+    rserve_start();
+    my @rnorm = rserve_eval(&quot;rnorm(15, mean=$m, sd=$sd)&quot;);
+    rserve_eval(data(stackloss));
+    my @coeff = rserve_eval(&#39;lm(stack.loss ~ stack.x, stackloss)$coeff&#39;);
+    rserve_finish();</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The macros in this file provide access to facilities of <a href="http://www.r-project.org">R statistical computing environment</a>, optionally located on another server, by using the <a href="http://www.rforge.net/Rserve/">Rserve</a> protocol.</p>
+
+<p><b>IMPORTANT:</b> Before you can use these macros, you will need to configure the location of your Rserve host by adding it to <code>$pg{specialPGEnvironmentVars}{Rserve}{host}</code>, for instance by appending the following line to <i>webwork2/conf/localOverrides.conf</i>:</p>
+
+<pre><code>    $pg{specialPGEnvironmentVars}{Rserve} = {host =&gt; &quot;localhost&quot;};</code></pre>
+
+<p>Without this configuration in place, Rserve macros will only print out a warning about missing configuration and return <code>undef</code>.</p>
+
+<a href="#_podtop_"><h1 id="MACROS">MACROS</h1></a>
+
+<p>The macros in this file set up a connection to the R server and pass a string parameter to R for evaluation. The resulting vector is returned as a perl array object.</p>
+
+<dl>
+
+<dt>rserve_eval REXPR</dt>
+<dd>
+
+<p>Evaluates an R expression, given as text string in REXPR, on the <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a Perl representation of the <a href="https://metacpan.org/pod/Statistics::R::REXP">Statistics::R::REXP</a> object. Multiple calls within the same problem share the R session and the object workspace.</p>
+
+</dd>
+<dt>rserve_query</dt>
+<dd>
+
+<p>Evaluates an R expression, given as text string in REXPR, in a single-use session on the <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a Perl representation of the <a href="https://metacpan.org/pod/Statistics::R::REXP">Statistics::R::REXP</a> object.</p>
+
+<p>This function is different from <code>rserve_eval</code> in that each call is completely self-enclosed and its R session is discarded after it returns.</p>
+
+</dd>
+<dt>rserve_start, rserve_finish</dt>
+<dd>
+
+<p>Start up and close the current connection to the Rserve server. In normal use, these functions are completely optional because the first call to <code>rserve_eval</code> will call start the session if one is not already open. Similarly, the current session will be closed in its destructor when the current question goes out of scope.</p>
+
+<p>Other than backward compatibility, the only reason for using these functions is to start a new clean session within a single problem, which shouldn&#39;t be a common occurrence.</p>
+
+</dd>
+<dt>rserve_start_plot [IMG_TYPE, [WIDTH, HEIGHT]]</dt>
+<dd>
+
+<p>Opens a new R graphics device to capture subsequent graphics output in a temporary file on the R server. IMG_TYPE can be &#39;png&#39;, &#39;jpg&#39;, or &#39;pdf&#39;, with &#39;png&#39; as the default. If left unspecified, WIDTH and HEIGHT, will use the R graphics device&#39;s default size. Returns the name of the remote file.</p>
+
+</dd>
+<dt>rserve_finish_plot REMOTE_NAME</dt>
+<dd>
+
+<p>Closes the R graphics capture to file REMOTE_NAME, transfers the file to WebWork&#39;s temporary file area, and returns the name of the local file that can then be used by the image macro.</p>
+
+</dd>
+<dt>rserve_get_file REMOTE_NAME, [LOCAL_NAME]</dt>
+<dd>
+
+<p>Transfer the file REMOTE_NAME from the R server to WebWork&#39;s temporary file area, and returns the name of the local file that can then be used by the <code>htmlLink</code> macro. If LOCAL_NAME is not specified, the filename portion of the REMOTE_NAME is used.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="DEPENDENCIES">DEPENDENCIES</h1></a>
+
+<p>Requires perl 5.010 or newer and CPAN module Statistics::R::IO, which has to be loaded in WebWork&#39;s Safe compartment by adding it to ${pg}{modules}.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

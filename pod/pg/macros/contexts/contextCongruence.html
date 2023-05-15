@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextCongruence.pl</title>
+</head>
+<body>
+<h1>contexts/contextCongruence.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+</ul>
+
+<p><code>Context(&quot;Congruence&quot;)</code> - Provides contexts that allow the entry of congruence solutions</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>These contexts allow you to enter congruence solutions. Either the general solution or all possible solutions can be accepted based on settings.</p>
+
+<p>There are three contexts included here: <code>Context(&quot;Congruence&quot;)</code>, which allows both types of solutions, <code>Context(&quot;Congruence-General-Solution&quot;)</code>, which requires the general solution, and <code>Context(&quot;Congruence-All-Solutions&quot;)</code>, which requires all solutions to be entered.</p>
+
+<p>Congruences must be created with three paramters (a, b, m) from ax &equiv; b (mod m).</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        loadMacros(&quot;contextCongruence.pl&quot;);
+        
+        Context(&quot;Congruence&quot;);
+
+  ax &equiv; b (mod m)
+  can initialize with Congruence(a, b, m);
+
+  #ex: 15x &equiv; 10 (mod 25)
+        $C1 = Congruence(15, 10, 25); 
+  $general_answer = Compute(&quot;4+5k&quot;);
+  $all_answers = Compute(&quot;4+25k,9+25k,14+25k,19+25k,24+25k&quot;);
+  $all_answers_diff_order = Compute(&quot;9+25k,4+25k,14+25k,19+25k,24+25k&quot;);
+
+  $C1-&gt;compare($general_answer); # is true
+  $C1-&gt;compare($all_answers); # is true
+  $C1-&gt;compare($all_answers_diff_order); # is true
+
+  Can an force general solution only with
+
+        Context()-&gt;flags-&gt;set(requireGeneralSolution =&gt; 1);
+  $C1-&gt;compare($general_answer); # is true
+  $C1-&gt;compare($all_answers); # is false
+
+
+  Can an force all solutions only with
+
+        Context()-&gt;flags-&gt;set(requireAllSolutions =&gt; 1);
+  $C1-&gt;compare($general_answer); # is false
+  $C1-&gt;compare($all_answers); # is true
+
+  Students can enter &#39;none&#39; when there is no solution
+  #ex: 15x &equiv; 10 (mod 24)
+        $C2 = Congruence(15, 10, 24); 
+  $none = Compute(&quot;None&quot;);
+  $n = Compute(&quot;n&quot;);
+
+  $C2-&gt;compare($none); # is true
+  $C2-&gt;compare($n); # is true
+  $C1-&gt;compare($none); # is false</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/VectorListCheckers.pl</title>
+</head>
+<body>
+<h1>math/VectorListCheckers.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>VectorListCheckers.pl</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Provides subroutines for answer checking lists MathObjects vectors with real entries.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>First, load the <code>VectorListCheckers.pl</code> macro file.</p>
+
+<dl>
+
+<dt><code>loadMacros(&quot;PGstandard.pl&quot;,&quot;MathObjects.pl&quot;,&quot;VectorListCheckers.pl&quot;);</code></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>For a MathObject list of MathObject vectors, the way to use the answer checkers is the same as using a custom answer checker inside of <code>cmp(checker=&lt;gt</code>~~&amp;name_of_answer_checker_subroutine)&gt; such as</p>
+
+<dl>
+
+<dt><code>ANS( List(ColumnVector(1,0,0),ColumnVector(0,1,0))-&lt;gt</code>cmp( checker=&lt;gt&gt;~~&amp;basis_checker_list_of_vectors ) );&gt;</dt>
+<dd>
+
+</dd>
+<dt><code>ANS( Vector(&quot;&lt;1,0,0</code> + s * &lt;0,1,0&gt; + t * &lt;0,0,1&gt;&quot;)-&lt;gt&gt;cmp( checker=&lt;gt&gt;~~&amp;affine_subspace_checker_vectors ) );&gt;</dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>The &quot;list of vectors&quot; at the end of the checker name refers to the fact that the student answer is a list of vectors.</p>
+
+<p>Here is an example of how to use these answer checkers.</p>
+
+<ul>
+
+<p>DOCUMENT(); loadMacros( &quot;PGstandard.pl&quot;, &quot;MathObjects.pl&quot;, &quot;VectorListCheckers.pl&quot;, &quot;PGcourse.pl&quot;, ); $showPartialCorrectAnswers = 1; TEXT(beginproblem());</p>
+
+<p>Context(&#39;Vector&#39;);</p>
+
+<p>$B = Matrix([[1,0,0],[0,1,0],[0,0,0]]);</p>
+
+<p>$answer = List(ColumnVector(1,0,0),ColumnVector(0,1,0));</p>
+
+<p>Context()-&gt;texStrings; BEGIN_TEXT A basis for the column space of \( B = $B \) is $BR $BR \{ $answer-&gt;ans_rule(60) \} $BR $BR Enter your answer as a comma separated list of vectors, such as \( \verb+&lt;1,2,3&gt;,&lt;4,5,6&gt;+ \). END_TEXT Context()-&gt;normalStrings;</p>
+
+<p>ANS( $answer-&gt;cmp(list_checker=&gt;~~&amp;basis_checker_list_of_vectors) );</p>
+
+<p>ENDDOCUMENT();</p>
+
+</ul>
+
+<p>The answer evaluation section of the PG file is totally standard.</p>
+
+<ul>
+
+<p>ANS( $multians-&gt;cmp );</p>
+
+</ul>
+
+<p>The <code>parametric_plane_checker_columns</code> should be used for solutions to non-homogeneous systems of linear equations for which the solution is essentially a point plus the span of several linearly independent vectors. When using the parametric plane checker, the first vector input always serves as a point on the hyperplane (i.e., the first vector input is always a particular solution), while the remaining vectors are a basis for the hyperplane (i.e., they span the homogeneous solution set).</p>
+
+<a href="#_podtop_"><h1 id="AUTHORS">AUTHORS</h1></a>
+
+<p>Paul Pearson, Hope College, Department of Mathematics</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

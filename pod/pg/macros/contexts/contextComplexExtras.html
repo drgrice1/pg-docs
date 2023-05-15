@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextComplexExtras.pl</title>
+</head>
+<body>
+<h1>contexts/contextComplexExtras.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p><i>contextCopmlesExtras.pl</i> - Add conjugation to Complex contexts, and transpose, conjugate transpose, trace, and determinant to Complex-Matrix context.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The <i>contextComplexExtras.pl</i> file adds the ability to include matrix transpose, conjugate transpose, trace, and determinants in student answers in the Complex-Matrix context, and adds conjugation to all Complex contexts.</p>
+
+<p>Conjugation is represented by <code>~</code>, as in <code>~z</code> or <code>~M</code> to conjugate a complex number or complex matrix. This can be used in both PG code as well as student answers. The transpose is represented by <code>^T</code>, as in <code>M^T</code>, in student answers or parsed strings. The conjugate transpose is <code>^*</code>, as in <code>M^*</code>, and is equivalent to <code>~M^T</code>. The trace is given as <code>tr(M)</code>, and the determinant by <code>det(M)</code>. Thus you can do things like:</p>
+
+<pre><code>    loadMacros(&quot;contextComplexExtras.pl&quot;);
+    
+    Context(&quot;Complex-Matrix&quot;);
+    Context()-&gt;constants-&gt;add(
+      A =&gt; Matrix([[pi+i,i/pi**2],[1+sqrt[2]*i,ln(pi)-2*i]]),  # an arbitrary matrix with no special properties
+    );
+    
+    $F = Formula(&quot;det(~A) + tr(A^*)&quot;);
+    
+    Context()-&gt;texStrings;
+    BEGIN_TEXT
+    \($F\) = \{ans_rule(20)\}
+    END_TEXT
+    Context()-&gt;normalStrings;
+    
+    ANS($F-&gt;cmp);</code></pre>
+
+<p>You can also use the <code>trace</code>, <code>det</code>, and <code>transpose</code> methods of a Matrix object to compute these in PG code.</p>
+
+<pre><code>    loadMacros(&quot;contextMatrixExtras.pl&quot;);
+    
+    Context(&quot;Matrix&quot;);
+    $M = Matrix([[1,2],[3,4]]);
+    
+    $Mt = $M-&gt;transpose;
+    $d  = $M-&gt;det;
+    $tr = $M-&gt;trace;
+    $Mc = ~$M;
+    $Ms = ~($M-&gt;transpose);</code></pre>
+
+<p>Note that the <i>contextComplexExtras.pl</i> file modifies the Complex, Complex-Point, Complex-Vector, and Complex-Matrix contexts, so be sure to load it before you set the Context.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

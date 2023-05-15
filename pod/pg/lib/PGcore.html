@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>PGcore</title>
+</head>
+<body>
+<h1>PGcore</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a>
+    <ul>
+      <li><a href="#Message-channels">Message channels</a></li>
+      <li><a href="#insertGraph">insertGraph</a></li>
+      <li><a href="#getUniqueName">getUniqueName</a></li>
+    </ul>
+  </li>
+  <li><a href="#Macros-from-IO.pm">Macros from IO.pm</a>
+    <ul>
+      <li><a href="#surePathToTmpFile">surePathToTmpFile</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file provides the fundamental macros that define the PG language. It maintains a problem&#39;s text, header text, and answers:</p>
+
+<ul>
+
+<li><p>Problem text: The text to appear in the body of the problem. See TEXT() below.</p>
+
+</li>
+<li><p>Header text: When a problem is processed in an HTML-based display mode, this variable can contain text that the caller should place in the HEAD of the resulting HTML page. See HEADER_TEXT() below.</p>
+
+</li>
+<li><p>Implicitly-labeled answers: Answers that have not been explicitly assigned names, and are associated with their answer blanks by the order in which they appear in the problem. These types of answers are designated using the ANS() macro.</p>
+
+</li>
+<li><p>Explicitly-labeled answers: Answers that have been explicitly assigned names with the LABELED_ANS() macro, or a macro that uses it. An explicitly- labeled answer is associated with its answer blank by name.</p>
+
+</li>
+<li><p>&quot;Extra&quot; answers: Names of answer blanks that do not have a 1-to-1 correspondance to an answer evaluator. For example, in matrix problems, there will be several input fields that correspond to the same answer evaluator.</p>
+
+</li>
+</ul>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<p>This file is automatically loaded into the namespace of every PG problem. The macros within can then be called to define the structure of the problem.</p>
+
+<p>DOCUMENT() should be the first executable statement in any problem. It initializes vriables and defines the problem environment.</p>
+
+<p>ENDDOCUMENT() must be the last executable statement in any problem. It packs up the results of problem processing for delivery back to WeBWorK.</p>
+
+<p>The HEADER_TEXT(), TEXT(), and ANS() macros add to the header text string, body text string, and answer evaluator queue, respectively.</p>
+
+<dl>
+
+<dt>HEADER_TEXT()</dt>
+<dd>
+
+<pre><code> HEADER_TEXT(&quot;string1&quot;, &quot;string2&quot;, &quot;string3&quot;);</code></pre>
+
+<p>HEADER_TEXT() concatenates its arguments and appends them to the stored header text string. It can be used more than once in a file.</p>
+
+<p>The macro is used for material which is destined to be placed in the HEAD of the page when in HTML mode, such as JavaScript code.</p>
+
+<p>Spaces are placed between the arguments during concatenation, but no spaces are introduced between the existing content of the header text string and the new content being appended.</p>
+
+</dd>
+<dt>POST_HEADER_TEXT()</dt>
+<dd>
+
+<pre><code> POST_HEADER_TEXT(&quot;string1&quot;, &quot;string2&quot;, &quot;string3&quot;);</code></pre>
+
+<p>POST_HEADER_TEXT() concatenates its arguments and appends them to the stored post_header text string. It can be used more than once in a file.</p>
+
+<p>The macro is used for material which is destined to be placed iimmediately after the HEAD of the page as the first item in the body, before the main problem form when in HTML mode, such as JavaScript code.</p>
+
+<p>Spaces are placed between the arguments during concatenation, but no spaces are introduced between the existing content of the header text string and the new content being appended.</p>
+
+</dd>
+<dt>TEXT()</dt>
+<dd>
+
+<pre><code> TEXT(&quot;string1&quot;, &quot;string2&quot;, &quot;string3&quot;);</code></pre>
+
+<p>TEXT() concatenates its arguments and appends them to the stored problem text string. It is used to define the text which will appear in the body of the problem. It can be used more than once in a file.</p>
+
+<p>This macro has no effect if rendering has been stopped with the STOP_RENDERING() macro.</p>
+
+<p>This macro defines text which will appear in the problem. All text must be passed to this macro, passed to another macro that calls this macro, or included in a BEGIN_TEXT/END_TEXT block, which uses this macro internally. No other statements in a PG file will directly appear in the output. Think of this as the &quot;print&quot; function for the PG language.</p>
+
+<p>Spaces are placed between the arguments during concatenation, but no spaces are introduced between the existing content of the header text string and the new content being appended.</p>
+
+</dd>
+<dt>LABELED_ANS()</dt>
+<dd>
+
+<pre><code> TEXT(labeled_ans_rule(&quot;name1&quot;), labeled_ans_rule(&quot;name2&quot;));
+ LABELED_ANS(name1 =&gt; answer_evaluator1, name2 =&gt; answer_evaluator2);</code></pre>
+
+<p>Adds the answer evaluators listed to the list of labeled answer evaluators. They will be paired with labeled answer rules (a.k.a. answer blanks) in the order entered. This allows pairing of answer evaluators and answer rules that may not have been entered in the same order.</p>
+
+</dd>
+<dt>NAMED_ANS()</dt>
+<dd>
+
+<p>Old name for LABELED_ANS(). DEPRECATED.</p>
+
+</dd>
+<dt>ANS()</dt>
+<dd>
+
+<pre><code> TEXT(ans_rule(), ans_rule(), ans_rule());
+ ANS($answer_evaluator1, $answer_evaluator2, $answer_evaluator3);</code></pre>
+
+<p>Adds the answer evaluators listed to the list of unlabeled answer evaluators. They will be paired with unlabeled answer rules (a.k.a. answer blanks) in the order entered. This is the standard method for entering answers.</p>
+
+<p>In the above example, answer_evaluator1 will be associated with the first answer rule, answer_evaluator2 with the second, and answer_evaluator3 with the third. In practice, the arguments to ANS() will usually be calls to an answer evaluator generator such as the cmp() method of MathObjects or the num_cmp() macro in <a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>.</p>
+
+</dd>
+<dt>STOP_RENDERING()</dt>
+<dd>
+
+<pre><code> STOP_RENDERING() unless all_answers_are_correct();</code></pre>
+
+<p>Temporarily suspends accumulation of problem text and storing of answer blanks and answer evaluators until RESUME_RENDERING() is called.</p>
+
+</dd>
+<dt>RESUME_RENDERING()</dt>
+<dd>
+
+<pre><code> RESUME_RENDERING();</code></pre>
+
+<p>Resumes accumulating problem text and storing answer blanks and answer evaluators. Reverses the effect of STOP_RENDERING().</p>
+
+</dd>
+<dt>base64 encoding and decoding</dt>
+<dd>
+
+<pre><code>        $str       = decode_base64($coded_str);
+        $coded_str = encode_base64($str);</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="Message-channels">Message channels</h2>
+
+<p>There are three message channels $PG-&gt;debug_message() or in PG: DEBUG_MESSAGE() $PG-&gt;warning_message() or in PG: WARN_MESSAGE()</p>
+
+<p>They behave the same way, it is simply convention as to how they are used.</p>
+
+<p>To report the messages use:</p>
+
+<pre><code>        $PG-&gt;get_debug_messages
+        $PG-&gt;get_warning_messages</code></pre>
+
+<p>These are used in Problem.pm for example to report any errors.</p>
+
+<p>There is also</p>
+
+<pre><code>                $PG-&gt;internal_debug_message()
+        $PG-&gt;get_internal_debug_message
+        $PG-&gt;clear_internal_debug_messages();</code></pre>
+
+<p>There were times when things were buggy enough that only the internal_debug_message which are not saved inside the PGcore object would report.</p>
+
+<h2 id="insertGraph">insertGraph</h2>
+
+<pre><code>        # returns a path to the file containing the graph image.
+        $filePath = insertGraph($graphObject);</code></pre>
+
+<p>insertGraph writes a GIF or PNG image file to the images subdirectory of the current course&#39;s HTML temp directory. The file name is obtained from the graph object. Warnings are issued if errors occur while writing to the file.</p>
+
+<p>Returns a string containing the full path to the temporary file containing the image. This is most often used in the construct</p>
+
+<pre><code>        TEXT(alias(insertGraph($graph)));</code></pre>
+
+<p>where alias converts the directory address to a URL when serving HTML pages and insures that an EPS file is generated when creating TeX code for downloading.</p>
+
+<h2 id="getUniqueName">getUniqueName</h2>
+
+<pre><code>        # Returns a unique file name for use in the problem
+        $name = getUniqueName(&#39;png&#39;);</code></pre>
+
+<p>getUniqueName generates a unique file name for use in a problem. Its single argument is the file type. This is used internally by PGgraphmacros.pl and PGtikz.pl.</p>
+
+<a href="#_podtop_"><h1 id="Macros-from-IO.pm">Macros from IO.pm</h1></a>
+
+<pre><code>                includePGtext
+                read_whole_problem_file
+                convertPath
+                fileFromPath
+                directoryFromPath
+                createDirectory</code></pre>
+
+<h2 id="surePathToTmpFile">surePathToTmpFile</h2>
+
+<pre><code>        $path = surePathToTmpFile($path);</code></pre>
+
+<p>Creates all of the intermediate directories between the tempDirectory</p>
+
+<p>If $path begins with the tempDirectory path, then the path is treated as absolute. Otherwise, the path is treated as relative the the course temp directory.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

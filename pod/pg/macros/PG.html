@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>PG.pl</title>
+</head>
+<body>
+<h1>PG.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#ADD_CSS_FILE">ADD_CSS_FILE</a></li>
+              <li><a href="#ADD_JS_FILE">ADD_JS_FILE</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#Problem-Grader-Subroutines">Problem Grader Subroutines</a></li>
+      <li><a href="#Filter-utilities">Filter utilities</a>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#assign_option_aliases">assign_option_aliases</a></li>
+              <li><a href="#set_default_options">set_default_options</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+  <li><a href="#PRIVATE-MACROS">PRIVATE MACROS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<h4 id="ADD_CSS_FILE">ADD_CSS_FILE</h4>
+
+<p>Request that the problem HTML page also include additional CSS files from the webwork2/htdocs/ directory or from an external location.</p>
+
+<pre><code>        ADD_CSS_FILE($file, $external);</code></pre>
+
+<p>If external is 1, it is assumed the full url is provided. If external is 0 or not given, then file name will be prefixed with the webwork2/htdocs/ directory. For example:</p>
+
+<pre><code>        ADD_CSS_FILE(&quot;css/rtl.css&quot;);
+        ADD_CSS_FILE(&quot;https://external.domain.com/path/to/file.css&quot;, 1);</code></pre>
+
+<h4 id="ADD_JS_FILE">ADD_JS_FILE</h4>
+
+<p>Request that the problem HTML page also include additional JS files from the webwork2/htdocs/ directory or from an external location.</p>
+
+<pre><code>        ADD_JS_FILE($file, $external);</code></pre>
+
+<p>If external is 1, it is assumed the full url is provided. If external is 0 or not given, then file name will be prefixed with the webwork2/htdocs/ directory.</p>
+
+<p>Additional attributes can be passed as a hash reference in the optional third argument. These attributes will be added as attributes to the script tag.</p>
+
+<p>For example:</p>
+
+<pre><code>        ADD_JS_FILE(&quot;js/apps/Base64/Base64.js&quot;);
+        ADD_JS_FILE(&quot;//web.geogebra.org/4.4/web/web.nocache.js&quot;, 1);
+        ADD_JS_FILE(&quot;js/apps/GraphTool/graphtool.js&quot;, 0, { id =&gt; &quot;gt_script&quot;, defer =&gt; undef });</code></pre>
+
+<h2 id="Problem-Grader-Subroutines">Problem Grader Subroutines</h2>
+
+<h2 id="Filter-utilities">Filter utilities</h2>
+
+<p>These two subroutines can be used in filters to set default options. They help make filters perform in uniform, predictable ways, and also make it easy to recognize from the code which options a given filter expects.</p>
+
+<h4 id="assign_option_aliases">assign_option_aliases</h4>
+
+<p>Use this to assign aliases for the standard options. It must come before set_default_options within the subroutine.</p>
+
+<pre><code>                assign_option_aliases(\%options,
+                                &#39;alias1&#39;        =&gt; &#39;option5&#39;
+                                &#39;alias2&#39;        =&gt; &#39;option7&#39;
+                );</code></pre>
+
+<p>If the subroutine is called with an option &quot; alias1 =&gt; 23 &quot; it will behave as if it had been called with the option &quot; option5 =&gt; 23 &quot;</p>
+
+<h4 id="set_default_options">set_default_options</h4>
+
+<pre><code>                set_default_options(\%options,
+                                &#39;_filter_name&#39;  =&gt;      &#39;filter&#39;,
+                                &#39;option5&#39;               =&gt;  .0001,
+                                &#39;option7&#39;               =&gt;      &#39;ascii&#39;,
+                                &#39;allow_unknown_options  =&gt;      0,
+                }</code></pre>
+
+<p>Note that the first entry is a reference to the options with which the filter was called.</p>
+
+<p>The option5 is set to .0001 unless the option is explicitly set when the subroutine is called.</p>
+
+<p>The <b>&#39;_filter_name&#39;</b> option should always be set, although there is no error if it is missing. It is used mainly for debugging answer evaluators and allows you to keep track of which filter is currently processing the answer.</p>
+
+<p>If <b>&#39;allow_unknown_options&#39;</b> is set to 0 then if the filter is called with options which do NOT appear in the set_default_options list an error will be signaled and a warning message will be printed out. This provides error checking against misspelling an option and is generally what is desired for most filters.</p>
+
+<p>Occasionally one wants to write a filter which accepts a long list of options, not all of which are known in advance, but only uses a subset of the options provided. In this case, setting &#39;allow_unkown_options&#39; to 1 prevents the error from being signaled.</p>
+
+<dl>
+
+<dt>includePGproblem($filePath)</dt>
+<dd>
+
+<pre><code> includePGproblem($filePath);
+
+ Essentially runs the pg problem specified by $filePath, which is
+ a path relative to the top of the templates directory.  The output
+ of that problem appears in the given problem.</code></pre>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>PG.pl - Provides core Program Generation Language functionality.</p>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<p>In a PG problem:</p>
+
+<pre><code>        DOCUMENT();             # should be the first statment in the problem
+
+        loadMacros(.....);      # (optional) load other macro files if needed.
+
+        HEADER_TEXT(...);       # (optional) used only for inserting javaScript into problems.
+
+        TEXT(                   # insert text of problems
+                &quot;Problem text to be displayed. &quot;,
+                &quot;Enter 1 in this blank:&quot;,
+                ANS_RULE(1,30)      # ANS_RULE() defines an answer blank 30 characters long.
+                                        # It is defined in F&lt;PGbasicmacros.pl&gt;
+        );
+
+        ANS(answer_evalutors);  # see F&lt;PGanswermacros.pl&gt; for examples of answer evaluatiors.
+
+        ENDDOCUMENT()           # must be the last statement in the problem</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file provides the fundamental macros that define the PG language. It maintains a problem&#39;s text, header text, and answers:</p>
+
+<ul>
+
+<li><p>Problem text: The text to appear in the body of the problem. See TEXT() below.</p>
+
+</li>
+<li><p>Header text: When a problem is processed in an HTML-based display mode, this variable can contain text that the caller should place in the HEAD of the resulting HTML page. See HEADER_TEXT() below.</p>
+
+</li>
+<li><p>Implicitly-labeled answers: Answers that have not been explicitly assigned names, and are associated with their answer blanks by the order in which they appear in the problem. These types of answers are designated using the ANS() macro.</p>
+
+</li>
+<li><p>Explicitly-labeled answers: Answers that have been explicitly assigned names with the LABELED_ANS() macro, or a macro that uses it. An explicitly- labeled answer is associated with its answer blank by name.</p>
+
+</li>
+<li><p>&quot;Extra&quot; answers: Names of answer blanks that do not have a 1-to-1 correspondance to an answer evaluator. For example, in matrix problems, there will be several input fields that correspond to the same answer evaluator.</p>
+
+</li>
+</ul>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<p>This file is automatically loaded into the namespace of every PG problem. The macros within can then be called to define the structure of the problem.</p>
+
+<p>DOCUMENT() should be the first executable statement in any problem. It initializes vriables and defines the problem environment.</p>
+
+<p>ENDDOCUMENT() must be the last executable statement in any problem. It packs up the results of problem processing for delivery back to WeBWorK.</p>
+
+<p>The HEADER_TEXT(), TEXT(), and ANS() macros add to the header text string, body text string, and answer evaluator queue, respectively.</p>
+
+<dl>
+
+<dt>HEADER_TEXT()</dt>
+<dd>
+
+<pre><code> HEADER_TEXT(&quot;string1&quot;, &quot;string2&quot;, &quot;string3&quot;);</code></pre>
+
+<p>HEADER_TEXT() concatenates its arguments and appends them to the stored header text string. It can be used more than once in a file.</p>
+
+<p>The macro is used for material which is destined to be placed in the HEAD of the page when in HTML mode, such as JavaScript code.</p>
+
+<p>Spaces are placed between the arguments during concatenation, but no spaces are introduced between the existing content of the header text string and the new content being appended.</p>
+
+</dd>
+<dt>TEXT()</dt>
+<dd>
+
+<pre><code> TEXT(&quot;string1&quot;, &quot;string2&quot;, &quot;string3&quot;);</code></pre>
+
+<p>TEXT() concatenates its arguments and appends them to the stored problem text string. It is used to define the text which will appear in the body of the problem. It can be used more than once in a file.</p>
+
+<p>This macro has no effect if rendering has been stopped with the STOP_RENDERING() macro.</p>
+
+<p>This macro defines text which will appear in the problem. All text must be passed to this macro, passed to another macro that calls this macro, or included in a BEGIN_TEXT/END_TEXT block, which uses this macro internally. No other statements in a PG file will directly appear in the output. Think of this as the &quot;print&quot; function for the PG language.</p>
+
+<p>Spaces are placed between the arguments during concatenation, but no spaces are introduced between the existing content of the header text string and the new content being appended.</p>
+
+</dd>
+<dt>ANS()</dt>
+<dd>
+
+<pre><code> TEXT(ans_rule(), ans_rule(), ans_rule());
+ ANS($answer_evaluator1, $answer_evaluator2, $answer_evaluator3);</code></pre>
+
+<p>Adds the answer evaluators listed to the list of unlabeled answer evaluators. They will be paired with unlabeled answer rules (a.k.a. answer blanks) in the order entered. This is the standard method for entering answers.</p>
+
+<p>In the above example, answer_evaluator1 will be associated with the first answer rule, answer_evaluator2 with the second, and answer_evaluator3 with the third. In practice, the arguments to ANS() will usually be calls to an answer evaluator generator such as the cmp() method of MathObjects or the num_cmp() macro in <a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>.</p>
+
+</dd>
+<dt>LABELED_ANS()</dt>
+<dd>
+
+<pre><code> TEXT(labeled_ans_rule(&quot;name1&quot;), labeled_ans_rule(&quot;name2&quot;));
+ LABELED_ANS(name1 =&gt; answer_evaluator1, name2 =&gt; answer_evaluator2);</code></pre>
+
+<p>Adds the answer evaluators listed to the list of labeled answer evaluators. They will be paired with labeled answer rules (a.k.a. answer blanks) in the order entered. This allows pairing of answer evaluators and answer rules that may not have been entered in the same order.</p>
+
+</dd>
+<dt>STOP_RENDERING()</dt>
+<dd>
+
+<pre><code> STOP_RENDERING() unless all_answers_are_correct();</code></pre>
+
+<p>Temporarily suspends accumulation of problem text and storing of answer blanks and answer evaluators until RESUME_RENDERING() is called.</p>
+
+</dd>
+<dt>RESUME_RENDERING()</dt>
+<dd>
+
+<pre><code> RESUME_RENDERING();</code></pre>
+
+<p>Resumes accumulating problem text and storing answer blanks and answer evaluators. Reverses the effect of STOP_RENDERING().</p>
+
+</dd>
+<dt>ENDDOCUMENT()</dt>
+<dd>
+
+<pre><code> ENDDOCUMENT();</code></pre>
+
+<p>When PG problems are evaluated, the result of evaluating the entire problem is interpreted as the return value of ENDDOCUMENT(). Therefore, ENDDOCUMENT() must be the last executable statement of every problem. It can only appear once. It returns a list consisting of:</p>
+
+</dd>
+</dl>
+
+<ul>
+
+<li><p>A reference to a string containing the rendered text of the problem.</p>
+
+</li>
+<li><p>A reference to a string containing text to be placed in the HEAD block when in and HTML-based mode (e.g. for JavaScript).</p>
+
+</li>
+<li><p>A reference to the hash mapping answer labels to answer evaluators.</p>
+
+</li>
+<li><p>A reference to a hash containing various flags:</p>
+
+</li>
+<li><p><code>showPartialCorrectAnswers</code>: determines whether students are told which of their answers in a problem are wrong.</p>
+
+</li>
+<li><p><code>recordSubmittedAnswers</code>: determines whether students submitted answers are saved.</p>
+
+</li>
+<li><p><code>refreshCachedImages</code>: determines whether the cached image of the problem in typeset mode is always refreshed (i.e. setting this to 1 means cached images are not used).</p>
+
+</li>
+<li><p><code>solutionExits</code>: indicates the existence of a solution.</p>
+
+</li>
+<li><p><code>hintExits</code>: indicates the existence of a hint.</p>
+
+</li>
+<li><p><code>comment</code>: contents of COMMENT commands if any.</p>
+
+</li>
+<li><p><code>PROBLEM_GRADER_TO_USE</code>: a reference to the chosen problem grader. ENDDOCUMENT chooses the problem grader as follows:</p>
+
+<ul>
+
+<li><p>If a problem grader has been chosen in the problem by calling <code>install_problem_grader(\&amp;grader)</code>, it is used.</p>
+
+</li>
+<li><p>Otherwise, if the <code>PROBLEM_GRADER_TO_USE</code> PG environment variable contains a reference to a subroutine, it is used.</p>
+
+</li>
+<li><p>Otherwise, if the <code>PROBLEM_GRADER_TO_USE</code> PG environment variable contains the string <code>std_problem_grader</code> or the string <code>avg_problem_grader</code>, <code>&amp;std_problem_grader</code> or <code>&amp;avg_problem_grader</code> are used. These graders are defined in <a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>.</p>
+
+</li>
+<li><p>Otherwise, the PROBLEM_GRADER_TO_USE flag will contain an empty value and the PG translator should select <code>&amp;std_problem_grader</code>.</p>
+
+</li>
+</ul>
+
+</li>
+</ul>
+
+<a href="#_podtop_"><h1 id="PRIVATE-MACROS">PRIVATE MACROS</h1></a>
+
+<p>These macros should only be used by other macro files. In practice, they are used exclusively by <a href="//pg/macros/core/PGbasicmacros.html">PGbasicmacros.pl</a>.</p>
+
+<dl>
+
+<dt>inc_ans_rule_count()</dt>
+<dd>
+
+<p>DEPRECATED</p>
+
+<p>Increments the internal count of the number of answer blanks that have been defined ($ans_rule_count) and returns the new count. This should only be used when one is about to define a new answer blank, for example with NEW_ANS_NAME().</p>
+
+</dd>
+<dt>RECORD_ANS_NAME()</dt>
+<dd>
+
+<pre><code> RECORD_ANS_NAME(&quot;label&quot;, &quot;VALUE&quot;);</code></pre>
+
+<p>Records the label for an answer blank. Used internally by <a href="//pg/macros/core/PGbasicmacros.html">PGbasicmacros.pl</a> to record the order of explicitly-labelled answer blanks.</p>
+
+</dd>
+<dt>NEW_ANS_NAME()</dt>
+<dd>
+
+<pre><code> NEW_ANS_NAME();</code></pre>
+
+<p>Generates an anonymous answer label from the internal count The label is added to the list of implicity-labeled answers. Used internally by <a href="//pg/macros/core/PGbasicmacros.html">PGbasicmacros.pl</a> to generate labels for unlabeled answer blanks.</p>
+
+</dd>
+<dt>ANS_NUM_TO_NAME()</dt>
+<dd>
+
+<pre><code> ANS_NUM_TO_NAME($num);</code></pre>
+
+<p>Generates an answer label from the supplied answer number, but does not add it to the list of inplicitly-labeled answers. Used internally by <a href="//pg/macros/core/PGbasicmacros.html">PGbasicmacros.pl</a> in generating answers blanks that use radio buttons or check boxes. (This type of answer blank uses multiple HTML INPUT elements with the same label, but the label should only be added to the list of implicitly- labeled answers once.)</p>
+
+</dd>
+<dt>RECORD_FROM_LABEL()</dt>
+<dd>
+
+<pre><code> RECORD_FORM_LABEL(&quot;label&quot;);</code></pre>
+
+<p>Stores the label of a form field in the &quot;extra&quot; answers list. This is used to keep track of answer blanks that are not associated with an answer evaluator.</p>
+
+</dd>
+<dt>NEW_ANS_ARRAY_NAME()</dt>
+<dd>
+
+<pre><code> NEW_ANS_ARRAY_NAME($num, $row, $col);</code></pre>
+
+<p>Generates a new answer label for an array (vector) element and adds it to the list of implicitly-labeled answers.</p>
+
+</dd>
+<dt>NEW_ANS_ARRAY_NAME_EXTENSION()</dt>
+<dd>
+
+<pre><code> NEW_ANS_ARRAY_NAME_EXTENSION($num, $row, $col);</code></pre>
+
+<p>Generate an additional answer label for an existing array (vector) element and add it to the list of &quot;extra&quot; answers.</p>
+
+</dd>
+<dt>get_PG_ANSWERS_HASH()</dt>
+<dd>
+
+<pre><code> get_PG_ANSWERS_HASH();
+ get_PG_ANSWERS_HASH($key);</code></pre>
+
+</dd>
+<dt>includePGproblem($filePath)</dt>
+<dd>
+
+<pre><code> includePGproblem($filePath);
+
+ Essentially runs the pg problem specified by $filePath, which is
+ a path relative to the top of the templates directory.  The output
+ of that problem appears in the given problem.</code></pre>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="SEE-ALSO">SEE ALSO</h1></a>
+
+<p><a href="//pg/macros/core/PGbasicmacros.html">PGbasicmacros.pl</a>, <a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

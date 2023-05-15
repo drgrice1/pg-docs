@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>core/scaffold.pl</title>
+</head>
+<body>
+<h1>core/scaffold.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>scaffold.pl - Provides support for multi-part problems where later parts are not visible until earlier parts are completed correctly.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Scaffolding macros provide the ability to make a single problem file contain multiple parts, where the later parts aren&#39;t visible to the student until the earlier ones are completed. The author has control over which parts are allowed to be opened, and which are showing, but does not have to keep track of what answer blanks go with which sections (as was the case in the earlier compoundProblem macros). It is even possible to have nested scaffolds within a single problem.</p>
+
+<p>To use the scaffolding macros, include the macros into your problem</p>
+
+<pre><code>    loadMacros(&quot;scaffold.pl&quot;);</code></pre>
+
+<p>and then use <code>Scaffold::Begin()</code> to start a scaffold problem and <code>Scaffold::End()</code> to end it. In between, use <code>Section::Begin(title)</code> and <code>Section::End()</code> around the sections of your problem. Within a section, use <code>BEGIN_TEXT/END_TEXT</code> or <code>BEGIN_PGML/END_PGML</code> to create the text of the section as usual, and <code>ANS()</code> to assign answer checkers to the blanks that appear within the section. For example:</p>
+
+<pre><code>    Scaffold::Begin();
+
+    Section::Begin(&quot;Part 1: The first part&quot;);
+    BEGIN_TEXT
+    This is the text for part 1.  \(1+1\) = \{ans_rule\}
+    END_TEXT
+    ANS(Real(2)-&gt;cmp);
+    Section::End();
+
+    Section::Begin(&quot;Part 2: The second part&quot;);
+    BEGIN_TEXT
+    This is text for the second part.  \(2*2\) = \{ans_rule\}
+    END_TEXT
+    ANS(Real(4)-&gt;cmp);
+    Section::End();
+
+    Scaffold::End();</code></pre>
+
+<p>You can include whatever code you need to between the <code>Section::Begin()</code> and <code>Section::End()</code> calls, so you can create variables, set the Context, perform computations, generate text sections, and so on. Whatever answer checkers are assigned within a section are the ones that are used to decide when that section can be opened by the student. Any solutions created within a section become part of that section, and will be made available from within that section, when applicable.</p>
+
+<p>A section is considered to be &quot;correct&quot; when all the answers contained in it are correct. Note that essay answers are treated specially, and are always considered correct (when non-empty) for purposes of determining when a section is correct. You can also force a non-empty answer blank to be considered correct by using the <code>scaffold_force</code> option on the answer checker. For example:</p>
+
+<pre><code>    ANS(Real(123)-&gt;cmp(scaffold_force =&gt; 1));</code></pre>
+
+<p>would mean that this answer would not have to be correct for the section to be considered correct.</p>
+
+<p>Note that you can also create text (or even answer blanks and checkers) between the sections, or before the first one, or after the last one, if you wish. That material would always be showing, regardless of which sections are open. So, for example, you could put a data table in the area before the first section, so that it would be visible throughtout the problem, no matter which section the student is working on.</p>
+
+<p>The <code>Scaffold::Begin()</code> function accepts optional parameters that control the functioning of the scaffold as a whole. The primary use it to control when the sections can be opened by the student, and which is currently open. The following options are provided:</p>
+
+<dl>
+
+<dt><code><span style="white-space: nowrap;">can_open =&gt; condition</span></code></dt>
+<dd>
+
+<p>This specifies when a section can be opened by the student. The <code>condition</code> is either one of the strings <code>&quot;always&quot;</code>, <code>&quot;when_previous_correct&quot;</code>, <code>&quot;first_incorrect&quot;</code>, <code>&quot;incorrect&quot;</code> or <code>&quot;never&quot;</code>, or is a reference to a subroutine that returns 0 or 1 depending on whether the section can be opened or not (the subroutine is passed a reference to the section object). The default value is <code>&quot;when_previous_correct&quot;</code>, which means that all the correct sections and the first section incorrect or empty blanks would be able to be opened by the student. The value <code>&quot;first_incorrect&quot;</code> would mean that correct sections can not be reopened, and only the first one that is not fully correct can be, while <code>&quot;incorrect&quot;</code> means that only incorrect sections can be opened (so once a section is correct, it can&#39;t be reopened). The value <code>&quot;always&quot;</code> means the student can always open the section, and <code>&quot;never&quot;</code> means that the section can never be opened.</p>
+
+<p>If answers are available (i.e., it is after the answer date), then the <code>after_AnswerDate_can_open</code> option (described below) is used instead of this option. If not and the user is a professor, then the <code>instructor_can_open</code> option (described below) is used instead.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">is_open =&gt; condition</span></code></dt>
+<dd>
+
+<p>This is similar to the <code>can_open</code> option above, but determines whether the section will be open when the problem is displayed. The possible values are <code>&quot;always&quot;</code>, <code>&quot;incorrect&quot;</code>, <code>&quot;first_incorrect&quot;</code>, <code>&quot;correct_or_first_incorrect&quot;</code>, <code>&quot;never&quot;</code>, or a reference to a subroutine that returns 0 or 1 depending on whether the section should be open or not (the subroutine is passed a reference to the section object). Note that a section will only open if the <code>can_open</code> condition is also met, so you do need to coordinate these two values. The default is <code>&quot;first_incorrect&quot;</code>, which means that only the first section with incorrect answers will be open when the problem is displayed after answers are submitted (though the student may be abe to open other sections afterward, depending on the value if <code>can_open</code>. The value <code>&quot;incorrect&quot;</code> would mean that all incorrect or incomplete sections are open (the student can see all future work that he or she must complete) but correct sections are closed, while <code>&quot;correct_or_first_incorrect&quot;</code> would be the opposite: all correct sections and the first incorrect one are opened while the later sections are closed (the student can see the completed work, but not the future sections). As expected, <code>&quot;always&quot;</code> would mean every section that can be opened will be open, and <code>&quot;never&quot;</code> means no section is opened.</p>
+
+<p>Hardcopy versions of the problem use the <code>hardcopy_is_open</code> option (described below).</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">instructor_can_open =&gt; condition</span></code></dt>
+<dd>
+
+<p>This provides the condition for when an instructor (as opposed to a student) can open a section. By default, this is set to <code>&quot;always&quot;</code>, so that instructors can look at any section of the problem, but you can set it to any value for <code>can_open</code> above. If you are an instructor and want to test how a problem looks for a student, you can set</p>
+
+<pre><code>    $Scaffold::isInstructor = 0;</code></pre>
+
+<p>temporarily while testing the problem. Remember to remove that when you are done, however.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">after_AnswerDate_can_open =&gt; condition</span></code></dt>
+<dd>
+
+<p>This is similar to the <code>can_open</code> option (described above), and is used in place of it when the answers are available. The default is <code>&quot;always&quot;</code>. That means that after the answer date, the student will be able to open all the sections regardless of whether the answers are correct or not.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">hardcopy_is_open =&gt; condition</span></code></dt>
+<dd>
+
+<p>This is similar to the <code>is_open</code> option (described above), and is used in place of it when the problem appears in hardcopy output. The default is <code>&quot;always&quot;</code>, which means that any sections that can be open will be open in hardcopy output. This allows the student to see the parts of the problem that are already complete, even if they don&#39;t open when viewed on line.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">open_first_section =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>This determines whether the initial section is open (when it can be). With the default <code>can_open</code> and <code>is_open</code> settings, the first section will be open automatically when the problem is first viewed, but if you have material to read (or even answers to give) prior to the first section, you might want the first section to be closed, and have the student open it by hand before anwering the questions. In this case, set this value to 0 (it is 1 by default).</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">numbered =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>This determines whether each section is automatically numbered before its title. If true, each section title will be preceded by a number and a period. The section&#39;s nesting level determines the style of numbering: a, i, A. Any deeper and numbering is just arabic. If there is no title, a default title like &quot;Part 1:&quot; is used, and in that case no extra numbering is added regardless of this option.</p>
+
+</dd>
+</dl>
+
+<p>Some useful configurations are:</p>
+
+<pre><code>    #
+    #  The defaults:
+    #    only the active section is open, but students can open
+    #    previous correct sections if they want.
+    #
+    Scaffold::Begin(
+      can_open =&gt; &quot;when_previous_correct&quot;,
+      is_open  =&gt; &quot;first_incorrect&quot;
+    );
+
+    #
+    #  Sections stay open as the student works through
+    #  the problem.
+    #
+    Scaffold::Begin(
+      can_open =&gt; &quot;when_previous_correct&quot;,
+      is_open  =&gt; &quot;correct_or_first_incorrect&quot;
+    );
+
+    #
+    #  Students work through the problem seeing only
+    #  one section at a time, and can&#39;t go back to
+    #  previous sections.
+    #
+    Scaffold::Begin(
+      can_open =&gt; &quot;first_incorrect&quot;,
+      is_open  =&gt; &quot;first_incorrect&quot;
+    );
+
+    #
+    #  Students can view and work on any section,
+    #  but only the first incorrect one is shown initially.
+    #
+    Scaffold::Begin(
+      can_open =&gt; &quot;always&quot;,
+      is_open  =&gt; &quot;first_incorrect&quot;
+    );
+
+    #
+    #  Students see all the parts initially, but the
+    #  sections close as the student gets them correct.
+    #
+    Scaffold::Begin(
+      can_open =&gt; &quot;always&quot;,
+      is_open  =&gt; &quot;incorrect&quot;
+    );
+
+    #
+    #  Students see all the parts initially, but the
+    #  sections close as the student gets them correct,
+    #  and can&#39;t be reopened.
+    #
+    Scaffold::Begin(
+      can_open =&gt; &quot;incorrect&quot;,
+      is_open  =&gt; &quot;incorrect&quot;
+    );</code></pre>
+
+<p>The <code>Section::Begin()</code> macro also accepts the options <code>can_open</code>, <code>is_open</code>, and <code>instructor_can_open</code> described above. This allows you to override the defaults for a particular section. In particular, you can provide a subroutine that determines when the section can or should be open.</p>
+
+<p>Note that values like <code>$showPartialCorrectAnswers</code> and the isntalled grader are global to the whole problem, so can&#39;t be set individually on a per section basis. Also note that the answers aren&#39;t checked until the end of the problem, so any changes you make to the <code>Context()</code> after a section is ended will still affect the context within that section.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

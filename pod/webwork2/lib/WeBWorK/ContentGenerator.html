@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::ContentGenerator</title>
+</head>
+<body>
+<h1>WeBWorK::ContentGenerator</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#INVOCATION">INVOCATION</a></li>
+  <li><a href="#DATA-MODIFIERS">DATA MODIFIERS</a></li>
+  <li><a href="#STANDARD-METHODS">STANDARD METHODS</a>
+    <ul>
+      <li><a href="#Template-escape-handlers">Template escape handlers</a></li>
+      <li><a href="#Template-conditions">Template conditions</a></li>
+    </ul>
+  </li>
+  <li><a href="#HTML-MACROS">HTML MACROS</a>
+    <ul>
+      <li><a href="#Template-escape-handler-macros">Template escape handler macros</a></li>
+      <li><a href="#Parameter-management">Parameter management</a></li>
+      <li><a href="#Utilities">Utilities</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::ContentGenerator - base class for modules that generate page content.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code> # start with a WeBWorK::Controller object: $c
+
+ use WeBWorK::ContentGenerator::SomeSubclass;
+
+ my $cg = WeBWorK::ContentGenerator::SomeSubclass-&gt;new($c);
+ my $result = $cg-&gt;go();</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>WeBWorK::ContentGenerator provides the framework for generating page content. &quot;Content generators&quot; are subclasses of this class which provide content for particular parts of the system.</p>
+
+<p>Default versions of methods used by the templating system are provided. Several useful methods are provided for rendering common output idioms and some miscellaneous utilities are provided.</p>
+
+<a href="#_podtop_"><h1 id="INVOCATION">INVOCATION</h1></a>
+
+<dl>
+
+<dt>go()</dt>
+<dd>
+
+<p>Generates a page, using methods from the particular subclass of ContentGenerator that is instantiated. Generatoion is broken up into several steps, to give subclasses ample control over the process.</p>
+
+<ol>
+
+<li><p>go() will attempt to call the method pre_header_initialize(). This method may be implemented in subclasses which must do processing before the HTTP header is emitted.</p>
+
+</li>
+<li><p>go() will attempt to call the method header(). This method emits the HTTP header. It is defined in this class (see below), but may be overridden in subclasses which need to send different header information. For some reason, the return value of header() will be used as the result of this function, if it is defined.</p>
+
+<p>FIXME: figure out what the deal is with the return value of header(). If we sent a header, it&#39;s too late to set the status by returning. If we didn&#39;t, header() didn&#39;t perform its function!</p>
+
+</li>
+<li><p>At this point, go() will terminate if the request is a HEAD request.</p>
+
+</li>
+<li><p>go() then attempts to call the method initialize(). This method may be implemented in subclasses which must do processing after the HTTP header is sent but before any content is sent.</p>
+
+</li>
+<li><p>The method content() is called to send the page content to client.</p>
+
+</li>
+</ol>
+
+</dd>
+<dt>do_reply_with_file($fileHash)</dt>
+<dd>
+
+<p>Handler for reply_with_file(), used by go(). DO NOT CALL THIS METHOD DIRECTLY.</p>
+
+</dd>
+<dt>do_reply_with_redirect($url)</dt>
+<dd>
+
+<p>Handler for reply_with_redirect(), used by go(). DO NOT CALL THIS METHOD DIRECTLY.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="DATA-MODIFIERS">DATA MODIFIERS</h1></a>
+
+<p>Modifiers allow the caller to register a piece of data for later retrieval in a standard way.</p>
+
+<dl>
+
+<dt>reply_with_file($type, $source, $name, $delete_after)</dt>
+<dd>
+
+<p>Enables file sending mode, causing go() to send the file specified by $source to the client after calling pre_header_initialize(). The content type sent is $type, and the suggested client-side file name is $name. If $delete_after is true, $source is deleted after it is sent.</p>
+
+<p>Must be called from pre_header_initialize().</p>
+
+</dd>
+<dt>reply_with_redirect($url)</dt>
+<dd>
+
+<p>Enables redirect mode, causing go() to redirect to the given URL after calling pre_header_initialize().</p>
+
+<p>Must be called from pre_header_initialize().</p>
+
+</dd>
+<dt>addmessage($message)</dt>
+<dd>
+
+<p>Adds a message to the list of messages to be output by the message() template escape handler.</p>
+
+<p>Must be called before the message() template escape is invoked.</p>
+
+</dd>
+<dt>addgoodmessage($message)</dt>
+<dd>
+
+<p>Adds a success message to the list of messages to be output by the message() template escape handler.</p>
+
+</dd>
+<dt>addbadmessage($message)</dt>
+<dd>
+
+<p>Adds a failure message to the list of messages to be output by the message() template escape handler.</p>
+
+</dd>
+<dt>prepare_activity_entry()</dt>
+<dd>
+
+<p>Prepare a string to be sent to the activity log, if it is turned on. This can be overriden by different modules.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="STANDARD-METHODS">STANDARD METHODS</h1></a>
+
+<p>The following are the standard content generator methods. Some are defined here, but may be overridden in a subclass. Others are not defined unless they are defined in a subclass.</p>
+
+<p>FIXME: The names of the first three methods don&#39;t really make sense anymore. There really is no need for both of the pre_header_initialize and initialize methods. The initialize method should be dropped and the pre_header_initialize method renamed.</p>
+
+<dl>
+
+<dt>pre_header_initialize()</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>May be defined by a subclass to perform any early processing that is needed. This method must be used if responding with a file or redirect.</p>
+
+<p>This method may be asynchronous.</p>
+
+</dd>
+<dt>header()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>This method is not really useful anymore. For now it returns the response status code and this return value is ignored. Headers are now set when rendering a response (as it really should have been done before.</p>
+
+</dd>
+<dt>initialize()</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>May be defined by a subclass to perform any early processing that is needed. This method can not be used if responding with a file or redirect.</p>
+
+<p>This method may be asynchronous.</p>
+
+</dd>
+<dt>output_course_lang_and_dir()</dt>
+<dd>
+
+<p>Output the LANG and DIR tags in the main HTML tag of a generated web page when a template file calls this function.</p>
+
+<p>This calls WeBWorK::Utils::LanguageAndDirection::get_lang_and_dir.</p>
+
+</dd>
+<dt>webwork_logo()</dt>
+<dd>
+
+<p>Create the link to the webwork installation landing page with a logo and alt text</p>
+
+</dd>
+<dt>institution_logo()</dt>
+<dd>
+
+<p>Create the link to the host institution with a logo and alt text</p>
+
+</dd>
+<dt>content()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Print the content of the generated page.</p>
+
+<p>This renders a Mojo::Template.</p>
+
+<p>The defaultThemeTemplate in the course environment is used for the page layout. If that is not defined, the default &quot;system&quot; template, is used. The location of the template is looked up in the course environment.</p>
+
+</dd>
+</dl>
+
+<h2 id="Template-escape-handlers">Template escape handlers</h2>
+
+<p>Template escape handlers are invoked in the templates.</p>
+
+<p>Some of the template escapes handlers are defined here but may be overridden in a subclass. Others, like <code>head</code> and <code>info</code> are not defined here, but may be defined in a subclass if needed.</p>
+
+<dl>
+
+<dt>head()</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>Any tags that should appear in the HEAD of the document.</p>
+
+</dd>
+<dt>info()</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>Auxiliary information related to the content displayed in the <code>body</code>.</p>
+
+</dd>
+<dt>links()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Links that should appear on every page.</p>
+
+</dd>
+<dt>nav($args)</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>Links to the previous, next, and parent objects.</p>
+
+<p>$args is a reference to a hash containing the following fields:</p>
+
+<pre><code> style       =&gt; text|buttons
+ separator   =&gt; HTML to place in between links</code></pre>
+
+<p>For example:</p>
+
+<pre><code> &lt;!--#nav style=&quot;buttons&quot; separator=&quot; &quot;--&gt;</code></pre>
+
+</dd>
+<dt>options()</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>View options related to the content displayed in the body or info areas.</p>
+
+</dd>
+<dt>path($args)</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Print &quot;breadcrubs&quot; from the root of the virtual hierarchy to the current page. $args is a reference to a hash containing the following fields:</p>
+
+<pre><code> style    =&gt; type of separator: text|image
+ image    =&gt; if style=image, URL of image to use as path separator
+ text     =&gt; if style=text, text to use as path separator
+             if style=image, the ALT text of each separator image
+ textonly =&gt; suppress all HTML, return only plain text</code></pre>
+
+<p>The implementation in this package gathers the route information from the current request.</p>
+
+</dd>
+<dt>siblings()</dt>
+<dd>
+
+<p>Not defined in this package.</p>
+
+<p>Print links to siblings of the current object.</p>
+
+</dd>
+<dt>timestamp()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Display the current time and date using default format &quot;3:37pm on Jan 7, 2004&quot;. The display format can be adjusted by giving a style in the template. For example,</p>
+
+<pre><code>  &lt;!--#timestamp style=&quot;%m/%d/%y at %I:%M%P&quot;--&gt;</code></pre>
+
+<p>will give standard WeBWorK time format. Wording and other formatting can be done in the template itself.</p>
+
+</dd>
+<dt>message()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Print any messages (error or non-error) resulting from the last form submission. This could be used to give Sucess and Failure messages after an action is performed by a module.</p>
+
+<p>The implementation in this package outputs the value of the field $c-&gt;{status_message}, if it is present.</p>
+
+</dd>
+<dt>page_title()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Print the title of the current page.</p>
+
+<p>The implementation in this package takes information from the current route.</p>
+
+</dd>
+<dt>webwork_url</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Outputs the $webwork_url defined in site.conf, unless $webwork_url is equal to &quot;/&quot;, in which case this outputs the empty string.</p>
+
+<p>This is used to set a value in a global webworkConfig javascript variable, that can be accessed in javascript files.</p>
+
+</dd>
+<dt>warnings()</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Print accumulated warnings.</p>
+
+<p>The implementation in this package checks for a stash key named &quot;warnings&quot;. If present, its contents are formatted and returned.</p>
+
+</dd>
+<dt>help()</dt>
+<dd>
+
+<p>Display a link to context-sensitive help for the current content generator module.</p>
+
+</dd>
+<dt>url($args)</dt>
+<dd>
+
+<p>Defined in this package.</p>
+
+<p>Returns the specified URL from either %webworkURLs or %courseURLs in the course environment. $args is a reference to a hash containing the following fields:</p>
+
+<pre><code> type =&gt; type of URL: webwork|course (defaults to webwork)
+ name =&gt; name of URL type (must be &#39;theme&#39; or undefined)
+ file =&gt; the local file name</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="Template-conditions">Template conditions</h2>
+
+<p>Template condition methods are called in the template. If a method is defined here or overriden in the instantiated subclass, it is invoked.</p>
+
+<p>The following conditions are currently defined:</p>
+
+<dl>
+
+<dt>can($function)</dt>
+<dd>
+
+<p>If a function named $function is present in the current content generator (or any superclass), a true value is returned. Otherwise, a false value is returned.</p>
+
+<p>This package just uses the UNIVERSAL::can() function.</p>
+
+<p>A subclass could redefine this method to, for example, &quot;hide&quot; a method from the template:</p>
+
+<pre><code>    sub can ($c, $arg) {
+        my ($c, $arg) = @_;
+
+        if ($arg eq &quot;floobar&quot;) {
+                return 0;
+        } else {
+                return $c-&gt;SUPER::can($arg);
+        }
+    }</code></pre>
+
+</dd>
+<dt>have_warnings</dt>
+<dd>
+
+<p>If warnings have been emitted while handling this request return true, otherwise return false.</p>
+
+<p>This implementation checks if a stash value named &quot;warnings&quot; has been set or if there are pg errors.</p>
+
+</dd>
+<dt>exists_theme_file</dt>
+<dd>
+
+<p>Returns true if the specified file exists in the current theme directory and false otherwise</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="HTML-MACROS">HTML MACROS</h1></a>
+
+<p>Various routines are defined in this package for rendering common WeBWorK idioms.</p>
+
+<p>FIXME: some of these should be moved to WeBWorK::HTML:: modules!</p>
+
+<p># ------------------------------------------------------------------------------</p>
+
+<h2 id="Template-escape-handler-macros">Template escape handler macros</h2>
+
+<p>These methods are used by implementations of the escape sequence handlers to maintain a consistent style.</p>
+
+<dl>
+
+<dt>pathMacro($args, @path)</dt>
+<dd>
+
+<p>Helper macro for the <code>#path</code> escape sequence: $args is a hash reference containing the &quot;style&quot;, &quot;image&quot;, &quot;text&quot;, and &quot;textonly&quot; arguments to the escape. @path consists of ordered key-value pairs of the form:</p>
+
+<pre><code> &quot;Page Name&quot; =&gt; Mojo::URL</code></pre>
+
+<p>If the page should not have a link associated with it, the URL should be the empty string. Authentication data is added to each URL so you don&#39;t have to. A fully-formed path line is returned, suitable for returning by a function implementing the <code>#path</code> escape.</p>
+
+</dd>
+<dt>navMacro($args, $tail, @links)</dt>
+<dd>
+
+<p>Helper macro for the <code>#nav</code> escape sequence: <code>$args</code> is a hash reference containing the &quot;style&quot; and &quot;separator&quot; arguments to the escape. <code>@links</code> consists of ordered tuples of the form:</p>
+
+<pre><code> &quot;Link Name&quot;, Mojo::URL</code></pre>
+
+<p>If a nav element should not have a link associated with it, the URL should be the empty string. <code>$tail</code> should be a hash reference of URL query parameters to add to each URL after the authentication information. A fully-formed nav line is returned, suitable for returning by a function implementing the <code>#nav</code> escape.</p>
+
+</dd>
+<dt>helpMacro($name)</dt>
+<dd>
+
+<p>This method outputs a link that opens a modal dialog containing the results of rendering a HelpFiles template. The template file that is rendered is $name.html. If that file does not exist, then nothing is output.</p>
+
+<p>The optional argument $args is a hash that may contain the keys label, label_size, or class. $args-&gt;{label} is the displayed label, $args-&gt;{label_size} is a font awesome size class and is only used if $args-&gt;{label} is not set, and $args-&gt;{class} is added to the html class attribute if defined.</p>
+
+</dd>
+<dt>feedbackMacro(%params)</dt>
+<dd>
+
+<p>Helper macro for displaying the feedback form. Returns a button named &quot;Email Instructor&quot;. %params contains the request parameters accepted by the Feedback module and their values.</p>
+
+</dd>
+</dl>
+
+<h2 id="Parameter-management">Parameter management</h2>
+
+<p>Methods for formatting request parameters as hidden form fields or query string fragments.</p>
+
+<dl>
+
+<dt>hidden_fields(@fields)</dt>
+<dd>
+
+<p>Return hidden &lt;INPUT&gt; tags for each field mentioned in @fields (or all fields if list is empty), taking data from the current request.</p>
+
+<p>A hash of options may be passed for the first argument of this method. The only supported option is an &quot;id_prefix&quot; to prepend to the id&#39;s of all of the hidden inputs that are created.</p>
+
+</dd>
+<dt>hidden_authen_fields()</dt>
+<dd>
+
+<p>Use hidden_fields to return hidden &lt;INPUT&gt; tags for request fields used in authentication.</p>
+
+<p>An optional $id_prefix may be passed as the first argument of this method.</p>
+
+</dd>
+<dt>hidden_proctor_authen_fields()</dt>
+<dd>
+
+<p>Use hidden_fields to return hidden &lt;INPUT&gt; tags for request fields used in proctor authentication.</p>
+
+</dd>
+<dt>url_args(@fields)</dt>
+<dd>
+
+<p>Return a hash containing values for each field mentioned in @fields, or all fields if list is empty. Data is taken from the current request. This return value is suitable for passing to the Mojo::URL query method.</p>
+
+</dd>
+<dt>url_authen_args()</dt>
+<dd>
+
+<p>Use url_args to return a hash of request fields used in authentication that is suitable for passing to the Mojo::URL query method.</p>
+
+</dd>
+</dl>
+
+<h2 id="Utilities">Utilities</h2>
+
+<dl>
+
+<dt>systemLink($urlpath, %options)</dt>
+<dd>
+
+<p>Generate a link to another part of the system. $urlpath is Mojo::URL object from which the base path will be taken. %options can consist of:</p>
+
+<dl>
+
+<dt>params</dt>
+<dd>
+
+<p>Can be either a reference to an array or a reference to a hash.</p>
+
+<p>If it is a reference to a hash, it maps parmaeter names to values. These parameters will be included in the generated link. If a value is an arrayref, the values of the array referenced will be used. If a value is undefined, the value from the current request will be used.</p>
+
+<p>If <code>params</code> is an arrayref, it is interpreted as a list of parameter names. These parameters will be included in the generated link, using the values from the current request.</p>
+
+<p>Unless <code>authen</code> is false (see below), the authentication parameters (<code>user</code>, <code>effectiveUser</code>, and <code>key</code>) are included with their default values.</p>
+
+</dd>
+<dt>authen</dt>
+<dd>
+
+<p>If set to a false value, the authentication parameters (<code>user</code>, <code>effectiveUser</code>, and <code>key</code>) are included in the the generated link unless explicitly listed in <code>params</code>.</p>
+
+</dd>
+<dt>use_abs_url</dt>
+<dd>
+
+<p>If set to a true value, the scheme, host, and port are prepended to the URL. This is useful for links which must be usable on their own, such as those sent via email.</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt>nbsp($string)</dt>
+<dd>
+
+<p>If string consists of only whitespace, the HTML entity <code>&amp;nbsp;</code> is returned. Otherwise $string is returned.</p>
+
+</dd>
+<dt>errorOutput($error, $details)</dt>
+<dd>
+
+<p>Used by Problem, ProblemSet, and Hardcopy to report errors encountered during problem rendering.</p>
+
+</dd>
+<dt>warningMessage</dt>
+<dd>
+
+<p>Used to display a generic warning message at the top of the page</p>
+
+</dd>
+<dt>$dateTime = parseDateTime($string, $display_tz)</dt>
+<dd>
+
+<p>Parses $string as a datetime. If $display_tz is given, $string is assumed to be in that timezone. Otherwise, the timezone defined in the course environment variable $siteDefaults{timezone} is used. The result, $dateTime, is an integer UNIX datetime (epoch) in the server&#39;s timezone.</p>
+
+</dd>
+<dt>$string = formatDateTime($dateTime, $display_tz)</dt>
+<dd>
+
+<p>Formats the UNIX datetime $dateTime in the standard WeBWorK datetime format. $dateTime is assumed to be in the server&#39;s time zone. If $display_tz is given, the datetime is converted from the server&#39;s timezone to the timezone specified. Otherwise, the timezone defined in the course environment variable $siteDefaults{timezone} is used.</p>
+
+</dd>
+<dt>read_scoring_file($fileName)</dt>
+<dd>
+
+<p>Wrapper for WeBWorK::File::Scoring that no-ops if $fileName is &quot;None&quot; and prepends the path to the scoring directory.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

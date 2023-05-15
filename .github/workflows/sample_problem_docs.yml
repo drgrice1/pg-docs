@@ -33,20 +33,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends --no-install-suggests \
             libtext-multimarkdown-perl \
-            libmojolicious-perl
+            libmojolicious-perl \
+            libyaml-libyaml-perl
 
       # Runs a set of commands using the runners shell
       - name: parse sample problems
         run: |
-          pwd
-          ls -l pg/doc/sample-problems/Algebra
-          ls -l pg/doc/sample-problems/Precalc
-          ls -l pg/doc/sample-problems/Sequences
-          ls -l pg/doc/sample-problems/Trig
-          ls -l pg/doc/sample-problems/Misc
           perl pg/bin/parse-prob-doc.pl  \
             --problem_dir=/home/runner/work/pg-docs/pg-docs/pg/doc/sample-problems \
-            --out_dir=/home/runner/work/pg-docs/pg-docs/sample-problems
+            --out_dir=/home/runner/work/pg-docs/pg-docs/sample-problems \
+            --pod_root=https://pstaabp.github.io/pg-docs/pod
           ls -l sample-problems
       - name: remove pg code
         run: |

@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::PG::ImageGenerator</title>
+</head>
+<body>
+<h1>WeBWorK::PG::ImageGenerator</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#CONFIGURATION-VARIABLES">CONFIGURATION VARIABLES</a></li>
+  <li><a href="#METHODS">METHODS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::PG::ImageGenerator - create an object for holding bits of math for LaTeX, and then to process them all at once.</p>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>    my $image_generator = WeBWorK::PG::ImageGenerator-&gt;new(
+        tempDir         =&gt; $pg_envir-&gt;{directories}{tmp},
+        latex           =&gt; $pg_envir-&gt;{externalPrograms}{latex},
+        dvipng          =&gt; $pg_envir-&gt;{externalPrograms}{dvipng},
+        useCache        =&gt; 1,
+        cacheDir        =&gt; $pg_envir-&gt;{directories}{equationCache},
+        cacheURL        =&gt; $pg_envir-&gt;{URLs}{equationCache},
+        cacheDB         =&gt; $pg_envir-&gt;{equationCacheDB},
+        useMarkers      =&gt; 0,
+        dvipng_align    =&gt; $pg_envir-&gt;{displayModeOptions}{images}{dvipng_align},
+        dvipng_depth_db =&gt; $pg_envir-&gt;{displayModeOptions}{images}{dvipng_depth_db},
+    );</code></pre>
+
+<a href="#_podtop_"><h1 id="CONFIGURATION-VARIABLES">CONFIGURATION VARIABLES</h1></a>
+
+<dl>
+
+<dt>$DvipngArgs</dt>
+<dd>
+
+<p>Arguments to pass to dvipng.</p>
+
+</dd>
+<dt>$PreserveTempFiles</dt>
+<dd>
+
+<p>If true, don&#39;t delete temporary files.</p>
+
+</dd>
+<dt>$TexPreamble</dt>
+<dd>
+
+<p>TeX to prepend to equations to be processed.</p>
+
+</dd>
+<dt>$TexPostamble</dt>
+<dd>
+
+<p>TeX to append to equations to be processed.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<dl>
+
+<dt>new</dt>
+<dd>
+
+<p>Returns a new ImageGenerator object. <code>%options</code> must contain the following entries:</p>
+
+<pre><code> tempDir  =&gt; directory in which to create temporary processing directory
+ latex    =&gt; path to latex binary
+ dvipng   =&gt; path to dvipng binary
+ useCache =&gt; boolean, whether to use global image cache</code></pre>
+
+<p>If <code>useCache</code> is false, <code>%options</code> must also contain the following entries:</p>
+
+<pre><code> dir      =&gt; directory for resulting files
+ url      =&gt; url to directory for resulting files
+ basename =&gt; base name for image files (i.e. &quot;eqn-$psvn-$probNum&quot;)</code></pre>
+
+<p>If <code>useCache</code> is true, <code>%options</code> must also contain the following entries:</p>
+
+<pre><code> cacheDir =&gt; directory for resulting files
+ cacheURL =&gt; url to cacheDir
+ cacheDB  =&gt; path to cache database file</code></pre>
+
+<p>Options may also contain:</p>
+
+<pre><code> dvipng_align    =&gt; Vertical alignment option.  This should be any of the valid values
+                    for the css vertical-align rule like &#39;baseline&#39; or &#39;middle&#39;.
+ dvipng_depth_db =&gt; Database connection information for a database that has the &#39;depths&#39; table.
+ useMarkers      =&gt; If you want to have the dvipng images vertically aligned, this involves adding markers.
+                    This only works if dvipng depths are stored and the body_text is provided.</code></pre>
+
+</dd>
+<dt>addToTeXPreamble($string)</dt>
+<dd>
+
+<p>Adds the string as part of the TeX preamble for all equations in the problem. For example $rh_envir-&gt;{imagegen}-&gt;addToTeXPreamble(&quot;\newcommand{\myVec}[#1]{\vec{#1}} &quot;);</p>
+
+<p>Will define a question wide style for interpreting \( \myVec{v} \)</p>
+
+<p>If this statement is placed in PGcourse.pl then the backslashes must be doubled since it is a .pl file not a .pg file</p>
+
+</dd>
+<dt>refresh(1)</dt>
+<dd>
+
+<p>Forces every equation picture to be recalculated. Useful for debugging.</p>
+
+<pre><code>        $rh_envir-&gt;{imagegen}-&gt;refresh(1);</code></pre>
+
+</dd>
+<dt>add($string, $mode)</dt>
+<dd>
+
+<p>Adds the equation in <code>$string</code> to the object. <code>$mode</code> can be &quot;display&quot; or &quot;inline&quot;. If not specified, &quot;inline&quot; is assumed. Returns the proper HTML tag for displaying the image.</p>
+
+</dd>
+<dt>render(%options)</dt>
+<dd>
+
+<p>Uses LaTeX and dvipng to render the equations stored in the object.</p>
+
+<p>The option <code>body_text</code> is a reference to the text of the problem&#39;s text. After rendering the images and figuring out their depths, we go through and fix the tags of the images to get the vertical alignment right. If it is left out, then we skip that step.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

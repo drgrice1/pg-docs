@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>graph/PGgraphmacros.pl</title>
+</head>
+<body>
+<h1>graph/PGgraphmacros.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Other-constructs">Other constructs</a></li>
+      <li><a href="#init_graph">init_graph</a></li>
+      <li><a href="#plot_functions">plot_functions</a></li>
+      <li><a href="#insertGraph">insertGraph</a></li>
+      <li><a href="#Circle-lables">&#39;Circle&#39; lables</a></li>
+      <li><a href="#Auxiliary-macros">Auxiliary macros</a>
+        <ul>
+          <li><a href="#string_to_sub-and-my_math_constants">string_to_sub and my_math_constants</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        PGgraphmacros -- in courseScripts directory</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<p># use Fun; # use Label; # use Circle; # use WWPlot;</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This collection of macros provides easy access to the facilities provided by the graph module WWPlot and the modules for objects which can be drawn on a graph: functions (Fun.pm) labels (Label.pm) and images. The only images implemented currently are open and closed circles (Circle) which can be used to mark graphs of functions defined on open and closed intervals.</p>
+
+<p>These macros provide an easy ability to graph simple functions. More complicated projects may require direct access to the underlying modules. If these complicated projects are common then it may be desirable to create additional macros. (See numericalmacros.pl for one example.)</p>
+
+<h2 id="Other-constructs">Other constructs</h2>
+
+<p>See <i>PGbasicmacros</i> for definitions of <code>image</code> and <code>caption</code></p>
+
+<h2 id="init_graph">init_graph</h2>
+
+<pre><code>                $graphObject = init_graph(xmin,ymin,xmax,ymax,&#39;ticks&#39;=&gt;[4,4],&#39;axes&#39;=&gt;[0,0])
+                options are
+                        &#39;grid&#39; =&gt;[8,8] or
+                        # there are 8 evenly spaced lines intersecting the horizontal axis
+                        &#39;ticks&#39;=&gt;[8,8] and/or
+                        # there are 8 ticks on the horizontal axis, 8 on the vertical
+                        &#39;axes&#39; =&gt; [0,0]
+                        # axes pass through the point (0,0) in real coordinates
+                        &#39;size&#39; =&gt; [200,200]
+                        # dimensions of the graph in pixels.
+                        &#39;pixels&#39; =&gt;[200,200]  # synonym for size</code></pre>
+
+<p>Creates a graph object with the default size 200 by 200 pixels. If you want axes or grids you need to specify them in options. But the default values can be selected for you.</p>
+
+<h2 id="plot_functions">plot_functions</h2>
+
+<pre><code>        Usage:  ($f1, $f2, $f3) = plot_functions($graph, $f1, $f2, $f3);
+        Synonym: add_functions($graph,$f1,$f2,$f3);</code></pre>
+
+<p>Where $f1 is a string of the form</p>
+
+<pre><code>        $f1 = qq! x^2 - 3*x + 45 for x in [0, 45) using color:red and weight:2!</code></pre>
+
+<p>The phrase translates as: formula <b>for</b> variable <b>in</b> interval <b>using</b> option-list. The option-list contains pairs of the form attribute:value. The default for color is &quot;default_color&quot; which is usually black. The default for the weight (pixel width) of the pen is 2 pixels.</p>
+
+<p>The string_to_sub subroutine is used to translate the formula into a subroutine.</p>
+
+<p>The functions in the list are installed in the graph object $graph and will appear when the graph object is next drawn.</p>
+
+<h2 id="insertGraph">insertGraph</h2>
+
+<pre><code>        $filePath = insertGraph(graphObject);
+                  returns a path to the file containing the graph image.</code></pre>
+
+<p><b>Note:</b> insertGraph is defined in PGcore.pl, because it involves writing to the disk.</p>
+
+<p>insertGraph(graphObject) writes a image file to the <code>html/tmp/images</code> directory of the current course. The file name is obtained from the graphObject. Warnings are issued if errors occur while writing to the file.</p>
+
+<p>The permissions and ownership of the file are controlled by <code>$main::tmp_file_permission</code> and <code>$main::numericalGroupID</code>.</p>
+
+<p><b>Returns:</b> A string containing the full path to the temporary file containing the image.</p>
+
+<p>InsertGraph draws the object $graph, stores it in &quot;${tempDirectory}images/$imageName.png (or .gif)&quot; where the $imageName is obtained from the graph object. ConvertPath and surePathToTmpFile are used to insure that the correct directory separators are used for the platform and that the necessary directories are created if they are not already present. The directory address to the file is the result.</p>
+
+<p>The most common use of C,insertGraph&gt; is</p>
+
+<pre><code>        TEXT(image(insertGraph($graph)) );</code></pre>
+
+<p>where <code>image</code> takes care of creating the proper URL for accessing the graph and for creating the HTML code to display the image.</p>
+
+<p>Another common usage is:</p>
+
+<pre><code>        TEXT(htmlLink( alias(insertGraph($graph), &quot;picture&quot; ) ) );</code></pre>
+
+<p>which inserts the URL pointing to the picture.</p>
+
+<p>alias() converts the directory address to a URL when serving HTML pages and insures that an eps file is generated when creating TeX code for downloading. (Image, automatically applies alias to its input in order to obtain the URL.)</p>
+
+<p>See the documentation in <i>PGcore.pl</i> for the latest details.</p>
+
+<h2 id="Circle-lables">&#39;Circle&#39; lables</h2>
+
+<pre><code>        Usage: $circle_object = open_circle( $x_position, $y_position, $color );
+                $circle_object2 = closed_circle( $x_position, $y_position, $color );</code></pre>
+
+<p>Creates a small open (resp. filled in or closed) circle for use as a stamp in marking graphs. For example</p>
+
+<pre><code>        $graph -&gt; stamps($circle_object2); # puts a filled dot at $x_position, $y_position</code></pre>
+
+<h2 id="Auxiliary-macros">Auxiliary macros</h2>
+
+<h3 id="string_to_sub-and-my_math_constants">string_to_sub and my_math_constants</h3>
+
+<p>These are internal macros which govern the interpretation of equations.</p>
+
+<pre><code>        Usage: $string = my_math_constants($string)
+               $subroutine_reference = my_string_to_sub($string)</code></pre>
+
+<p><code>my_math_constants</code> interprets pi, e as mathematical constants 3.1415926... and 2.71828... respectively. (Case is important). The power operator ^ is replaced by ** to conform with perl constructs</p>
+
+<p><code>string_to_sub</code> converts a string defining a single perl arithmetic expression with independent variable $XVAR into a subroutine. The string is first filtered through <code>my_math_macros</code>. The resulting subroutine takes a single real number as input and produces a single output value.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

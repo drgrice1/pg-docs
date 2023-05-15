@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextPiecewiseFunction.pl</title>
+</head>
+<body>
+<h1>contexts/contextPiecewiseFunction.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextPiecewiseFunction.pl - Allow usage of piecewise functions.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a context in which piecewise-defined functions can be specified by students and problem authors. To use it, add</p>
+
+<pre><code>        loadMacros(&quot;contextPiecewiseFunction.pl&quot;);</code></pre>
+
+<p>and then use</p>
+
+<pre><code>        Context(&quot;PiecewiseFunction&quot;);</code></pre>
+
+<p>to select the context for piecewise functions. There are several ways to produce a piecewise function. For example:</p>
+
+<pre><code>        $f = Compute(&quot;x if x &gt;= 0 else -x&quot;);
+        $f = Compute(&quot;x if x &gt;= 0 else -x if x &lt; 0&quot;);
+        $f = Formula(&quot;x+1 if x &gt; 2 else 4 if x = 2 else 1-x&quot;);
+        $f = PiecewiseFunction(&quot;x^2 if 1 &lt; x &lt;= 2 else 2x+1&quot;);
+        $f = PiecewiseFunction(&quot;1 &lt; x &lt;= 2&quot; =&gt; &quot;x^2&quot;, &quot;2x+1&quot;);
+        $f = PiecewiseFunction(&quot;(1,2]&quot; =&gt; &quot;x^2&quot;, &quot;2x+1&quot;);
+        $f = PiecewiseFunction(Interval(&quot;(1,2]&quot;) =&gt; &quot;x^2&quot;, &quot;2x+1&quot;);</code></pre>
+
+<p>You can use either Compute() or Formula() interchangeably to convert a string containing &quot;if&quot; and &quot;else&quot; to the corresponding PiecewiseFunction. The PiecewiseFunction() constructor can also do this, or you can pass it a list of interval=&gt;formula pairs that specify the various branches. If there is an unpaired final formula, it represents the &quot;otherwise&quot; portion of the function (the formula to use of the input is not in any of the given intervals).</p>
+
+<p>Note that you can use Inveral, Set, or Union objects in place of the intervals in the specification of a piecewise function.</p>
+
+<p>The PiecewiseFunction object TeXifies using a LaTeX &quot;cases&quot; environment, so you can use these objects to produce nice output even if you are not asking a student to enter one. For example:</p>
+
+<pre><code>        Context(&quot;PiecewiseFunction&quot;);
+        
+        $f = Formula(&quot;1-x if x &gt; 0 else 4 if x = 0 else 1+x if x &lt; 0&quot;);
+        $a = random(-2,2,.1);
+        
+        Context()-&gt;texStrings;
+        BEGIN_TEXT
+        If \[f(x)=$f\] then \(f($a)\) = \{ans_rule(20)\}.
+        END_TEXT
+        Context()-&gt;normalStrings;
+        
+        ANS($f-&gt;eval(x=&gt;$a)-&gt;cmp);</code></pre>
+
+<p>Normally when you use a piecewise function at the end of a sentence, the period is placed at the end of the last case. Since</p>
+
+<pre><code>        \[ f(x) = $f \].</code></pre>
+
+<p>would put the period centered at the right-hand side of the function, this is not what is desired. To get a period at the end of the last case, use</p>
+
+<pre><code>        \[ f(x) = \{$f-&gt;with(final_period=&gt;1)\} \]</code></pre>
+
+<p>instead.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

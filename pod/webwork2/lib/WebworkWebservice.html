@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WebworkWebservice</title>
+</head>
+<body>
+<h1>WebworkWebservice</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#new-constructor">new (constructor)</a></li>
+      <li><a href="#Accessor-methods">Accessor methods</a></li>
+      <li><a href="#rpc_execute">rpc_execute</a></li>
+      <li><a href="#c">c</a></li>
+      <li><a href="#Pass-through-methods-which-access-the-data-in-the-WeBWorK::Controller-object">Pass through methods which access the data in the WeBWorK::Controller object</a></li>
+      <li><a href="#command_permission">command_permission</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WebworkWebservice</p>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>    my $rpc_service = WebworkWebservice-&gt;new($c);
+    await $rpc_service-&gt;rpc_execute(&#39;command_to_execute&#39;);</code></pre>
+
+<p>After that, if the command is &#39;renderProblem&#39;, use</p>
+
+<pre><code>        my $result = $rpc_service-&gt;formatRenderedProblem;</code></pre>
+
+<p>to obtain the result in the requested &#39;outputformat&#39;.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The WebworkWebservice executes a requested command and returns with the result. The webservice command methods are available are in the following modules:</p>
+
+<pre><code>    WebworkWebservice::RenderProblem;
+    WebworkWebservice::LibraryActions;
+    WebworkWebservice::SetActions;
+    WebworkWebservice::CourseActions;
+    WebworkWebservice::ProblemActions</code></pre>
+
+<p>Note that WebworkWebservice contains the formatRenderedProblem method for formatting the reply returned by the renderProblem command.</p>
+
+<p>Also note that the WeBWorK::ContentGenerator::RenderViaRPC module implements the renderProblem command, and the WeBWorK::ContentGenerator::InstructorPRCHandler module has implements all other commands.</p>
+
+<h2 id="new-constructor">new (constructor)</h2>
+
+<h2 id="Accessor-methods">Accessor methods</h2>
+
+<pre><code>    return_object
+    error_string</code></pre>
+
+<h2 id="rpc_execute">rpc_execute</h2>
+
+<p>This method executes a WebworkWebservice command, and makes sure that credentials are returned in the result on success. The result will be stored in the result_object of the instance. An error_string will be set on failure.</p>
+
+<dl>
+
+<dt>formatRenderedProblem</dt>
+<dd>
+
+<p>This is called by WeBWorK::ContentGenerator::RenderViaRPC::pre_header_initialize to format the return result of the WebworkWebservice::renderProblem method. This method calls HardcopyRenderedProblem::hardcopyRenderedProblem if the outputformat is tex or pdf, and calls FormatRenderedProblem::formatRenderedProblem otherwise.</p>
+
+</dd>
+</dl>
+
+<h2 id="c">c</h2>
+
+<p>Returns the WeBWorK::Controller object contained in $webworkRPC.</p>
+
+<h2 id="Pass-through-methods-which-access-the-data-in-the-WeBWorK::Controller-object">Pass through methods which access the data in the WeBWorK::Controller object</h2>
+
+<pre><code>    ce
+    db
+    params
+    authz
+    authen
+    maketext</code></pre>
+
+<h2 id="command_permission">command_permission</h2>
+
+<p>This returns the permission required to perform the commands offered by the WebworkWebservice. Note that all available commands must be listed here or the command will not be allowed.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

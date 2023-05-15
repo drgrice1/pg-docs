@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/PGfunctionevaluators.pl</title>
+</head>
+<body>
+<h1>answers/PGfunctionevaluators.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#MathObjects-and-answer-evaluators">MathObjects and answer evaluators</a></li>
+    </ul>
+  </li>
+  <li><a href="#fun_cmp">fun_cmp</a>
+    <ul>
+      <li><a href="#Options">Options</a></li>
+      <li><a href="#Examples">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#Single-variable-Function-Comparisons">Single-variable Function Comparisons</a>
+    <ul>
+      <li><a href="#function_cmp">function_cmp</a></li>
+      <li><a href="#function_cmp_up_to_constant">function_cmp_up_to_constant</a></li>
+      <li><a href="#function_cmp_abs">function_cmp_abs</a></li>
+      <li><a href="#function_cmp_up_to_constant_abs">function_cmp_up_to_constant_abs</a></li>
+      <li><a href="#adaptive_function_cmp">adaptive_function_cmp</a></li>
+    </ul>
+  </li>
+  <li><a href="#Multi-variable-Function-Comparisons">Multi-variable Function Comparisons</a>
+    <ul>
+      <li><a href="#DEPRECATED-multivar_function_cmp">[DEPRECATED] multivar_function_cmp</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>PGfunctionevaluators.pl - Macros that generate function answer evaluators.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>        ANS(fun_cmp($answer_or_answer_array_ref, %options));
+
+        ANS(function_cmp($correctEqn, $var, $llimit, $ulimit, $relTol, $numPoints, $zeroLevel,
+                         $zeroLevelTol));
+        ANS(function_cmp_up_to_constant($correctEqn, $var, $llimit, $ulimit, $relpercentTol, 
+                                        $numOfPoints, $maxConstantOfIntegration, $zeroLevel, 
+                                        $zeroLevelTol));
+        ANS(function_cmp_abs($correctFunction, $var, $llimit, $ulimit, $absTol, $numOfPoints));
+        ANS(function_cmp_up_to_constant_abs($correctFunction, $var, $llimit, $ulimit,
+                                            $absTol, $numOfPoints, $maxConstantOfIntegration));</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Function answer evaluators take in a function, compare it numerically to a correct function, and return a score. They can require an exactly equivalent function, or one that is equal up to a constant. They can accept or reject an answer based on specified tolerances for numerical deviation.</p>
+
+<p>The general function answer evaluator is fun_cmp(). It takes a hash of named options as parameters. There are also several specific function_cmp_*() answer evaluators for use in common situations which feature a simplified syntax.</p>
+
+<h2 id="MathObjects-and-answer-evaluators">MathObjects and answer evaluators</h2>
+
+<p>The MathObjects system provides a Formula-&gt;cmp() method that produce answer evaluators for function comparisons. fun_cmp() has been rewritten to use Formula-&gt;cmp() to produce the answer evaluator. It is recommended that you use the Formula object&#39;s cmp() method directly if possible.</p>
+
+<a href="#_podtop_"><h1 id="fun_cmp">fun_cmp</h1></a>
+
+<pre><code>        ANS(fun_cmp($answer_or_answer_array_ref, %options));</code></pre>
+
+<p>Compares a function or a list of functions, using a named hash of options to set parameters. This can make for more readable code than using the function_cmp() style, but some people find one or the other easier to remember.</p>
+
+<h2 id="Options">Options</h2>
+
+<p>$answer_or_answer_array_ref can either be a string scalar representing the correct formula or a reference to an array of string scalars. If multiple formulas are provided, fun_cmp() will return a list of answer evaluators, one for each answer specified. The answer can contain functions, pi, e, and arithmetic operations. However, the correct answer string follows a slightly stricter syntax than student answers; specifically, there is no implicit multiplication. So the correct answer must be &quot;3*x&quot; rather than &quot;3 x&quot;. Students can still enter &quot;3 x&quot;.</p>
+
+<p>%options is a hash containing options that affect the way the comparison is performed. All hash items are optional. Allowed options are:</p>
+
+<dl>
+
+<dt>mode</dt>
+<dd>
+
+<p>This determines the evaluation mode. The recognized modes are:</p>
+
+<dl>
+
+<dt>std (default)</dt>
+<dd>
+
+<p>Function must match exactly.</p>
+
+</dd>
+<dt>antider</dt>
+<dd>
+
+<p>Function must match up to a constant.</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt>tol</dt>
+<dd>
+
+<p>An absolute tolerance value. When the student and correct functions are evaluated, the result for each evaluation point must be within a fixed distance from the correct answer to qualify. For example, an absolute tolerance of 5 means that any result which is +-5 of the correct answer qualifies as correct. abstol is accepted as a synonym for tol.</p>
+
+</dd>
+<dt>relTol</dt>
+<dd>
+
+<p>A relative tolerance. Relative tolerances are given in percentages. A relative tolerance of 1 indicates that when the student&#39;s function are evaluated, the result of evaluation at each point must be within within 1% of the correct answer to qualify as correct. In other words, a student answer is correct when</p>
+
+<pre><code>        abs(studentAnswer - correctAnswer) &lt;= abs(.01*relTol*correctAnswer)</code></pre>
+
+<p>tol and relTol are mutually exclusive. reltol is also accpeted as a synonym for relTol.</p>
+
+</dd>
+<dt>zeroLevel, zeroLevelTol</dt>
+<dd>
+
+<p>zeroLevel and zeroLevelTol specify a alternative absolute tolerance to use when the correct answer is very close to zero.</p>
+
+<p>If the correct answer has an absolute value less than or equal to zeroLevel, then the student answer must be, in absolute terms, within zeroLevelTol of correctAnswer, i.e.,</p>
+
+<pre><code>        abs(studentAnswer - correctAnswer) &lt;= zeroLevelTol</code></pre>
+
+<p>In other words, if the correct answer is very near zero, an absolute tolerance will be used. One must do this to handle floating point answers very near zero, because of the inaccuracy of floating point arithmetic. However, the default values are almost always adequate.</p>
+
+</dd>
+<dt>var</dt>
+<dd>
+
+<p>The var parameter can contain a number, a string, or a reference to an array of variable names. If it contains a number, the variables are named automatically as follows:</p>
+
+<pre><code>         var | variables used     
+        -----+--------------------
+         1   | x                  
+         2   | x, y               
+         3   | x, y, z            
+         4+  | x_1, x_2, x_3, ... </code></pre>
+
+<p>If the var parameter contains a reference to an array of variable names, then the number of variables is determined by the number of items in the array. For example:</p>
+
+<pre><code>        var=&gt;[&#39;r&#39;,&#39;s&#39;,&#39;t&#39;]</code></pre>
+
+<p>If the var parameter contains a string, the string is used as the name of a single variable. Hence, the following are equivalent:</p>
+
+<pre><code>        var=&gt;[&#39;t&#39;]
+        var=&gt;&#39;t&#39;</code></pre>
+
+<p>vars is recognied as a synonym for var. The default is a single variable, x.</p>
+
+</dd>
+<dt>limits</dt>
+<dd>
+
+<p>Limits are specified with the limits parameter. If you specify limits for one variable, you must specify them for all variables. The limit parameter must be a reference to an array of arrays of the form <code>[$lower_limit. $upper_limit]</code>, each array corresponding to the lower and upper endpoints of the (half-open) domain of one variable. For example,</p>
+
+<pre><code>        vars=&gt;2, limits=&gt;[[0,2], [-3,8]]</code></pre>
+
+<p>would cause x to be evaluated in [0,2) and y to be evaluated in [-3,8). If only one variable is being used, you can write either:</p>
+
+<pre><code>        limits =&gt; [[0,3]]
+        limits =&gt; [0,3]</code></pre>
+
+<p>domain is recognized as a synonym for limits.</p>
+
+</dd>
+<dt>test_points</dt>
+<dd>
+
+<p>In some cases, the problem writer may want to specify the points used to check a particular function. For example, if you want to use only integer values, they can be specified. With one variable, either of these two forms work:</p>
+
+<pre><code>        test_points=&gt;[1,4,5,6]
+        test_points=&gt;[[1,4,5,6]]</code></pre>
+
+<p>With more variables, specify the list for the first variable, then the second, and so on:</p>
+
+<pre><code>        vars=&gt;[&#39;x&#39;,&#39;y&#39;], test_points=&gt;[[1,4,5],[7,14,29]]&quot;.</code></pre>
+
+<p>If the problem writer wants random values which need to meet some special restrictions (such as being integers), they can be generated in the problem:</p>
+
+<pre><code>        test_points=&gt;[random(1,50), random(1,50), random(1,50), random(1,50)]</code></pre>
+
+<p>Note that test_points should not be used for function checks which involve parameters (either explicitly given by &quot;params&quot;, or as antiderivatives).</p>
+
+</dd>
+<dt>numPoints</dt>
+<dd>
+
+<p>The number of sample points to use when evaluating the function.</p>
+
+</dd>
+<dt>maxConstantOfIntegration</dt>
+<dd>
+
+<p>Maximum size for the constant of integration (in antider mode).</p>
+
+</dd>
+<dt>params</dt>
+<dd>
+
+<p>A reference to an array of &quot;free&quot; parameters which can be used to adapt the correct answer to the submitted answer. (e.g. [&#39;c&#39;] for a constant of integration in the answer x^3/3+c.</p>
+
+</dd>
+<dt>debug</dt>
+<dd>
+
+<p>If set to one, extra debugging information will be output.</p>
+
+</dd>
+</dl>
+
+<h2 id="Examples">Examples</h2>
+
+<pre><code>        # standard compare, variable is x
+        fun_cmp(&quot;3*x&quot;);
+
+        # standard compare, defaults used for all three functions
+        fun_cmp([&quot;3*x&quot;, &quot;4*x+3&quot;, &quot;3*x**2&quot;]);
+
+        # standard compare, variable is t
+        fun_cmp(&quot;3*t&quot;, var=&gt;&#39;t&#39;);
+
+        # x, y and z are the variables
+        fun_cmp(&quot;5*x*y*z&quot;, var=&gt;3);
+
+        # student answer must match up to constant (i.e., 5x+C)
+        fun_cmp(&quot;5*x&quot;, mode=&gt;&#39;antider&#39;);
+
+        # x is evaluated in [0,2), y in [5,7)
+        fun_cmp([&quot;3*x*y&quot;, &quot;4*x*y&quot;], limits=&gt;[[0,2], [5,7]]);</code></pre>
+
+<a href="#_podtop_"><h1 id="Single-variable-Function-Comparisons">Single-variable Function Comparisons</h1></a>
+
+<p>There are four single-variable function answer evaluators: &quot;normal,&quot; absolute tolerance, antiderivative, and antiderivative with absolute tolerance. All parameters (other than the correct equation) are optional.</p>
+
+<h2 id="function_cmp">function_cmp</h2>
+
+<pre><code>        ANS(function_cmp($correctEqn, $var, $llimit, $ulimit, $relTol, $numPoints,
+                         $zeroLevel, $zeroLevelTol));</code></pre>
+
+<p>function_cmp() uses standard comparison and relative tolerance. It takes a string representing a single-variable function and compares the student answer to that function numerically. $var, $relTol, $numPoints, $zeroLevel, and $zeroLevelTol are equivalent to the identically-named options to fun_cmp(), above. $llimit and $ulimit are combined to form the value of limits above.</p>
+
+<h2 id="function_cmp_up_to_constant">function_cmp_up_to_constant</h2>
+
+<pre><code>        ANS(function_cmp_up_to_constant($correctEqn, $var, $llimit, $ulimit,
+                                        $relpercentTol, $numOfPoints,
+                                        $maxConstantOfIntegration, $zeroLevel,
+                                        $zeroLevelTol));</code></pre>
+
+<p>function_cmp_up_to_constant() uses antiderivative compare and relative tolerance. All but the first argument are optional. All options work exactly like function_cmp(), except of course $maxConstantOfIntegration. It will accept as correct any function which differs from $correctEqn by at most a constant; that is, if</p>
+
+<pre><code>        $studentEqn = $correctEqn + C, where C &lt;= $maxConstantOfIntegration</code></pre>
+
+<p>the answer is correct.</p>
+
+<h2 id="function_cmp_abs">function_cmp_abs</h2>
+
+<pre><code>        ANS(function_cmp_abs($correctFunction, $var, $llimit, $ulimit, $absTol, $numOfPoints));</code></pre>
+
+<p>function_cmp_abs() uses standard compare and absolute tolerance. All but the first argument are optional. $absTol defines the absolute tolerance value. See the corresponding option to fun_cmp(), above. All other options work exactly as for function_cmp().</p>
+
+<h2 id="function_cmp_up_to_constant_abs">function_cmp_up_to_constant_abs</h2>
+
+<pre><code>        ANS(function_cmp_up_to_constant_abs($correctFunction, $var, $llimit,
+                                            $ulimit, $absTol, $numOfPoints,
+                                            $maxConstantOfIntegration));</code></pre>
+
+<p>function_cmp_up_to_constant_abs() uses antiderivative compare and absolute tolerance. All but the first argument are optional. $absTol defines the absolute tolerance value. See the corresponding option to fun_cmp(), above. All other options work exactly as with function_cmp_up_to_constant().</p>
+
+<h2 id="adaptive_function_cmp">adaptive_function_cmp</h2>
+
+<p>FIXME undocumented.</p>
+
+<a href="#_podtop_"><h1 id="Multi-variable-Function-Comparisons">Multi-variable Function Comparisons</h1></a>
+
+<h2 id="DEPRECATED-multivar_function_cmp">[DEPRECATED] multivar_function_cmp</h2>
+
+<pre><code>        ANS(multivar_function_cmp($correctFunction, $var, $limits, $relTol, $numPoints, $zeroLevel, $zeroLevelTol));</code></pre>
+
+<p>This function is deprecated. Use fun_cmp instead:</p>
+
+<pre><code>        ANS(fun_cmp($correctFunction, var=&gt;$var, limits=&gt;$limits, ...));</code></pre>
+
+<a href="#_podtop_"><h1 id="SEE-ALSO">SEE ALSO</h1></a>
+
+<p><a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>, <a href="//pg/doc/MathObjects">MathObjects</a>.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

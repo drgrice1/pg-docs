@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/PGstringevaluators.pl</title>
+</head>
+<body>
+<h1>answers/PGstringevaluators.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#MathObjects-and-answer-evaluators">MathObjects and answer evaluators</a></li>
+    </ul>
+  </li>
+  <li><a href="#String-Filters">String Filters</a></li>
+  <li><a href="#str_cmp">str_cmp</a>
+    <ul>
+      <li><a href="#Examples">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#mode_str_cmp-functions">&quot;mode&quot;_str_cmp functions</a>
+    <ul>
+      <li><a href="#Examples1">Examples</a></li>
+    </ul>
+  </li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>PGstringevaluators.pl - Macros that generate string answer evaluators.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>        ANS(str_cmp(&quot;increasing&quot;));
+        
+        ANS(unordered_str_cmp(&quot;A C E&quot;));</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>String answer evaluators compare a student string to the correct string.</p>
+
+<h2 id="MathObjects-and-answer-evaluators">MathObjects and answer evaluators</h2>
+
+<p>The MathObjects system provides a String-&gt;cmp() method that produce answer evaluators for string comparisons. It is recommended that you use the String object&#39;s cmp() method directly if possible.</p>
+
+<a href="#_podtop_"><h1 id="String-Filters">String Filters</h1></a>
+
+<p>Different filters can be applied to allow various degrees of variation. Both the student and correct answers are subject to the same filters, to ensure that there are no unexpected matches or rejections.</p>
+
+<dl>
+
+<dt>remove_whitespace</dt>
+<dd>
+
+<p>Removes all whitespace from the string. It applies the following substitution to the string:</p>
+
+<pre><code>        $filteredAnswer =~ s/\s+//g;</code></pre>
+
+</dd>
+<dt>compress_whitespace</dt>
+<dd>
+
+<p>Removes leading and trailing whitespace, and replaces all other blocks of whitespace by a single space. Applies the following substitutions:</p>
+
+<pre><code>        $filteredAnswer =~ s/^\s*//;
+        $filteredAnswer =~ s/\s*$//;
+        $filteredAnswer =~ s/\s+/ /g;</code></pre>
+
+</dd>
+<dt>trim_whitespace</dt>
+<dd>
+
+<p>Removes leading and trailing whitespace. Applies the following substitutions:</p>
+
+<pre><code>        $filteredAnswer =~ s/^\s*//;
+        $filteredAnswer =~ s/\s*$//;</code></pre>
+
+</dd>
+<dt>nullify</dt>
+<dd>
+
+<p>Returns the null string.</p>
+
+</dd>
+<dt>ignore_case</dt>
+<dd>
+
+<p>Ignores the case of the string. More accurately, it converts the string to uppercase (by convention). Applies the following function:</p>
+
+<pre><code>        $filteredAnswer = uc($filteredAnswer);</code></pre>
+
+</dd>
+<dt>ignore_order</dt>
+<dd>
+
+<p>Ignores the order of the letters in the string. This is used for problems of the form &quot;Choose all that apply.&quot; Specifically, it removes all whitespace and lexically sorts the letters in ascending alphabetical order. Applies the following functions:</p>
+
+<pre><code>        $filteredAnswer = join(&quot;&quot;, lex_sort(split(/\s*/, $filteredAnswer)));</code></pre>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="str_cmp">str_cmp</h1></a>
+
+<pre><code>        ANS(str_cmp($answer_or_answer_array_ref, @filters));
+        ANS(str_cmp($answer_or_answer_array_ref, %options));</code></pre>
+
+<p>Compares a string or a list of strings, using a named hash of options to set parameters. This can make for more readable code than using the &quot;mode&quot;_str_cmp() style, but some people find one or the other easier to remember.</p>
+
+<p>$answer_or_answer_array_ref can be a scalar representing the correct answer or a reference to an array of string scalars. If multiple answers are given, str_cmp returns one answer evaluator for each answer.</p>
+
+<p>num_cmp() differentiates %options from @filters by checking for the names of supported options in the list. Currently &quot;filter&quot;, &quot;filters&quot;, and &quot;debug&quot; are checked for. If these strings are found in the argument list, it is assumed that %options is present rather than @filters.</p>
+
+<p>%options can contain the following items:</p>
+
+<dl>
+
+<dt>filters</dt>
+<dd>
+
+<p>A reference to an array of filter names, to be applied to both the correct answer and the student&#39;s answer before doing string comparison. Supported filters are listed above. filter is avaliable as a synonym for filters.</p>
+
+</dd>
+<dt>debug</dt>
+<dd>
+
+<p>If set to 1, extra debugging information will be output.</p>
+
+</dd>
+</dl>
+
+<p>If %options is not detected, the rest of the argument list is assumed to be a list of filter names. Hence, the following two forms are equivalent:</p>
+
+<pre><code>        ANS(str_cmp($ans, &#39;remove_whitespace&#39;, &#39;ignore_order&#39;));
+        ANS(str_cmp($ans, filters=&gt;[&#39;remove_whitespace&#39;, &#39;ignore_order&#39;]));</code></pre>
+
+<h2 id="Examples">Examples</h2>
+
+<pre><code>        # same as std_str_cmp() -- matches &quot;Hello&quot;, &quot;  hello&quot;, etc.
+        str_cmp(&quot;Hello&quot;)
+
+        # same as std_str_cmp_list()
+        str_cmp([&quot;Hello&quot;, &quot;Goodbye&quot;]);
+
+        # matches &quot;hello&quot;, &quot; hello  &quot;, etc.
+        str_cmp(&#39; hello &#39;, &#39;trim_whitespace&#39;);
+
+        # matches &quot;ACB&quot; and &quot;A B C&quot;, but not &quot;abc&quot;
+        str_cmp(&#39;ABC&#39;, filters=&gt;&#39;ignore_order&#39;);
+
+        # matches &quot;def&quot; and &quot;d e f&quot; but not &quot;fed&quot;
+        str_cmp(&#39;D E F&#39;, &#39;remove_whitespace&#39;, &#39;ignore_case&#39;);</code></pre>
+
+<a href="#_podtop_"><h1 id="mode_str_cmp-functions">&quot;mode&quot;_str_cmp functions</h1></a>
+
+<p>The functions of the the form &quot;mode&quot;_str_cmp() use different functions to specify which filters to apply. They take no options except the correct string. There are also versions which accept a list of strings.</p>
+
+<dl>
+
+<dt>standard</dt>
+<dd>
+
+<pre><code>        std_str_cmp($correctString)
+        std_str_cmp_list(@correctStringList)</code></pre>
+
+<p>Filters: compress_whitespace, ignore_case</p>
+
+</dd>
+<dt>standard, case sensitive</dt>
+<dd>
+
+<pre><code>        std_cs_str_cmp($correctString)
+        std_cs_str_cmp_list(@correctStringList)</code></pre>
+
+<p>Filters: compress_whitespace</p>
+
+</dd>
+<dt>strict</dt>
+<dd>
+
+<pre><code>        strict_str_cmp($correctString)
+        strict_str_cmp_list(@correctStringList)</code></pre>
+
+<p>Filters: trim_whitespace</p>
+
+</dd>
+<dt>unordered</dt>
+<dd>
+
+<pre><code>        unordered_str_cmp( $correctString )
+        unordered_str_cmp_list( @correctStringList )</code></pre>
+
+<p>Filters: ignore_order, ignore_case</p>
+
+</dd>
+<dt>unordered, case sensitive</dt>
+<dd>
+
+<pre><code>        unordered_cs_str_cmp( $correctString )
+        unordered_cs_str_cmp_list( @correctStringList )</code></pre>
+
+<p>Filters: ignore_order</p>
+
+</dd>
+<dt>ordered</dt>
+<dd>
+
+<pre><code>        ordered_str_cmp( $correctString )
+        ordered_str_cmp_list( @correctStringList )</code></pre>
+
+<p>Filters: remove_whitespace, ignore_case</p>
+
+</dd>
+<dt>ordered, case sensitive</dt>
+<dd>
+
+<pre><code>        ordered_cs_str_cmp( $correctString )
+        ordered_cs_str_cmp_list( @correctStringList )</code></pre>
+
+<p>Filters: remove_whitespace</p>
+
+</dd>
+</dl>
+
+<h2 id="Examples1">Examples</h2>
+
+<pre><code>        # Accepts &quot;W. Mozart&quot;, &quot;W. MOZarT&quot;, and so forth. Case insensitive. All
+        # internal spaces treated as single spaces.
+        ANS(std_str_cmp(&quot;W. Mozart&quot;));
+
+        # Rejects &quot;mozart&quot;. Same as std_str_cmp() but case sensitive.
+        ANS(std_cs_str_cmp(&quot;Mozart&quot;));
+
+        # Accepts only the exact string.
+        ANS(strict_str_cmp(&quot;W. Mozart&quot;));
+
+        # Accepts &quot;a c B&quot;, &quot;CBA&quot; and so forth. Unordered, case insensitive, spaces
+        # ignored.
+        ANS(unordered_str_cmp(&quot;ABC&quot;));
+
+        # Rejects &quot;abc&quot;. Same as unordered_str_cmp() but case sensitive.
+        ANS(unordered_cs_str_cmp(&quot;ABC&quot;));
+
+        # Accepts &quot;a b C&quot;, &quot;A B C&quot; and so forth. Ordered, case insensitive, spaces
+        # ignored.
+        ANS(ordered_str_cmp(&quot;ABC&quot;));
+
+        # Rejects &quot;abc&quot;, accepts &quot;A BC&quot; and so forth. Same as ordered_str_cmp() but
+        # case sensitive.
+        ANS(ordered_cs_str_cmp(&quot;ABC&quot;));</code></pre>
+
+<a href="#_podtop_"><h1 id="SEE-ALSO">SEE ALSO</h1></a>
+
+<p><a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>, <a href="//pg/doc/MathObjects">MathObjects</a>.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

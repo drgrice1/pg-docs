@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextMatrixExtras.pl</title>
+</head>
+<body>
+<h1>contexts/contextMatrixExtras.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p><i>contextMatrixExtras.pl</i> - Add transpose, trace, and determinant to Matrix context</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The <i>contextMatrixExtras.pl</i> file adds the ability to include matrix transpose, trace, and determinants in student answers. The transpose is represented by <code>^T</code>, as in <code>M^T</code>, in student answers or parsed strings. The trace is given as <code>tr(M)</code>, and the determinant by <code>det(M)</code>. Thus you can do things like:</p>
+
+<pre><code>    loadMacros(&quot;contextMatrixExtras.pl&quot;);
+    
+    Context(&quot;Matrix&quot;);
+    Context()-&gt;constants-&gt;add(
+      A =&gt; Matrix([[pi,1/pi**2],[sqrt[2],ln(pi)]]),  # an arbitrary matrix with no special properties
+    );
+    
+    $F = Formula(&quot;det(A) + tr(A^T)&quot;);
+    
+    Context()-&gt;texStrings;
+    BEGIN_TEXT
+    \($F\) = \{ans_rule(20)\}
+    END_TEXT
+    Context()-&gt;normalStrings;
+    
+    ANS($F-&gt;cmp);</code></pre>
+
+<p>You can also use the <code>trace</code>, <code>det</code>, and <code>transpose</code> methods of a Matrix object to compute these in PG code.</p>
+
+<pre><code>    loadMacros(&quot;contextMatrixExtras.pl&quot;);
+    
+    Context(&quot;Matrix&quot;);
+    $M = Matrix([[1,2],[3,4]]);
+    
+    $Mt = $M-&gt;transpose;
+    $d  = $M-&gt;det;
+    $tr = $M-&gt;trace;</code></pre>
+
+<p>Note that the <i>contextMatrixExtras.pl</i> file modifies the Matrix context, so be sure to load it before you set the Context.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

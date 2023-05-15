@@ -1,0 +1,508 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ui/niceTables.pl</title>
+</head>
+<body>
+<h1>ui/niceTables.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#niceTables.pl">niceTables.pl</a>
+    <ul>
+      <li><a href="#Description">Description</a></li>
+      <li><a href="#Options-for-the-WHOLE-TABLE">Options for the WHOLE TABLE</a>
+        <ul>
+          <li><a href="#All-output-formats">All output formats</a></li>
+          <li><a href="#HTML-output">HTML output</a></li>
+          <li><a href="#PDF-hardcopy-output">PDF hardcopy output</a></li>
+        </ul>
+      </li>
+      <li><a href="#Options-for-CELLS">Options for CELLS</a>
+        <ul>
+          <li><a href="#All-output-formats1">All output formats</a></li>
+          <li><a href="#HTML-output1">HTML output</a></li>
+          <li><a href="#PDF-hardcopy-output1">PDF hardcopy output</a></li>
+        </ul>
+      </li>
+      <li><a href="#Options-for-ROWS">Options for ROWS</a></li>
+      <li><a href="#Options-for-COLUMNS">Options for COLUMNS</a></li>
+      <li><a href="#Deprecations">Deprecations</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="niceTables.pl">niceTables.pl</h1></a>
+
+<p>Subroutines for creating tables that:</p>
+
+<ul>
+
+<li><p>conform to accessibility standards in HTML output</p>
+
+</li>
+<li><p>have uniform styling across output formats, to the degree possible</p>
+
+</li>
+<li><p>may use CSS for additional HTML styling</p>
+
+</li>
+<li><p>may use LaTeX commands for additional hardcopy styling</p>
+
+</li>
+</ul>
+
+<p><code>DataTable()</code> creates a table displaying data. It should not be used for layout, such as displaying an array of graphs.</p>
+
+<p><code>LayoutTable()</code> creates a &quot;table&quot; without using an HTML table in HTML output. Use <code>LayoutTable()</code> whenever you are simply laying out content for space-saving purposes. Ask yourself if there is any meaningful relation between content cells within a column or within a row. If the answer is no in both cases, it is likely a case for <code>LayoutTable()</code>.</p>
+
+<h2 id="Description">Description</h2>
+
+<p>Command for a typical table:</p>
+
+<pre><code>    DataTable(
+        [
+            [a,b,c,...],
+            [d,e,f,...],
+            ...
+        ],
+        options
+    );
+
+    LayoutTable(
+        [
+            [a,b,c,...],
+            [d,e,f,...],
+            ...
+        ],
+        options
+    );</code></pre>
+
+<p>The cell entries above like <code>a</code> may be simple cell content, a hash reference with <code>data =&gt; cellContent</code> and options, or an array reference where the 0th entry is the the cell content and it is followed by option key-value pairs.</p>
+
+<p>As much as possible, options apply to all output formats. Some options only apply to HTML, and some apply only to PDF. Not all options are supported by every output format. For example PreTeXt cannot use color information.</p>
+
+<p>All features described below apply to a <code>DataTable</code>. Most apply to a <code>LayoutTable</code> as well, but not <code>caption</code>, <code>rowheaders</code>, <code>header</code>, <code>colspan</code>, or <code>headerrow</code>.</p>
+
+<h2 id="Options-for-the-WHOLE-TABLE">Options for the WHOLE TABLE</h2>
+
+<h3 id="All-output-formats">All output formats</h3>
+
+<dl>
+
+<dt><code>center =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>center the table (default 1)</p>
+
+</dd>
+<dt><code>caption =&gt; string</code></dt>
+<dd>
+
+<p>caption for the table</p>
+
+</dd>
+<dt><code>horizontalrules =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>make rules above and below every row (default 0)</p>
+
+</dd>
+<dt><code>texalignment =&gt; string</code></dt>
+<dd>
+
+<p>an alignment string like is used in a LaTeX tabular environment: for example <code>&#39;r|ccp{1in}&#39;</code></p>
+
+<p><code>l</code> for left-aligned column</p>
+
+<p><code>c</code> for center-aligned column</p>
+
+<p><code>r</code> for right-aligned column</p>
+
+<p><code>p{width}</code> for a column with left-aligned paragraphs of fixed width. The width needs to be absolute to work in all output formats.</p>
+
+<p><code>X</code> for a column that expands to fill (see <code>Xratio</code> below), and will have left-aligned paragraphs</p>
+
+<p><code>|</code> for a vertical rule (n adjacent pipes make one rule that is n times as thick)</p>
+
+<p><code>!{\vrule width 3pt}</code> for a vertical rule of the indicated width (must be an absolute width; <code>3pt</code> is just an example)</p>
+
+<p><code>&gt;{commands}</code> Execute <code>commands</code> at each cell in the column. For example, <code>&#39;c&gt;{\color{blue}}c&#39;</code> will make the second column have blue text. The following LaTeX commands may be used:</p>
+
+<ul>
+
+<p><code>\color{colorname}</code> for text color</p>
+
+<p><code>\color[HTML]{xxxxxx}</code> for text color (xxxxxx is a 6-character hex color code)</p>
+
+<p><code>\columncolor{colorname}</code> for background color</p>
+
+<p><code>\columncolor[HTML]{xxxxxx}</code> for background color (xxxxxx is a 6-character hex color code)</p>
+
+<p><code>\bfseries</code> for bold</p>
+
+<p><code>\itshape</code> for italics</p>
+
+<p><code>\ttfamily</code> for monospace</p>
+
+</ul>
+
+<p>Other LaTeX commands apply only to PDF output.</p>
+
+</dd>
+<dt><code>align =&gt; string</code></dt>
+<dd>
+
+<p>convenient short version of <code>texalignment</code></p>
+
+</dd>
+<dt><code>Xratio =&gt; number</code></dt>
+<dd>
+
+<p>When <code>X</code> is part of overall alignment, <code>Xratio</code> must be some number between 0 and 1, inclusive of 1. The table as a whole will be <code>Xratio</code> wide, relative to the overall horizontal space. And <code>X</code> columns expand to fill the available space. The default is 0.97.</p>
+
+</dd>
+<dt><code>encase =&gt; [ , ]</code></dt>
+<dd>
+
+<p>Encases all table entries in the two entries. For example, use <code>[$BM,$EM]</code> to wrap all cells in math delimiters. See also <code>noencase</code> for individual cells.</p>
+
+</dd>
+<dt><code>rowheaders =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>Make the first element of every row a row header. Default is 0.</p>
+
+</dd>
+<dt><code>headerrules =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>Make a horizontal rule under a row of column headers and a vertical rule to the right of a column of row headers. Default is 1.</p>
+
+</dd>
+<dt><code>valign =&gt; &#39;top&#39;</code></dt>
+<dd>
+
+<p>Can be <code>&#39;top&#39;</code>, <code>&#39;middle&#39;</code>, or <code>&#39;bottom&#39;</code>. Applies to all rows. See below to override for an individual row.</p>
+
+</dd>
+</dl>
+
+<h3 id="HTML-output">HTML output</h3>
+
+<p>Each css property setting should be a hash reference. For example, <code>{&#39;font-family&#39; =&gt; &#39;fantasy&#39;, color =&gt; &#39;red&#39;}</code>. If a key has a dash character, it needs to be in quotes. Alternatively, you may uses a javascript flavor of CSS key like <code>{fontFamily =&gt; &#39;fantasy&#39;}</code></p>
+
+<dl>
+
+<dt><code>tablecss =&gt; css string</code></dt>
+<dd>
+
+<p>css styling commands for the table element</p>
+
+</dd>
+<dt><code>captioncss =&gt; css string</code></dt>
+<dd>
+
+<p>css styling commands for the caption element</p>
+
+</dd>
+<dt><code>columnscss =</code> array ref</dt>
+<dd>
+
+<p>an array reference to css strings for columns</p>
+
+<p>Note: only four css properties apply to a col element:</p>
+
+<ul>
+
+<li><p><code>border</code> (family)</p>
+
+</li>
+<li><p><code>background</code> (family)</p>
+
+</li>
+<li><p><code>width</code></p>
+
+</li>
+<li><p><code>column-span</code></p>
+
+</li>
+</ul>
+
+</dd>
+<dt><code>datacss =&gt; css string</code></dt>
+<dd>
+
+<p>css styling commands for non-header cells</p>
+
+</dd>
+<dt><code>headercss =&gt; css string</code></dt>
+<dd>
+
+<p>css styling commands for header cells</p>
+
+</dd>
+<dt><code>allcellcss =&gt; css string</code></dt>
+<dd>
+
+<p>css styling commands for all cells</p>
+
+</dd>
+</dl>
+
+<h3 id="PDF-hardcopy-output">PDF hardcopy output</h3>
+
+<dl>
+
+<dt><code>booktabs =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>use the booktabs package for horizontal rules (default 1)</p>
+
+</dd>
+</dl>
+
+<h2 id="Options-for-CELLS">Options for CELLS</h2>
+
+<p>Each cell entry can be an array reference where the first entry is the actual cell content, and then key-value pairs follow. For example, in a table with four columns, to make the first cell span two columns, enter the first cell as an array reference:</p>
+
+<pre><code>  [[a, colspan =&gt; 2], b, c]</code></pre>
+
+<p>Alternatively, using a hash reference with a data key:</p>
+
+<pre><code>  [{data =&gt; a, colspan =&gt; 2}, b, c]</code></pre>
+
+<h3 id="All-output-formats1">All output formats</h3>
+
+<dl>
+
+<dt><code>halign =&gt; string</code></dt>
+<dd>
+
+<p>Similar to the components for <code>texalignment</code> above. However, only <code>l</code>, <code>c</code>, <code>r</code>, <code>p{}</code>, and vertical rule specifications should be used. With vertical rule specifiers, any left vertical rule will only be observed for cells is in the first column. Otherwise, use a right vertical rule on the cell to the left.</p>
+
+</dd>
+<dt><code>header =&gt; type</code>,</dt>
+<dd>
+
+<p>Declares the scope of the HTML <code>th</code> element. Case-insensitive:</p>
+
+<ul>
+
+<li><p><code>th</code> for a generic table header</p>
+
+</li>
+<li><p><code>ch</code> for a column header (<code>col</code> and <code>column</code> work too)</p>
+
+</li>
+<li><p><code>rh</code> for a row header (<code>row</code> works too)</p>
+
+</li>
+<li><p><code>td</code> for overriding a <code>headerrow</code> or <code>rowheaders</code> option (except PTX output cannot honor this)</p>
+
+</li>
+</ul>
+
+</dd>
+<dt><code>color =&gt; string</code></dt>
+<dd>
+
+<p>color name or 6-character hex color code for text color</p>
+
+</dd>
+<dt><code>bgcolor =&gt; string</code></dt>
+<dd>
+
+<p>color name or 6-character hex color code for background color</p>
+
+</dd>
+<dt><code>b=&gt;1</code></dt>
+<dd>
+
+<p>Set the cell to bold font.</p>
+
+</dd>
+<dt><code>i=&gt;1</code></dt>
+<dd>
+
+<p>Set the cell to italics font.</p>
+
+</dd>
+<dt><code>m=&gt;1</code></dt>
+<dd>
+
+<p>Set the cell to monospace font.</p>
+
+</dd>
+<dt><code>noencase =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>If you are using encase (see above) use this to opt out.</p>
+
+</dd>
+<dt><code>colspan =&gt; positive integer</code></dt>
+<dd>
+
+<p>Makes the cell span more than one column. When using this, you often set <code>halign</code> as well.</p>
+
+</dd>
+<dt><code>top =&gt; positive integer or string</code></dt>
+<dd>
+
+<p>Make a top rule for one cell if the cell is in the top row. Thickness is either <code>n</code> pixels or a width like <code>&#39;0.04em&#39;</code>. Has no effect on cells outside of top row.</p>
+
+</dd>
+<dt><code>bottom =&gt; positive integer or string</code></dt>
+<dd>
+
+<p>Make a bottom rule for one cell. Thickness is either <code>n</code> pixels or a width like <code>&#39;0.04em&#39;</code>.</p>
+
+</dd>
+</dl>
+
+<h3 id="HTML-output1">HTML output</h3>
+
+<p>This option is only for HTML output.</p>
+
+<dl>
+
+<dt><code>cellcss =&gt; string</code></dt>
+<dd>
+
+<p>css styling commands for this cell</p>
+
+</dd>
+</dl>
+
+<h3 id="PDF-hardcopy-output1">PDF hardcopy output</h3>
+
+<p>The following apply only to PDF output</p>
+
+<dl>
+
+<dt><code>texpre =&gt; tex code</code> and <code>texpost =&gt; tex code</code></dt>
+<dd>
+
+<p>For more fussy cell-by-cell alteration of the tex version of the table, code to place before and after the cell content.</p>
+
+</dd>
+<dt><code>texencase =&gt; array ref</code></dt>
+<dd>
+
+<p>Shortcut for entering <code>[texpre,texpost]</code> at once.</p>
+
+</dd>
+</dl>
+
+<h2 id="Options-for-ROWS">Options for ROWS</h2>
+
+<p>Some parameters in a cell&#39;s options array affect the entire row. When there is a clash, the last non-falsy declaration in the row will be used.</p>
+
+<dl>
+
+<dt><code>rowcolor =&gt; string</code></dt>
+<dd>
+
+<p>Sets the row&#39;s background color. Must be a color name, 6-character hex color code.</p>
+
+</dd>
+<dt><code>rowcss =&gt; string</code></dt>
+<dd>
+
+<p>css styling commands for the row</p>
+
+</dd>
+<dt><code>headerrow =&gt; 0 or 1</code></dt>
+<dd>
+
+<p>Makes an entire row use header cells (with column scope).</p>
+
+</dd>
+<dt><code>rowtop =&gt; positive integer or string</code></dt>
+<dd>
+
+<p>When used on the first row, creates a top rule. Has no effect on other rows. Thickness is either <code>n</code> pixels or a width like <code>&#39;0.04em&#39;</code>.</p>
+
+</dd>
+<dt><code>rowbottom =&gt; positive integer string</code></dt>
+<dd>
+
+<p>Make a bottom rule. Thickness is either <code>n</code> pixels or a width like <code>&#39;0.04em&#39;</code>.</p>
+
+</dd>
+<dt><code>valign =&gt; string</code></dt>
+<dd>
+
+<p>Override table&#39;s overall vertical alignment for this row. Can be <code>&#39;top&#39;</code>, <code>&#39;middle&#39;</code>, or <code>&#39;bottom&#39;</code>.</p>
+
+</dd>
+</dl>
+
+<h2 id="Options-for-COLUMNS">Options for COLUMNS</h2>
+
+<p>Column styling is handled indirectly for now, mostly through the <code>texalignment</code> option above.</p>
+
+<h2 id="Deprecations">Deprecations</h2>
+
+<p>These features were supported in an earlier version and still work, but are deprecated.</p>
+
+<ul>
+
+<li><p>Each css setting can be a raw CSS string, including all its colons and a semicolons. For example, <code>tablecss =&gt; &#39;font-family: fantasy; text-decoration: underline;&#39;</code>.</p>
+
+</li>
+<li><p>A cell can have <code>tex =&gt; commands</code>. This executes commands at start of a cell with scope the entire cell. The following LaTeX commands may be used and respected in HTML as well as LaTeX:</p>
+
+<ul>
+
+<li><p><code>\color{colorname}</code> for text color</p>
+
+</li>
+<li><p><code>\color[HTML]{xxxxxx}</code> for text color (xxxxxx is a 6-character hex color code)</p>
+
+</li>
+<li><p><code>\columncolor{colorname}</code> for background color</p>
+
+</li>
+<li><p><code>\columncolor[HTML]{xxxxxx}</code> for background color (xxxxxx is a 6-character hex color code)</p>
+
+</li>
+<li><p><code>\bfseries</code> for bold</p>
+
+</li>
+<li><p><code>\itshape</code> for italics</p>
+
+</li>
+<li><p><code>\ttfamily</code> for monospace</p>
+
+</li>
+</ul>
+
+<p>Other LaTeX commands apply only to hardcopy output.</p>
+
+</li>
+<li><p><code>rowcolor</code> can be in the form <code>&#39;[HTML]{xxxxxx}&#39;</code></p>
+
+</li>
+</ul>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

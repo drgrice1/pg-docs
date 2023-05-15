@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserDifferenceQuotient.pl</title>
+</head>
+<body>
+<h1>parsers/parserDifferenceQuotient.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserDifferenceQuotient.pl - An answer checker for difference quotients.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser class that implements an answer checker for difference quotients as a subclass of the Formula class. The standard -&gt;cmp routine will work for this. The difference quotient is just a special type of formula with a special variable for &#39;dx&#39;. The checker will give an error message if the student&#39;s result contains a dx in the denominator, meaning it is not fully reduced.</p>
+
+<p>Use DifferenceQuotient(formula) to create a difference equation object. If the context has more than one variable, the last one alphabetically is used to form the dx. Otherwise, you can specify the variable used for dx as the second argument to DifferenceQuotient(). You could use a variable like h instead of dx if you prefer. This is specified in the second argument. If you want to identify division by zero when a value other than zero is substituted in for dx (or h), then the third argument is a number to be substituted into the variable named in the second argument. The third argument is optional and the default value 0 is used when the third argument is omitted.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        # simplify (f(x+dx)-f(x)) / dx for f(x)=x^2
+        $df = DifferenceQuotient(&quot;2x+dx&quot;);
+        ANS($df-&gt;cmp);
+
+        # simplify (f(x+h)-f(x)) / h for f(x) = x^2
+        $df = DifferenceQuotient(&quot;2x+h&quot;,&quot;h&quot;);
+        ANS($df-&gt;cmp);
+        
+        # simplify (f(t+dt)-f(t)) / dt for f(t)=a/t
+        Context()-&gt;variables-&gt;are(t=&gt;&#39;Real&#39;,a=&gt;&#39;Real&#39;);
+        ANS(DifferenceQuotient(&quot;-a/[t(t+dt)]&quot;,&quot;dt&quot;)-&gt;cmp);
+
+        # simplify (f(x)-f(c)) / (x-c) for f(x)=x^2 at c=3
+        $df = DifferenceQuotient(&quot;x+3&quot;,&quot;x&quot;,3);
+
+        # simplify (x^2 - 4) / (x-2)
+        $df = DifferenceQuotient(&quot;x+2&quot;,&quot;x&quot;,2);
+        ANS($df-&gt;cmp);</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

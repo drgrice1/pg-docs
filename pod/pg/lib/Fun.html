@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Fun</title>
+</head>
+<body>
+<h1>Fun</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#new-non-parametric-version">new (non-parametric version)</a></li>
+      <li><a href="#new-parametric-version">new (parametric version)</a></li>
+      <li><a href="#Properites">Properites</a></li>
+      <li><a href="#Actions-which-affect-more-than-one-property">Actions which affect more than one property.</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        Fun</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>        use Carp;
+        use GD;
+        use WWPlot;
+        use Fun;
+        $fn = new Fun( rule_reference);
+        $fn = new Fun( rule_reference , graph_reference);
+        $fn = new Fun ( x_rule_ref, y_rule_ref );
+        $fn = new Fun ( x_rule_ref, y_rule_ref, graph_ref );</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module defines a parametric or non-parametric function object. The function object is designed to be inserted into a graph object defined by WWPlot.</p>
+
+<p>The following functions are provided:</p>
+
+<h2 id="new-non-parametric-version">new (non-parametric version)</h2>
+
+<dl>
+
+<dt>$fn = new Fun( rule_reference);</dt>
+<dd>
+
+<p>rule_reference is a reference to a subroutine which accepts a numerical value and returns a numerical value. The Fun object will draw the graph associated with this subroutine. For example: $rule = sub { my $x= shift; $x**2}; will produce a plot of the x squared. The new method returns a reference to the function object.</p>
+
+</dd>
+<dt>$fn = new Fun( rule_reference , graph_reference);</dt>
+<dd>
+
+<p>The function is also placed into the printing queue of the graph object pointed to by graph_reference and the domain of the function object is set to the domain of the graph.</p>
+
+</dd>
+</dl>
+
+<h2 id="new-parametric-version">new (parametric version)</h2>
+
+<dl>
+
+<dt>$fn = new Fun ( x_rule_ref, y_rule_ref );</dt>
+<dd>
+
+<p>A parametric function object is created where the subroutines refered to by x_rule_ref and y_rule_ref define the x and y outputs in terms of the input t.</p>
+
+</dd>
+<dt>$fn = new Fun ( x_rule_ref, y_rule_ref, graph_ref );</dt>
+<dd>
+
+<p>This variant inserts the parametric function object into the graph object referred to by graph_ref. The domain of the function object is not adjusted. The domain&#39;s default value is (-1, 1).</p>
+
+</dd>
+</dl>
+
+<h2 id="Properites">Properites</h2>
+
+<pre><code>        All of the properties are set using the construction $new_value = $fn-&gt;property($new_value) 
+        and read using $current_value = $fn-&gt;property()</code></pre>
+
+<dl>
+
+<dt>tstart, tstop, steps</dt>
+<dd>
+
+<p>The domain of the function is (tstart, tstop). steps is the number of subintervals used in graphing the function.</p>
+
+</dd>
+<dt>color</dt>
+<dd>
+
+<p>The color used to draw the function is specified by a word such as &#39;orange&#39; or &#39;yellow&#39;. <code>$fn-</code>color(&#39;blue&#39;)&gt; sets the drawing color to blue. The RGB values for the color are defined in the graph object in which the function is drawn. If the color, e.g. &#39;mauve&#39;, is not defined by the graph object then the function is drawn using the color &#39;default_color&#39; which is always defined (and usually black).</p>
+
+</dd>
+<dt>x_rule</dt>
+<dd>
+
+<p>A reference to the subroutine used to calculate the x value of the graph. This is set to the identity function (x = t ) when using the function object in non-parametric mode.</p>
+
+</dd>
+<dt>y_rule</dt>
+<dd>
+
+<p>A reference to the subroutine used to calculate the y value of the graph.</p>
+
+</dd>
+<dt>weight</dt>
+<dd>
+
+<p>The width in pixels of the pen used to draw the graph. The pen is square.</p>
+
+</dd>
+</dl>
+
+<h2 id="Actions-which-affect-more-than-one-property">Actions which affect more than one property.</h2>
+
+<dl>
+
+<dt>rule</dt>
+<dd>
+
+<p>This defines a non-parametric function.</p>
+
+<pre><code>        $fn-&gt;rule(sub {my $x =shift; $x**2;} ) 
+        
+        is equivalent to
+        
+        $fn-&gt;x_rule(sub {my $x = shift; $x;});
+        $fn-&gt;y_rule(sub {my $x = shift; $x**2;);
+        
+        $fn-&gt;rule() returns the reference to the y_rule.</code></pre>
+
+</dd>
+<dt>domain</dt>
+<dd>
+
+<p>$array_ref = $fn-&gt;domain(-1,1) sets tstart to -1 and tstop to 1 and returns a reference to an array containing this pair of numbers.</p>
+
+</dd>
+<dt>draw</dt>
+<dd>
+
+<p>$fn-&gt;draw($graph_ref) draws the function in the graph object pointed to by $graph_ref. If one of the points bounding a subinterval is undefined then that segment is not drawn. This usually does the &quot;right thing&quot; for functions which have simple singularities.</p>
+
+<p>The graph object must respond to the methods below. The draw call is mainly for internal use by the graph object. Most users will not call it directly.</p>
+
+<dl>
+
+<dt>$graph_ref-&gt;{colors}</dt>
+<dd>
+
+<p>a hash containing the defined colors</p>
+
+</dd>
+<dt>$graph_ref -&gt;im</dt>
+<dd>
+
+<p>a GD image object</p>
+
+</dd>
+<dt>$graph_ref-&gt;lineTo(x,y, color_number)</dt>
+<dd>
+
+<p>draw line to the point (x,y) from the current position using the specified color. To obtain the color number use a construction such as <code>$color_number = $graph_ref-</code>{colors}{&#39;blue&#39;};&gt;</p>
+
+</dd>
+<dt>$graph_ref-&gt;lineTo(x,y,gdBrushed)</dt>
+<dd>
+
+<p>draw line to the point (x,y) using the pattern set by SetBrushed (see GD documentation)</p>
+
+</dd>
+<dt>$graph_ref-&gt;moveTo(x,y)</dt>
+<dd>
+
+<p>set the current position to (x,y)</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+
