@@ -1,0 +1,812 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PG Sample Problems</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<style>
+		.navbar {
+			height: 70px;
+		}
+		body {
+			margin-top: 70px;
+		}
+		#sidebar {
+			--bs-offcanvas-width: 250px;
+		}
+		@media only screen and (min-width: 768px) {
+			#sidebar {
+				height: calc(100vh - 70px);
+			}
+		}
+	</style>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" defer></script>
+</head>
+
+<body>
+	<nav class="navbar fixed-top bg-primary border-bottom border-dark" data-bs-theme="dark">
+		<div class="container-fluid">
+			<h1 class="navbar-brand fs-3 m-0 p-0">PG Sample Problems</h1>
+
+			<ul class="nav nav-pills nav-fill">
+				<li class="nav-item">
+					<a class="nav-link" href="categories.html">Sample Problems</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="techniques.html">Problem Techniques</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link" href="subjects.html">Subject Area Problems</a>
+				</li>
+			</ul>
+
+			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</nav>
+	<div class="d-flex">
+		<div class="offcanvas-md offcanvas-start overflow-y-auto border-end border-dark" tabindex="-1" id="sidebar"
+			aria-labelledby="sidebar-label">
+				<div class="offcanvas-header">
+	<h2 class="offcanvas-title fs-3" id="categories-label">Categories</h2>
+	<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+		data-bs-target="#categories" aria-label="Close">
+	</button>
+</div>
+
+<h2 class="fs-3 d-none d-md-block px-3 pt-3">Categories</h2>
+<div class="offcanvas-body px-md-3 pb-md-3">
+	<ul class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="Riemann_sums-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#Riemann_sums" role="tab"
+					aria-controls="Riemann_sums" aria-selected="false">
+					Riemann sums
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="adaptive_parameters-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#adaptive_parameters" role="tab"
+					aria-controls="adaptive_parameters" aria-selected="false">
+					adaptive parameters
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="algebra-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#algebra" role="tab"
+					aria-controls="algebra" aria-selected="false">
+					algebra
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="answer-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#answer" role="tab"
+					aria-controls="answer" aria-selected="false">
+					answer
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="answers-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#answers" role="tab"
+					aria-controls="answers" aria-selected="false">
+					answers
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="antiderivatives-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#antiderivatives" role="tab"
+					aria-controls="antiderivatives" aria-selected="false">
+					antiderivatives
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="composition-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#composition" role="tab"
+					aria-controls="composition" aria-selected="false">
+					composition
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="constant-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#constant" role="tab"
+					aria-controls="constant" aria-selected="false">
+					constant
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="context-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#context" role="tab"
+					aria-controls="context" aria-selected="false">
+					context
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="custom-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#custom" role="tab"
+					aria-controls="custom" aria-selected="false">
+					custom
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="custom_error-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#custom_error" role="tab"
+					aria-controls="custom_error" aria-selected="false">
+					custom error
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="difference_quotient-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#difference_quotient" role="tab"
+					aria-controls="difference_quotient" aria-selected="false">
+					difference quotient
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="disk_method-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#disk_method" role="tab"
+					aria-controls="disk_method" aria-selected="false">
+					disk method
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="domain-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#domain" role="tab"
+					aria-controls="domain" aria-selected="false">
+					domain
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="double_integral-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#double_integral" role="tab"
+					aria-controls="double_integral" aria-selected="false">
+					double integral
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="draggable-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#draggable" role="tab"
+					aria-controls="draggable" aria-selected="false">
+					draggable
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="equation-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#equation" role="tab"
+					aria-controls="equation" aria-selected="false">
+					equation
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="essay-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#essay" role="tab"
+					aria-controls="essay" aria-selected="false">
+					essay
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="exponent-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#exponent" role="tab"
+					aria-controls="exponent" aria-selected="false">
+					exponent
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="fraction-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#fraction" role="tab"
+					aria-controls="fraction" aria-selected="false">
+					fraction
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="function-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#function" role="tab"
+					aria-controls="function" aria-selected="false">
+					function
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="graph-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#graph" role="tab"
+					aria-controls="graph" aria-selected="false">
+					graph
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="heaviside/step-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#heaviside/step" role="tab"
+					aria-controls="heaviside/step" aria-selected="false">
+					heaviside/step
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="implicit_function-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#implicit_function" role="tab"
+					aria-controls="implicit_function" aria-selected="false">
+					implicit function
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="knowls-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#knowls" role="tab"
+					aria-controls="knowls" aria-selected="false">
+					knowls
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="linear_approximation-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#linear_approximation" role="tab"
+					aria-controls="linear_approximation" aria-selected="false">
+					linear approximation
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="logarithm-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#logarithm" role="tab"
+					aria-controls="logarithm" aria-selected="false">
+					logarithm
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="matrix-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#matrix" role="tab"
+					aria-controls="matrix" aria-selected="false">
+					matrix
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="misc-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#misc" role="tab"
+					aria-controls="misc" aria-selected="false">
+					misc
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="multiple_choice-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#multiple_choice" role="tab"
+					aria-controls="multiple_choice" aria-selected="false">
+					multiple choice
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="numbers-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#numbers" role="tab"
+					aria-controls="numbers" aria-selected="false">
+					numbers
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="plots-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#plots" role="tab"
+					aria-controls="plots" aria-selected="false">
+					plots
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="point-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#point" role="tab"
+					aria-controls="point" aria-selected="false">
+					point
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="polynomial-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#polynomial" role="tab"
+					aria-controls="polynomial" aria-selected="false">
+					polynomial
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="proof-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#proof" role="tab"
+					aria-controls="proof" aria-selected="false">
+					proof
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="row_operation-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#row_operation" role="tab"
+					aria-controls="row_operation" aria-selected="false">
+					row operation
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="sequence-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#sequence" role="tab"
+					aria-controls="sequence" aria-selected="false">
+					sequence
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="series-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#series" role="tab"
+					aria-controls="series" aria-selected="false">
+					series
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="solid_of_revolution-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#solid_of_revolution" role="tab"
+					aria-controls="solid_of_revolution" aria-selected="false">
+					solid of revolution
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="strings-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#strings" role="tab"
+					aria-controls="strings" aria-selected="false">
+					strings
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="table-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#table" role="tab"
+					aria-controls="table" aria-selected="false">
+					table
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="tolerance-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#tolerance" role="tab"
+					aria-controls="tolerance" aria-selected="false">
+					tolerance
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="transformation-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#transformation" role="tab"
+					aria-controls="transformation" aria-selected="false">
+					transformation
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="trig_degrees-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#trig_degrees" role="tab"
+					aria-controls="trig_degrees" aria-selected="false">
+					trig degrees
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="trigonometry-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#trigonometry" role="tab"
+					aria-controls="trigonometry" aria-selected="false">
+					trigonometry
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="units-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#units" role="tab"
+					aria-controls="units" aria-selected="false">
+					units
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="video-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#video" role="tab"
+					aria-controls="video" aria-selected="false">
+					video
+				</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link px-3 py-1" id="volume-tab" href="#" data-bs-toggle="pill"
+					data-bs-target="#volume" role="tab"
+					aria-controls="volume" aria-selected="false">
+					volume
+				</a>
+			</li>
+	</ul>
+</div>
+
+		</div>
+		<div class="main-content">
+			<div class="tab-content p-3">
+					<div class="tab-pane fade" id="Riemann_sums" role="tabpanel" aria-labelledby="Riemann_sums-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: Riemann sums</h2>
+		<ul>
+				<li><a href="IntegralCalc/RiemannSums.html">Riemann Sums</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="adaptive_parameters" role="tabpanel" aria-labelledby="adaptive_parameters-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: adaptive parameters</h2>
+		<ul>
+				<li><a href="problem-techniques/AdaptiveParameters.html">Adaptive Parameters</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="algebra" role="tabpanel" aria-labelledby="algebra-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: algebra</h2>
+		<ul>
+				<li><a href="Algebra/SolutionForEquation.html">Solution for an Equation</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="answer" role="tabpanel" aria-labelledby="answer-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: answer</h2>
+		<ul>
+				<li><a href="problem-techniques/AnswerHints.html">Answer Hints</a></li>
+				<li><a href="problem-techniques/AnswerInExponent.html">Answer in an Exponent</a></li>
+				<li><a href="problem-techniques/AnswerIsSolutionToEquation.html">Answer is a Solution to an Equation</a></li>
+				<li><a href="Precalc/AnswerUpToMultiplication.html">Answer up to a Constant Multiple</a></li>
+				<li><a href="problem-techniques/AnyAnswerMarkedCorrect.html">Any Answer is Marked Correct</a></li>
+				<li><a href="problem-techniques/CustomAnswerCheckers.html">Custom Answer Checker</a></li>
+				<li><a href="LinearAlgebra/MatrixCustomAnswerChecker.html">Custom Matrix Answer Checker</a></li>
+				<li><a href="Misc/FormulaAnswer.html">Formula Answer</a></li>
+				<li><a href="LinearAlgebra/MatrixAnswer2.html">Matrix Answer Alternative</a></li>
+				<li><a href="Sequences/AnswerOrderedList.html">Ordered List</a></li>
+				<li><a href="Misc/FormulaDomain.html">Setting the Domain for Answer Checking</a></li>
+				<li><a href="Algebra/UnorderedAnswers.html">Unordered Answers</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="answers" role="tabpanel" aria-labelledby="answers-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: answers</h2>
+		<ul>
+				<li><a href="Algebra/EquationDefiningFunction.html">Answer is an Equation</a></li>
+				<li><a href="Precalc/PointAnswers.html">Answers are a list of points</a></li>
+				<li><a href="DiffEq/GeneralSolutionODE.html">General Solution to a Differential Equation</a></li>
+				<li><a href="DiffEq/PrimesInFormulas.html">Primes in Formulas</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="antiderivatives" role="tabpanel" aria-labelledby="antiderivatives-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: antiderivatives</h2>
+		<ul>
+				<li><a href="IntegralCalc/LimitsOfIntegration.html">Answer Blanks in Limits of Integration</a></li>
+				<li><a href="IntegralCalc/IndefiniteIntegrals.html">Indefinite Integrals</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="composition" role="tabpanel" aria-labelledby="composition-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: composition</h2>
+		<ul>
+				<li><a href="problem-techniques/ComposingFunctions.html">Composing Functions</a></li>
+				<li><a href="Precalc/FunctionDecomposition.html">Function Decomposition</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="constant" role="tabpanel" aria-labelledby="constant-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: constant</h2>
+		<ul>
+				<li><a href="problem-techniques/ConstantsInProblems.html">Constants in Problems</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="context" role="tabpanel" aria-labelledby="context-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: context</h2>
+		<ul>
+				<li><a href="problem-techniques/StringsInContext.html">Adding Strings to a Context</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="custom" role="tabpanel" aria-labelledby="custom-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: custom</h2>
+		<ul>
+				<li><a href="problem-techniques/CustomAnswerCheckers.html">Custom Answer Checker</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="custom_error" role="tabpanel" aria-labelledby="custom_error-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: custom error</h2>
+		<ul>
+				<li><a href="problem-techniques/ErrorMessageCustomization.html">Custom Error Message</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="difference_quotient" role="tabpanel" aria-labelledby="difference_quotient-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: difference quotient</h2>
+		<ul>
+				<li><a href="DiffCalc/DifferenceQuotient.html">Difference Quotient</a></li>
+				<li><a href="DiffCalc/DifferentiateFunction.html">Differentiate a Function</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="disk_method" role="tabpanel" aria-labelledby="disk_method-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: disk method</h2>
+		<ul>
+				<li><a href="IntegralCalc/Volume1.html">Volume of Solids of Revolution 1</a></li>
+				<li><a href="IntegralCalc/Volume2.html">Volume of Solids of Revolution 2</a></li>
+				<li><a href="IntegralCalc/Volume3.html">Volume of Solids of Revolution 3</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="domain" role="tabpanel" aria-labelledby="domain-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: domain</h2>
+		<ul>
+				<li><a href="Precalc/DomainRange.html">Domain and Range of a Function</a></li>
+				<li><a href="Misc/FormulaDomain.html">Setting the Domain for Answer Checking</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="double_integral" role="tabpanel" aria-labelledby="double_integral-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: double integral</h2>
+		<ul>
+				<li><a href="IntegralCalcMV/DoubleIntegral.html">Double Integral</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="draggable" role="tabpanel" aria-labelledby="draggable-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: draggable</h2>
+		<ul>
+				<li><a href="Misc/DraggableProof.html">Draggable Proof</a></li>
+				<li><a href="problem-techniques/DraggableSubsets.html">Draggable Subsets</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="equation" role="tabpanel" aria-labelledby="equation-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: equation</h2>
+		<ul>
+				<li><a href="Algebra/EquationDefiningFunction.html">Answer is an Equation</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="essay" role="tabpanel" aria-labelledby="essay-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: essay</h2>
+		<ul>
+				<li><a href="Misc/EssayAnswer.html">Essay Answer</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="exponent" role="tabpanel" aria-labelledby="exponent-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: exponent</h2>
+		<ul>
+				<li><a href="Algebra/AnswerBlankInExponent.html">Answer Blank in the Exponent</a></li>
+				<li><a href="problem-techniques/AnswerInExponent.html">Answer in an Exponent</a></li>
+				<li><a href="problem-techniques/AnswerIsSolutionToEquation.html">Answer is a Solution to an Equation</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="fraction" role="tabpanel" aria-labelledby="fraction-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: fraction</h2>
+		<ul>
+				<li><a href="Algebra/InequalityAnswer.html">Answer as an Inequality</a></li>
+				<li><a href="Algebra/FractionAnswer.html">Fraction Answer</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="function" role="tabpanel" aria-labelledby="function-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: function</h2>
+		<ul>
+				<li><a href="Algebra/EquationDefiningFunction.html">Answer is an Equation</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="graph" role="tabpanel" aria-labelledby="graph-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: graph</h2>
+		<ul>
+				<li><a href="Precalc/DynamicGraph.html">Dynamic Graph</a></li>
+				<li><a href="VectorCalc/VectorFieldGraph3D1/VectorFieldGraph3D1.html">Three-D Vector Field Graph</a></li>
+				<li><a href="VectorCalc/VectorFieldGraph2D.html">Two-D Vector Field</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="heaviside/step" role="tabpanel" aria-labelledby="heaviside/step-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: heaviside/step</h2>
+		<ul>
+				<li><a href="DiffEq/HeavisideStep.html">Heaviside or Step Function</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="implicit_function" role="tabpanel" aria-labelledby="implicit_function-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: implicit function</h2>
+		<ul>
+				<li><a href="Algebra/EquationImplicitFunction.html">Implicit Function as an Equation</a></li>
+				<li><a href="DiffCalcMV/ImplicitPlane.html">Implicit Plane</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="knowls" role="tabpanel" aria-labelledby="knowls-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: knowls</h2>
+		<ul>
+				<li><a href="problem-techniques/AnswerHints.html">Answer Hints</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="linear_approximation" role="tabpanel" aria-labelledby="linear_approximation-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: linear approximation</h2>
+		<ul>
+				<li><a href="DiffCalc/LinearApprox.html">Linear Approximation</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="logarithm" role="tabpanel" aria-labelledby="logarithm-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: logarithm</h2>
+		<ul>
+				<li><a href="Algebra/Logarithms.html">Logarithms</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="matrix" role="tabpanel" aria-labelledby="matrix-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: matrix</h2>
+		<ul>
+				<li><a href="LinearAlgebra/MatrixCustomAnswerChecker.html">Custom Matrix Answer Checker</a></li>
+				<li><a href="LinearAlgebra/MatrixAnswer1.html">Matrix Answer</a></li>
+				<li><a href="LinearAlgebra/MatrixAnswer2.html">Matrix Answer Alternative</a></li>
+				<li><a href="LinearAlgebra/MatrixOperations.html">Matrix Operation</a></li>
+				<li><a href="LinearAlgebra/RowOperations.html">Row Operations</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="misc" role="tabpanel" aria-labelledby="misc-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: misc</h2>
+		<ul>
+				<li><a href="Misc/IframeEmbedding.html">Embedding an IFrame</a></li>
+				<li><a href="Misc/ManyMultipleChoice.html">Many Multiple Choice</a></li>
+				<li><a href="Misc/Matching.html">Matching Problem</a></li>
+				<li><a href="Misc/MultipleChoiceCheckbox.html">Multiple Choice with Checkbox</a></li>
+				<li><a href="Misc/MultipleChoicePopup.html">Multiple Choice with Popup</a></li>
+				<li><a href="Misc/MultipleChoiceRadio.html">Multiple Choice with Radio Buttons</a></li>
+				<li><a href="Misc/RandomPerson.html">Random Person</a></li>
+				<li><a href="Misc/Scaffolding.html">Scaffolded Problem</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="multiple_choice" role="tabpanel" aria-labelledby="multiple_choice-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: multiple choice</h2>
+		<ul>
+				<li><a href="Misc/ManyMultipleChoice.html">Many Multiple Choice</a></li>
+				<li><a href="Misc/Matching.html">Matching Problem</a></li>
+				<li><a href="Misc/MultipleChoiceCheckbox.html">Multiple Choice with Checkbox</a></li>
+				<li><a href="Misc/MultipleChoicePopup.html">Multiple Choice with Popup</a></li>
+				<li><a href="Misc/MultipleChoiceRadio.html">Multiple Choice with Radio Buttons</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="numbers" role="tabpanel" aria-labelledby="numbers-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: numbers</h2>
+		<ul>
+				<li><a href="problem-techniques/AddingFunctions.html">Adding Functions to a Context</a></li>
+				<li><a href="problem-techniques/NumericalTolerance.html">Numerical Tolerance</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="plots" role="tabpanel" aria-labelledby="plots-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: plots</h2>
+		<ul>
+				<li><a href="DiffCalcMV/ContourPlot.html">Contour Plot</a></li>
+				<li><a href="IntegralCalc/GraphShading.html">Graph Shading</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="point" role="tabpanel" aria-labelledby="point-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: point</h2>
+		<ul>
+				<li><a href="Precalc/PointAnswers.html">Answers are a list of points</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="polynomial" role="tabpanel" aria-labelledby="polynomial-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: polynomial</h2>
+		<ul>
+				<li><a href="Algebra/ExpandedPolynomial.html">Expanded Polynomial</a></li>
+				<li><a href="Algebra/FactoredPolynomial.html">Factored Polynomial</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="proof" role="tabpanel" aria-labelledby="proof-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: proof</h2>
+		<ul>
+				<li><a href="Misc/DraggableProof.html">Draggable Proof</a></li>
+				<li><a href="Trig/ProvingTrigIdentities.html">Proving Identities</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="row_operation" role="tabpanel" aria-labelledby="row_operation-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: row operation</h2>
+		<ul>
+				<li><a href="LinearAlgebra/RowOperations.html">Row Operations</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="sequence" role="tabpanel" aria-labelledby="sequence-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: sequence</h2>
+		<ul>
+				<li><a href="Sequences/ExplicitSequence.html">Explicit Sequence</a></li>
+				<li><a href="Sequences/RecursiveSequence.html">Recursive Sequence</a></li>
+				<li><a href="Sequences/SeriesTest.html">Series Test</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="series" role="tabpanel" aria-labelledby="series-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: series</h2>
+		<ul>
+				<li><a href="Sequences/SeriesTest.html">Series Test</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="solid_of_revolution" role="tabpanel" aria-labelledby="solid_of_revolution-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: solid of revolution</h2>
+		<ul>
+				<li><a href="IntegralCalc/Volume1.html">Volume of Solids of Revolution 1</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="strings" role="tabpanel" aria-labelledby="strings-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: strings</h2>
+		<ul>
+				<li><a href="problem-techniques/StringsInContext.html">Adding Strings to a Context</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="table" role="tabpanel" aria-labelledby="table-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: table</h2>
+		<ul>
+				<li><a href="Precalc/TableOfValues.html">Table of Values</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="tolerance" role="tabpanel" aria-labelledby="tolerance-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: tolerance</h2>
+		<ul>
+				<li><a href="problem-techniques/AddingFunctions.html">Adding Functions to a Context</a></li>
+				<li><a href="problem-techniques/NumericalTolerance.html">Numerical Tolerance</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="transformation" role="tabpanel" aria-labelledby="transformation-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: transformation</h2>
+		<ul>
+				<li><a href="Precalc/ScalingTranslating.html">Scaling and Translating a Function</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="trig_degrees" role="tabpanel" aria-labelledby="trig_degrees-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: trig degrees</h2>
+		<ul>
+				<li><a href="Trig/TrigDegrees.html">Degrees in Trigonometric Functions</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="trigonometry" role="tabpanel" aria-labelledby="trigonometry-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: trigonometry</h2>
+		<ul>
+				<li><a href="Trig/DisableFunctions.html">Diabled Functions</a></li>
+				<li><a href="Trig/PeriodicAnswers.html">Periodic Answers</a></li>
+				<li><a href="Trig/ProvingTrigIdentities.html">Proving Identities</a></li>
+				<li><a href="Trig/TrigIdentities.html">Trigonometric Identities</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="units" role="tabpanel" aria-labelledby="units-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: units</h2>
+		<ul>
+				<li><a href="DiffCalc/AnswerWithUnits.html">Answer with Units</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="video" role="tabpanel" aria-labelledby="video-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: video</h2>
+		<ul>
+				<li><a href="Misc/IframeEmbedding.html">Embedding an IFrame</a></li>
+		</ul>
+	</div>
+	<div class="tab-pane fade" id="volume" role="tabpanel" aria-labelledby="volume-tab"
+		tabindex="0">
+		<h2 class="fs-3">Sample Problems for Category: volume</h2>
+		<ul>
+				<li><a href="IntegralCalc/Volume1.html">Volume of Solids of Revolution 1</a></li>
+				<li><a href="IntegralCalc/Volume2.html">Volume of Solids of Revolution 2</a></li>
+				<li><a href="IntegralCalc/Volume3.html">Volume of Solids of Revolution 3</a></li>
+		</ul>
+	</div>
+
+			</div>
+		</div>
+	</div>
+	<script type="module">
+		const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('sidebar'));
+		for (const link of document.querySelectorAll('.nav .nav-item .nav-link')) {
+			link.addEventListener('click', () => offcanvas.hide());
+		}
+		// Set the link active in the header bar.
+		const page = location.href.split('/').at(-1);
+		var els = document.querySelectorAll(`a[href='${page}']`);
+		els[0].classList.add('active');
+	</script>
+</body>
+
+</html>
