@@ -42,7 +42,8 @@ jobs:
           perl pg/bin/parse-prob-doc.pl  \
             --problem_dir=/home/runner/work/pg-docs/pg-docs/pg/doc/sample-problems \
             --out_dir=/home/runner/work/pg-docs/pg-docs/sample-problems \
-            --pod_root=https://pstaabp.github.io/pg-docs/pod
+            --pod_root=https://pstaabp.github.io/pg-docs/pod \
+            --pg_doc_home=https://pstaabp.github.io/pg-docs/sample-problems
           ls -l sample-problems
       - name: remove pg code
         run: |
