@@ -47,7 +47,28 @@
 
 <div class="container">
 	<div class="row pb-3">
+		<h1>ManyMultipleChoice</h1>
+	</div>
+	<div class="row pb-3">
+		<div class="col">
 		Many multiple choice template
+		</div>
+		<div class="col">
+			<h2>POD for macro files</h2>
+			<ul>
+			
+					<li style="color: red">PGstandard.pl</li>
+			
+					<li style="color: red">PGML.pl</li>
+			
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/PGchoicemacros.html">PGchoicemacros.pl</a></li>
+
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/answers/PGgraders.html">PGgraders.pl</a></li>
+
+					<li style="color: red">PGcourse.pl</li>
+			
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col header">
@@ -68,15 +89,13 @@
 				</button>
 				<pre><code class="language-perl">DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGchoicemacros.pl','PGgraders.pl',
-  'PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','PGchoicemacros.pl','PGgraders.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </code></pre>
 				<div class="hidden-code" style="display: none"> DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGchoicemacros.pl','PGgraders.pl',
-  'PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','PGchoicemacros.pl','PGgraders.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </div>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserLinearInequality.pl</title>
+</head>
+<body>
+<h1>parsers/parserLinearInequality.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserLinearInequality.pl - Implement linear inequalities.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser class that implements implicit open or closed half planes as a subclass of the Formula class. This is built on the implicit plane MathObject. The first intended use case is for linear programming problems whose domains are closed convex sets so only closed half planes are defined at present.</p>
+
+<p>Use LinearInequality(formula), Formula(formula), or Compute(formula) to create a LinearInequality object.</p>
+
+<p>Usage examples:</p>
+
+<pre><code>        $LI = LinearInequality(&quot;4x1 -3x2 &lt;= 5&quot;);
+        $LI = LinearInequality(&quot;3x2 &gt;= 2x1&quot;);
+        $LI = LinearInequality(&quot;3x2 =&gt; 2x1&quot;);       # Sloppy inequalities are allowed
+        
+    $LI = LinearInequality(&quot;3x1 + 4x2 &lt; x3&quot;);
+    $LI = LinearInequality(&quot;x1 - 2x2 = 5&quot;);     # equality is also supported
+    $LI = Compute(&quot;x1 + 4x2 - 2x3 &lt;= 3&quot;);       # Compute() returns a LinearInequality</code></pre>
+
+<p>Then use</p>
+
+<pre><code>        ANS($LI-&gt;cmp);</code></pre>
+
+<p>to get the answer checker for $LI.</p>
+
+<p>Notice that sloppy inequality signs (i.e. =&gt; and =&lt; ) are allowed.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

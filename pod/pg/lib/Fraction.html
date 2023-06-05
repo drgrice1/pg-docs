@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Fraction</title>
+</head>
+<body>
+<h1>Fraction</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#Fraction">Fraction</a>
+            <ul>
+              <li><a href="#Variables-and-Methods">Variables and Methods</a></li>
+              <li><a href="#Synopsis">Synopsis</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="Fraction">Fraction</h3>
+
+<pre><code>  This object is designed to ease the use of fractions</code></pre>
+
+<h4 id="Variables-and-Methods">Variables and Methods</h4>
+
+<pre><code>        Variables
+
+                numerator       #numerator of fraction
+                denominator     #denominator of fraction
+
+        Arithmetic Methods      #these will all accept a scalar value or 
+                                #another fraction as an argument
+
+                plus            #returns the sum of the fraction and argument
+                minus           #returns fraction minus argument
+                subtractFrom    #returns argument minus fraction
+                divBy           #returns fraction divided by argument
+                divInto         #returns argument divided by fraction
+                times           #returns fraction times argument
+                compare         #returns &lt;, =, or &gt; for the relation of fraction to argument
+
+                        pow             #returns fraction raised to argument, a given integer power
+
+
+        Other methods
+                
+                reduce          #reduces to lowest terms, and makes sure denominator is positive
+                scalar          #returns the scalar value numerator/denominator
+                print           #prints the fraction
+                print_mixed     #prints the fractionas a mixed number
+                print_inline    #prints the fraction like this 2/3</code></pre>
+
+<h4 id="Synopsis">Synopsis</h4>
+
+<pre><code>        The fraction object stores two variables, numerator and denominator.  The basic
+arithmatic methods listed above can be performed on a fraction, and it can return its own
+scalar value for use with functions expecting a scalar (ie, sqrt($frac-&gt;scalar) ).  </code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

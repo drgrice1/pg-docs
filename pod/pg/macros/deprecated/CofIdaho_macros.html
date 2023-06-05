@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>deprecated/CofIdaho_macros.pl</title>
+</head>
+<body>
+<h1>deprecated/CofIdaho_macros.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#Synposis-macros-by-R-Cruz----The-College-of-Idaho">Synposis macros by R Cruz -- The College of Idaho</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#Format-the-instuctor-answer">Format the instuctor answer</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>    extra macros for Intermediate Algebra problems at The College of Idaho</code></pre>
+
+<a href="#_podtop_"><h1 id="Synposis-macros-by-R-Cruz----The-College-of-Idaho">Synposis macros by R Cruz -- The College of Idaho</h1></a>
+
+<h3 id="Format-the-instuctor-answer">Format the instuctor answer</h3>
+
+<p>1) SimplifyExponents: Formats an expression without negative exponents To use: SimplifyExponents(num, den,~~@var,@exp); where num = numerator&#39;s constant den = denominator&#39;s constant ~~@var = pointer to an array with the list of variables @exp = array with the exponents for the variables</p>
+
+<p>2) num_and_unit_checker: Checks for units like &quot;apples&quot; or &quot;oranges&quot; To use: ANS (num_and_units_checker($correct_answer, &quot;units&quot;);</p>
+
+<p>3) strict_percent_cmp: Checks percentages have been rounded as required. To use: ANS(strict_percent_cmp($answer,&quot;%&quot;,roundto)); where $answer is in percent form: xx.x roundto = &quot;tenths&quot; or &quot;hundredths&quot;</p>
+
+<p>4) Picky_equation_cmp: Checks both sides of an equation model the word problem. To use: Picky_equation_cmp(&quot;2x+1=5&quot;); Note: This one allows only the variables that have been used in the CofIdaho problems. It should be changed so that it is more flexible, or better, convert it to a MathObject.</p>
+
+<p>5) SlopeIntercept_equation_cmp: Checks both sides of an equation for the slope-intercept form of a line. To use: ANS(SlopeIntercept_equation_cmp($answer)); where $answer = &quot;y = $m x + $b&quot;; (Use only y and x for variables.)</p>
+
+<p>6) functionNotation_cmp: Checks for &quot;f(x)= ***&quot; notation To use: ANS(functionNotation_cmp(&quot;f(x)=2x&quot;,[&quot;x&quot;,&quot;f&quot;]));</p>
+
+<p>7) Checks factors of polynomials. To use: The answer must be submitted in this form: ANS(FactorEvaluator($answer,[variable array])); If the polynomial is prime: ANS(FactorEvaluator(&quot;Does not factor&quot;,polynomial,[variable array]));</p>
+
+<pre><code>  Note: Answers must be in the form: monomial(poly)...(poly) with
+    or without parentheses about the monomial.  The polynomial factors must
+    not contain any other grouping symbols and, in any case, only parenthesis
+    may be used.  This needs to be in the instructions for any set that uses 
+    this macro (in the screenHeader.pg file).
+
+  Note: &quot;StrictFactoringEvaluator&quot; requires leading negatives to be factored out.
+    This not may not work with all situations.  BE SURE TO CHANGE THIS FILE IF THE
+    FactoringEvaluator IS CHANGED!!</code></pre>
+
+<p>8) RationalExpEvaluator: Checks for simplified rational expressions. To use: ANS(RationalExpEvaluation($answer,[variable array])); or something like: ANS(RationalExpEvaluator($answer,[&quot;x&quot;,&quot;y&quot;]));</p>
+
+<pre><code>   Note: Answers must be of the form: (poly)/(poly) </code></pre>
+
+<p>9) ReduceFraction: Returns a string that represents a reduced fraction. To use: $a = SimplifyFraction(numerator expression,denominator espression);</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

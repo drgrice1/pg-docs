@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserVectorUtils.pl</title>
+</head>
+<body>
+<h1>parsers/parserVectorUtils.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#MACROS">MACROS</a>
+    <ul>
+      <li><a href="#Overline">Overline</a></li>
+      <li><a href="#BoldMath">BoldMath</a></li>
+      <li><a href="#GRAD">$GRAD</a></li>
+      <li><a href="#non_zero_point">non_zero_point</a></li>
+      <li><a href="#non_zero_vector-non_zero_vector2D-non_zero_vector3D">non_zero_vector, non_zero_vector2D, non_zero_vector3D</a></li>
+      <li><a href="#Line">Line</a></li>
+      <li><a href="#Plane">Plane</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserVectorUtils.pl - Utility macros that are useful in vector problems.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Some utility routines that are useful in vector problems</p>
+
+<a href="#_podtop_"><h1 id="MACROS">MACROS</h1></a>
+
+<h2 id="Overline">Overline</h2>
+
+<pre><code>        Overline($vectorName)</code></pre>
+
+<p>formats a vector name (should be used in math mode)</p>
+
+<p>Vectors will be in bold italics in HTML modes, and will be overlined in TeX modes. (Bold italic could also work in TeX modes, but the low resolution on screen made it less easy to distinguish the difference between bold and regular letters.)</p>
+
+<h2 id="BoldMath">BoldMath</h2>
+
+<pre><code>        BoldMath($vectorName)</code></pre>
+
+<p>This gets a bold letter in TeX as well as HTML modes. Although \boldsymbol{} works fine on screen in latex2html mode, the PDF file produces non-bold letters. I haven&#39;t been able to track this down, so used \mathbf{} in TeX mode, which produces roman bold, not math-italic bold.</p>
+
+<h2 id="GRAD">$GRAD</h2>
+
+<pre><code>        TEXT($GRAD)
+
+        BEGIN_TEXT
+        $GRAD
+        END_TEXT</code></pre>
+
+<p>Grad symbol.</p>
+
+<h2 id="non_zero_point">non_zero_point</h2>
+
+<pre><code>        non_zero_point($Dim,$L_bound,$U_bound,$step)</code></pre>
+
+<p>Create a non-zero point with the given number of coordinates with the given random range (which defaults to (-5,5,1)).</p>
+
+<p>non_zero_point(n,a,b,c) non_zero_point_2D(a,b,c) non_zero_point_3D(a,b,c)</p>
+
+<p>non_zero_point2D and 3D automatically set Dimension to 2 and 3 respectively.</p>
+
+<h2 id="non_zero_vector-non_zero_vector2D-non_zero_vector3D">non_zero_vector, non_zero_vector2D, non_zero_vector3D</h2>
+
+<pre><code>        non_zero_vector($Dim,$L_bound,$U_bound,$step)
+
+        non_zero_vector2D($L_bound,$U_bound,$step)
+
+        non_zero_vector3D($L_bound,$U_bound,$step)</code></pre>
+
+<p>Functions the same as non_zero_point but for Vectors. non_zero_vector2D and non_zero_vector3D automatically set Dimension to 2 and 3 respectively.</p>
+
+<h2 id="Line">Line</h2>
+
+<pre><code>        $P = Point(@coords1);
+        $V = Vector(@coords2);
+        $t = &#39;t&#39;;
+        Line($P,$V);
+        Line($P,$V,$t);</code></pre>
+
+<p>Form the vector-parametric form for a line given its point and vector, where $P is the point and $V the direction vector for the line, and $t is the variable to use (default is &#39;t&#39;).</p>
+
+<p>For example:</p>
+
+<pre><code>        Line([1,-3],[2,1]);            # produces Vector(&quot;1+2t&quot;,&quot;-3+t&quot;).
+        Line(Point(1,-3),Vector(2,1)); # produces Vector(&quot;1+2t&quot;,&quot;-3+t&quot;).</code></pre>
+
+<p>(It may be better to use the ParametricLine class from parserParametricLine.pl).</p>
+
+<h2 id="Plane">Plane</h2>
+
+<pre><code>        Plane($point,$NormalVector)</code></pre>
+
+<p>Creates a displayable string for a plane given its normal vector and a point on the plane. (Better to use the ImplicitPlane class from parserImplicitPlane.pl).</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

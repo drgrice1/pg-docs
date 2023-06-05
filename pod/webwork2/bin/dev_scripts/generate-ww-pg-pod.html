@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>dev_scripts/generate-ww-pg-pod.pl</title>
+</head>
+<body>
+<h1>dev_scripts/generate-ww-pg-pod.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>generate-ww-pg-pod.pl - Convert WeBWorK and PG POD into HTML form.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>generate-ww-pg-pod.pl [options]</p>
+
+<pre><code> Options:
+   -w|--webwork-root     Directory containing a git clone of webwork2.
+                         If this option is not set, then the environment
+                         variable $WEBWORK_ROOT will be used if it is set.
+   -p|--pg-root          Directory containing  a git clone of pg.
+                         If this option is not set, then the environment
+                         variable $PG_ROOT will be used if it is set.
+   -o|--output-dir       Directory to save the output files to. (required)
+   -b|--base-url         Base url location used on server. (default: /)
+                         This is needed for internal POD links to work correctly.
+   -v|--verbose          Increase the verbosity of the output.
+                         (Use multiple times for more verbosity.)</code></pre>
+
+<p>Note that at least one of the options --webwork-root or --pg-root must be provided (or there is nothing to do!).</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Convert WeBWorK and PG POD into HTML form.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

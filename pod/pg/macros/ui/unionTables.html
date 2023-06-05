@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ui/unionTables.pl</title>
+</head>
+<body>
+<h1>ui/unionTables.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#unionTables.pl">unionTables.pl</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="unionTables.pl">unionTables.pl</h2>
+
+<pre><code>  Make a two-column table in HTML and Latex2HTML modes
+
+  Usage:  ColumnTable(col1,col2,[options])
+
+  Options can be taken from:
+
+      indent =&gt; n           the width to indent the first column
+                            (default is 0)
+
+      separation =&gt; n       the width of the separating gutter
+                            (default is 50)
+
+      valign =&gt; type        set the vertical alignment
+                            (default is &quot;MIDDLE&quot;)</code></pre>
+
+<pre><code>  Use columns for a match-list output
+
+  Usage:  ColumnMatchTable($ml,options)
+
+  where $ml is a math list reference and options are those
+  allowed for ColumnTable above.</code></pre>
+
+<pre><code>  Command for tables with no borders.
+
+  Usage:  BeginTable(options);
+
+  Options are taken from:
+
+    border =&gt; n           value for BORDER attribute (default 0)
+    spacing =&gt; n          value for CELLSPACING attribute (default 0)
+    padding =&gt; n          value for CELLPADDING attribute (default 0)
+    tex_spacing =&gt; dimen  value for spacing between columns in TeX
+                          (e.g, tex_spacing =&gt; 2em) (default 1em)
+    tex_border =&gt; dimen   value for left- and right border in TeX (0pt)
+    center =&gt; 0 or 1      center table or not (default 1)</code></pre>
+
+<pre><code>  Usage:  EndTable(options)
+
+  where options are taken from:
+
+     tex_border =&gt; dimen     extra vertical space in TeX mode (default 0pt)</code></pre>
+
+<pre><code>  Creates a row in the table
+
+  Usage:  Row([item1,item2,...],options);
+
+  Each item appears as a separate entry in the table.
+
+  Options control how the row is displayed:
+
+    indent =&gt; num           Specifies size of blank column on the left
+                            (default:  indent =&gt; 0)
+
+    separation =&gt; num       Specifies separation of columns
+                            (default:  spearation =&gt; 30)
+
+    tex_vspace =&gt; &quot;dimen&quot;   Specifies additional vertical spacing for TeX
+
+    align =&gt; &quot;type&quot;         Specifies alignment of initial column
+                            (default:  align =&gt; &quot;LEFT&quot;)
+
+    valign =&gt; &quot;type&quot;        Specified vertical alignment of row
+                            (default:  valign =&gt; &quot;MIDDLE&quot;)</code></pre>
+
+<pre><code>  AlignedRow([item1,item2,...],options);
+
+  Options control how the row is displayed:
+
+    indent =&gt; num           Specifies size of blank column on the left
+                            (default:  indent =&gt; 0)
+
+    separation =&gt; num       Specifies separation of columns
+                            (default:  spearation =&gt; 30)
+
+    tex_vspace =&gt; &quot;dimen&quot;   Specifies additional vertical spacing for TeX
+
+    align =&gt; &quot;type&quot;         Specifies alignment of all columns
+                            (default:  align =&gt; &quot;CENTER&quot;)
+
+    valign =&gt; &quot;type&quot;        Specified vertical alignment of row
+                            (default:  valign =&gt; &quot;MIDDLE&quot;)</code></pre>
+
+<pre><code>  Add extra space between rows of a table
+
+  Usage:  TableSpace(pixels,points)
+
+  where pixels is the number of pixels of space in HTML mode and
+  points is the number of points to use in TeX mode.</code></pre>
+
+<pre><code>  A horizontal rule within a table.  (Could have been a variable,
+  but all the other table commands are subroutines, so kept it
+  one to be consistent.)</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

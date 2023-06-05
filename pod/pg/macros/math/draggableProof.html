@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/draggableProof.pl</title>
+</head>
+<body>
+<h1>math/draggableProof.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#TERMINOLOGY">TERMINOLOGY</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+  <li><a href="#EXAMPLE">EXAMPLE</a></li>
+  <li><a href="#CUSTOM-CHECKERS">CUSTOM CHECKERS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>draggableProof.pl</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This macro helps the instructor create a drag-and-drop environment in which students are asked to arrange predefined statements into a correct sequence.</p>
+
+<a href="#_podtop_"><h1 id="TERMINOLOGY">TERMINOLOGY</h1></a>
+
+<p>An HTML element into or out of which other elements may be dragged will be called a &quot;bucket&quot;.</p>
+
+<p>An HTML element which houses a collection of buckets will be called a &quot;bucket pool&quot;.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<p>To initialize a <code>DraggableProof</code> bucket pool in a .pg problem, insert the line:</p>
+
+<pre><code>    $draggable = DraggableProof(
+        $statements,
+        $extra_statements,
+        option1 =&gt; $value1,
+        option2 =&gt; $value2,
+        ...
+    );</code></pre>
+
+<p>Then insert the draggable proof bucket pool into the problem text with</p>
+
+<pre><code>    BEGIN_TEXT
+    \{$draggable-&gt;ans_rule\}
+    END_TEXT</code></pre>
+
+<p>for basic PG, or</p>
+
+<pre><code>    BEGIN_PGML
+    [_]{$draggable}
+    END_PGML</code></pre>
+
+<p>for PGLM. Note the following also works, but is deprecated. However, if you want your problem to be compatible with previous versions of PG this must be used. Call</p>
+
+<pre><code>    \{$draggable-&gt;Print\} (or [@ $draggable-&gt;Print @]* )</code></pre>
+
+<p>within the BEGIN_TEXT / END_TEXT (or BEGIN_PGML / END_PGML ) environment. Then call</p>
+
+<pre><code>    ANS($draggable-&gt;cmp)</code></pre>
+
+<p>after END_TEXT (or END_PGML).</p>
+
+<p><code>$statements</code>, e.g. [&quot;Socrates is a man.&quot;, &quot;Socrates is mortal.&quot;, ...], is an array reference to the list of statements used in the correct proof.</p>
+
+<p><code>$extra_statements</code>, e.g. [&quot;Roses are red.&quot;], is an array reference to the list statements extraneous to the proof. If there are no extraneous statements, use the empty array reference [].</p>
+
+<p>By default, the score of the student answer is 100% if the draggable statements are placed in the exact same order as in the array referenced by <code>$statements</code>, with no inclusion of any statement from <code>$extra_statements</code>. The score is 0% otherwise.</p>
+
+<p>Available Options:</p>
+
+<pre><code>    NumBuckets         =&gt; 1 or 2
+    SourceLabel        =&gt; &lt;string&gt;
+    TargetLabel        =&gt; &lt;string&gt;
+    Levenshtein        =&gt; 0 or 1
+    DamerauLevenshtein =&gt; 0 or 1
+    InferenceMatrix    =&gt; &lt;array reference&gt;
+    IrrelevancePenalty =&gt; &lt;float&gt;
+    ResetButtonText    =&gt; &lt;string&gt;</code></pre>
+
+<p>Their usage is explained in the example below.</p>
+
+<a href="#_podtop_"><h1 id="EXAMPLE">EXAMPLE</h1></a>
+
+<pre><code>    DOCUMENT();
+    loadMacros(
+        &#39;PGstandard.pl&#39;,
+        &#39;PGML.pl&#39;,
+        &#39;MathObjects.pl&#39;,
+        &#39;draggableProof.pl&#39;
+    );
+
+    $draggable = DraggableProof(
+        # The proof given in the correct order.
+        [
+            &#39;All men are mortal.&#39;, # index 0
+            &#39;Socrates is a man.&#39;,  # index 1
+            &#39;Socrates is mortal.&#39;  # index 2
+        ],
+
+        # Extra statements that are not part of the correct answer.
+        [
+            &#39;Some animals are men.&#39;,
+            &#39;Beauty is immortal.&#39;,
+            &#39;Not all animals are men.&#39;
+        ],
+
+        # Number of drag and drop buckets.  Must be either 1 or 2.
+        # The default value if not given is 2.
+        NumBuckets =&gt; 2,
+
+        # Label of first bucket if NumBuckets = 2.
+        # The default value if not given is &#39;Choose from these sentences:&#39;
+        SourceLabel =&gt; &quot;${BBOLD}Axioms${EBOLD}&quot;,
+
+        # Label of second bucket if NumBuckets = 2,
+        # or of the only bucket if NumBuckets = 1.
+        # The default value if not given is &#39;Your Proof:&#39;.
+        TargetLabel =&gt; &quot;${BBOLD}Reasoning${EBOLD}&quot;,
+
+        # If equal to 1, scoring is determined by the Levenshtein edit distance
+        # between student answer and correct answer.
+        # The default value if not given is 0.
+        Levenshtein =&gt; 1,
+
+        # If equal to 1, scoring is determined by the Damerau-Levenshtein
+        # distance between student answer and correct answer.  A pair of
+        # transposed adjacent statements is counted as two mistakes under
+        # Levenshtein scoring, but as one mistake under Damerau-Levenshtein
+        # scoring.
+        # The default value if not given is 0.
+        DamerauLevenshtein =&gt; 1,
+
+        # (i, j)-entry is nonzero &lt;=&gt; statement i implies statement j.  The
+        # score of each corresponding inference is weighted according to the
+        # value of the matrix entry.
+        # The default value if not given is [].
+        InferenceMatrix =&gt; [
+            [0, 0, 1],
+            [0, 0, 1],
+            [0, 0, 0]
+        ],
+
+        # This option is processed only if the InferenceMatrix option is set.
+        # Penalty for each extraneous statement in the student answer is
+        # &lt;IrrelevancePenalty&gt; divided by the total number of inference points
+        # (i.e. sum of all entries in the InferenceMatrix).
+        # The default value if not given is 1.
+        IrrelevancePenalty =&gt; 1
+
+        # This is the text label for the button shown that resets the drag and
+        # drop element to its default state.  The default value if not given is
+        # &quot;Reset&quot;.
+        ResetButtonText =&gt; &#39;zur&uuml;cksetzen&#39;
+
+        # These are options that will be passed to the $draggable-&gt;cmp method.
+        cmpOptions =&gt; { checker =&gt; sub { ... } }
+    );
+
+    BEGIN_PGML
+    Show that Socrates is mortal by dragging the relevant *Axioms* into the
+    *Reasoning* box in an appropriate order.
+
+    [_]{$draggable}
+    END_PGML
+
+    ENDDOCUMENT();</code></pre>
+
+<a href="#_podtop_"><h1 id="CUSTOM-CHECKERS">CUSTOM CHECKERS</h1></a>
+
+<p>Custom checkers can also be used by passing the <code>checker</code> or <code>list_checker</code> options to the <code>cmp</code> method. See <a href="https://webwork.maa.org/wiki/Custom_Answer_Checkers">https://webwork.maa.org/wiki/Custom_Answer_Checkers</a>, and <a href="https://webwork.maa.org/wiki/Custom_Answer_Checkers_for_Lists">https://webwork.maa.org/wiki/Custom_Answer_Checkers_for_Lists</a> for details on how to use these.</p>
+
+<p>Note that if using a standard <code>checker</code> the the correct and student answers will be the MathObject List of indices corresponding to the only bucket if <code>NumBuckets</code> is 1, and will be the MathObject List of indices corresponding to the second bucket if <code>NumBuckets</code> is 2. The checker should return a number between 0 and 1 inclusive.</p>
+
+<p>For a <code>list_checker</code> the correct and student answers will be perl arrays containing MathObject Lists for all buckets. So if <code>NumBuckets</code> is 1, the arrays will only contain one list corresponding to the only bucket, and if <code>NumBuckets</code> is 2, the arrays will contain two lists corresponding to the two buckets. Usually the first (source) list is ignored for grading if <code>NumBuckets</code> is 2. So if you want to determine the score using both buckets this is the only option. Note that the checker should return a number between 0 and 1 inclusive regardless of the number of buckets.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

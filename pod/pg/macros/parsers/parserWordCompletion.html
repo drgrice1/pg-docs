@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserWordCompletion.pl</title>
+</head>
+<body>
+<h1>parsers/parserWordCompletion.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserWordCompletion.pl</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Provides free response, fill in the blank questions with interactive help. As a student types their answer into the answer blank, jQuery&#39;s autocomplete feature generates a drop-down list of allowable answers that match what has already been typed. When the student presses the &quot;Check Answers&quot; or &quot;Submit Answers&quot; button, jQuery generates a warning message if the student answer is not one of the allowable answers. Choices in the drop-down list and the correct answer are specified by the problem author. WordCompletion objects are compatible with Value objects, and in particular, can be used with MultiAnswer objects.</p>
+
+<p>To create a WordCompletion object, use</p>
+
+<pre><code>        $w = WordCompletion([choices,...],correct);</code></pre>
+
+<p>where &quot;choices&quot; are the strings for the allowable answers in the drop-down list and &quot;correct&quot; is the correct answer from the list.</p>
+
+<p>To insert the WordCompletion into the problem text, use</p>
+
+<pre><code>        BEGIN_TEXT
+        \{ $w-&gt;ans_rule(40) \}
+        END_TEXT</code></pre>
+
+<p>You can explicitly list all of the choices using</p>
+
+<pre><code>        \{ $w-&gt;choices_text \}</code></pre>
+
+<p>for a comma separated list of the choices (inline, text style) and</p>
+
+<pre><code>        \{ $w-&gt;choices_list \}</code></pre>
+
+<p>for an unordered list (display style). Use</p>
+
+<pre><code>        ANS( $wb-&gt;cmp );</code></pre>
+
+<p>to get the answer checker for the WordCompletion object. Note: the way to construct and use WordCompletion objects is exactly the same as PopUp objects (see parserPopUp.pl), and you can use <code>menu</code> instead of <code>ans_rule</code>.</p>
+
+<p>You can use the WordCompletion object in MultiAnswer objects. This is the reason for the WordCompletion&#39;s ans_rule method (since that is what MultiAnswer calls to get answer rules).</p>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Paul Pearson (Hope College Mathematics Department)</p>
+
+<p>(Davide Cervone wrote parserPopUp.pl, which served as a template for parserWordCompletion.pl.)</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

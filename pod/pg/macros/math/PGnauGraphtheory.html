@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/PGnauGraphtheory.pl</title>
+</head>
+<body>
+<h1>math/PGnauGraphtheory.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<pre><code>  for ($i = 0; $i &lt; $size; $i++){
+    push @lowdeg, 2;
+  }
+
+  $comp = 2;
+  while ($graph eq &#39;DNE&#39; || $comp &gt; 1){
+    @deg = ();
+    for ($i = 0; $i &lt; $size; $i++){
+      push @deg, random($lowdeg[$i],$size - 1,2);
+    }
+    $graph = GRgraph_degrees(@deg);
+    $comp = GRncomponents_graph($graph);
+
+    do {
+      $diff = random (0, $size - 1, 1);
+    } until ($lowdeg[$diff] &lt; $size - 2);
+    $lowdeg[$diff] += 2;
+  }</code></pre>
+
+<pre><code>  while ($graph eq &#39;DNE&#39; || $ans == 1){
+    @deg = ();
+    for ($i = 0; $i &lt; $size; $i++){
+      push @deg, random($lowdeg[$i],$size - 1,1);
+    }
+    $graph = GRgraph_degrees(@deg);
+    if ($graph ne &#39;DNE&#39;){
+      @ans = GRiseulertrail_graph($graph);
+    }
+
+    do {
+    $diff = random (0, $size - 1, 1);
+    } until ($lowdeg[$diff] &lt; $size - 1);
+    $lowdeg[$diff]++;
+  }</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

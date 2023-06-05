@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>deprecated/AnswerFormatHelp.pl</title>
+</head>
+<body>
+<h1>deprecated/AnswerFormatHelp.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>AnswerFormatHelp.pl</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>THIS MACRO IS DEPRECATED. DO NOT USE THIS MACRO IN NEWLY WRITTEN PROBLEMS. Use <code>helpLink</code> from PGbasicmacros.pl instead.</p>
+
+<p>Creates links for students to help documentation on formatting answers and allows for custom help links.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>There are 16 predefined help links: angles, decimals, equations, exponents, formulas, fractions, inequalities, intervals, limits, logarithms, matrices, numbers, points, syntax, units, vectors.</p>
+
+<p>Usage:</p>
+
+<pre><code>     DOCUMENT();
+     loadMacros(&quot;PGstandard.pl&quot;,&quot;AnswerFormatHelp.pl&quot;,);
+     TEXT(beginproblem());
+     BEGIN_TEXT
+     \{ ans_rule(20) \}
+     \{ AnswerFormatHelp(&quot;formulas&quot;) \} $PAR
+     \{ ans_rule(20) \}
+     \{ AnswerFormatHelp(&quot;equations&quot;,&quot;help entering equations&quot;) \} $PAR
+     END_TEXT
+     ENDDOCUMENT();</code></pre>
+
+<p>The first example use defaults and displays the help link right next to the answer blank, which is recommended. The second example customizes the link text displayed to the student, but the actual help document is unaffected.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

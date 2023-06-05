@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Authen</title>
+</head>
+<body>
+<h1>WeBWorK::Authen</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FACTORY">FACTORY</a></li>
+  <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+  <li><a href="#METHODS">METHODS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Authen - Check user identity, manage session keys.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code> # get the name of the appropriate Authen class, based on the %authen hash in $ce
+ my $class_name = WeBWorK::Authen::class($ce, &quot;user_module&quot;);
+
+ # load that class
+ require $class_name;
+
+ # create an authen object
+ my $authen = $class_name-&gt;new($c);
+
+ # verify credentials
+ $authen-&gt;verify or die &quot;Authentication failed&quot;;
+
+ # verification status is stored for quick retrieval later
+ my $auth_ok = $authen-&gt;was_verified;
+
+ # for some reason, you might want to clear that cache
+ $authen-&gt;forget_verification;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>WeBWorK::Authen is the base class for all WeBWorK authentication classes. It provides default authentication behavior which can be selectively overridden in subclasses.</p>
+
+<a href="#_podtop_"><h1 id="FACTORY">FACTORY</h1></a>
+
+<dl>
+
+<dt>class($ce, $type)</dt>
+<dd>
+
+<p>This subroutine consults the given WeBWorK::CourseEnvironment object to determine which WeBWorK::Authen subclass should be used. $type can be any key given in the %authen hash in the course environment. If the type is not found in the %authen hash, an exception is thrown.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="CONSTRUCTOR">CONSTRUCTOR</h1></a>
+
+<dl>
+
+<dt>new($c)</dt>
+<dd>
+
+<p>Instantiates a new WeBWorK::Authen object for the given WeBWorK::Controller ($c).</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<dl>
+
+<dt>was_verified()</dt>
+<dd>
+
+<p>Returns true if verify() returned true the last time it was called.</p>
+
+</dd>
+<dt>forget_verification()</dt>
+<dd>
+
+<p>Future calls to was_verified() will return false, until verify() is called again and succeeds.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ui/PGinfo.pl</title>
+</head>
+<body>
+<h1>ui/PGinfo.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#listVariables">listVariables</a>
+            <ul>
+              <li><a href="#listFormVariables">listFormVariables()</a></li>
+              <li><a href="#listEnvironmentVariables">listEnvironmentVariables()</a></li>
+              <li><a href="#listContextFlags">listContextFlags()</a></li>
+            </ul>
+          </li>
+          <li><a href="#listContext">listContext()</a></li>
+          <li><a href="#pp">pp()</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        PGinfo.pl</code></pre>
+
+<p>Provides macros for determining the values of the current context in which the problem is being written.</p>
+
+<h3 id="listVariables">listVariables</h3>
+
+<p>Usage: listVariables();</p>
+
+<p>Prints all variables submitted in the problem form and all variables in the the Problem environment and all of the flag variables in Context(). This is used for debugging and to determine the current context for the problem.</p>
+
+<h4 id="listFormVariables">listFormVariables()</h4>
+
+<pre><code>        Called by listVariables to print out the input form variables.</code></pre>
+
+<h4 id="listEnvironmentVariables">listEnvironmentVariables()</h4>
+
+<pre><code>        Called by listVariables to print out the environment variables (in %envir).</code></pre>
+
+<h4 id="listContextFlags">listContextFlags()</h4>
+
+<pre><code>        Called by listVariables to print out context flags for Math Objects.</code></pre>
+
+<h3 id="listContext">listContext()</h3>
+
+<pre><code>        Usage:  listContext(Context())
+
+        Prints out the contents of the current context hash -- includes flags and much more</code></pre>
+
+<h3 id="pp">pp()</h3>
+
+<pre><code>        Usage:  pp(Hash );
+                pp(Object);
+                
+
+        Prints out the contents of Hash or the instance variables of Object</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

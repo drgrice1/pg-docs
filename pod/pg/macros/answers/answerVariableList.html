@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/answerVariableList.pl</title>
+</head>
+<body>
+<h1>answers/answerVariableList.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#MACROS">MACROS</a>
+    <ul>
+      <li><a href="#variable_cmp">variable_cmp</a></li>
+      <li><a href="#addVariables">addVariables</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>answerVariableList.pl - Creates answer checkers that compare the student&#39;s answer to a list of variable names.</p>
+
+<a href="#_podtop_"><h1 id="MACROS">MACROS</h1></a>
+
+<h2 id="variable_cmp">variable_cmp</h2>
+
+<pre><code> ANS(variable_cmp($var_string, %options))</code></pre>
+
+<p>This answer checker compares the student answer to a list of variable names (so, for example, you can ask for what values a given function depends on).</p>
+
+<p>Use addVariables() to create the list of variables that from which the student can choose, and then use variable_cmp() to generate the answer checker. If the formula passed to variable_cmp contains parentheses around the list, then the student&#39;s answer must as well.</p>
+
+<p>You can also include additional parameters to variable_cmp. These can be any of the flags appropriate for List() answer checker.</p>
+
+<p>Usage examples:</p>
+
+<pre><code>        addVariables(&#39;x&#39;,&#39;y&#39;,&#39;z&#39;);
+        ANS(variable_cmp(&quot;(x,y)&quot;));
+
+        addVariables(&#39;x&#39;,&#39;y&#39;,&#39;z&#39;,&#39;s&#39;,&#39;t,);
+        ANS(variable_cmp(&quot;s,t&quot;));
+
+        addVariables(&#39;x&#39;,&#39;y&#39;,&#39;z&#39;);
+        ANS(variable_cmp(&quot;(x)&quot;,showHints=&gt;0,showLengthHints=&gt;0));</code></pre>
+
+<h2 id="addVariables">addVariables</h2>
+
+<pre><code> addVariables(@vars)</code></pre>
+
+<p>Adds each string in @vars as a varible to the current context.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

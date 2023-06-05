@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserCustomization.pl</title>
+</head>
+<body>
+<h1>parsers/parserCustomization.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserCustomization.pl - Placeholder for site/course-local customization file.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Copy this file to your course templates directory and put any customization for the Parser that you want for your course here. For example, you can make vectors display using ijk notation (and force students to use it for entering vectors) by using:</p>
+
+<pre><code>        $context{Vector} = Parser::Context-&gt;getCopy(&quot;Vector&quot;);
+        $context{Vector}-&gt;flags-&gt;set(ijk=&gt;1);
+        $context{Vector}-&gt;parens-&gt;remove(&#39;&lt;&#39;);</code></pre>
+
+<p>To allow vectors to be entered with parens (and displayed with parens) rather than angle-brakets, use</p>
+
+<pre><code>        $context{Vector} = Parser::Context-&gt;getCopy(&quot;Vector&quot;);
+        $context{Vector}-&gt;{cmpDefaults}{Vector} = {promotePoints =&gt; 1};
+        $context{Vector}-&gt;lists-&gt;set(Vector=&gt;{open=&gt;&#39;(&#39;, close=&gt;&#39;)&#39;});</code></pre>
+
+<p>(This actually just turns points into vectors in the answer checker for vectors, and displays vectors using parens rather than angle brackets. The student is really still entering what MathObjects thinks is a point, but since points get promoted automatically, that should work. But if a problem checks if a student&#39;s value is actually a Vector, that will not be true.)</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

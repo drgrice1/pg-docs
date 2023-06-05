@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/answerCustom.pl</title>
+</head>
+<body>
+<h1>answers/answerCustom.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#MACROS">MACROS</a>
+    <ul>
+      <li><a href="#custom_cmp">custom_cmp</a></li>
+      <li><a href="#custom_list_cmp">custom_list_cmp</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>answerCustom.pl - An easy method for creating answer checkers with a custom subroutine that performs the check for correctness.</p>
+
+<a href="#_podtop_"><h1 id="MACROS">MACROS</h1></a>
+
+<h2 id="custom_cmp">custom_cmp</h2>
+
+<pre><code>        ANS(custom_cmp($correct_ans, $ans_checker, %options))</code></pre>
+
+<p>This answer checker provides an easy method for creating an answer checker with a custom subroutine that performs the check for correctness.</p>
+
+<p>Pass the correct answer (either as a string or as a Parser object) as the first argument, and a reference to the checker subroutine as the second argument. Additional parameters can follow. These include any of the parameters for the usual answer checker of the of the type of the correct answer (e.g., showCoordinateHints), plus the following:</p>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>sameClass =&gt; 0 or 1</code></span></dt>
+<dd>
+
+<p>If 1 (the default), only call the custom checker if the student answer is the same object class as the correct answer (e.g., both are points). If 0, the checker will be called whenever the student answer passes the typeMatch check for the correct answer. For example, if the correct answer is a vector, and promotePoints has been set to 1, then the checker will be called when the student answer is a vector OR a point.</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>sameLength =&gt; 0 or 1</code></span></dt>
+<dd>
+
+<p>If 1 (the default), only call the custom checker if the student answer has the same number of coordinates as the correct answer.</p>
+
+</dd>
+</dl>
+
+<p>If the correct answer is a list, the custom checker will be called on the individual entries of the list, not on the list as a whole. If the list is an unordered list, the routine may be called multiple times with various combinations of student and professor&#39;s answers in order to find a correct match.</p>
+
+<p>Note: If you want a correct answer whose class is a complex variable to check a real number entry you will have to set both sameClass and sameLength to 0 since a complex number has length 2 and a real number has length 1.</p>
+
+<p>The checker routine will be passed the correct answer, the student&#39;s answer, and the answer evaluator object, in that order.</p>
+
+<p>For example, the following checks if a student entered a unit vector (any unit vector in R^3 will do):</p>
+
+<pre><code>        ANS(custom_cmp(&quot;&lt;1,0,0&gt;&quot;,sub {
+                my ($correct,$student,$ans) = @_;
+                return norm($student) == 1;
+        },showCoordinateHints =&gt; 0));</code></pre>
+
+<p>The checker subroutine can call Value::Error(message) to generate an error message that will be reported in the table at the top of the page. If the checker generates a fatal runtime error (e.g., calls the &quot;die&quot; function), then the message is reported with the &quot;pink screen of death&quot;, and includes a request for the student to inform the instructor.</p>
+
+<h2 id="custom_list_cmp">custom_list_cmp</h2>
+
+<pre><code> ANS(custom_list_cmp($correct_ans, $ans_checker, %options))</code></pre>
+
+<p>This one installs a custom list-based answer checker (for the List and Union classes). Basically it is just a shell that makes it a little easier to do, and provides an interface similar to custom_cmp.</p>
+
+<p>You pass the correct answer (as a string or as a List or Union object) as the first argument, and the custom list checker as the second argument. You can pass any additional parameters that should be included in the answer checker following those two required ones.</p>
+
+<p>The checker will be passed a reference to the array of correct answers, a reference to the array of student answers, and the answer evaluator object. Note that the correct and student answers are array references, not List structures (this is because a list of formulas becomes a formula returning a list, so in order to keep the formulas separate, they are passed in an array).</p>
+
+<p>The checker should return the number of list entries that were matched by the students answers. (I.e., a number between 0 and the length of the list.)</p>
+
+<p>For example, the following checks for any list of the same length as the instructor&#39;s list. (A stupid checker, but just an example.)</p>
+
+<pre><code>    ANS(custom_list_cmp(&quot;1,2,3&quot;,sub {
+        my ($correct,$student,$ans) = @_;
+        (scalar(@{$correct}) == scalar(@{$student}) ? 3 : 0);
+    }));</code></pre>
+
+<p>The checker subroutine can call Value::Error(message) to generate an error message that will be reported in the table at the top of the page. If the checker generates a fatal runtime error (e.g., calls the &quot;die&quot; function), then the message is reported with the &quot;pink screen of death&quot;, and includes a request for the student to inform the instructor.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

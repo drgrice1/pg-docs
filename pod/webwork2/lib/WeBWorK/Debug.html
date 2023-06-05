@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Debug</title>
+</head>
+<body>
+<h1>WeBWorK::Debug</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#CONFIGURATION-VARIABLES">CONFIGURATION VARIABLES</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Debug - Print (or don&#39;t print) debugging output.</p>
+
+<p>head1 SYNOPSIS</p>
+
+<pre><code> use WeBWorK::Debug;
+ 
+ # Enable debugging
+ $WeBWorK::Debug::Enabled = 1;
+ 
+ # Log to a file instead of STDERR
+ $WeBWorK::Debug::Logfile = &quot;/path/to/debug.log&quot;;
+ 
+ # log some debugging output
+ debug(&quot;Generated 5 widgets.&quot;);</code></pre>
+
+<a href="#_podtop_"><h1 id="CONFIGURATION-VARIABLES">CONFIGURATION VARIABLES</h1></a>
+
+<dl>
+
+<dt>$Enabled</dt>
+<dd>
+
+<p>If true, debugging messages will be output. If false, they will be ignored.</p>
+
+</dd>
+<dt>$Logfile</dt>
+<dd>
+
+<p>If non-empty, debugging output will be sent to the file named rather than STDERR.</p>
+
+</dd>
+<dt>$DenySubroutineOutput</dt>
+<dd>
+
+<p>If defined, prevent subroutines matching the following regular expression from logging.</p>
+
+</dd>
+<dt>$AllowSubroutineOutput</dt>
+<dd>
+
+<p>If defined, allow only subroutines matching the following regular expression to log.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>debug(@messages)</dt>
+<dd>
+
+<p>Write @messages to the debugging log.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Written by Sam Hathaway, sh002i (at) math.rochester.edu.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

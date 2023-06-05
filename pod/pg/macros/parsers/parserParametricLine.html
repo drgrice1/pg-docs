@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserParametricLine.pl</title>
+</head>
+<body>
+<h1>parsers/parserParametricLine.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#lhs-rhs">$lhs == $rhs</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserParametricLine.pl - Implements Formulas that represent parametric lines.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser class that implements parametric lines as a subclass of the Formula class. The standard -&gt;cmp routine will work for this, provided we define the compare() function needed by the overloaded ==. We assign the special precedence so that overloaded operations will be promoted to the ones below.</p>
+
+<p>Use ParametricLine(point,vector) or ParametricLine(formula) to create a ParametricLine object. You can pass an optional additional parameter that indicated the variable to use for the parameter for the line.</p>
+
+<p>Usage examples:</p>
+
+<pre><code>        $L = ParametricLine(Point(3,-1,2),Vector(1,1,3));
+        $L = ParametricLine([3,-1,2],[1,1,3]);
+        $L = ParametricLine(&quot;&lt;t,1-t,2t-3&gt;&quot;);
+
+        $p = Point(3,-1,2); $v = Vector(1,1,3);
+        $L = ParametricLine($p,$v);
+
+        $t = Formula(&#39;t&#39;); $p = Point(3,-1,2); $v = Vector(1,1,3);
+        $L = ParametricLine($p+$t*$v);
+
+        Context()-&gt;constants-&gt;are(a=&gt;1+pi^2); # won&#39;t guess this value
+        $L = ParametricLine(&quot;(a,2a,-1) + t &lt;1,a,a^2&gt;&quot;);</code></pre>
+
+<p>Then use</p>
+
+<pre><code>   ANS($L-&gt;cmp);</code></pre>
+
+<p>to get the answer checker for $L.</p>
+
+<h2 id="lhs-rhs">$lhs == $rhs</h2>
+
+<pre><code> #
+ #  Two parametric lines are equal if they have
+ #  parallel direction vectors and either the same
+ #  points or the vector between the points is
+ #  parallel to the (common) direction vector.
+ #</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

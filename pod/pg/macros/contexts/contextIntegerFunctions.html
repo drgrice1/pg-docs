@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextIntegerFunctions.pl</title>
+</head>
+<body>
+<h1>contexts/contextIntegerFunctions.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextIntegerFunctions.pl - adds integer related functions C(n,r) and P(n,r).</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser context that adds integer related functions C(n,r) and P(n,r). They can be used by the problem author and also by students if the answer checking is done by Parser. The latter is the main purpose of this file.</p>
+
+<p><b>Note:</b> by default, webwork problems do not permit students to use C(n,r) and P(n,r) functions. Problems which do permit this should alert the student in their text.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        Context(&quot;IntegerFunctions&quot;)
+        
+        $b = random(2, 5); $a = $b+random(0, 5);
+        $c = C($a, $b);
+        ANS(Compute(&quot;P($a, $b)&quot;)-&gt;cmp);</code></pre>
+
+<p><b>Note:</b> If the context is set to something else, such as Numeric, it can be set back with Context(&quot;IntegerFunctions&quot;).</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

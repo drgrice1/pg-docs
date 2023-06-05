@@ -47,7 +47,26 @@
 
 <div class="container">
 	<div class="row pb-3">
+		<h1>Pronoun</h1>
+	</div>
+	<div class="row pb-3">
+		<div class="col">
 		Shows the use of the randomNamesPronouns.pl macro
+		</div>
+		<div class="col">
+			<h2>POD for macro files</h2>
+			<ul>
+			
+					<li style="color: red">PGstandard.pl</li>
+			
+					<li style="color: red">PGML.pl</li>
+			
+					<li style="color: red">randomPerson.pl</li>
+			
+					<li style="color: red">PGcourse.pl</li>
+			
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col header">
@@ -69,23 +88,21 @@
 				<pre><code class="language-perl">
 DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGML.pl',
-	'randomNamesPronouns.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','randomPerson.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </code></pre>
 				<div class="hidden-code" style="display: none"> 
 DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGML.pl',
-	'randomNamesPronouns.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','randomPerson.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </div>
 			</div>
 			<div class="col preamble explanation">
 				<p><b>Preamble</b></p>
-				<p>We need to load <code>randomNamesPronouns.pl</code> macro</p>
+				<p>We need to load <code>randomPerson.pl</code> macro</p>
 
 			</div>
 		</div>
@@ -111,7 +128,7 @@ $c = random(4,8,2);
 			</div>
 			<div class="col setup explanation">
 				<p><b>Setup</b></p>
-				<p>The macro <code>randomNamesPronouns.pl</code> functionality to</p>
+				<p>The macro <code>randomPerson.pl</code> functionality to</p>
 
 <ul>
 <li>select a random name from a user-defined or default list with pronouns.</li></li>

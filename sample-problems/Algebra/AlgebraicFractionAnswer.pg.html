@@ -47,7 +47,28 @@
 
 <div class="container">
 	<div class="row pb-3">
+		<h1>AlgebraicFractionAnswer</h1>
+	</div>
+	<div class="row pb-3">
+		<div class="col">
 		Algebra: algebraic fraction answer requiring simplification
+		</div>
+		<div class="col">
+			<h2>POD for macro files</h2>
+			<ul>
+			
+					<li style="color: red">PGstandard.pl</li>
+			
+					<li style="color: red">PGML.pl</li>
+			
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/misc/unionTables.html">unionTables.pl</a></li>
+
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserMultiAnswer.html">parserMultiAnswer.pl</a></li>
+
+					<li style="color: red">PGcourse.pl</li>
+			
+			</ul>
+		</div>
 	</div>
 	<div class="row">
 		<div class="col header">
@@ -68,20 +89,20 @@
 				</button>
 				<pre><code class="language-perl">DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGunion.pl','parserMultiAnswer.pl','PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','unionTables.pl','parserMultiAnswer.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </code></pre>
 				<div class="hidden-code" style="display: none"> DOCUMENT();
 
-loadMacros('PGstandard.pl','MathObjects.pl','PGunion.pl','parserMultiAnswer.pl','PGML.pl','PGcourse.pl');
+loadMacros('PGstandard.pl','PGML.pl','unionTables.pl','parserMultiAnswer.pl','PGcourse.pl');
 
 TEXT(beginproblem());
 </div>
 			</div>
 			<div class="col preamble explanation">
 				<p><b>Preamble</b></p>
-				<p>We include the macros file <code>PGunion.pl</code> to be able to display the answer boxes on top of each other (as a fraction).</p>
+				<p>We include the macros file <code>unionTables.pl</code> to be able to display the answer boxes on top of each other (as a fraction).</p>
 
 			</div>
 		</div>

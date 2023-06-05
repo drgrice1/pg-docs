@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextRationalExponent.pl</title>
+</head>
+<body>
+<h1>contexts/contextRationalExponent.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextRationalExponent.pl - allows the requirement of simplified rational exponent answers. May be a misnomer since nothing requires exponents to be rational.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This code is a copy of contextLimitedRadical.pl, with the following changes: - no need for contextLimitedPowers.pl, since we need to use bizarro power, so that macro is removed - name of the context changed to RationalExponent - set class of ^ and ** to bizarro - removed LimitedPowers::OnlyPositiveIntegers($context) call - set bizarroPow flags in answer checking (on, then off) - undefined sqrt and root (after root is added to the context). These can be redefined by a problem author if desired. - added special messages if sqrt or root are used when they were undefined</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

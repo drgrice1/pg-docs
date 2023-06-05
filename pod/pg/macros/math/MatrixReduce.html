@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/MatrixReduce.pl</title>
+</head>
+<body>
+<h1>math/MatrixReduce.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>MatrixReduce.pl - reduced row echelon form, row operations, and elementary matrices.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Provides subroutines for elementary matrix computations using MathObjects matrices.</p>
+
+<dl>
+
+<dt>Get the reduced row echelon form: <code>$Areduced = rref($A);</code></dt>
+<dd>
+
+<p>Should be used in the fraction context with all entries of $A made into fractions.</p>
+
+</dd>
+<dt>Make matrix entries do fraction arithmetic (rather than decimal arithmetic):</dt>
+<dd>
+
+<p>After selecting the Fraction context using Context(&#39;Fraction&#39;)-&gt;parens-&gt;set(&quot;[&quot; =&gt; {formMatrix =&gt; 1}), <code>$A = apply_fraction_to_matrix_entries($A);</code> applies Fraction() to all of the entries of $A, which makes subsequent matrix algebra computations with $A use fraction arithmetic.</p>
+
+</dd>
+<dt>Get the reduced column echelon form: <code>$Areduced = rcef($A);</code></dt>
+<dd>
+
+</dd>
+<dt>Change the value of a matrix entry: <code>change_matrix_entry($A,[2,3],50);</code></dt>
+<dd>
+
+<p>changes the [2,3] entry to the value 50.</p>
+
+</dd>
+<dt>Construct an n x n identity matrix: <code>$E = identity_matrix(5);</code></dt>
+<dd>
+
+<p>(This is an alias for Value::Matrix-&gt;I(5);)</p>
+
+</dd>
+<dt>Construct an n x n elementary matrix that will permute rows i and j:</dt>
+<dd>
+
+<p><code>$E = elem_matrix_row_switch(5,2,4);</code> creates a 5 x 5 identity matrix and swaps rows 2 and 4.</p>
+
+</dd>
+<dt>Construct an n x n elementary matrix that will multiply row i by s: <code>$E = elem_matrix_row_mult(5,2,4);</code></dt>
+<dd>
+
+<p>creates a 5 x 5 identity matrix and swaps puts 4 in the second spot on the diagonal.</p>
+
+</dd>
+<dt>Construct an n x n elementary matrix that will multiply row i by s: <code>$E = elem_matrix_row_mult(5,2,4);</code> creates a 5 x 5 identity matrix and puts 4 in the second spot on the diagonal.</dt>
+<dd>
+
+</dd>
+<dt>Construct an n x n elementary matrix that will add s times row j to row i: <code>$E3 = elem_matrix_row_add(5,3,1,35);</code> creates a 5 x 5 identity matrix and puts 35 in the (3,1) position.</dt>
+<dd>
+
+</dd>
+<dt>Perform the row switch transform that swaps (row i) with (row j): <code>$Areduced = row_switch($A,2,4);</code></dt>
+<dd>
+
+<p>swaps rows 2 and 4 in matrix $A.</p>
+
+</dd>
+<dt>Perform the row multiplication transform s * (row i) placed into (row i): <code>$Areduced = row_mult(A,2,10);</code></dt>
+<dd>
+
+<p>multiplies every entry in row 2 of $A by 10.</p>
+
+</dd>
+<dt>Perform the row addition transform (row i) + s * (row j) placed into (row i): <code>$Areduced = row_add($A,2,1,10);</code></dt>
+<dd>
+
+<p>adds 10 times row 1 to row 2 and places the result in row 2. (Same as constructing $E to be the identity with 10 placed in entry (2,1), then multiplying $E * $A.)</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Usage:</p>
+
+<pre><code>        DOCUMENT();
+        loadMacros(
+        &quot;PGstandard.pl&quot;,
+        &quot;MathObjects.pl&quot;,
+        &quot;MatrixReduce.pl&quot;, # automatically loads contextFraction.pl and MathObjects.pl
+        &quot;PGcourse.pl&quot;,
+        );
+        $showPartialCorrectAnswers = 0;
+        TEXT(beginproblem()); 
+
+        # Context(&#39;Matrix&#39;); # for decimal arithmetic
+        Context(&#39;Fraction&#39;); # for fraction arithmetic
+
+        $A = Matrix([
+        [random(-5,5,1),random(-5,5,1),random(-5,5,1),3],
+        [random(-5,5,1),random(-5,5,1),random(-5,5,1),0.75],
+        [random(-5,5,1),random(-5,5,1),random(-5,5,1),9/4],
+        ]);
+
+        $A = apply_fraction_to_matrix_entries($A); # try commenting this line out for different results
+
+        $Arref = rref($A);
+
+        $Aswitch = row_switch($A, 2, 3);
+
+        $Amult = row_mult($A, 2, 4);
+
+        $Aadd = row_add($A, 2, 1, 10);
+
+        $E = elem_matrix_row_add(3,2,1,10);
+        $EA = $E * $A;
+
+        $E1 = elem_matrix_row_switch(5,2,4);
+        $E2 = elem_matrix_row_mult(5,4,Fraction(1/10));
+        $E3 = elem_matrix_row_add(5,3,1,35);
+        $E4 = identity_matrix(4);
+        change_matrix_entry($E4,[3,2],10);
+
+        Context()-&gt;texStrings;
+        BEGIN_TEXT
+        The original matrix and its row reduced echelon form:
+        \[ $A \sim $Arref. \]
+        $BR
+        The original matrix with rows switched, multiplied, or added together:
+        \[ $Aswitch, $Amult, $Aadd. \]
+        $BR
+        Some elementary matrices.
+        \[$E1, $E2, $E3, $E4\]
+        END_TEXT
+        Context()-&gt;normalStrings;
+
+        COMMENT(&#39;MathObject version.&#39;);
+        ENDDOCUMENT();</code></pre>
+
+<a href="#_podtop_"><h1 id="AUTHORS">AUTHORS</h1></a>
+
+<p>Paul Pearson, Hope College, Department of Mathematics</p>
+
+<p>with help from</p>
+
+<p>Davide Cervone, Union College, Department of Mathematics</p>
+
+<p>Michael Doob, University of Manitoba, Department of Mathematics</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

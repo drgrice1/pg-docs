@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::HTML::AttemptsTable</title>
+</head>
+<body>
+<h1>WeBWorK::HTML::AttemptsTable</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#new">new</a></li>
+      <li><a href="#Methods">Methods</a></li>
+      <li><a href="#Read-Write-Properties">Read/Write Properties</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        AttemptsTable</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>        my $tbl = WeBWorK::HTML::AttemptsTable-&gt;new(
+                $answers,
+                answersSubmitted       =&gt; 1,
+                answerOrder            =&gt; $pg-&gt;{flags}{ANSWER_ENTRY_ORDER},
+                displayMode            =&gt; &#39;MathJax&#39;,
+                showAnswerNumbers      =&gt; 0,
+                showAttemptAnswers     =&gt; $showAttemptAnswers &amp;&amp; $showEvaluatedAnswers,
+                showAttemptPreviews    =&gt; $showAttemptPreview,
+                showAttemptResults     =&gt; $showAttemptResults,
+                showCorrectAnswers     =&gt; $showCorrectAnswers,
+                showMessages           =&gt; $showAttemptAnswers, # internally checks for messages
+                showSummary            =&gt; $showSummary,
+                imgGen                 =&gt; $imgGen, # not needed if ce is present ,
+                ce                     =&gt; &#39;&#39;,      # not needed if $imgGen is present
+                maketext               =&gt; WeBWorK::Localize::getLoc(&quot;en&quot;),
+        );
+        $tbl-&gt;{imgGen}-&gt;render(refresh =&gt; 1) if $tbl-&gt;displayMode eq &#39;images&#39;;
+        my $answerTemplate = $tbl-&gt;answerTemplate;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module handles the formatting of the table which presents the results of analyzing a student&#39;s answer to a WeBWorK problem. It is used in Problem.pm, OpaqueServer.pm, standAlonePGproblemRender</p>
+
+<h2 id="new">new</h2>
+
+<pre><code>        my $tbl = WeBWorK::HTML::AttemptsTable-&gt;new(
+                $answers,
+                answersSubmitted       =&gt; 1,
+                answerOrder            =&gt; $pg-&gt;{flags}{ANSWER_ENTRY_ORDER},
+                displayMode            =&gt; &#39;MathJax&#39;,
+                showHeadline           =&gt; 1,
+                showAnswerNumbers      =&gt; 0,
+                showAttemptAnswers     =&gt; $showAttemptAnswers &amp;&amp; $showEvaluatedAnswers,
+                showAttemptPreviews    =&gt; $showAttemptPreview,
+                showAttemptResults     =&gt; $showAttemptResults,
+                showCorrectAnswers     =&gt; $showCorrectAnswers,
+                showMessages           =&gt; $showAttemptAnswers, # internally checks for messages
+                showSummary            =&gt; $showSummary,
+                imgGen                 =&gt; $imgGen, # not needed if ce is present ,
+                ce                     =&gt; &#39;&#39;,      # not needed if $imgGen is present
+                maketext               =&gt; WeBWorK::Localize::getLoc(&quot;en&quot;),
+                summary                =&gt;&#39;&#39;,
+        );
+
+        $answers -- a hash of student answers e.g. $pg-&gt;{answers}
+        answersSubmitted     if 0 then then the attemptsTable is not displayed (???)
+        answerOrder       -- an array indicating the order the answers appear on the page.
+        displayMode       &#39;MathJax&#39; and &#39;images&#39; are the most common
+
+        showHeadline       Show the header line &#39;Results for this submission&#39;
+
+        showAnswerNumbers, showAttemptAnswers, showAttemptPreviews,showAttemptResults,
+        showCorrectAnswers and showMessages control the display of each column in the table.
+
+        attemptAnswers     the student&#39;s typed in answer (possibly simplified numerically)
+        attemptPreview     the student&#39;s answer after typesetting
+        attemptResults     &quot;correct&quot;, &quot;_% correct&quot;,  &quot;incorrect&quot; or &quot;ungraded&quot;- links to the answer blank
+        correctAnswers     typeset version (untypeset versions are available via popups)
+        messages           warns of formatting typos in the answer, or
+                            more detailed messages about a wrong answer
+        summary            is obtained from $pg-&gt;{result}{summary}.
+                           If this is empty then a (localized)
+                           version of &quot;all answers are correct&quot;
+                           or &quot;at least one answer is not coorrect&quot;
+        imgGen             points to a prebuilt image generator objectfor &quot;images&quot; mode
+        ce                 points to the CourseEnvironment -- it is needed if AttemptsTable
+                            is required to build its own imgGen object
+        maketext           points to a localization subroutine</code></pre>
+
+<h2 id="Methods">Methods</h2>
+
+<dl>
+
+<dt>answerTemplate</dt>
+<dd>
+
+<p>Returns HTML which formats the analysis of the student&#39;s answers to the problem.</p>
+
+</dd>
+</dl>
+
+<h2 id="Read-Write-Properties">Read/Write Properties</h2>
+
+<dl>
+
+<dt>showMessages,</dt>
+<dd>
+
+<p>This can be switched on or off before exporting the answerTemplate, perhaps under instructions from the PG problem.</p>
+
+</dd>
+<dt>summary</dt>
+<dd>
+
+<p>The contents of the summary can be defined when the attemptsTable object is created.</p>
+
+<p>The summary can be defined by the PG problem grader usually returned as $pg-&gt;{result}{summary}.</p>
+
+<p>If the summary is not explicitly defined then (localized) versions of the default summaries are created:</p>
+
+<pre><code>        &quot;The answer above is correct.&quot;,
+        &quot;Some answers will be graded later.&quot;,
+        &quot;All of the [gradeable] answers above are correct.&quot;,
+        &quot;[N] of the questions remain unanswered.&quot;,
+        &quot;At least one of the answers above is NOT [fully] correct.&#39;,</code></pre>
+
+<p>Note that if this is set after initialization, you must ensure that it is a Mojo::ByteStream object if it contains html or characters that need escaping.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>graph/PGgraphgrid.pl</title>
+</head>
+<body>
+<h1>graph/PGgraphgrid.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>PGgraphgrid.pl</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Provides subroutines plotting a parallelogram grid on a graph object created by PGgraphmacros.pl.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Load the <code>PGgraphgrid.pl</code> macro file.</p>
+
+<dl>
+
+<dt><code>loadMacros(&quot;PGstandard.pl&quot;,&quot;MathObjects.pl&quot;,&quot;PGgraphmacros.pl&quot;,&quot;PGgraphgrid.pl&quot;);</code></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>The macro <code>PGgraphgrid.pl</code> provides two different subroutines for graphing grids: the first one draws the grid using parallel lines and should be fast, and a second that draws each individual parallelogram and should be slow (but will suffer less from clipping):</p>
+
+<dl>
+
+<dt><code>graphgrid1($gr, $B, $hmin, $vmin, $hmax, $vmax, $color, $linewidth)</code></dt>
+<dd>
+
+</dd>
+<dt><code>graphgrid1($gr, $B, $hmin, $vmin, $hmax, $vmax, $color, $linewidth)</code></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>Here <code>$gr</code> is a graph object created by <code>PGgraphmacros.pl</code>, <code>$B</code> is a two by two MathObjects matrix, the integers <code>$hmin</code> and <code>$vmin</code> specify one corner of the grid, the integers <code>$hmax</code> and <code>$vmax</code> specify the opposite corner of the grid, <code>$color</code> is a string that specifies the drawing color, and <code>$linewidth</code> is a positive integer for the line width.</p>
+
+<a href="#_podtop_"><h1 id="AUTHORS">AUTHORS</h1></a>
+
+<p>Paul Pearson, Hope College, Department of Mathematics</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

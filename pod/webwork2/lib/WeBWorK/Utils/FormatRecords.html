@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::FormatRecords</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::FormatRecords</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::FormatRecords - utilities for formatting database records as strings.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>    use WeBWorK::Utils::FormatRecords qw/getFormatsForClass/;
+
+        # Get a list of label =&gt; format pairs.  The $default_format will be marked
+        # as the format that will be selected by default if provided.  Otherwise the
+        # first format will be marked as selected by default.
+    my $formats = getFormatsForClass(ref $Users[0], $default_formats);
+
+    use WeBWorK::Utils::FormatRecords qw/formatRecords/;
+
+    # Start with an array of database records
+    my @records = $db-&gt;getUsers($db-&gt;listUsers);
+
+        # Get a list of label =&gt; id pairs.  The labels are formatted according to
+        # the provided $preset_format.
+    my $formattedRecords = formatRecords(&#39;lnfn_uid&#39;, @records);</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module provides record formatting functions, and a collection of preset formats for the standard WeBWorK record classes. Formats are specified by a list of field names and an sprintf format string.</p>
+
+<p>The return values of these methods are suitable for passing as the second value argument to the Mojolicious select_field tag helper method.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>getFormatsForClass($class, $default_format)</dt>
+<dd>
+
+<p>Given the name of a record class, returns the preset formats available for that class.</p>
+
+<p>The return value is a reference to a list of two element lists. The first element in each list is a a string description of a format name and the second element is the format name. The return value is suitable for passing as the second value argument to the Mojolicious select_field tag helper method.</p>
+
+<p>If the <code>$default_format</code> is provided then that format will be marked as the default selected format. Otherwise the first format will be marked as the default selected format.</p>
+
+</dd>
+<dt>formatRecords($preset_format, @records)</dt>
+<dd>
+
+<p>Given the name of a preset format and an array of database records, returns a reference to a list of two element lists. The first element in each list is a formatted string representing the record, and the second element is a string that is obtained by joining the key fields of the database record with exclamation marks.</p>
+
+<p>The <code>$preset_format</code> must be provided. It must either be one of the presets defined above, or the name of a field in the database record class.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

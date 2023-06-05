@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::Instructor</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::Instructor</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#METHODS">METHODS</a>
+    <ul>
+      <li><a href="#Primary-assignment-methods">Primary assignment methods</a></li>
+      <li><a href="#Secondary-assignment-methods">Secondary assignment methods</a></li>
+      <li><a href="#Utility-assignment-methods">Utility assignment methods</a></li>
+      <li><a href="#Utility-method-for-adding-problems-to-a-set">Utility method for adding problems to a set</a></li>
+      <li><a href="#Utility-methods">Utility methods</a></li>
+      <li><a href="#Methods-for-listing-various-types-of-files">Methods for listing various types of files</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::Instructor - Useful instructor utility tools.</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<h2 id="Primary-assignment-methods">Primary assignment methods</h2>
+
+<dl>
+
+<dt>assignSetToUser($db, $userID, $GlobalSet)</dt>
+<dd>
+
+<p>Assigns the given set and all problems contained therein to the given user. If the set (or any problems in the set) are already assigned to the user, a list of failure messages is returned.</p>
+
+</dd>
+<dt>assignMultipleProblemsToGivenUsers($db, $userIDsRef, $set_id, @globalProblemIDs)</dt>
+<dd>
+
+<p>Assigns all the problems of the given $set_id to the given users. The list of users are sent as an array reference If any assignments fail, an error message is returned.</p>
+
+</dd>
+<dt>assignProblemToUser($db, $userID, $GlobalProblem, $seed)</dt>
+<dd>
+
+<p>Assigns the given problem to the given user. If the problem is already assigned to the user, an error string is returned. If $seed is defined, the UserProblem will be given that seed.</p>
+
+</dd>
+</dl>
+
+<h2 id="Secondary-assignment-methods">Secondary assignment methods</h2>
+
+<dl>
+
+<dt>assignSetToAllUsers($db, $ce, $setID)</dt>
+<dd>
+
+<p>Assigns the set specified and all problems contained therein to all users in the course. This skips users whose status does not have the behavior include_in_assignment. This is more efficient than repeatedly calling assignSetToUser(). If any assignments fail, a list of failure messages is returned.</p>
+
+</dd>
+<dt>assignSetToGivenUsers($db, $ce, $setID, $alwaysInclude, @userRecords)</dt>
+<dd>
+
+<p>Assigns the set specified and all problems contained therein to all users in the list provided. When $alwaysInclude is false, it will skip users whose status does not have the behavior include_in_assignment. This is more efficient than repeatedly calling assignSetToUser(). If any assignments fail, an error message is returned.</p>
+
+</dd>
+<dt>unassignSetFromAllUsers($db, $setID)</dt>
+<dd>
+
+<p>Unassigns the specified sets and all problems contained therein from all users.</p>
+
+</dd>
+<dt>assignAllSetsToUser($db, $userID)</dt>
+<dd>
+
+<p>Assigns all sets in the course and all problems contained therein to the specified user. If any assignments fail, a list of failure messages is returned.</p>
+
+</dd>
+<dt>unassignAllSetsFromUser($db, $userID)</dt>
+<dd>
+
+<p>Unassigns all sets and all problems contained therein from the specified user.</p>
+
+</dd>
+</dl>
+
+<h2 id="Utility-assignment-methods">Utility assignment methods</h2>
+
+<dl>
+
+<dt>assignSetsToUsers($db, $ce, $setIDsRef, $userIDsRef)</dt>
+<dd>
+
+<p>Assign each of the given sets to each of the given users. If any assignments fail, a list of failure messages is returned.</p>
+
+</dd>
+<dt>unassignSetsFromUsers($db, $setIDsRef, $userIDsRef)</dt>
+<dd>
+
+<p>Unassign each of the given sets from each of the given users.</p>
+
+</dd>
+<dt>assignProblemToAllSetUsers($GlobalProblem)</dt>
+<dd>
+
+<p>Assigns the problem specified to all users to whom the problem&#39;s set is assigned. If any assignments fail, a list of failure messages is returned.</p>
+
+</dd>
+</dl>
+
+<h2 id="Utility-method-for-adding-problems-to-a-set">Utility method for adding problems to a set</h2>
+
+<h2 id="Utility-methods">Utility methods</h2>
+
+<h2 id="Methods-for-listing-various-types-of-files">Methods for listing various types of files</h2>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

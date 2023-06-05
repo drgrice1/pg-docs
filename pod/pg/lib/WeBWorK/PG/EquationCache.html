@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::PG::EquationCache</title>
+</head>
+<body>
+<h1>WeBWorK::PG::EquationCache</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#FILE-FORMAT">FILE FORMAT</a></li>
+    </ul>
+  </li>
+  <li><a href="#METHODS">METHODS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::PG::EquationCache - create and cache images of TeX equations.</p>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code> my $cache = WeBWorK::PG::EquationCache-&gt;new(cacheDB =&gt; &quot;/path/to/equationcache.db&quot;);
+ my $imageName = $cache-&gt;lookup(&#39;\[3x^2\]&#39;);</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>WeBWorK::PG::EquationCache maintains a list of unique identifiers for TeX strings. The unique identifier is based on an MD5 hash of the TeX string, and a sequence number. Before calcuating the MD5 hash of a TeX string, all whitespace is removed.</p>
+
+<h2 id="FILE-FORMAT">FILE FORMAT</h2>
+
+<p>The cache database file is a text file consisting of lines of the following form:</p>
+
+<pre><code> md5_hash     sequence_number     tex_string</code></pre>
+
+<p>Any amount of whitespace may separate the fields. Lines which do not conform to this format are ignored. Any string of characters beginning with `#&#39; and extending to the end of the line is also ignored.</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<dl>
+
+<dt>new(%options)</dt>
+<dd>
+
+<p>Returns a new EquationCache object. <code>%options</code> must contain the following entries:</p>
+
+<pre><code> cacheDB =&gt; path to image cache database file</code></pre>
+
+<p>If cacheDB is the empty string, don&#39;t use a cache file and assume that there are no md5 collisions.</p>
+
+</dd>
+<dt>lookup</dt>
+<dd>
+
+<p>Looks up a TeX string in the database. A unique identifier for the cached image is returned. If necessary, the string is added to the database.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

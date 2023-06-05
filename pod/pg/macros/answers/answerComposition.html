@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/answerComposition.pl</title>
+</head>
+<body>
+<h1>answers/answerComposition.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#MACROS">MACROS</a>
+    <ul>
+      <li><a href="#COMPOSITION_ANS">COMPOSITION_ANS</a></li>
+      <li><a href="#NAMED_COMPOSITION_ANS">NAMED_COMPOSITION_ANS</a></li>
+      <li><a href="#composition_ans_list">composition_ans_list</a></li>
+      <li><a href="#message_cmp">message_cmp</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>answerComposition.pl - An answer checker that determines if two functions compose to form a given function.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>answerComposition.pl provides an answer checker that determines if two functions compose to form a given function. This can be used in problems where you ask a student to break a given function into a composition of two simpler functions, neither of which is allowed to be the identity function.</p>
+
+<a href="#_podtop_"><h1 id="MACROS">MACROS</h1></a>
+
+<h2 id="COMPOSITION_ANS">COMPOSITION_ANS</h2>
+
+<pre><code>        COMPOSITION_ANS($f, $g, %options)</code></pre>
+
+<p>An answer checked to see if $f composed with $g matches a given function,where $f and $g are one possible decomposition of the target function, and options are any of the options allowed by composition_ans_list() below.</p>
+
+<p>$f and $g are used to display the &quot;correct&quot; answer, and the composition is computed from them.</p>
+
+<p>This function actually supplies TWO answer checkers, for the two previous answer blanks. So be sure to call it immediately after the answer blanks have been supplied. (It may be best to use the NAMED_COMPOSITION_ANS checker below, which specifies the answer blanks explicitly.)</p>
+
+<p>Example:</p>
+
+<pre><code>        BEGIN_TEXT
+        \(f\circ g = (1+x)^2\) when
+        \(f(x)\) = \{ans_rule(20)\} and \(g(x)\) = \{ans_rule(20)\}
+        END_TEXT
+        COMPOSITION_ANS(&quot;x^2&quot;,&quot;1+x&quot;);</code></pre>
+
+<h2 id="NAMED_COMPOSITION_ANS">NAMED_COMPOSITION_ANS</h2>
+
+<pre><code> NAMED_COMPOSITION_ANS($fID=&gt;$f, $gID=&gt;$g, %options)</code></pre>
+
+<p>An answer checked to see if $f composed with $g matches a given function, where $fID and $gID are the names of the answer rules for the functions $f and $g, and $f and $g are the answers for the functions. %options are any of the options allowed by composition_ans_list() below.</p>
+
+<p>This routine allows you to put the answer blanks for $f and $g at any location in the problem, and in any order.</p>
+
+<p>Example:</p>
+
+<pre><code> BEGIN_TEXT
+ \(g\circ f = (1+x)^2\) when
+ \(f(x)\) = \{NAMED_ANS(&#39;f&#39;,20)\} and \(g(x)\) = \{NAMED_ANS(&#39;g&#39;,20)\}
+ END_TEXT
+ NAMED_COMPOSITION_ANS(f =&gt; &quot;x^2&quot;, g =&gt; &quot;1+x&quot;);</code></pre>
+
+<h2 id="composition_ans_list">composition_ans_list</h2>
+
+<pre><code> composition_ans_list($fID=&gt;$f, $gID=&gt;$g, %options)</code></pre>
+
+<p>This is an internal routine that returns the named answer checkers used by COMPOSITION_ANS and NAMED_COMPOSITION_ANS above.</p>
+
+<p>$fID and $gID are the names of the answer rules for the functions and $f and $g are the answers for these functions. %options are from among:</p>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>var =&gt; &#39;x&#39;</code></span></dt>
+<dd>
+
+<p>the name of the variable to use when both functions use the same one</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>vars =&gt; [&#39;x&#39;,&#39;t&#39;]</code></span></dt>
+<dd>
+
+<p>the names of the variables for $f and $g</p>
+
+</dd>
+<dt><span style="white-space: nowrap;"><code>showVariableHints =&gt; 1 or 0</code></span></dt>
+<dd>
+
+<p>do/don&#39;t show errors when the variable used by the student is incorrect</p>
+
+</dd>
+</dl>
+
+<h2 id="message_cmp">message_cmp</h2>
+
+<pre><code> message_cmp($correct)</code></pre>
+
+<p>Returns an answer evaluator that always returns incorrect, with a given error message. Used by COMPOSITION_ANS to produce &quot;dummy&quot; answer checkers for the two parts of the composition.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

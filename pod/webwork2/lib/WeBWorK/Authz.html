@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Authz</title>
+</head>
+<body>
+<h1>WeBWorK::Authz</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Format-of-the-permissionLevels-hash">Format of the %permissionLevels hash</a></li>
+    </ul>
+  </li>
+  <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+  <li><a href="#METHODS">METHODS</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Authz - check user permissions.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code> # create new authorizer -- $c is a WeBWorK::Controller object.
+ my $authz = new WeBWorK::Authz($c);
+
+ # tell authorizer to cache permission level of user spammy.
+ $authz-&gt;setCachedUser(&quot;spammy&quot;);
+
+ # this call will use the cached data.
+ if ($authz-&gt;hasPermissions(&quot;spammy&quot;, &quot;eat_breakfast&quot;)) {
+        eat_breakfast();
+ }
+
+ # this call will not use the cached data, and will cause a database lookup.
+ if ($authz-&gt;hasPermissions(&quot;hammy&quot;, &quot;go_to_bed&quot;)) {
+        go_to_bed();
+ }</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>WeBWorK::Authen determines if a user is authorized to perform a specific activity, based on the user&#39;s PermissionLevel record in the WeBWorK database and the contents of the %permissionLevels hash in the course environment.</p>
+
+<h2 id="Format-of-the-permissionLevels-hash">Format of the %permissionLevels hash</h2>
+
+<p>%permissionLevels maps text strings describing activities to numeric permission levels. The definitive list of activities is contained in the default version of %permissionLevels, in the file <i>conf/defaults.config</i>.</p>
+
+<p>A user is able to engage in an activity if their permission level is greater than or equal to the level associated with the activity. If the level associated with an activity is undefiend, then no user is permitted to perform the activity, regardless of their permission level.</p>
+
+<a href="#_podtop_"><h1 id="CONSTRUCTOR">CONSTRUCTOR</h1></a>
+
+<dl>
+
+<dt>WeBWorK::Authz-&gt;new($c)</dt>
+<dd>
+
+<p>Creates a new authorizer instance. $c is a WeBWorK::Controller object. It must already have its <code>ce</code> and <code>db</code> fields set.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<dl>
+
+<dt>setCachedUser($userID)</dt>
+<dd>
+
+<p>Caches the PermissionLevel of the user $userID in an existing authorizer. If a user&#39;s PermissionLevel is cached, it will be used whenever hasPermissions() is called on the same user. Only one user can be cached at a time. This is used by WeBWorK to cache the &quot;real&quot; user.</p>
+
+</dd>
+<dt>hasPermissions($userID, $activity)</dt>
+<dd>
+
+<p>Checks the %permissionLevels hash in the course environment to determine if the user $userID has permission to engage in the activity $activity. If the user&#39;s permission level is greater than or equal to the level associated with $activty, a true value is returned. Otherwise, a false value is returned.</p>
+
+<p>If $userID has been cached using the setCachedUser() call, the cached data is used. Otherwise, the user&#39;s PermissionLevel is looked up in the WeBWorK database.</p>
+
+<p>If the user does not have a PermissionLevel record, the permission level record is empty, or the activity does not appear in %permissionLevels, hasPermissions() assumes that the user does not have permission.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Written by Dennis Lambe, malsyned at math.rochester.edu. Modified by Sam Hathaway, sh002i at math.rochester.edu.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextPartition.pl</title>
+</head>
+<body>
+<h1>contexts/contextPartition.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p><code>Context(&quot;Partition&quot;)</code> - Provides a context that allows the entry of a partition of an integer as a sum of positive integers.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>A partition is a sum of positive integers (usually that add up to a given number). Different partitions are ones that are made up of different integers in the sum. This context allows students to enter partitions, and provides the answer checker to determine if partitions are equal.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        loadMacros(&quot;contextPartition.pl&quot;);
+        
+        Context(&quot;Partition&quot;);
+        
+        $P1 = Compute(&quot;3 + 2 + 5&quot;);
+        $P2 = Partition(3,2,5);          # same as $P1
+        
+        $P1-&gt;canonical;                  # produces &quot;2 + 3 + 5&quot;
+        
+        $P3 = Compute(&quot;5 + 3 + 2&quot;);
+        $P4 = Compute(&quot;5 + 3 + 1 + 1&quot;);
+        $P3 == $P1;                      # true
+        $P3 == $P4;                      # false
+        
+        $P3-&gt;sum;                        # returns 10</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::ContentGenerator::Instructor::PGProblemEditor</title>
+</head>
+<body>
+<h1>WeBWorK::ContentGenerator::Instructor::PGProblemEditor</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a>
+    <ul>
+      <li><a href="#File-types-file_type-which-can-be-edited">File types (file_type) which can be edited.</a></li>
+      <li><a href="#Action">Action</a></li>
+      <li><a href="#Notes">Notes</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::ContentGenerator::Instructor::PGProblemEditor - Edit a pg file</p>
+
+<p>This editor will edit problem files, set header files, or files such as course_info whose name is defined in the defaults.config file.</p>
+
+<p>Only files under the template directory (or linked to this location) can be edited.</p>
+
+<p>The course information and problems are located in the course templates directory. Course information has the name defined by $ce-&gt;{courseFiles}{course_info}</p>
+
+<p>editMode = temporaryFile | savedFile</p>
+
+<p>This flag is read by Problem.pm and ProblemSet.pm (perhaps others).</p>
+
+<p>The value of temporaryFile means view the temp file defined by fname.user_name.tmp instead of the file fname.</p>
+
+<p>The value of savedFile means to use fname directly.</p>
+
+<p>The suffix for a temporary file is &quot;user_name.tmp&quot; by default.</p>
+
+<h2 id="File-types-file_type-which-can-be-edited">File types (file_type) which can be edited.</h2>
+
+<dl>
+
+<dt>problem</dt>
+<dd>
+
+<p>This is the most common type. This editor can be called by an instructor when viewing any problem. the information for retrieving the source file is found using the problemID in order to look look up the source file path.</p>
+
+</dd>
+<dt>source_path_for_problem_file</dt>
+<dd>
+
+<p>This is the same as the &#39;problem&#39; file type except that the source for the problem is found in the parameter $r-&gt;param(&#39;sourceFilePath&#39;). This path is relative to the templates directory</p>
+
+</dd>
+<dt>set_header</dt>
+<dd>
+
+<p>This is a special case of editing the problem. The set header is often listed as problem 0 in the set&#39;s list of problems.</p>
+
+</dd>
+<dt>hardcopy_header</dt>
+<dd>
+
+<p>This is a special case of editing the problem. The hardcopy_header is often listed as problem 0 in the set&#39;s list of problems. But it is used instead of set_header when producing a hardcopy of the problem set in the TeX format, instead of producing HTML formatted version for use on the computer screen.</p>
+
+</dd>
+<dt>course_info</dt>
+<dd>
+
+<p>This allows editing of the course_info.txt file which gives general information about the course. It is called from the ProblemSets.pm module.</p>
+
+</dd>
+<dt>blank_problem</dt>
+<dd>
+
+<p>This is a special case which allows one to create and edit a new PG problem. The &quot;stationary&quot; source for this problem is stored in the conf/snippets directory and defined in defaults.config as $webworkFiles{screenSnippets}{blankProblem}</p>
+
+</dd>
+</dl>
+
+<h2 id="Action">Action</h2>
+
+<p>The behavior on submit is defined by the value of $file_type and the value of the submit button pressed (the action).</p>
+
+<pre><code>    Requested actions and aliases
+        Save:                      action = save
+        Save as:                   action = save_as
+        View Problem:              action = view
+        Add this problem to:       action = add_problem
+        Make this set header for:  action = add_problem
+        Revert:                    action = revert
+                Generate Hardcopy:         actoin = hardcopy</code></pre>
+
+<p>An undefined or invalid action is interpreted as an initial edit of the file.</p>
+
+<h2 id="Notes">Notes</h2>
+
+<p>The editFilePath and tempFilePath should always be set. The tempFilePath may not exist. The path to the actual file being edited is stored in inputFilePath.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

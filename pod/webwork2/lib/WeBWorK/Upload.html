@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Upload</title>
+</head>
+<body>
+<h1>WeBWorK::Upload</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#STORING-UPLOADS">STORING UPLOADS</a>
+    <ul>
+      <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+    </ul>
+  </li>
+  <li><a href="#RETRIEVING-UPLOADS">RETRIEVING UPLOADS</a>
+    <ul>
+      <li><a href="#CONSTRUCTOR1">CONSTRUCTOR</a></li>
+      <li><a href="#METHODS">METHODS</a></li>
+    </ul>
+  </li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Upload - store uploads securely across requests.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Given <code>$u</code>, an Mojo::Upload object</p>
+
+<pre><code> my $upload = WeBWorK::Upload-&gt;store($u,
+        dir =&gt; $ce-&gt;{webworkDirs}-&gt;{DATA}
+ );
+ my $id = $upload-&gt;id;
+ my $hash = $upload-&gt;hash;</code></pre>
+
+<p>Later...</p>
+
+<pre><code> my $upload = WeBWorK::Upload-&gt;retrieve($id, $hash,
+        dir =&gt; $ce-&gt;{webworkDirs}-&gt;{uploadCache}
+ );
+ my $fh = $upload-&gt;fileHandle;
+ my $path = $upload-&gt;filePath;
+
+ # get rid of the upload -- $upload is useless after this!
+ $upload-&gt;dispose;
+
+ # ...or move it somewhere before disposal
+ $upload-&gt;disposeTo($path);</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>WeBWorK::Upload provides a method for securely storing uploaded files until such time as they are needed. This is useful for situations in which an upload cannot be handled by the system until some later request, such as the case where a user is not yet authenticated, and a login page must be returned. Since a file upload should not be sent back to the client and then uploaded again with the user provides his login information, some proxy must be sent in its place. WeBWorK::Upload generates a unique ID which can be used to retrieve the original file.</p>
+
+<a href="#_podtop_"><h1 id="STORING-UPLOADS">STORING UPLOADS</h1></a>
+
+<p>Uploads can be stored in an upload cache and later retrieved, given the proper ID and hash. The hash is used to confirm the authenticity of the ID.</p>
+
+<p>Uploads are Mojo::Upload objects under.</p>
+
+<h2 id="CONSTRUCTOR">CONSTRUCTOR</h2>
+
+<dl>
+
+<dt>store($u, %options)</dt>
+<dd>
+
+<p>Stores the Mojo::Upload <code>$u</code> securely. The following keys must be defined in %options:</p>
+
+<pre><code> dir =&gt; the directory in which to store the uploaded file</code></pre>
+
+</dd>
+<dt>id</dt>
+<dd>
+
+<p>Return the upload&#39;s unique ID, or an undefiend value if the upload is not valid.</p>
+
+</dd>
+<dt>hash</dt>
+<dd>
+
+<p>Return the upload&#39;s hash, or an undefiend value if the upload is not valid.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="RETRIEVING-UPLOADS">RETRIEVING UPLOADS</h1></a>
+
+<p>An upload stored in the upload cache can be retrieved by supplying its ID and hash (accessible from the above <code>id</code> and <code>hash</code> methods, respectivly. The file can then be accessed by name or file handle, moved, and disposed of.</p>
+
+<h2 id="CONSTRUCTOR1">CONSTRUCTOR</h2>
+
+<dl>
+
+<dt>retrieve($id, $hash, %options)</dt>
+<dd>
+
+<p>Retrieves the Mojo::Upload referenced by <code>$id</code> and <code>$hash</code>. The following keys must be defined in %options:</p>
+
+<pre><code> dir =&gt; the directory in which to store the uploaded file</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="METHODS">METHODS</h2>
+
+<dl>
+
+<dt>filename</dt>
+<dd>
+
+<p>Returns the original name of the uploaded file.</p>
+
+</dd>
+<dt>fileHandle</dt>
+<dd>
+
+<p>Return a file handle pointing to the uploaded file, or an undefiend value if the upload is not valid. Suitable for reading.</p>
+
+</dd>
+<dt>filePath</dt>
+<dd>
+
+<p>Return the path to the uploaded file, or an undefiend value if the upload is not valid.</p>
+
+<p>If you use this, bear in mind that you must not dispose of the upload (either by moving or deleting the uploaded file or calling the <code>dispose</code> method). If you wish to move the file, use the <code>disposeTo</code> method instead.</p>
+
+</dd>
+<dt>dispose</dt>
+<dd>
+
+<p>Remove the file from the upload cache. Returns true if the upload was successfully destroyed, or an undefiend value if the upload is not valid.</p>
+
+</dd>
+<dt>disposeTo($path)</dt>
+<dd>
+
+<p>Remove the file from the upload cache, and move it to <code>$path</code>. Returns true if the upload was successfully moved, or an undefiend value if the upload is not valid.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Written by Sam Hathaway, sh002i at math.rochester.edu. Based on the original WeBWorK::Upload module by Dennis Lambe, Jr., malsyned at math.rochester.edu.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

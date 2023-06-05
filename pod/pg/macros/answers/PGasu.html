@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/PGasu.pl</title>
+</head>
+<body>
+<h1>answers/PGasu.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#auto_right">auto_right()</a></li>
+          <li><a href="#no_decs">no_decs()</a></li>
+          <li><a href="#must_include">must_include()</a></li>
+          <li><a href="#no_trig_fun">no_trig_fun()</a></li>
+          <li><a href="#no_trig">no_trig()</a></li>
+          <li><a href="#exact_no_trig">exact_no_trig()</a></li>
+          <li><a href="#must_have_filter">must_have_filter()</a></li>
+          <li><a href="#catch_errors_filter">catch_errors_filter()</a></li>
+          <li><a href="#raw_student_answer_filter">raw_student_answer_filter()</a></li>
+          <li><a href="#no_decimal_list">no_decimal_list()</a></li>
+          <li><a href="#no_decimals">no_decimals()</a></li>
+          <li><a href="#with_comments">with_comments()</a></li>
+          <li><a href="#pc_evaluator">pc_evaluator()</a></li>
+          <li><a href="#weighted_partial_grader">weighted_partial_grader</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        PGasu.pl -- located in the pg/macros directory</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>        Macros contributed by John Jones</code></pre>
+
+<h3 id="auto_right">auto_right()</h3>
+
+<pre><code>        Usage: ANS(auto_right());
+          or
+               ANS(auto_right(&quot;this answer can be left blank&quot;));</code></pre>
+
+<p>This answer checker marks any answer correct. It is useful when you want to leave multiple answer blanks, only some of which will be used. If you turn off showing partial correct answers and partial credit, the effect is not visible to the students. The comment in the second case is what will be displayed as the correct answer. This helps avoid confusion.</p>
+
+<h3 id="no_decs">no_decs()</h3>
+
+<p>Can be wrapped around an numerical evaluation. It marks the answer wrong if it contains a decimal point. Usage:</p>
+
+<pre><code>  ANS(no_decs(num_cmp(&quot;sqrt(3)&quot;)));</code></pre>
+
+<p>This will accept &quot;sqrt(3)&quot; or &quot;3^(1/2)&quot; as answers, but not 1.7320508</p>
+
+<h3 id="must_include">must_include()</h3>
+
+<p>Wrapper for other answer evaluators. It insists that a string is part of the answer to be marked right.</p>
+
+<h3 id="no_trig_fun">no_trig_fun()</h3>
+
+<p>Wrapper for other answer evaluators. It marks the answer wrong if it contains one of the six basic trig functions.</p>
+
+<p>This is useful if you want students to report the value of sin(pi/4), but you don&#39;t want to allow &quot;sin(pi/4)&quot; as the answer.</p>
+
+<p>A similar effect can be accomplished with Contexts() by undefining the trig functions. See http://webwork.maa.org/wiki/Modifying_contexts_%28advanced%29#.282.29_Functions</p>
+
+<h3 id="no_trig">no_trig()</h3>
+
+<h3 id="exact_no_trig">exact_no_trig()</h3>
+
+<h3 id="must_have_filter">must_have_filter()</h3>
+
+<p>Filter for checking that an answer has (or doesn&#39;t have) a certain string in it. This can be used to screen answers where you want them in a particular form (e.g., if you allow most functions, but not trig functions in the answer, or if the answer must include some string).</p>
+
+<p>First argument is the string to have, or not have Second argument is optional, and tells us whether yes or no Third argument is the error message to produce (if any).</p>
+
+<p>When using this filter directly, you also need to install catch_errors_filter as a post filter.</p>
+
+<p>A similar effect can be accomplished with Contexts() by undefining the trig functions. See http://webwork.maa.org/wiki/Modifying_contexts_%28advanced%29</p>
+
+<h3 id="catch_errors_filter">catch_errors_filter()</h3>
+
+<h3 id="raw_student_answer_filter">raw_student_answer_filter()</h3>
+
+<h3 id="no_decimal_list">no_decimal_list()</h3>
+
+<h3 id="no_decimals">no_decimals()</h3>
+
+<h3 id="with_comments">with_comments()</h3>
+
+<pre><code>        # Wrapper for an answer evaluator which can also supply comments</code></pre>
+
+<h3 id="pc_evaluator">pc_evaluator()</h3>
+
+<pre><code>                # Wrapper for multiple answer evaluators, it takes a list of the following as inputs
+                # [answer_evaluator, partial credit factor, comment]
+                # it applies evaluators from the list until it hits one with positive credit,
+                # weights it by the partial credit factor, and throws in its comment</code></pre>
+
+<h3 id="weighted_partial_grader">weighted_partial_grader</h3>
+
+<p>This is a grader which weights the different parts of the problem differently. The weights passed to it through the environment. In the problem:</p>
+
+<pre><code> $ENV{&#39;partial_weights&#39;} = [.2,.2,.2,.3];</code></pre>
+
+<p>This will soon be superceded by a better grader.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

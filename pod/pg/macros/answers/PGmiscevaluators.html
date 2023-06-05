@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>answers/PGmiscevaluators.pl</title>
+</head>
+<body>
+<h1>answers/PGmiscevaluators.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#MathObjects-and-answer-evaluators">MathObjects and answer evaluators</a></li>
+    </ul>
+  </li>
+  <li><a href="#checkbox_cmp">checkbox_cmp</a></li>
+  <li><a href="#radio_cmp">radio_cmp</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>PGmiscevaluators.pl - Some miscellaneous answer macros.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Currently contains answer evaluators for radio buttons and checkboxes.</p>
+
+<h2 id="MathObjects-and-answer-evaluators">MathObjects and answer evaluators</h2>
+
+<p>The MathObjects system provides a parserRadioButtons.pl file that manages display and checking of radio-button based answers. It is recommended that you use this method directly if possible.</p>
+
+<a href="#_podtop_"><h1 id="checkbox_cmp">checkbox_cmp</h1></a>
+
+<pre><code>        ANS(checkbox_cmp($correctAnswer))</code></pre>
+
+<p>$correctAnswer is a string containing the names of the correct boxes, e.g. &quot;ACD&quot;. Note that this means that individual checkbox names can only be one character. Internally, this is largely the same as unordered_cs_str_cmp().</p>
+
+<a href="#_podtop_"><h1 id="radio_cmp">radio_cmp</h1></a>
+
+<pre><code>        ANS(radio_cmp($correctAnswer))</code></pre>
+
+<p>$correctAnswer is a string containing the name of the correct radio button, e.g. &quot;Choice1&quot;. This is case sensitive and whitespace sensitive, so the correct answer must match the name of the radio button exactly.</p>
+
+<a href="#_podtop_"><h1 id="SEE-ALSO">SEE ALSO</h1></a>
+
+<p><a href="//pg/macros/core/PGanswermacros.html">PGanswermacros.pl</a>, <a href="//pg/doc/MathObjects">MathObjects</a>.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>VectorField</title>
+</head>
+<body>
+<h1>VectorField</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#new-direction-field-version">new (direction field version)</a></li>
+      <li><a href="#new-phase-plane-version">new (phase plane version)</a></li>
+      <li><a href="#Properites">Properites</a></li>
+      <li><a href="#Actions-which-affect-more-than-one-property">Actions which affect more than one property.</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        VectorField</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>        use Carp;
+        use GD;
+        use WWPlot;
+        use VectorField;
+        $vf = new VectorField( dy_rule_ref);
+        $vf = new VectorField( dy_rule_ref , graph_reference);
+        $vf = new VectorField( x_rule_ref, y_rule_ref );
+        $vf = new VectorField( x_rule_ref, y_rule_ref, graph_ref );</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module defines a phase plane vector field. It can also be used to define direction fields for differenential equations.</p>
+
+<p>The following functions are provided:</p>
+
+<h2 id="new-direction-field-version">new (direction field version)</h2>
+
+<dl>
+
+<dt>$vf = new VectorField( dy_rule_ref);</dt>
+<dd>
+
+<p>rule_reference is a reference to a subroutine which accepts a pair of numerical values and returns a numerical value. The vector field is also placed into the printing queue of the graph object pointed to by graph_reference and the domain of the vector field object is set to the domain of the graph. The graph_ref must come last.</p>
+
+</dd>
+</dl>
+
+<h2 id="new-phase-plane-version">new (phase plane version)</h2>
+
+<dl>
+
+<dt>$vf = new VectorField ( dx_rule_ref, dy_rule_ref );</dt>
+<dd>
+
+<p>A vector field object is created where the subroutines refered to by dx_rule_ref and dy_rule_ref define the x and y components of the vector field at (x,y). Both subroutines must be functions of two variables.</p>
+
+</dd>
+<dt>$vf = new VectorField ( x_rule_ref, y_rule_ref, graph_ref );</dt>
+<dd>
+
+<p>This variant inserts the vector field object into the graph object referred to by graph_ref. The domain of the vector field object is set to the domain of the graph. The graph_ref must come last.</p>
+
+</dd>
+</dl>
+
+<h2 id="Properites">Properites</h2>
+
+<pre><code>        All of the properties are set using the construction $new_value = $vf-&gt;property($new_value)
+        and read using $current_value = $vf-&gt;property()</code></pre>
+
+<dl>
+
+<dt>xmin, xmax, ymin, ymax</dt>
+<dd>
+
+<p>The domain of the vector field defined by these values.</p>
+
+</dd>
+<dt>x_steps y_steps</dt>
+<dd>
+
+<p>This gives the number of intervals in the x direction (respectively the y direction) for plotting the vector field arrows.</p>
+
+</dd>
+<dt>arrow_color, dot_color</dt>
+<dd>
+
+<p>The colors of the arrow bodies and the dot &quot;base&quot; of the arrow are specified by a word such as &#39;orange&#39; or &#39;yellow&#39;. <code>$vf-</code>arrow_color(&#39;blue&#39;); $vf-&gt;dot_color(&#39;red&#39;);&gt; sets the drawing color to blue for the arrow body, with a red dot at the base of the arrow. The RGB values for the color are defined in the graph object in which the vector field is drawn. If the color, e.g. &#39;mauve&#39;, is not defined by the graph object then the function is drawn using the color &#39;default_color&#39; which is always defined (and usually black).</p>
+
+</dd>
+<dt>dx_rule</dt>
+<dd>
+
+<p>A reference to the subroutine used to calculate the dx value of the phase plane field. This is set to the constant function 1 when using the function object in direction field mode.</p>
+
+</dd>
+<dt>dy_rule</dt>
+<dd>
+
+<p>A reference to the subroutine used to calculate the dy value of the phase plane field.</p>
+
+</dd>
+<dt>arrow_weight, dot_weight</dt>
+<dd>
+
+<p>The width in pixels of the pen used to draw the arrow (respectively the dot).</p>
+
+</dd>
+</dl>
+
+<h2 id="Actions-which-affect-more-than-one-property">Actions which affect more than one property.</h2>
+
+<dl>
+
+<dt>domain</dt>
+<dd>
+
+<p>$array_ref = $vf-&gt;domain(-1,-2,1,2) sets xmin to -1, ymin to -2, xmax to 1, and ymax to 2.</p>
+
+</dd>
+<dt>draw</dt>
+<dd>
+
+<p>$vf-&gt;draw($graph_ref) draws the vector field in the graph object pointed to by $graph_ref.</p>
+
+<p>The graph object must respond to the methods below. The draw call is mainly for internal use by the graph object. Most users will not call it directly.</p>
+
+<dl>
+
+<dt>$graph_ref-&gt;{colors}</dt>
+<dd>
+
+<p>a hash containing the defined colors</p>
+
+</dd>
+<dt>$graph_ref -&gt;im</dt>
+<dd>
+
+<p>a GD image object</p>
+
+</dd>
+<dt>$graph_ref-&gt;lineTo(x,y, color_number)</dt>
+<dd>
+
+<p>draw line to the point (x,y) from the current position using the specified color. To obtain the color number use a construction such as <code>$color_number = $graph_ref-</code>{colors}{&#39;blue&#39;};&gt;</p>
+
+</dd>
+<dt>$graph_ref-&gt;lineTo(x,y,gdBrushed)</dt>
+<dd>
+
+<p>draw line to the point (x,y) using the pattern set by SetBrushed (see GD documentation)</p>
+
+</dd>
+<dt>$graph_ref-&gt;moveTo(x,y)</dt>
+<dd>
+
+<p>set the current position to (x,y)</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

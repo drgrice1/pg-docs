@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::Rendering</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::Rendering</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#constructPGOptions">constructPGOptions</a></li>
+  <li><a href="#getTranslatorDebuggingOptions">getTranslatorDebuggingOptions</a></li>
+  <li><a href="#renderPG">renderPG</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::Rendering - utilities for rendering problems.</p>
+
+<a href="#_podtop_"><h1 id="constructPGOptions">constructPGOptions</h1></a>
+
+<p>This method requires a course environment, user, set, problem, psvn, form fields, and translation options. It constructs the options to pass to the WeBWorK::PG constructor in the new format. The options are roughly in correspondence to the PG translator environment variables.</p>
+
+<a href="#_podtop_"><h1 id="getTranslatorDebuggingOptions">getTranslatorDebuggingOptions</h1></a>
+
+<p>This method requires an $authz and a $userName, and converts permissions into the corresponding PG debugging environment variable.</p>
+
+<a href="#_podtop_"><h1 id="renderPG">renderPG</h1></a>
+
+<p>This method requires a course environment, user, set, problem, psvn, form fields, and translation options. These are passed to the WeBWorK::PG constructor inside of a subprocess. The created object is then parsed into a hash that containing all of the data webwork2 needs for rendering and processing the problem. Note that this hash can not contain any blessed references. Those will all be lost in the return value from the process.</p>
+
+<p>The return value of the method is a Mojo::Promise that will resolve to the above hash when awaited.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

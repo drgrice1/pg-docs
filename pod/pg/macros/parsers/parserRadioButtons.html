@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserRadioButtons.pl</title>
+</head>
+<body>
+<h1>parsers/parserRadioButtons.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserRadioButtons.pl - Radio buttons compatible with MathObjects, specifically MultiAnswer objects.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a radio button group object that is compatible with MathObjects, and in particular, with the MultiAnswer object, and with PGML.</p>
+
+<p>To create a RadioButtons object, use</p>
+
+<pre><code>        $radio = RadioButtons([choices,...],correct,options);</code></pre>
+
+<p>where &quot;choices&quot; are the strings for the items in the radio buttons, &quot;correct&quot; is the choice that is the correct answer for the group (or its index, with 0 being the first one), and options are chosen from among those listed below. If the correct answer is a number, it is interpreted as an index, even if the array of choices are also numbers. (See the <code>noindex</code> below for more details.)</p>
+
+<p>The entries in the choices array can either be strings that are the text to use for the choice buttons, or <code>{ label =&gt; text }</code> where <code>label</code> is a label to use for the choice when showing the student or correct answers and <code>text</code> is the text to use for the choice, or <code>{ label =&gt; [ text, value ] }</code> where <code>label</code> and <code>text</code> are as described above and <code>value</code> is the value to for the radio input for this choice.</p>
+
+<p>See below for options controlling how the labels will be used. If a choice includes mathematics, you should use labels as above or through the <code>labels</code> option below in order to have the student and correct answers display properly in the results table when an answer is submitted. Use the <code>displayLabels</code> option to make the labels be part of the choice as it is displayed following the radio button.</p>
+
+<p>The values set as described above are the answers that will be displayed in the past answers table. See the <code>values</code> option below for more information. Problem authors are encourages to set these values either as described above, or via the <code>values</code> option. This is useful for instructors viewing past answers.</p>
+
+<p>By default, the choices are left in the order that you provide them, but you can cause some or all of them to be ordered randomly by enclosing those that should be randomized within a second set of brackets. For example</p>
+
+<pre><code>        $radio = RadioButtons(
+                   [
+                     &quot;First Item&quot;,
+                     [&quot;Random 1&quot;,&quot;Random 2&quot;,&quot;Random 3&quot;],
+                     &quot;Last Item&quot;
+                   ],
+                   &quot;Random 3&quot;
+                 );</code></pre>
+
+<p>will make a list of radio buttons that has the first item always on top, the next three ordered randomly, and the last item always on the bottom. In this example</p>
+
+<pre><code>        $radio = RadioButtons([[&quot;Random 1&quot;,&quot;Random 2&quot;,&quot;Random 3&quot;]],2);</code></pre>
+
+<p>all the entries are randomized, and the correct answer is &quot;Random 3&quot; (the one with index 2 in the original, unrandomized list). You can have as many randomized groups, with as many static items in between, as you want.</p>
+
+<p>The <code>options</code> are taken from the following list:</p>
+
+<dl>
+
+<dt><code><span style="white-space: nowrap;">labels =&gt; &quot;123&quot;, &quot;ABC&quot;, &quot;text&quot;, or [label1,...]</span></code></dt>
+<dd>
+
+<p>Labels are used to replace the text of the choice in the student and correct answers, and can also be shown just before the choice text (if <code>displayLabels</code> is set). If the value is <code>&quot;123&quot;</code> then the choices will be labeled with numbers (the choices will be numbered sequentially after they have been randomized). If the value is <code>&quot;ABC&quot;</code> then the choices will be labeled with capital letters after they have been randomized. If the value is <code>&quot;text&quot;</code> then the button text is used (note, however, that if the text contains things like math or formatting or special characters, these may not display well in the student and correct answer columns of the results table).</p>
+
+<p>If any choices have explicit labels (via <code>{ label =&gt; text }</code>), those labels will be used instead of the automatic number of letter (and the number of letter will be skipped). The third form allows you to specify labels for each of the choices in their random order. If you want to specify the labels for the choices in their original order the <code>{ label =&gt; text }</code> form must be used.</p>
+
+<p>Default: labels are the text of the choice when they don&#39;t include any special characters, and &quot;Button 1&quot;, &quot;Button 2&quot;, etc. otherwise.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">values =&gt; array reference</span></code></dt>
+<dd>
+
+<p>Values are the form of the student answer that will be displayed in the past answers table for this answer. By default these are B0, B1, etc. However, that can be changed either with this option or by specifying the choices with <code>{ label =&gt; [ text, value ] }</code> as described previously. If this option is used, then the value of the option should be a reference to an array containing the values for the choices. For example:</p>
+
+<pre><code>    values =&gt; [ &#39;first choice&#39;, &#39;second choice&#39;, ... ]</code></pre>
+
+<p>If a choice is not represented in the hash, then <code>Bn</code> will be used for the value instead where <code>n</code> is the 0 based index of the choice.</p>
+
+<p>These values can be any descriptive string that is unique for the choice, but care should be taken to ensure that these values do not indicate which choice is the correct answer.</p>
+
+<p>Note that values given via <code>{ label =&gt; [ text, value ] }</code> will override any values given by this option if both are provided for a particular choice.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">displayLabels =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>Specifies whether labels should be displayed after the radio button and before its text. This makes the association between the choices and the label used as an answer more explicit. Default: 1</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">labelFormat =&gt; string</span></code></dt>
+<dd>
+
+<p>Specifies a format string to use when displaying labels before the choice text. It is an <code>sprintf()</code> string that contains <code>%s</code> where the label should go. By default, it is <code>${BBOLD}%s. ${EBOLD}</code>, which produces the label in bold followed by a period and a space.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">forceLabelFormat =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>When <code>displayLabels</code> is set, this controls how blank labels are handled. When set to <code>0</code>, no label is inserted before the choice text for blank labels, and when <code>1</code>, the <code>labelFormat</code> is applied to the empty string and the result is inserted before the choice text. Default: 0.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">separator =&gt; string</span></code></dt>
+<dd>
+
+<p>Specifies the text to put between the radio buttons. Default: $BR</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">checked =&gt; choice</span></code></dt>
+<dd>
+
+<p>The text or index (starting at zero) of the button to be checked initially. Default: none checked</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">maxLabelSize =&gt; n</span></code></dt>
+<dd>
+
+<p>The approximate largest size that should be used for the answer strings to be generated by the radio buttons (if the choice strings are too long, they will be trimmed and &quot;...&quot; inserted) Default: 25</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">uncheckable =&gt; 0 or 1 or &quot;shift&quot;</span></code></dt>
+<dd>
+
+<p>Determines whether the radio buttons can be unchecked (requires JavaScript). To uncheck, click a second time; when set to &quot;shift&quot;, unchecking requires the shift key to be pressed. Default: 0</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">noindex =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>Determines whether a numeric value for the correct answer is interpreted as an index into the choice array or not. If set to 1, then the number is treated as the literal correct answer, not an index to it. Default: 0</p>
+
+</dd>
+</dl>
+
+<p>The following options are deprecated, but are available for backward compatibility. This functionality can now be accomplished though grouping the items in the choice list.</p>
+
+<dl>
+
+<dt><code><span style="white-space: nowrap;">randomize =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>Specifies whether the order of the choices should be randomized or not. By default, the order is exactly as they appear in the choices array. If you select random order, you can use the <code>first</code> and <code>last</code> arrays to help organize the choices.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">order =&gt; [choice,...]</span></code></dt>
+<dd>
+
+<p>Specifies the order in which choices should be presented. All choices must be listed. If this option is specified, the <code>first</code> and <code>last</code> options are ignored. The order can be given in terms of the indices of the choices (0 is the first one), or as the strings themselves.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">first =&gt; [choice,...]</span></code></dt>
+<dd>
+
+<p>Specifies choices which should appear first, in the order specified, in the list of choices. Ignored if the <code>order</code> option is specified. The entries in this list are either indices of the choices (0 is the first one), or the strings themselves.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">last =&gt; [choice,...]</span></code></dt>
+<dd>
+
+<p>Specifies choices which should appear last, in the order specified, in the list of choices. Ignored if the <code>order</code> option is specified. The entries in this list are either the indices of the choices (0 is the first one), or the strings themselves.</p>
+
+</dd>
+</dl>
+
+<p>To insert the radio buttons into the problem text, use</p>
+
+<pre><code>        BEGIN_TEXT
+        \{$radio-&gt;buttons\}
+        END_TEXT</code></pre>
+
+<p>and then</p>
+
+<pre><code>        ANS($radio-&gt;cmp);</code></pre>
+
+<p>to get the answer checker for the radion buttons.</p>
+
+<p>You can use the RadioButtons object in MultiAnswer objects. This is the reason for the RadioButton&#39;s <code>ans_rule()</code> method (since that is what MultiAnswer calls to get answer rules). Just pass a RadioButtons object as one of the arguments of the MultiAnswer constructor.</p>
+
+<p>When writing a custom answer checker involving a RadioButtons object (e.g. if it is part of a MultiAnswer and its answer depends on, or affects, the answers given to other parts), note that the actual answer strings associated to a RadioButtons object (which are those appearing in the &quot;student answer&quot; argument passed to a custom answer checker) are neither the supplied choice strings nor the supplied labels, but are the radio button values. These are the values given by the <code>values</code> option or <code>{ label =&gt; [ text, value ] }</code> choice format if provided. Otherwise they are an internal implementation detail whose format should not be depended on. In any case, you can convert these value strings to a choice string or a label with the methods answerChoice or answerLabel.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

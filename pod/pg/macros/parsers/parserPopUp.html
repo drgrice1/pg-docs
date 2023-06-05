@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserPopUp.pl</title>
+</head>
+<body>
+<h1>parsers/parserPopUp.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserPopUp.pl - Pop-up menus compatible with Value objects.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a pop-up menu object that is compatible with MathObjects, and in particular, with the MultiAnswer object, and with PGML.</p>
+
+<p>To create a PopUp object, use one of:</p>
+
+<pre><code>        $popup = PopUp([choices,...], correct);
+        $dropdown = DropDown([choices,...], correct);
+        $truefalse = DropDownTF(correct);</code></pre>
+
+<p>where &quot;choices&quot; are the strings for the items in the popup menu, and &quot;correct&quot; is the choice that is the correct answer for the popup (or its index, with 0 being the first one).</p>
+
+<p>The difference between <code>PopUp()</code> and <code>DropDown() </code>is that in HTML, the latter will have an unselectable placeholder value. This value is &#39;?&#39; by default, but can be customized with a <code>placeholder</code> option.</p>
+
+<p><code>DropDownTF()</code> is like <code>DropDown</code> with options being localized versions of &quot;True&quot; and &quot;False&quot;. 1 is understood as &quot;True&quot; and 0 as &quot;False&quot;. The initial letter of the localized word is understood as that word if those letter are different. All of this is case-insensitive. Also, in static output (PDF, PTX) <code>showInStatic</code> is 0. It is assumed that context makes the menu redundant.</p>
+
+<p>By default, the choices are left in the order that you provide them, but you can cause some or all of them to be ordered randomly by enclosing those that should be randomized within a second set of brackets. For example</p>
+
+<pre><code>        $radio = PopUp(
+                   [
+                     &quot;First Item&quot;,
+                     [&quot;Random 1&quot;,&quot;Random 2&quot;,&quot;Random 3&quot;],
+                     &quot;Last Item&quot;
+                   ],
+                   &quot;Random 3&quot;
+                 );</code></pre>
+
+<p>will make a pop-up menu that has the first item always on top, the next three ordered randomly, and the last item always on the bottom. In this example</p>
+
+<pre><code>        $radio = PopUp([[&quot;Random 1&quot;,&quot;Random 2&quot;,&quot;Random 3&quot;]],2);</code></pre>
+
+<p>all the entries are randomized, and the correct answer is &quot;Random 3&quot; (the one with index 2 in the original, unrandomized list). You can have as many randomized groups, with as many static items in between, as you want.</p>
+
+<p>Note that pop-up menus can not contain mathematical notation, only plain text. This is because the PopUp object uses the browser&#39;s native menus, and these can contain only text, not mathematics or graphics.</p>
+
+<p>To insert the pop-up menu into the problem text, use</p>
+
+<pre><code>        BEGIN_TEXT
+        \{$popup-&gt;menu\}
+        END_TEXT</code></pre>
+
+<p>and then</p>
+
+<pre><code>        ANS($popup-&gt;cmp);</code></pre>
+
+<p>to get the answer checker for the popup.</p>
+
+<p>You can use the PopUp menu object in MultiAnswer objects. This is the reason for the pop-up menu&#39;s ans_rule method (since that is what MultiAnswer calls to get answer rules).</p>
+
+<p>There is one option, <code>showInStatic</code>. It is 1 by default, except for <code>DropDownTF</code> it is 0. This option controls whether or not the menu is displayed in a static output format (PDF hardcopy or PTX).</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

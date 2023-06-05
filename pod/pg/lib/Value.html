@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Value</title>
+</head>
+<body>
+<h1>Value</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#Value-context">Value context</a></li>
+          <li><a href="#Implemented-MathObject-types-and-their-precedence">Implemented MathObject types and their precedence</a></li>
+          <li><a href="#getFlag">getFlag</a></li>
+          <li><a href="#makeValue">makeValue</a></li>
+          <li><a href="#showClass">showClass</a></li>
+          <li><a href="#showType">showType</a></li>
+          <li><a href="#output-methods-for-MathObjects">output methods for MathObjects</a>
+            <ul>
+              <li><a href="#stringify">stringify</a></li>
+              <li><a href="#string">-&gt;string</a></li>
+              <li><a href="#TeX">-&gt;TeX</a></li>
+            </ul>
+          </li>
+          <li><a href="#Error">Error</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Value (also called MathObjects) are intelligent versions of standard mathematical objects. They &#39;know&#39; how to produce string or TeX or perl representations of themselves. They also &#39;know&#39; how to compare themselves to student responses -- in other words they contain their own answer evaluators (response evaluators). The standard operators like +, -, *, &lt;, ==, &gt;, etc, all work with them (when they make sense), so that you can use these MathObjects in a natural way. The comparisons like equality are &quot;fuzzy&quot;, meaning that two items are equal when they are &quot;close enough&quot; (by tolerances that are set in the current Context).</p>
+
+<h3 id="Value-context">Value context</h3>
+
+<pre><code> #############################################################
+ #
+ #  Initialize the context-- flags set
+ #
+        The following are list objects, meaning that they involve delimiters (parentheses)
+        of some type.  They get overridden in lib/Parser/Context.pm
+
+        lists =&gt; {
+                &#39;Point&#39;  =&gt; {open =&gt; &#39;(&#39;, close =&gt; &#39;)&#39;},
+                &#39;Vector&#39; =&gt; {open =&gt; &#39;&lt;&#39;, close =&gt; &#39;&gt;&#39;},
+                &#39;Matrix&#39; =&gt; {open =&gt; &#39;[&#39;, close =&gt; &#39;]&#39;},
+                &#39;List&#39;   =&gt; {open =&gt; &#39;(&#39;, close =&gt; &#39;)&#39;},
+                &#39;Set&#39;    =&gt; {open =&gt; &#39;{&#39;, close =&gt; &#39;}&#39;},
+        },
+
+        The following context flags are set:
+
+    #  For vectors:
+    #
+    ijk =&gt; 0,  # print vectors as &lt;...&gt;
+    #
+    #  For strings:
+    #
+    allowEmptyStrings =&gt; 1,
+    infiniteWord =&gt; &#39;infinity&#39;,
+    #
+    #  For intervals and unions:
+    #
+    ignoreEndpointTypes =&gt; 0,
+    reduceSets =&gt; 1,
+    reduceSetsForComparison =&gt; 1,
+    reduceUnions =&gt; 1,
+    reduceUnionsForComparison =&gt; 1,
+    #
+    #  For fuzzy reals:
+    #
+    useFuzzyReals =&gt; 1,
+    tolerance    =&gt; 1E-4,
+    tolType      =&gt; &#39;relative&#39;,
+    zeroLevel    =&gt; 1E-14,
+    zeroLevelTol =&gt; 1E-12,
+    tolTruncation =&gt; 1,
+    tolExtraDigits =&gt; 1,
+    #
+    #  For Formulas:
+    #
+    limits       =&gt; [-2,2],
+    num_points   =&gt; 5,
+    granularity  =&gt; 1000,
+    resolution   =&gt; undef,
+    max_adapt    =&gt; 1E8,
+    checkUndefinedPoints =&gt; 0,
+    max_undefined =&gt; undef,
+  },</code></pre>
+
+<h3 id="Implemented-MathObject-types-and-their-precedence">Implemented MathObject types and their precedence</h3>
+
+<pre><code> #
+ #  Precedence of the various types
+ #    (They will be promoted upward automatically when needed)
+ #
+
+  &#39;Number&#39;   =&gt;  0,
+   &#39;Real&#39;     =&gt;  1,
+   &#39;Infinity&#39; =&gt;  2,
+   &#39;Complex&#39;  =&gt;  3,
+   &#39;Point&#39;    =&gt;  4,
+   &#39;Vector&#39;   =&gt;  5,
+   &#39;Matrix&#39;   =&gt;  6,
+   &#39;List&#39;     =&gt;  7,
+   &#39;Interval&#39; =&gt;  8,
+   &#39;Set&#39;      =&gt;  9,
+   &#39;Union&#39;    =&gt; 10,
+   &#39;String&#39;   =&gt; 11,
+   &#39;Formula&#39;  =&gt; 12,
+   &#39;special&#39;  =&gt; 20,</code></pre>
+
+<h3 id="getFlag">getFlag</h3>
+
+<p># # Get the value of a flag from the object itself, or from the # equation that created the object (if any), or from the AnswerHash # for the object (if it is being used as the source for an answer # checker), or from the object&#39;s context, or from the current # context, or use the given default, whichever is found first. #</p>
+
+<pre><code>        Usage:   $mathObj-&gt;getFlag(&quot;showTypeWarnings&quot;);
+                 $mathObj-&gt;getFlag(&quot;showTypeWarnings&quot;,1); # default is second parameter</code></pre>
+
+<h3 id="makeValue">makeValue</h3>
+
+<pre><code>        Usage:  Value::makeValue(45);
+
+        Will create a Real mathObject.
+ #
+ #  Convert non-Value objects to Values, if possible
+ #</code></pre>
+
+<h3 id="showClass">showClass</h3>
+
+<pre><code>        Usage:   TEXT( $mathObj -&gt; showClass() );
+
+                Will print the class of the MathObject
+
+ #
+ #  Get a printable version of the class of an object
+ #  (used primarily in error messages)
+ #</code></pre>
+
+<h3 id="showType">showType</h3>
+
+<pre><code>        Usage:   TEXT( $mathObj -&gt; showType() );
+
+                Will print the class of the MathObject
+
+ #
+ #  Get a printable version of the type of an object
+ #  (the class and type are not the same.  For example
+ #  a Formula-class object can be of type Number)
+ #</code></pre>
+
+<h3 id="output-methods-for-MathObjects">output methods for MathObjects</h3>
+
+<pre><code> #
+ #  Generate the various output formats
+ #  (can be replaced by sub-classes)
+ #</code></pre>
+
+<h4 id="stringify">stringify</h4>
+
+<pre><code>        Usage:   TEXT($mathObj); or TEXT( $mathObj-&gt;stringify() ) ;
+
+                Produces text string or TeX output depending on context
+                        Context()-&gt;texStrings;
+                        Context()-&gt;normalStrings;
+
+                called automatically when object is called in a string context.</code></pre>
+
+<h4 id="string">-&gt;string</h4>
+
+<pre><code>        Usage: $mathObj-&gt;string()
+
+        ---produce a string representation of the object
+           (as opposed to stringify, which can produce TeX or string versions)</code></pre>
+
+<h4 id="TeX">-&gt;TeX</h4>
+
+<pre><code>        Usage: $mathObj-&gt;TeX()
+
+        ---produce TeX prepresentation of the object</code></pre>
+
+<h3 id="Error">Error</h3>
+
+<pre><code>        Usage: Value-&gt;Error(&quot;We&#39;re sorry...&quot;);
+           or  $mathObject-&gt;Error(&quot;We&#39;re still sorry...&quot;);
+
+ #
+ #  Report an error and die.  This can be used within custom answer checkers
+ #  to report errors during the check, or when sub-classing a MathObject to
+ #  report error conditions.
+ #</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

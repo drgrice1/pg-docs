@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Matrix</title>
+</head>
+<body>
+<h1>Matrix</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#Matrix-Methods">Matrix Methods:</a>
+            <ul>
+              <li><a href="#Method-matrix-_stringify">Method $matrix-&gt;_stringify()</a></li>
+            </ul>
+          </li>
+          <li><a href="#Accessor-functions">Accessor functions</a>
+            <ul>
+              <li><a href="#Method-matrix-rh_options">Method $matrix-&gt;rh_options</a></li>
+              <li><a href="#Method-matrix-trace">Method $matrix-&gt;trace</a></li>
+              <li><a href="#Method-new_matrix-matrix-new_from_array_ref-a-b-c-d-e-f">Method $new_matrix = $matrix-&gt;new_from_array_ref ([[a,b,c],[d,e,f]])</a></li>
+              <li><a href="#Method-matrix-array_ref">Method $matrix-&gt;array_ref</a></li>
+              <li><a href="#Method-matrix-list">Method $matrix-&gt;list</a></li>
+              <li><a href="#Method-matrix-new_row_matrix">Method $matrix-&gt;new_row_matrix</a></li>
+              <li><a href="#Method-matrix-proj">Method $matrix-&gt;proj</a></li>
+              <li><a href="#Method-matrix-proj_coeff">Method $matrix-&gt;proj_coeff</a></li>
+              <li><a href="#Method-matrix-new_column_matrix">Method $matrix-&gt;new_column_matrix</a></li>
+              <li><a href="#Method-matrix-new_from_col_vecs">Method $matrix-&gt;new_from_col_vecs</a></li>
+            </ul>
+          </li>
+          <li><a href="#Overrides-of-MatrixReal-which-allow-use-of-complex-entries">Overrides of MatrixReal which allow use of complex entries</a>
+            <ul>
+              <li><a href="#Function:-cp">Function: cp()</a></li>
+              <li><a href="#Method-matrix-copy">Method $matrix-&gt;copy</a></li>
+              <li><a href="#Method-matrix-conj">Method $matrix-&gt;conj</a></li>
+              <li><a href="#Method-matrix-transpose">Method $matrix-&gt;transpose</a></li>
+              <li><a href="#Method-matrix-decompose_LR">Method $matrix-&gt;decompose_LR</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>Matrix - Matrix of Reals</p>
+
+<p>Implements overrides for MatrixReal.pm for WeBWorK In general it is better to use MathObjects Matrices (Value::Matrix) in writing PG problem. The answer checking is much superior with better error messages for syntax errors in student entries. Some of the subroutines in this file are still used behind the scenes by Value::Matrix to perform calculations, such as decompose_LR().</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<h3 id="Matrix-Methods">Matrix Methods:</h3>
+
+<h4 id="Method-matrix-_stringify">Method $matrix-&gt;_stringify()</h4>
+
+<pre><code>        -- overrides MatrixReal1 display mode</code></pre>
+
+<h3 id="Accessor-functions">Accessor functions</h3>
+
+<pre><code>        (these are deprecated for direct use.  Use the covering Methods
+         provided by MathObject Matrices instead.)
+
+        L($matrix) - return matrix L of the LR decomposition
+        R($matrix) - return matrix R of the LR decomposition
+        PL($matrix) - return permutation matrix
+        PR($matrix) - return permutation matrix
+        Original matrix is  PL * L * R *PR = M</code></pre>
+
+<p>Obtain the Left Right matrices of the decomposition and the two pivot permutation matrices the original is M = PL*L*R*PR</p>
+
+<h4 id="Method-matrix-rh_options">Method $matrix-&gt;rh_options</h4>
+
+<p>Meant for internal use when dealing with MatrixReal1</p>
+
+<h4 id="Method-matrix-trace">Method $matrix-&gt;trace</h4>
+
+<pre><code>        Returns: scalar which is the trace of the matrix.
+
+        Used by MathObject Matrices for calculating the trace.
+        Deprecated for direct use in PG questions.</code></pre>
+
+<h4 id="Method-new_matrix-matrix-new_from_array_ref-a-b-c-d-e-f">Method $new_matrix = $matrix-&gt;new_from_array_ref ([[a,b,c],[d,e,f]])</h4>
+
+<pre><code>        Deprecated in favor of using creation tools for MathObject Matrices</code></pre>
+
+<h4 id="Method-matrix-array_ref">Method $matrix-&gt;array_ref</h4>
+
+<p>Converts Matrix from an ARRAY to an ARRAY reference.</p>
+
+<h4 id="Method-matrix-list">Method $matrix-&gt;list</h4>
+
+<p>Converts a Matrix column vector to an ARRAY (list).</p>
+
+<h4 id="Method-matrix-new_row_matrix">Method $matrix-&gt;new_row_matrix</h4>
+
+<pre><code>        Deprecated -- there are better tools for MathObject Matrices.</code></pre>
+
+<p>Create a row 1 by n matrix from a list. This subroutine appears to be broken</p>
+
+<h4 id="Method-matrix-proj">Method $matrix-&gt;proj</h4>
+
+<pre><code>        Provides behind the scenes calculations for MathObject Matrix-&gt;proj
+        Deprecated for direct use in favor of methods of MathObject matrix</code></pre>
+
+<h4 id="Method-matrix-proj_coeff">Method $matrix-&gt;proj_coeff</h4>
+
+<pre><code>        Provides behind the scenes calculations for MathObject Matrix-&gt;proj_coeff
+        Deprecated for direct use in favor of methods of MathObject matrix</code></pre>
+
+<h4 id="Method-matrix-new_column_matrix">Method $matrix-&gt;new_column_matrix</h4>
+
+<pre><code>        Create column matrix from an ARRAY reference (list reference)</code></pre>
+
+<h4 id="Method-matrix-new_from_col_vecs">Method $matrix-&gt;new_from_col_vecs</h4>
+
+<pre><code>        This method takes an array of column vectors, or an array of arrays,
+        and converts them to a matrix where each column is one of the previous
+        vectors.
+
+        Deprecated: The tools for creating MathObjects Matrices are simpler</code></pre>
+
+<h3 id="Overrides-of-MatrixReal-which-allow-use-of-complex-entries">Overrides of MatrixReal which allow use of complex entries</h3>
+
+<h4 id="Function:-cp">Function: cp()</h4>
+
+<pre><code>        Provides ability to use complex numbers.</code></pre>
+
+<h4 id="Method-matrix-copy">Method $matrix-&gt;copy</h4>
+
+<h4 id="Method-matrix-conj">Method $matrix-&gt;conj</h4>
+
+<h4 id="Method-matrix-transpose">Method $matrix-&gt;transpose</h4>
+
+<h4 id="Method-matrix-decompose_LR">Method $matrix-&gt;decompose_LR</h4>
+
+<pre><code>        Used by MathObjects Matrix for LR decomposition
+        Deprecated for direct use in PG problems.</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

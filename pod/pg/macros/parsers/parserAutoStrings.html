@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserAutoStrings.pl</title>
+</head>
+<body>
+<h1>parsers/parserAutoStrings.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserAutoStrings.pl - Force String() to accept any string.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file allows you to force String() to accept ANY string as a legal value. (It will add the string to the context if it isn&#39;t already defined.)</p>
+
+<p>To accomplish this, put the lines</p>
+
+<pre><code>        loadMacros(&quot;parserAutoStrings.pl&quot;);
+        AutoStrings();</code></pre>
+
+<p>at the beginning of your problem file. (You can also pass AutoStrings a context pointer if you wish to alter context other than the current one.)</p>
+
+<p>There is also a routine to help make strings easier to predefine. For example:</p>
+
+<pre><code>        loadMacros(&quot;parserAutoStrings.pl&quot;);
+        DefineStrings(&quot;string1&quot;,&quot;string2&quot;);</code></pre>
+
+<p>would define two new strings (string1 and string2). You can pass a context reference as the first argument to add strings to that context rather than the active one.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

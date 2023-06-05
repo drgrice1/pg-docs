@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserMultiAnswer.pl</title>
+</head>
+<body>
+<h1>parsers/parserMultiAnswer.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserMultiAnswer.pl - Tie several blanks to a single answer checker.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>MultiAnswer objects let you tie several answer blanks to a single answer checker, so you can have the answer in one blank influence the answer in another. The MultiAnswer can produce either a single result in the answer results area, or a separate result for each blank.</p>
+
+<p>To create a MultiAnswer pass a list of answers to MultiAnswer() in the order they will appear in the problem. For example:</p>
+
+<pre><code>        $mp = MultiAnswer(&quot;x^2&quot;,-1,1);</code></pre>
+
+<p>or</p>
+
+<pre><code>        $mp = MultiAnswer(Vector(1,1,1),Vector(2,2,2))-&gt;with(singleResult=&gt;1);</code></pre>
+
+<p>Then, use $mp-&gt;ans_rule to create answer blanks for the various parts just as you would ans_rule. You can pass the width of the blank, which defaults to 20 otherwise. For example:</p>
+
+<pre><code>        BEGIN_TEXT
+        \(f(x)\) = \{$mp-&gt;ans_rule(20)\} produces the same value
+        at \(x\) = \{$mp-&gt;ans_rule(10)\} as it does at \(x\) = \{$mp-&gt;ans_rule(10)\}.
+        END_TEXT</code></pre>
+
+<p>Finally, call $mp-&gt;cmp to produce the answer checker(s) used in the MultiAnswer. You need to provide a checker routine that will be called to determine if the answers are correct or not. The checker will only be called if the student answers have no syntax errors and their types match the types of the professor&#39;s answers, so you don&#39;t have to worry about handling bad data from the student (at least as far as typechecking goes).</p>
+
+<p>The checker routine should accept four parameters: a reference to the array of correct answers, a reference to the array of student answers, a reference to the MultiAnswer itself, and a reference to the answer hash. It should do whatever checking it needs to do and then return a score for the MultiAnswer as a whole (every answer blank will be given the same score), or a reference to an array of scores, one for each blank. The routine can set error messages via the MultiAnswer&#39;s setMessage() method (e.g.,</p>
+
+<pre><code>        $mp-&gt;setMessage(1,&quot;The function can&#39;t be the identity&quot;);</code></pre>
+
+<p>would set the message for the first answer blank of the MultiAnswer), or can call Value::Error() to generate an error and die.</p>
+
+<p>The checker routine can be supplied either when the MultiAnswer is created, or when the cmp() method is called. For example:</p>
+
+<pre><code>        $mp = MultiAnswer(&quot;x^2&quot;,1,-1)-&gt;with(
+                singleResult =&gt; 1,
+                checker =&gt; sub {
+                        my ($correct,$student,$self) = @_;  # get the parameters
+                        my ($f,$x1,$x2) = @{$student};      # extract the student answers
+                        Value::Error(&quot;Function can&#39;t be the identity&quot;) if ($f == &#39;x&#39;);
+                        Value::Error(&quot;Function can&#39;t be constant&quot;) if ($f-&gt;isConstant);
+                        return $f-&gt;eval(x=&gt;$x1) == $f-&gt;eval(x=&gt;$x2);
+                },
+        );
+        ANS($mp-&gt;cmp);</code></pre>
+
+<p>or</p>
+
+<pre><code>        $mp = MultiAnswer(&quot;x^2&quot;,1,-1)-&gt;with(singleResult=&gt;1);
+        sub check {
+                my ($correct,$student,$self) = @_;  # get the parameters
+                my ($f,$x1,$x2) = @{$student};      # extract the student answers
+                Value::Error(&quot;Function can&#39;t be the identity&quot;) if ($f == &#39;x&#39;);
+                Value::Error(&quot;Function can&#39;t be constant&quot;) if ($f-&gt;isConstant);
+                return $f-&gt;eval(x=&gt;$x1) == $f-&gt;eval(x=&gt;$x2);
+        };
+        ANS($mp-&gt;cmp(checker=&gt;~~&amp;check));</code></pre>
+
+<a href="#_podtop_"><h1 id="CONSTRUCTOR">CONSTRUCTOR</h1></a>
+
+<pre><code>        MultiAnswer($answer1, $answer2, ...);
+        MultiAnswer($answer1, $answer2, ...)-&gt;with(...);</code></pre>
+
+<p>Create a new MultiAnswer item from a list of items. The items are converted if Value items, if they aren&#39;t already. You can set the following fields of the resulting item:</p>
+
+<pre><code>    checker =&gt; code            a subroutine to be called to check the
+                               student answers.  The routine is passed
+                               four parameters: a reference to the array
+                               or correct answers, a reference to the
+                               array of student answers, a reference to the
+                               MultiAnswer object itself, and a reference to
+                               the checker&#39;s answer hash.  The routine
+                               should return either a score or a reference
+                               to an array of scores (one for each answer).
+
+    singleResult =&gt; 0 or 1     whether to show only one entry in the
+                               results area at the top of the page,
+                               or one for each answer rule.
+                               (Default: 0)
+
+    namedRules =&gt; 0 or 1       whether to use named rules or default
+                               rule names.  Use named rules if you need
+                               to intersperse other rules with the
+                               ones for the MultiAnswer, in which case
+                               you must use NAMED_ANS not ANS.
+                               (Default: 0)
+
+    checkTypes =&gt; 0 or 1       whether the types of the student and
+                               professor&#39;s answers must match exactly
+                               or just pass the usual type-match error
+                               checking (in which case, you should check
+                               the types before you use the data).
+                               (Default: 1)
+
+    allowBlankAnswers=&gt;0 or 1  whether to remove the blank-check prefilter
+                               from the answer checkers used for type
+                               checking the student&#39;s answers.
+                               (Default: 0)
+
+    separator =&gt; string        the string to use between entries in the
+                               results area when singleResult is set.
+                               (Default: semicolon)
+
+    tex_separator =&gt; string    same, but for the preview area.
+                               (Default: semicolon followed by thinspace)
+
+    format =&gt; string           an sprintf-style string used to format the
+                               students answers for the results area
+                               when singleResults is true.  If undefined,
+                               the separator parameter (above) is used to
+                               form the string.
+                               (Default: undef)
+
+    tex_format =&gt; string       an sprintf-style string used to format the
+                               students answer previews when singleResults
+                               mode is in effect.  If undefined, the
+                               tex_separator (above) is used to form the
+                               string.
+                               (Default: undef)</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

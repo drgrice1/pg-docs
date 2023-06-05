@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserLinearRelation.pl</title>
+</head>
+<body>
+<h1>parsers/parserLinearRelation.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextLinearRelation.pl - Implement linear relations.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This macro library provides a context <code>LinearRelation</code> with a <code>LinearRelation</code> Math Object using =, &lt;, &gt;, &lt;=, &gt;=, or !=. Note that this file evolved from <code>parserLinearInequality.pl</code>, but it has several important differences.</p>
+
+<p>Activate the context with:</p>
+
+<pre><code>    Context(&quot;LinearRelation&quot;);</code></pre>
+
+<p>Use <code>LinearRelation(formula)</code>, <code>Formula(formula)</code>, or <code>Compute(formula)</code> to to create a LinearRelation object using a string formula. Alternatively, use <code>LinearRelation(vector,point,sign</code> where <code>vector</code> is the normal vector and <code>point</code> is a point on the plane. Either can be an array reference or a Math Object Vector or Point. And <code>sign</code> is one of the (in)equality symbols. Or use <code>LinearRelation(vector,real,sign)</code> where <code>real</code> is the dot product of any point in the plane with the normal vector.</p>
+
+<p>Usage examples:</p>
+
+<pre><code>    $LR = LinearRelation(&quot;x + y + 2z &lt;= 5&quot;);
+    $LR = Formula(&quot;x + y + 2z &lt;= 5&quot;);
+    $LR = Compute(&quot;x + y + 2z &lt;= 5&quot;);
+    $LR = LinearRelation([1,1,2], [1,2,1], &quot;&lt;=&quot;);
+    $LR = LinearRelation([1,1,2], 5, &quot;&lt;=&quot;);
+    $LR = LinearRelation(Vector(1,1,2), Point(1,2,1), &quot;&lt;=&quot;);
+    $LR = LinearRelation(Vector(1,1,2), 5, &quot;&lt;=&quot;);</code></pre>
+
+<p>If <code>$pg{specialPGEnvironmentVars}{parseAlternatives}</code> is true in your configuration, then you may also work with sloppy inequality signs (=&lt;, =&gt;, &lt;&gt;) and with the characters &le;, &ge;, and &ne;.</p>
+
+<p>By default, the context has three variables x, y, and z. You should explicitly set the variables if your situation should use something different. For example with</p>
+
+<pre><code>    Context()-&gt;variables-&gt;are(m =&gt; &#39;Real&#39;, n =&gt;&#39;Real&#39;);</code></pre>
+
+<p>Note that things like <code>LinearRelation(&quot;1 = 1&quot;)</code> and <code>&lt;LinearRelation(&quot;1 &lt; 5&quot;)</code>&gt; are allowed. These two examples are equivalent, but not equiivalent to <code>&lt;LinearRelation(&quot;1 &lt; 1&quot;)</code>&gt; and <code>&lt;LinearRelation(&quot;1 </code> 5&quot;)&gt;&gt; which are equivalent to each other.</p>
+
+<p>There is one special context flag.</p>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>standardForm</code></span></dt>
+<dd>
+
+<p>This determines whether something like <code>&lt;LinearRelation(&quot;x+2 &lt; y+z&quot;)</code>&gt; will be displayed as <code>&lt;x+2 &lt; y+z</code>&gt; or converted to standard form: <code>&lt;x-y-z &lt; -2</code>&gt;. It is 0 by default.</p>
+
+</dd>
+</dl>
+
+<p>There is one special method for LinearRelation objects.</p>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>$LR-&gt;check_at(point)</code></span></dt>
+<dd>
+
+<p>This returns true or false depending on if the point satisfies the relation. <code>point</code> must be a Math Object Point, Vector, or ColumnVector; or simply be an array reference. The number of entries in <code>point</code> must match the number of variables in the context.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

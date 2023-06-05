@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextOrdering.pl</title>
+</head>
+<body>
+<h1>contexts/contextOrdering.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextOrdering.pl - Parses ordered lists of letters like &quot;B &gt; A = C &gt; D&quot;</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This context provides a structured way to parse and check answers that are ordered lists of letters, where the letters are separated by greater-than signs or equal signs. The only operators allowed are &gt; and =, and the only letters allowed are the ones you specify explicitly.</p>
+
+<p>To access the context, you must include</p>
+
+<pre><code>        loadMacros(&quot;contextOrdering.pl&quot;);</code></pre>
+
+<p>at the top of your problem file, and then specify the Ordering context:</p>
+
+<pre><code>        Context(&quot;Ordering&quot;);</code></pre>
+
+<p>There are two main ways to use the Ordering context. The first is to use the Ordering() command to generate your ordering. This command creates a context in which the proper letters are defined, and returns a MathObject that represents the ordering you have provided. For example,</p>
+
+<pre><code>        $ans = Ordering(&quot;B &gt; A &gt; C&quot;);</code></pre>
+
+<p>or</p>
+
+<pre><code>        $ans = Ordering(A =&gt; 2, B =&gt; 2.5, C =&gt; 1);</code></pre>
+
+<p>would both produce the same ordering. The first form gives the ordering as the student must type it, and the second gives the ordering by specifying numeric values for the various letters that induce the resulting order. Note that equality is determined using the default tolerances for the Ordering context. You can change these using commands like the following:</p>
+
+<pre><code>        Context(&quot;Ordering&quot;);
+        Context()-&gt;flags-&gt;set(tolerance =&gt; .01, tolType =&gt; &#39;absolute&#39;);</code></pre>
+
+<p>If you want to allow lists of orderings, use the Ordering-List context:</p>
+
+<pre><code>        Context(&quot;Ordering-List&quot;);
+        $ans = Ordering(&quot;A &gt; B , B = C&quot;);</code></pre>
+
+<p>Note that each Ordering() call uses its own copy of the current context. If you need to modify the actual context used, then use the context() method of the resulting object.</p>
+
+<p>The second method of generating orderings is to declare the letters you wish to use explicitly, and then build the Ordering objects using the standard Compute() method:</p>
+
+<pre><code>        Context(&quot;Ordering&quot;);
+        Letters(&quot;A&quot;,&quot;B&quot;,&quot;C&quot;,&quot;D&quot;);
+        $a = Compute(&quot;A &gt; B = C&quot;);
+        $b = Compute(&quot;C &gt; D&quot;);</code></pre>
+
+<p>Note that in this case, D is still a valid letter that students can enter in response to an answer checker for $a, and similarly for A and B with $b. Note also that both $a and $b use the same context, unlike orderings produced by calls to the Ordering() function. Changes to the current context WILL affect $a and $b.</p>
+
+<p>If the ordering contains duplicate letters (e.g., &quot;A &gt; B &gt; A&quot;), then a warning message will be issued. If not all the letters are used by the student, then that also produces a warning message. The latter can be controlled by the showMissingLetterHints flag to the cmp() method. For example:</p>
+
+<pre><code>        ANS(Ordering(&quot;A &gt; B &gt; C&quot;)-&gt;cmp(showMissingLetterHints =&gt; 0));</code></pre>
+
+<p>would prevent the message from being issued if the student submitted just &quot;A &gt; B&quot;.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

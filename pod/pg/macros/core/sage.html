@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>core/sage.pl</title>
+</head>
+<body>
+<h1>core/sage.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li>
+        <ul>
+          <li><a href="#Sage-cell">Sage cell</a></li>
+          <li><a href="#sageCalculatorPad-code">sageCalculatorPad code.</a></li>
+          <li><a href="#Sample-sageCalculatorPad">Sample sageCalculatorPad</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h3 id="Sage-cell">Sage cell</h3>
+
+<pre><code>        usage: Sage( SageCode =&gt; &#39;print 1+2; record_answer(3)&#39;, 
+                     ButtonText =&gt; &#39;Start/Restart the Interactive Cell&#39;, 
+                     ShowAnswerBlank =&gt; # &quot;hidden&quot; (default) or &quot;visible&quot; or &#39;none&#39;
+                     CellServerAddress =&gt; &#39;https://sagecell.sagemath.org&#39;
+                    );
+                NAMED_ANS(sageAnswer =&gt; Compute(&#39;3&#39;)-&gt;cmp);</code></pre>
+
+<p>The arguments are all optional but usually you will want to supply your own SageCode.</p>
+
+<p>This method of calling sage was designed specially for presenting sage &quot;interacts&quot;, applet like creations in SageMath, although it may be useful for other purposes also. If the answer blank is hidden then the interact fills in the answer as a result of manipulations on the applet performed by the student and the student cannot override the answer.</p>
+
+<p>To return answers from the sage interact:</p>
+
+<p>The function record_answer(answer_list) called from within the SageCode creates a NAMED_ANS_RULE or NAMED_HIDDEN_ANS_RULE with the values of the answer_list inserted. If ShowAnswerBlank is &quot;hidden&quot; then the HIDDEN answer rule is used; if ShowAnswerBlank is &#39;none&#39; then no answer blank is inserted.</p>
+
+<p>For the current implementation the Sage interact can create only one answer blank.</p>
+
+<p>When the sage interact creates an answer blank it must be checked by WeBWorK using the construction</p>
+
+<p><code>NAMED_ANS(sageAnswer =&gt; $correctAnswer-&gt;cmp)</code></p>
+
+<p>where &#39;sageAnswer&#39; is the SageAnswerName and $correctAnswer is a MathObject.</p>
+
+<p>By default the sage created answer blanks are hidden, but it is visible if ShowAnswerBlank is set to &#39;visible&#39;. When visible the answer blanks occur within the borders which define the output of the sage applet. The answer blanks are 15 spaces long.</p>
+
+<h3 id="sageCalculatorPad-code">sageCalculatorPad code.</h3>
+
+<p>This is a simple interface for embedding a sage calculation cell in any problem. Details for this can be found at <a href="https://sagecell.sagemath.org/static/about.html?v=98b56535a5f3e54e272938b62c79287c">https://sagecell.sagemath.org/static/about.html?v=98b56535a5f3e54e272938b62c79287c</a> and for more detail: <a href="https://github.com/sagemath/sagecell/blob/master/doc/embedding.rst">https://github.com/sagemath/sagecell/blob/master/doc/embedding.rst</a>.</p>
+
+<p>The latter reference provides information for embedding a customized sageCell with more options than are provided by sageCalculatorPad()</p>
+
+<h3 id="Sample-sageCalculatorPad">Sample sageCalculatorPad</h3>
+
+<pre><code>        sageCalculatorHeader();  # set up javaScript needed for the sageCalculatorPad
+                                 
+
+        Context()-&gt;texStrings;
+        TEXT(
+           sageCalculatorPad( &quot;Use this calculator pad to make calculations&quot;,  
+        q!                                                                          
+        data = [1, 3, 4, 1, 7, 4, 2, 3, 2, 4, 2, 5, 4, 1, 3, 3, 2]
+        n = len(data); print &quot;Number of data values =&quot;,n
+        s = sum(data); print &quot;          Sum of data = &quot;,s
+        s2 = sum((x^2 for x in data)); print &quot;       Sum of squares = &quot;,s2
+        s3 = sum((x^3 for x in data)); print &quot;         Sum of cubes = &quot;,s3
+        s4 = sum((x^4 for x in data)); print &quot;        Sum of forths = &quot;,s4;print
+        mu = mean(data); print &quot;             The mean =&quot;,mu
+        var = variance(data); print &quot;  The sample variance = &quot;,var
+        !
+           )
+        );</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

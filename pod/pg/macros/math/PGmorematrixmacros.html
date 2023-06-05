@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/PGmorematrixmacros.pl</title>
+</head>
+<body>
+<h1>math/PGmorematrixmacros.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#NAME">NAME</a>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#random_inv_matrix">random_inv_matrix</a></li>
+              <li><a href="#random_diag_matrix">random_diag_matrix</a></li>
+              <li><a href="#swap_rows-matrix-row1-row2">swap_rows ($matrix, $row1, $row2)</a></li>
+              <li><a href="#row_mult-matrix-scaler-row">row_mult ($matrix, $scaler, $row)</a></li>
+              <li><a href="#linear_combo-matrix-scalar-row1-row2">linear_combo($matrix, $scalar, $row1, $row2)</a></li>
+            </ul>
+          </li>
+          <li><a href="#basis_cmp">basis_cmp()</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+  <li><a href="#BASIS_CMP">BASIS_CMP</a>
+    <ul>
+      <li>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#compare_basis">compare_basis</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+      <li><a href="#vec_list_string">vec_list_string</a>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#ans_array_filter">ans_array_filter</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="NAME">NAME</h2>
+
+<pre><code>        macros/PGmorematrixmacros.pl</code></pre>
+
+<h4 id="random_inv_matrix">random_inv_matrix</h4>
+
+<p>## Builds and returns a random invertible \$row by \$col matrix.</p>
+
+<h4 id="random_diag_matrix">random_diag_matrix</h4>
+
+<p>This method returns a random nxn diagonal matrix.</p>
+
+<h4 id="swap_rows-matrix-row1-row2">swap_rows ($matrix, $row1, $row2)</h4>
+
+<pre><code>        (deprecated use MathObject Matrix instead)</code></pre>
+
+<p>$matrix is assumed to be a RealMatrix1 object. It is better to use MathObject Matrices and row swap mechanisms from MatrixReduce.pl instead.</p>
+
+<h4 id="row_mult-matrix-scaler-row">row_mult ($matrix, $scaler, $row)</h4>
+
+<pre><code>        (deprecated use MathObject Matrix instead)</code></pre>
+
+<p>$matrix is assumed to be a RealMatrix1 object. It is better to use MathObject Matrices and row swap mechanisms from MatrixReduce.pl instead.</p>
+
+<h4 id="linear_combo-matrix-scalar-row1-row2">linear_combo($matrix, $scalar, $row1, $row2)</h4>
+
+<pre><code>        (deprecated use MathObject Matrix instead)</code></pre>
+
+<p>Adds a multiple of row1 to row2.</p>
+
+<p>$matrix is assumed to be a RealMatrix1 object. It is better to use MathObject Matrices and subroutines from MatrixReduce.pl instead.</p>
+
+<p>These should be compared to similar subroutines made later in MatrixCheckers.pl</p>
+
+<h3 id="basis_cmp">basis_cmp()</h3>
+
+<p>Compares a list of vectors by finding the change of coordinate matrix from the Prof&#39;s vectors to the students, and then taking the determinant of that to determine the existence of the change of coordinate matrix going the other way.</p>
+
+<p>ANS( basis_cmp( vectors_as_array_ref_in_array_ref, options_hash ) );</p>
+
+<pre><code>    1. a reference to an array of correct vectors
+    2. a hash with the following keys (all optional):
+        mode            --  &#39;basis&#39; (default) (only a basis allowed)
+                            &#39;orthogonal&#39; (only an orthogonal basis is allowed)
+                            &#39;unit&#39; (only unit vectors in the basis allowed)
+                            &#39;orthonormal&#39; (only orthogonal unit vectors in basis allowed)
+        zeroLevelTol    --  absolute tolerance to allow when answer is close
+                                 to zero
+
+        debug           --  if set to 1, provides verbose listing of
+                                hash entries throughout fliters.
+
+        help        --  &#39;none&#39; (default) (is quiet on all errors)
+                    &#39;dim&#39; (Tells student if wrong number of vectors are entered)
+                    &#39;length&#39; (Tells student if there is a vector of the wrong length)
+                    &#39;orthogonal&#39; (Tells student if their vectors are not orthogonal)
+                            (This is only in orthogonal mode)
+                    &#39;unit&#39; (Tells student if there is a vector not of unit length)
+                            (This is only in unit mode)
+                    &#39;orthonormal&#39; (Gives errors from orthogonal and orthonormal)
+                            (This is only in orthonormal mode)
+                    &#39;verbose&#39; (Gives all the above answer messages)
+
+    Returns an answer evaluator.</code></pre>
+
+<p>EXAMPLES:</p>
+
+<pre><code>    basis_cmp([[1,0,0],[0,1,0],[0,0,1]])
+                                    --  correct answer is any basis for R^3.
+    basis_cmp([1,0,2,0],[0,1,0,0], &#39;mode&#39;=&gt;orthonormal )
+                                    --  correct answer is any orthonormal basis
+                                        for this space such as:
+                                        [1/sqrt(3),0,2/sqrt(3),0],[0,1,0,0]</code></pre>
+
+<a href="#_podtop_"><h1 id="BASIS_CMP">BASIS_CMP</h1></a>
+
+<p>Made to keep the same format as num_cmp and fun_cmp.</p>
+
+<h4 id="compare_basis">compare_basis</h4>
+
+<pre><code>    compare_basis( $ans_hash,
+        %options
+        ra_student_ans     # a reference to the array of students answer vectors
+        rm_correct_ans,    # a reference to the correct answer matrix
+        %options
+    )</code></pre>
+
+<h2 id="vec_list_string">vec_list_string</h2>
+
+<p>(this is mostly obsolete. One should use MathObject Vectors instead. )</p>
+
+<p>This is a check_syntax type method (in fact I borrowed some of that method&#39;s code) for vector input. The student needs to enter vectors like: [1,0,0],[1,2,3],[0,9/sqrt(10),1/sqrt(10)] Each entry can contain functions and operations and the usual math constants (pi and e). The vectors, however can not be added or multiplied or scalar multiplied by the student. Most errors are handled well. Any error in an entry is caught by the PG_answer_eval like it is in num_cmp or fun_cmp. Right now the method basically ignores every thing outside the vectors. Also, an unmatched open parenthesis is caught, but a unmatched close parenthesis ends the vector, and since everything outside is ignored, no error is sent (other than the later when the length of the vectors is checked. In the end, the method returns an array of Matrix objects.</p>
+
+<h4 id="ans_array_filter">ans_array_filter</h4>
+
+<pre><code>        (this filter is not necessary when using MathObjects.  It may someday be useful
+        again if the AnswerEvaluator pipeline is used to its fullest extent. )
+
+    This filter was created to get, format, and evaluate each entry of the ans_array and ans_array_extension
+    answer entry methods. Running this filter is necessary to get all the entries out of the answer
+    hash. Each entry is evaluated and the resulting number is put in the display for student answer
+    as a string. For evaluation purposes an array of arrays of arrays is created called ra_student_ans
+    and placed in the hash. The entries are [array_number][row_number][column_number]. The latex strings
+    for each entry are taken from the parser and put, as a matrix, into the previewer. The preview text
+    string is also created, but this display method becomes confusing when large matrices are used.</code></pre>
+
+<p>The following subroutines, meant to be used with MatrixReal1 type matrices, are deprecated. In general you should use the MathObject Matrix type and the checking methods in MatrixCheckers.pl</p>
+
+<pre><code>        are_orthogonal_vecs($vec_ref, %opts)
+        is_diagonal($matrix, %opts)
+        are_unit_vecs($vec_ref, %opts)
+        display_correct_vecs($vec_ref, %opts)
+        vec_solution_cmp($vec,%opts)
+                filter: compare_vec_solution($rh_ans,%opts);</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

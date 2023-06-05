@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserFormulaWithUnits.pl</title>
+</head>
+<body>
+<h1>parsers/parserFormulaWithUnits.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#USAGE">USAGE</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserFormulaWithUnits.pl - Implements a formula with units.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser class that implements a formula with units. It is a temporary version until the Parser can handle it directly.</p>
+
+<p>Use FormulaWithUnits(&quot;num units&quot;) or FormulaWithUnits(formula,&quot;units&quot;) to generate a FormulaWithUnits object, and then call its cmp() method to get an answer checker for your formula with units.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<pre><code>        ANS(FormulaWithUnits(&quot;3x+1 ft&quot;)-&gt;cmp);
+        ANS(FormulaWithUnits(&quot;$a*x+1 ft&quot;)-&gt;cmp);
+
+        $x = Formula(&quot;x&quot;);
+        ANS(FormulaWithUnits($a*$x+1,&quot;ft&quot;)-&gt;cmp);</code></pre>
+
+<p>We now call on the Legacy version, which is used by num_cmp to handle numbers with units.</p>
+
+<p>New units can be added at run time by using the newUnit option</p>
+
+<pre><code>       $a = FormulaWithUnits(&quot;3x apples&quot;,{newUnit=&gt;&#39;apples&#39;});</code></pre>
+
+<p>A new unit can either be a string, in which case the string is added as a new unit with no relation to other units, or as a hashreference</p>
+
+<pre><code>       $newUnit = {name =&gt; &#39;bear&#39;,
+                   conversion =&gt; {factor =&gt;3, m=&gt;1}};
+       $a = FormulaWithUnits(&quot;3x bear&quot;, {newUnit=&gt;$newUnit});</code></pre>
+
+<p>You can also define your own conversion hash. In the above example one bear is three meters. (See Units.pm for examples).</p>
+
+<p>Finally, the newUnit option can also be an array ref containing any number of new units to add. A common reason for doing this would be to add the plural version of the unit as an equilvalent unit. E.G.</p>
+
+<pre><code>      $newUnits = [&#39;apple&#39;,{name=&gt;&#39;apples&#39;,conversion=&gt;{factor=&gt;1,apple=&gt;1}}];
+      $a = FormulaWithUnits(&quot;3x apples&quot;,{newUnit=&gt;$newUnits});</code></pre>
+
+<p>In this case both 3x apple and 3x apples would be accepted as answers.</p>
+
+<p>Note: English pluralization is suprisingly hard, so WeBWorK will make no attempt to display a grammerically correct result.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

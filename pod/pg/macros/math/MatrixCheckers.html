@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>math/MatrixCheckers.pl</title>
+</head>
+<body>
+<h1>math/MatrixCheckers.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHORS">AUTHORS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>MatrixCheckers.pl</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>Provides subroutines for answer checking using MathObjects matrices with real entries. (Sadly, it does not provide routines for using matrices to win at the game of checkers.)</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>First, load the <code>MatrixCheckers.pl</code> macro file. If the basis has more than one vector, also load <code>parserMultiAnswer.pl</code>.</p>
+
+<dl>
+
+<dt>loadMacros(&quot;PGstandard.pl&quot;,&quot;MathObjects.pl&quot;,&quot;parserMultiAnswer.pl&quot;,&quot;MatrixCheckers.pl&quot;);</dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>For a matrix that has a single column or row, the way to use the answer checkers is the same as using a custom answer checker inside of <code>cmp(checker=</code>~~&amp;name_of_answer_checker_subroutine)&gt; such as</p>
+
+<dl>
+
+<dt><code>ANS( Matrix([[1],[2],[3]])-</code>cmp( checker=&gt;~~&amp;basis_checker_one_column ) );&gt;</dt>
+<dd>
+
+</dd>
+<dt><code>ANS( Matrix([[1],[2],[3]])-</code>cmp( checker=&gt;~~&amp;unit_basis_checker_one_column ) );&gt;</dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>The &quot;one column&quot; at the end of the checker name refers to the fact that the student answer is a one-column matrix. The &quot;unit basis checker&quot; ensures that the student answer has unit length.</p>
+
+<p>For answers that are a collection of column or row vectors, the way to use the answer checkers is inside of a MultiAnswer object. The macro <code>parserMultiAnswer.pl</code> should also be loaded. The answer checkers that should be used inside a MultiAnswer object are:</p>
+
+<dl>
+
+<dt><code>basis_checker_columns</code></dt>
+<dd>
+
+</dd>
+<dt><code>orthonormal_basis_checker_columns</code></dt>
+<dd>
+
+</dd>
+<dt><code>basis_checker_rows</code></dt>
+<dd>
+
+</dd>
+<dt><code>orthonormal_basis_checker_rows</code></dt>
+<dd>
+
+</dd>
+<dt><code>parametric_plane_checker_columns</code></dt>
+<dd>
+
+</dd>
+</dl>
+
+<p>Here is an example of how to use these answer checkers. In the setup section of the PG file we create two 3 x 1 MathObject matrices with real-entries that serve as basis vectors. The object <code>$multians</code> takes the basis vectors as input and passes them to the custom answer checker called by <code>checker =&lt;gt</code>...&gt;.</p>
+
+<ul>
+
+<p>$basis1 = Matrix([1/sqrt(2), 0, 1/sqrt(2)])-&gt;transpose; $basis2 = Matrix([0,1,0])-&gt;transpose;</p>
+
+<p>$multians = MultiAnswer($basis1, $basis2)-&gt;with( singleResult =&gt; 1, separator =&gt; &#39;, &#39;, tex_separator =&gt; &#39;, &#39;, allowBlankAnswers=&gt;0, checker =&gt; ~~&amp;orthonormal_basis_checker_columns, );</p>
+
+</ul>
+
+<p>In the main text portion of the PG file, we use <code>\{ $multians-&lt;gt</code>ans_array(15) \}&gt; to create an array of text boxes that are 15 characters wide and have square brackets around them to look like a matrix. The braces around the vectors, which are produced by <code>\(\Bigg\lbrace\)</code> and <code>\(\Bigg\rbrace\)</code>, are a matter of personal preference (since a basis is an ordered set, I like to include braces).</p>
+
+<pre><code>        Context()-&gt;texStrings;
+        BEGIN_TEXT
+        Find an orthonormal basis for...
+        $BR
+        $BR
+        $BCENTER
+        \(\Bigg\lbrace\) 
+        \{ $multians-&gt;ans_array(15) \}, 
+        \{ $multians-&gt;ans_array(15) \} 
+        \(\Bigg\rbrace.\)
+        $ECENTER
+        END_TEXT
+        Context()-&gt;normalStrings;</code></pre>
+
+<p>The answer evaluation section of the PG file is totally standard.</p>
+
+<ul>
+
+<p>ANS( $multians-&gt;cmp );</p>
+
+</ul>
+
+<p>The <code>parametric_plane_checker_columns</code> should be used for solutions to non-homogeneous systems of linear equations for which the solution is essentially a point plus the span of several linearly independent vectors. When using the parametric plane checker, the first vector input always serves as a point on the hyperplane (i.e., the first vector input is always a particular solution), while the remaining vectors are a basis for the hyperplane (i.e., they span the homogeneous solution set).</p>
+
+<a href="#_podtop_"><h1 id="AUTHORS">AUTHORS</h1></a>
+
+<p>Paul Pearson, Hope College, Department of Mathematics</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

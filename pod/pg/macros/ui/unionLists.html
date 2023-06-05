@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>ui/unionLists.pl</title>
+</head>
+<body>
+<h1>ui/unionLists.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#unionLists.pl">unionLists.pl</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="unionLists.pl">unionLists.pl</h2>
+
+<pre><code>  Usage:  BeginList(type,options);
+
+  Produces &lt;OL&gt; and &lt;UL&gt; lists.  Type must be either &quot;OL&quot; or &quot;UL&quot;,
+  (and defaults to &quot;OL&quot;).  The options are
+
+    type =&gt; &quot;type&quot;            Specifies the type of marker
+                              (default is none specified)
+
+    value =&gt; num or string    Specified the initial value of the
+                              item numbering
+
+    tex_par =&gt; 1 or 0         Set paragraph spacing in TeX mode
+                              (default is 0)
+
+    noTopSkip =&gt; 1 or 0       Remove top skip produced by enumerate
+                              in TeX mode
+                              (default is 0)
+
+  Example:
+
+    BEGIN_TEXT
+      \{BeginList(&quot;OL&quot;)\}
+      $ITEM This is the first item
+      $ITEM This is the second
+      \{EndList(&quot;OL&quot;)\}
+    END_TEXT
+
+
+  Usage:  EndList(type)
+
+  where type is the list type (and must match the BeginList type).</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

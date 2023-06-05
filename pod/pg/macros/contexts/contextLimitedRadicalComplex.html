@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextLimitedRadicalComplex.pl</title>
+</head>
+<body>
+<h1>contexts/contextLimitedRadicalComplex.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME-contextLimitedRadical.pl---defines-a-root-n-x-function-for-n-th-root-of-x-and-allows-for-specification-of-forms-of-radical-answers-like-simplified-radicals-or-with-rational-denominators">NAME contextLimitedRadical.pl - defines a root(n,x) function for n-th root of x, and allows for specification of forms of radical answers, like simplified radicals or with rational denominators</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME-contextLimitedRadical.pl---defines-a-root-n-x-function-for-n-th-root-of-x-and-allows-for-specification-of-forms-of-radical-answers-like-simplified-radicals-or-with-rational-denominators">NAME contextLimitedRadical.pl - defines a root(n,x) function for n-th root of x, and allows for specification of forms of radical answers, like simplified radicals or with rational denominators</h1></a>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file enables a context LimitedRadical in which students and pg-authors may use root(n,x) for the nth root of x. The function makes sure n!=0, and also allows for negative x only if n is an odd integer.</p>
+
+<p>By default, the limits for Formula answer checking are [0,5] to avoid negatives in radicals. If it is important to distinguish sqrt(x^2) as |x| rather than x, then the limits should be changed to include a region where they differ.</p>
+
+<p>The context requires that radical expressions (using either sqrt() or root()) meet the form of the author&#39;s answer with respect to simplification and rationalization of denominators.</p>
+
+<p>To accomplish this, Math Objects like &quot;root(3,2)&quot; should be created as Formula(&quot;root(3,2)&quot;), not Compute(&quot;root(3,2)&quot;), or they will be treated as Reals and evaluated as decimals. Compute(&quot;root(3,x)&quot;) should be fine though, since it is unambiguously a Formula.</p>
+
+<p>Student answers are first compared to the correct answer in the usual way to see if they are at least numerically correct. Then to check that expressions are fully simplified, during a check, both sqrt(x) and root(n,x) are temporarily replaced by certain other functions. Also +, -, *, and / are temporarily replaced with bizarro arithmetic (from bizarroArithmetic.pl) that nearly make for a bizarro field structure on R. If the student and author answers disagree after this change, then the student&#39;s answer is not in form of the author&#39;s answer.</p>
+
+<p>For example &quot;1+2&quot; is not equivalent to &quot;3&quot; under bizarro addition. &quot;2sqrt(2)&quot; is not equivalent to &quot;sqrt(8)&quot; with the bizarro arithmetic. Any radical applied to 1 is declared unsimplified as well.</p>
+
+<p>If a student&#39;s answer is numerically equal to the author&#39;s, but not equal under bizarro arithmetic, students get the message that their answer is not fully simplified. So care should be taken by the problem author when defining answers.</p>
+
+<p>The near-field structure of the bizarro versions means that &quot;1+sqrt(2)+sqrt(3)&quot; can be entered as &quot;sqrt(3)+sqrt(2)+1&quot;, etc, and not be declared &quot;unsimplified&quot;. Also &quot;(1+sqrt(2))/2&quot; can be entered as &quot;1/2+sqrt(2)/2&quot; without being declared &quot;unsimplified&quot;. However, &quot;(1+2sqrt(2))/2&quot; *will* be declared different from &quot;1/2+sqrt(2)&quot;, even though both are generally considered fully simplified. If an author can foresee this arising, consider using parserOneOf.pl to allow for multiple forms of the correct answer.</p>
+
+<p>Technically both &quot;sqrt(3)/3&quot; and &quot;1/sqrt(3)&quot; are fully simplified, although you may want rational denominators. This context will declare them equal but not equivalent. The author should either accept both as correct using parserOneOf.pl, or give the message that the student&#39;s answer does not have a rational denominator using answerHints.pl.</p>
+
+<p>Note that there is nothing here that is actually doing any reducing of radical quantities or honestly checking for &quot;simplified&quot; answers - so authors need to make sure their answers are reduced and simplified. Also if the correct answer is &quot;sqrt(2)&quot; and the student enters &quot;sqrt(3)+sqrt(3)&quot; or &quot;4sqrt(2)/2&quot;, they will just be told they are wrong, not that their (incorrect) answer is unsimplified.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

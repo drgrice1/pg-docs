@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserOneOf.pl</title>
+</head>
+<body>
+<h1>parsers/parserOneOf.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserOneOf.pl - Implements a MathObject that allows students to entery any one of several possible right answers.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a MathObject that allows the student to answer any one of several correct answers. The correct answer (when shown in the results table) will list all the possibilities.</p>
+
+<p>To use it, load the macro file, and create a OneOf() object:</p>
+
+<pre><code>        loadMacros(
+          &quot;PGstandard.pl&quot;,
+          &quot;MathObjects.pl&quot;,
+          &quot;parserOneOf.pl&quot;,
+        );
+        
+        $ans = OneOf(pi,&quot;2x+1&quot;);</code></pre>
+
+<p>and create the answer checker as usual:</p>
+
+<pre><code>        ANS($ans-&gt;cmp);</code></pre>
+
+<p>If the student answers either &quot;pi&quot; or &quot;2x+1&quot; (or answers equivalent to those), the answer will be marked correct.</p>
+
+<p>You can control the format of the correct answer string using the following flags on the OneOf object:</p>
+
+<pre><code>    separator =&gt; &quot;, &quot;             The string to use for the separator between
+                                  choices in the correct answer string
+
+    or =&gt; &quot; or &quot;                  The string to use before the final choice
+
+    tex_separator =&gt; &quot;\hbox{, }&quot;  The string to use for the separator between
+                                  choices for TeX output
+
+    tex_or =&gt; &quot;\hbox{ or }&quot;       The string to use before the final choice in
+                                  TeX output strings
+
+    format =&gt; string or code      An sprintf-style format string to be used to
+                                  format the choices, or a code reference to
+                                  a subroutine that accepts the entries as input
+                                  and returns the formatted string.
+
+    tex_format =&gt; string or code  Same as format above, but for use in tex output.</code></pre>
+
+<p>You can set this using the with() method, or by setting the values explicitly. For example,</p>
+
+<pre><code>    $ans = OneOf(pi,&quot;2x+1&quot;,34)-&gt;with(separator=&gt;&quot;; &quot;,tex_separator=&gt;&quot;;\,&quot;);</code></pre>
+
+<p>or</p>
+
+<pre><code>    $ans = OneOf(pi,&quot;2x+1&quot;,34);
+    $ans-&gt;{separator} = &quot;; &quot;;
+    $ans-&gt;{tex_separator} = &quot;;\, &quot;;</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

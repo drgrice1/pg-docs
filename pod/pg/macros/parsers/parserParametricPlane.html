@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>parsers/parserParametricPlane.pl</title>
+</head>
+<body>
+<h1>parsers/parserParametricPlane.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#lhs-rhs">$lhs == $rhs</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserParametricPlane.pl - Implements Formulas that represent parametric planes in three-space.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This is a Parser class that implements parametric planes in 3D as a subclass of the Formula class. To use it, load this macro file, and set the context to the ParametricPlane context:</p>
+
+<pre><code>        loadMacros(&quot;parserParametricPlane.pl&quot;);
+        Context(&quot;ParametricPlane&quot;);</code></pre>
+
+<p>Use ParametricPlane(point,vector1,vector2) or ParametricPlane(formula) to create a ParametricPlane object. You can pass two optional additional parameters that indicated the variables to use for the parameter for the line (these are s and t by default).</p>
+
+<p>Usage examples:</p>
+
+<pre><code>        $P = ParametricPlane(Point(3,-1,2),Vector(1,1,3),Vector(-1,2,0));
+        $P = ParametricPlane([3,-1,2],[1,1,3],[-1,2,0]);
+        $P = ParametricPlane(&quot;&lt;3+t-s,t+2s-1,2+2t&gt;&quot;);
+
+        $p = Point(3,-1,2); $v1 = Vector(1,1,3); $v2 = Vector(-1,2,0)
+        $P = ParametricPlane($p,$v1,$v2);
+
+        $s = Formula(&#39;s&#39;); $t = Formula(&#39;t&#39;);
+        $p = Point(3,-1,2); $v1 = Vector(1,1,3); $v2 = Vector(-1,2,0);
+        $P = ParametricPlane($p+$s*$v1+$t*$v2);
+
+        Context()-&gt;constants-&gt;are(a=&gt;1+pi^2); # won&#39;t guess this value
+        $P = ParametricPlane(&quot;(a,2a,-1) + t &lt;1,a,a^2&gt; + s &lt;2a,0,1-a&gt;&quot;);</code></pre>
+
+<p>Then use</p>
+
+<pre><code>   ANS($P-&gt;cmp);</code></pre>
+
+<p>to get the answer checker for $P.</p>
+
+<h2 id="lhs-rhs">$lhs == $rhs</h2>
+
+<pre><code> #
+ #  Two parametric planes are equal if their implicit forms are equal
+ #</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

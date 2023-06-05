@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Circle</title>
+</head>
+<body>
+<h1>Circle</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a>
+    <ul>
+      <li><a href="#Command">Command:</a></li>
+      <li><a href="#Examples">Examples:</a></li>
+    </ul>
+  </li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<pre><code>        Circle</code></pre>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>    use Carp;
+        use GD;
+        use WWPlot;
+        use Fun;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module defines a circle which can be inserted as a stamp in a graph (WWPlot) object.</p>
+
+<h2 id="Command">Command:</h2>
+
+<pre><code>        $circle_object = new Circle( $center_pos_x, $center_pos_y, $radius, $border_color, $fill_color);</code></pre>
+
+<h2 id="Examples">Examples:</h2>
+
+<pre><code>        Here is the code used to define the subroutines open_circle
+        and closed_circle in PGgraphmacros.pl
+
+                sub open_circle {
+                    my ($cx,$cy,$color) = @_;
+                        new Circle ($cx, $cy, 4,$color,&#39;nearwhite&#39;);
+                }
+
+                sub closed_circle {
+                    my ($cx,$cy, $color) = @_;
+                    $color = &#39;black&#39; unless defined $color;
+                        new Circle ($cx, $cy, 4,$color, $color);
+                }
+
+        $circle_object2 = closed_circle( $x_position, $y_position, $color );
+
+        @circle_objects = $graph -&gt; stamps($circle_object2);
+        # puts a filled dot at ($x_position, $y_position) on the graph -- using real world coordinates.</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

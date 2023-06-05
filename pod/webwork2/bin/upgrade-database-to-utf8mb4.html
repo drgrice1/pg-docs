@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>upgrade-database-to-utf8mb4.pl</title>
+</head>
+<body>
+<h1>upgrade-database-to-utf8mb4.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#OPTIONS">OPTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>upgrade-database-to-utf8mb4.pl -- Upgrade webwork course database tables from latin1 to utf8mb4.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>  upgrade-database-to-utf8mb4.pl [options]
+
+  Options:
+    -c|--course-id [course]   Course id to upgrade the database for.
+                              (This option may be given multiple times.)
+    -a|--all                  Upgrade the database for all existing courses
+                              including the admin course.
+                              (Preempts the previous option.)
+    -2|--run-second-pass      Run a second pass to change column text types to
+                              be the defaults for webwork.  This pass is not run
+                              by default.
+    -n|--upgrade-non-native   Upgrade the non-native tables
+                              (locations, location_addresses, depths)
+    --no-backup               Do not backup the database before making changes
+                              to the database. (Not recommended)
+    -b|--backup-file [file]   Filename for the database backup file.
+                              Default: ./webwork.sql
+    -v|--verbose              Show progress output.
+    -h|--help                 Show full help for this script.</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Upgrade webwork course database tables from latin1 to utf8mb4.</p>
+
+<p>This script assumes that you have already properly configured the database to work with the utf8mb4 character set. See <a href="https://webwork.maa.org/wiki/Converting_the_webwork_database_from_the_latin1_to_the_utf8mb4_character_set#Check_what_the_default_character_set_is_for_MySQL_on_your_new_or_upgraded_server">https://webwork.maa.org/wiki/Converting_the_webwork_database_from_the_latin1_to_the_utf8mb4_character_set#Check_what_the_default_character_set_is_for_MySQL_on_your_new_or_upgraded_server</a>.</p>
+
+<p>Also, make sure to upgrade the course via webwork2/admin &quot;Upgrade Courses&quot; before running this script for the course.</p>
+
+<p>If you are upgrading a WeBWorK installation from a version prior to version 2.15 use</p>
+
+<pre><code>    upgrade-database-to-utf8mb4.pl -na</code></pre>
+
+<p>If you are upgrading a single course that was created with a version of WeBWorK prior to version 2.15, use</p>
+
+<pre><code>    upgrade-database-to-utf8mb4.pl -c courseId</code></pre>
+
+<p>If there are errors when running this script, then restore the database using the backup created by the script (unless you used --no-backup) by running</p>
+
+<pre><code>    mysql -u webworkWrite -p webwork &lt; webwork.sql</code></pre>
+
+<p>This is where <code>webworkWrite</code> is the <code>$database_username</code> set in site.conf. You may need to change <code>webwork.sql</code> if you used a different name for the database backup file. You will be prompted to enter the password, which should be the value of <code>$database_password</code> in site.conf.</p>
+
+<a href="#_podtop_"><h1 id="OPTIONS">OPTIONS</h1></a>
+
+<dl>
+
+<dt>-c|--course-id [course]</dt>
+<dd>
+
+<p>Course id or list of course ids to upgrade the database tables for. Use this option multiple times to upgrade the database tables for multiple courses at one time.</p>
+
+</dd>
+<dt>-a|--all</dt>
+<dd>
+
+<p>Ignore the previous option and upgrade the database tables for all existing courses, including the admin course.</p>
+
+</dd>
+<dt>-2|--run-second-pass</dt>
+<dd>
+
+<p>On the first pass this script will change the datatypes of all columns that are different from the datatype defined in the webwork database schema to that in the schema. Then it will convert the table to use the utf8mb4 charset. When this conversion is done the database automatically enlarges text datatypes. If this option is enabled then the second pass will change those back to the smaller text datatypes as defined in the webwork database schema.</p>
+
+<p>This second pass is not strictly neccessary. The larger text datatypes should still work with WeBWorK.</p>
+
+<p>This pass is not run by default. Note that running this script again will also perform this second pass, if desired.</p>
+
+</dd>
+<dt>--no-backup</dt>
+<dd>
+
+<p>Do not dump the entire webwork database to a backup sql file before performing changes. It is recommended that you make a backup before any of the other changes that this script makes. If you have already created a database backup, then you can use this option to prevent the creation of another backup file.</p>
+
+</dd>
+<dt>-b|--backup-file [filename]</dt>
+<dd>
+
+<p>Filename for the database backup file. By default the database is dumped to the file <code>./webwork.sql</code> in the directory the script is run from.</p>
+
+</dd>
+<dt>-v|--verbose</dt>
+<dd>
+
+<p>Make this script show output for the things that it is doing.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

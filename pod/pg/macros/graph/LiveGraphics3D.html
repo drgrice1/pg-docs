@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>graph/LiveGraphics3D.pl</title>
+</head>
+<body>
+<h1>graph/LiveGraphics3D.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#LiveGraphics3D.pl">LiveGraphics3D.pl</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="LiveGraphics3D.pl">LiveGraphics3D.pl</h2>
+
+<pre><code> ###########################################################################
+ #
+ #   Macros for handling interactive 3D graphics via the LiveGraphics3D
+ #   Java applet.  The applet needs to be in the course html directory.
+ #   (If it is in the system html area, you will need to change the
+ #   default below or supply the jar option explicitly).
+ #
+ #   The LiveGraphics3D applet displays a mathematica Graphics3D object
+ #   that is stored in a .m file (or a compressed one).  Use Mathematica
+ #   to create one.  (In the future, I plan to write a perl class that
+ #   will create these for you on the fly. -- DPVC)
+ #
+ #   The main routines are
+ #
+ #      Live3Dfile          load a data file
+ #      Live3Ddata          load raw Graphics3D data
+ #      LiveGraphics3D      access to all parameters
+ #
+
+ #
+ #  LiveGraphics3D(options)
+ #
+ #  Options are from:
+ #
+ #     file =&gt; name           name of .m file to load
+ #
+ #     archive =&gt; name        name of a .zip file to load
+ #
+ #     input =&gt; 3Ddata        string containing Graphics3D data to
+ #                            be displayed by the applet
+ #
+ #     size =&gt; [w,h]          width and height of applet
+ #
+ #     vars =&gt; [vars]         hash of variables to pass as independent
+ #                            variables to the applet, togther with
+ #                            their initial values
+ #                              e.g., vars =&gt; [a=&gt;1,b=&gt;1]
+ #
+ #     depend =&gt; [list]       list of dependent variables to pass to
+ #                            the applet with their replacement strings
+ #                            (see LiveGraphics3D documentation)
+ #
+ #     background=&gt;&quot;#RRGGBB&quot;  the background color to use (default is white)
+ #
+ #     scale =&gt; n             scaling factor for applet (default is 1.)
+ #
+ #     image =&gt; file          a file containing an image to use in TeX mode
+ #                            or when Java is disabled
+ #
+ #     tex_size =&gt; ratio      a scaling factor for the TeX image (as a portion
+ #                            of the line width).
+ #                                1000 is 100%, 500 is 50%, etc.
+ #
+ #     tex_center =&gt; 0 or 1   center the image in TeX mode or not
+ #
+ #     Live3D =&gt; [params]     hash of additional parameters to pass to
+ #                            the Live3D applet.
+ #                              e.g. Live3D =&gt; [VISIBLE_FACES =&gt; &quot;FRONT&quot;]
+ #</code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

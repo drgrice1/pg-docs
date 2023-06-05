@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Volume1</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
+	</script>
+	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+
+	<style>
+		.explanation {
+			--bs-code-color: #971556;
+		}
+		.preamble {
+			background-color: lightblue;
+		}
+		.setup {
+			background-color: #ddffdd;
+		}
+		.statement {
+			background-color: #eeb08199;
+		}
+		.answer {
+			background-color: #ffffdd;
+		}
+		.solution {
+			background-color: #ffb6c199;
+		}
+	</style>
+</head>
+
+<body class="p-3">
+	<div class="container-fluid">
+		<h1>Volume of Solids of Revolution 1</h1>
+		<p>Integral calculus: volume of solids of revolution</p>
+		<h2>POD for Macro Files</h2>
+		<ul>
+					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">PGML.pl</li>
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/answers/answerHints.html">answerHints.pl</a></li>
+					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/core/weightedGrader.html">weightedGrader.pl</a></li>
+					<li class="text-danger">PGcourse.pl</li>
+		</ul>
+		<div class="row">
+			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
+			<div class="col text-center"><h2 class="fw-bold fs-3">Explanation</h2></div>
+		</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
+						style="z-index: 10" type="button" data-code="DOCUMENT();
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;unionTables.pl&#39;, &#39;answerHints.pl&#39;, &#39;weightedGrader.pl&#39;, &#39;PGcourse.pl&#39;);
+
+install_weighted_grader();
+" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'unionTables.pl', 'answerHints.pl', 'weightedGrader.pl', 'PGcourse.pl');
+
+install_weighted_grader();
+</pre>
+				</div>
+				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Preamble</b></p>
+					<p>We load <code>weightedGrader.pl</code> and install it. We load <code>answerHints.pl</code> to give student feedback on particular
+ incorrect answers. We load <code>unionTables.pl</code> so that we can construct tables in HTML mode that will make
+ the answer blanks for the limits of integration appear at the top and bottom of the integral symbol.</p>
+
+<p>If the weighted grader is to be used, the command <code>install_weighted_grader();</code> must be called.</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
+						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;are(
+    x  =&gt; &#39;Real&#39;,
+    dx =&gt; &#39;Real&#39;,
+    y  =&gt; &#39;Real&#39;,
+    dy =&gt; &#39;Real&#39;
+);
+
+$f = Compute(&#39;x&#39;);
+$g = Compute(&quot;x^2&quot;);
+
+$upper = Real(&#39;1&#39;);
+$lower = Real(&#39;0&#39;);
+# answers below are intentionally wrong
+$int = Compute(&quot;( pi x - pi x^2 ) dx&quot;);
+$vol = Compute(&#39;pi&#39;);
+
+# Display the answer blanks properly in different modes
+Context()-&gt;texStrings;
+if ($displayMode eq &#39;TeX&#39;) {
+    $integral =
+        &#39;Volume = \(\displaystyle \int_{&#39;
+        . NAMED_ANS_RULE(&#39;lowerlimit&#39;, 4) . &#39;}^{&#39;
+        . NAMED_ANS_RULE(&#39;upperlimit&#39;, 4) . &#39;}&#39;
+        . NAMED_ANS_RULE(&#39;integrand&#39;,  30) . &#39; = &#39;
+        . NAMED_ANS_RULE(&#39;volume&#39;,     10) . &#39;\)&#39;;
+} else {
+    $integral = BeginTable(center =&gt; 0)
+        . Row(
+            [
+                &#39;Volume = \(\displaystyle\int\)&#39;,
+                NAMED_ANS_RULE(&#39;upperlimit&#39;, 4) . $BR . $BR . NAMED_ANS_RULE(&#39;lowerlimit&#39;, 4),
+                NAMED_ANS_RULE(&#39;integrand&#39;,  30) . $SPACE . &#39; = &#39; . $SPACE . NAMED_ANS_RULE(&#39;volume&#39;, 10),
+            ],
+            separation =&gt; 2
+        ) . EndTable();
+}
+Context()-&gt;normalStrings;
+
+@weights = (5, 5, 40, 50);
+" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->are(
+    x  => 'Real',
+    dx => 'Real',
+    y  => 'Real',
+    dy => 'Real'
+);
+
+$f = Compute('x');
+$g = Compute("x^2");
+
+$upper = Real('1');
+$lower = Real('0');
+# answers below are intentionally wrong
+$int = Compute("( pi x - pi x^2 ) dx");
+$vol = Compute('pi');
+
+# Display the answer blanks properly in different modes
+Context()->texStrings;
+if ($displayMode eq 'TeX') {
+    $integral =
+        'Volume = \(\displaystyle \int_{'
+        . NAMED_ANS_RULE('lowerlimit', 4) . '}^{'
+        . NAMED_ANS_RULE('upperlimit', 4) . '}'
+        . NAMED_ANS_RULE('integrand',  30) . ' = '
+        . NAMED_ANS_RULE('volume',     10) . '\)';
+} else {
+    $integral = BeginTable(center => 0)
+        . Row(
+            [
+                'Volume = \(\displaystyle\int\)',
+                NAMED_ANS_RULE('upperlimit', 4) . $BR . $BR . NAMED_ANS_RULE('lowerlimit', 4),
+                NAMED_ANS_RULE('integrand',  30) . $SPACE . ' = ' . $SPACE . NAMED_ANS_RULE('volume', 10),
+            ],
+            separation => 2
+        ) . EndTable();
+}
+Context()->normalStrings;
+
+@weights = (5, 5, 40, 50);
+</pre>
+				</div>
+				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Setup</b></p>
+					<p>To keep the code that needs to be modified compartmentalized, we define the functions involved,
+ the limits of integration, the integrand, the volume, and an array of weights (which sum to 100)
+ for each of these answers.</p>
+
+<p>The code for correctly displaying the answer blanks creates <code>$integral</code> which will be displayed
+ correctly both in TeX and HTML modes. Notice that it uses <code>NAMED_ANS_RULE(name,width)</code> for all of
+ the answer blanks instead of <code>ans_rule(width)</code>.</p>
+
+<p>We use the mode-specific <code>$integral</code> to display the integral and answer blanks correctly. In <code>TEXT()</code> we
+ specify for the students how the answer will be graded (weightedGrader.pl does not do this
+ automatically, as some other graders do.)</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
+						style="z-index: 10" type="button" data-code="BEGIN_PGML
+Set up and evaluate an integral for the volume of the solid of revolution obtained
+by rotating the region bounded by [` y = [$f] `] and [` y = [$g] `] about the [` x `]-axis.
+
+[$integral]***
+END_PGML
+
+TEXT(MODES(
+        TeX  =&gt; &quot;&quot;,
+        HTML =&gt; &quot;${PAR}${BITALIC}${BBOLD}Note:${EBOLD}
+You can earn
+$weights[0]${PERCENT} for the upper limit of integration,
+$weights[1]${PERCENT} for the lower limit of integration,
+$weights[2]${PERCENT} for the integrand, and
+$weights[3]${PERCENT} for the finding the volume.
+${EITALIC}&quot;
+    ));
+" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+Set up and evaluate an integral for the volume of the solid of revolution obtained
+by rotating the region bounded by [` y = [$f] `] and [` y = [$g] `] about the [` x `]-axis.
+
+[$integral]***
+END_PGML
+
+TEXT(MODES(
+        TeX  => "",
+        HTML => "${PAR}${BITALIC}${BBOLD}Note:${EBOLD}
+You can earn
+$weights[0]${PERCENT} for the upper limit of integration,
+$weights[1]${PERCENT} for the lower limit of integration,
+$weights[2]${PERCENT} for the integrand, and
+$weights[3]${PERCENT} for the finding the volume.
+${EITALIC}"
+    ));
+</pre>
+				</div>
+				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Statement</b></p>
+					
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
+						style="z-index: 10" type="button" data-code="NAMED_WEIGHTED_ANS(&#39;upperlimit&#39; =&gt; $upper-&gt;cmp(), $weights[0]);
+NAMED_WEIGHTED_ANS(&#39;lowerlimit&#39; =&gt; $lower-&gt;cmp(), $weights[1]);
+NAMED_WEIGHTED_ANS(
+    &#39;integrand&#39; =&gt; $int-&gt;cmp()-&gt;withPostFilter(AnswerHints(
+        Formula(&quot;pi x - pi x^2 dx&quot;) =&gt; &quot;Don&#39;t forget to multiply every
+                                  term in the integrand by dx&quot;,
+        Formula(&quot;pi x - pi x^2&quot;)      =&gt; &quot;Don&#39;t forget the differential dx&quot;,
+        Formula(&quot;(pi x^2 - pi x)*dx&quot;) =&gt; &quot;Is the parabola above the line?&quot;,
+        Formula(&quot;pi x^2 - pi x&quot;)      =&gt; &quot;Is the parabola above the line?&quot;,
+    )),
+    $weights[2]
+);
+NAMED_WEIGHTED_ANS(&#39;volume&#39; =&gt; $vol-&gt;cmp(), $weights[3]);
+" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">NAMED_WEIGHTED_ANS('upperlimit' => $upper->cmp(), $weights[0]);
+NAMED_WEIGHTED_ANS('lowerlimit' => $lower->cmp(), $weights[1]);
+NAMED_WEIGHTED_ANS(
+    'integrand' => $int->cmp()->withPostFilter(AnswerHints(
+        Formula("pi x - pi x^2 dx") => "Don't forget to multiply every
+                                  term in the integrand by dx",
+        Formula("pi x - pi x^2")      => "Don't forget the differential dx",
+        Formula("(pi x^2 - pi x)*dx") => "Is the parabola above the line?",
+        Formula("pi x^2 - pi x")      => "Is the parabola above the line?",
+    )),
+    $weights[2]
+);
+NAMED_WEIGHTED_ANS('volume' => $vol->cmp(), $weights[3]);
+</pre>
+				</div>
+				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Answer</b></p>
+					<p>The answer evaluator we use is <code>NAMED_WEIGHTED_ANS( name =&gt; $answer-&gt;cmp()-&gt;withPostFilter(), weight)</code>
+ instead of using <code>ANS( $answer-&gt;cmp()-&gt;withPostFilter() )</code>. Providing customized answer hints for
+ students is a very good idea, because the whole point of this homework exercise it to learn how
+ to set up this integral using proper notation. If we just wanted to ask for the volume, we could
+ have done it using only one answer blank.</p>
+
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
+						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+COMMENT(&#39;Weights each answer blank separately.&#39;);
+
+ENDDOCUMENT();" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+COMMENT('Weights each answer blank separately.');
+
+ENDDOCUMENT();</pre>
+				</div>
+				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Solution</b></p>
+					
+
+				</div>
+			</div>
+	</div>
+
+	<script type="module">
+		for (const pre of document.body.getElementsByTagName('pre')) {
+			CodeMirror.runMode(pre.textContent, 'PG', pre);
+		}
+
+		for (const btn of document.querySelectorAll('.clipboard-btn')) {
+			btn.addEventListener('click', () => navigator.clipboard.writeText(btn.dataset.code));
+		}
+	</script>
+</body>
+
+</html>

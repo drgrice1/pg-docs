@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::LanguageAndDirection</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::LanguageAndDirection</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::LanguageAndDirection - utilities to determine the language and text direction for a page based on language, or for a problem based on settings from the PG flags, the course configuration variable $perProblemLangAndDirSettingMode, and the course language.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code> use WeBWorK::Utils::LanguageAndDirection;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module provides functions to determine the language and text direction for a page based on language, or for a problem based on settings from the PG flags, the course configuration variable $perProblemLangAndDirSettingMode, and the course language.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>get_lang_and_dir()</dt>
+<dd>
+
+<p>Returns the LANG attribute and when needed the DIR attribute based on the language.</p>
+
+<p>It selects the language based on the given language code and otherwise defaults to lang=&quot;en-US&quot;.</p>
+
+<p>When the language chosen is a known right to left language, it will also set the DIR attribute to &quot;rtl&quot;. Currently, only Hebrew (&quot;heb&quot; or &quot;he&quot;) and Arabic (&quot;ar&quot;) trigger the RTL direction setting.</p>
+
+</dd>
+<dt>get_problem_lang_and_dir subroutine</dt>
+<dd>
+
+<pre><code> @output = get_problem_lang_and_dir($pg_flags, $requested_mode, $lang);
+or
+ $output = get_problem_lang_and_dir($pg_flags, $requested_mode, $lang);</code></pre>
+
+<p>Used to determine the language and maybe also the dir setting for the DIV tag attributes, if needed by the PROBLEM language.</p>
+
+<p>$pg_flags is a reference to the &quot;flags&quot; hash of a pg problem.</p>
+
+<p>$requested_mode is optional, and if provided should be a string containing the mode (one of &quot;force&quot;, &quot;auto&quot;, or &quot;&quot;), language code, and direction separated by colons. Alternately $requested_mode may be &quot;none&quot;. If it is &quot;none&quot; or undefined the return result is empty.</p>
+
+<p>$lang is also optional, and should the language code if provided.</p>
+
+<p>Return a hash of key-value pairs (eg. lang =&gt; &quot;eng&quot;, dir =&gt; &quot;ltr&quot;) in list context, and a string (eg. &#39; lang=&quot;eng&quot; dir=&quot;ltr&quot;&#39;) in scalar context. In some cases, the return result is empty.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Written by Nathan Wallach, tani (at) mathnet.technion.ac.il</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

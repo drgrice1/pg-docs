@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Distributions</title>
+</head>
+<body>
+<h1>Distributions</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>Statistics::Distributions - Perl module for calculating probabilities and critical values of common statistical distributions</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>  use Statistics::Distributions;
+
+  $uprob=uprob(-0.85);
+  print &quot;upper probability of the u distribution: Q(u) = 1-G(u) (u=1.43) = $uprob&quot;;
+
+  $tprob=tprob(3, 6.251);
+  print &quot;upper probability of the t distribution: Q = 1-G (3 degrees of freedom  , t = 6.251) = $tprob&quot;;
+
+  $chisprob=chisqrprob(3, 6.25);
+  print &quot;upper probability of the chi-square distribution: Q = 1-G (3 degrees of freedom, chi-squared = 6.25) = $chisprob&quot;;
+
+  $fprob=fprob(3,5, .625);
+  print &quot;upper probability of the F distribution: Q = 1-G (3 degrees of freedom  in numerator, 5 degrees of freedom in denominator, F $
+
+  $u=udistr(.05);
+  print &quot;u-crit (95th percentile = 0.05 level) = $u&quot;;
+
+  $t=tdistr(1, .005);
+  print &quot;t-crit (1 degree of freedom, 99.5th percentile = 0.005 level) =$t&quot;;
+
+  $chis=chisqrdistr(2, .05);
+  print &quot;Chi-squared-crit (2 degrees of freedom, 95th percentile = 0.05 level) = $chis&quot;;
+
+  $f=fdistr(1,3, .01);
+  print &quot;F-crit (1 degree of freedom in numerator, 3 degrees of freedom in denominator, 99th percentile = 0.01 level) = $f&quot;;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This Perl module calulates percentage points (6 significant digits) of the u (standard normal) distribution, the student&#39;s t distribution, the chi-square distribution and the F distribution.</p>
+
+<p>It can also calculate the upper probability (6 significant digits) of the u (standard normal), the chi-square, the t and the F distribution.</p>
+
+<p>These critical values are needed to perform statistical tests, like the u test, the t test, the chi-squared test, and the F test, and to calculate confidence intervals.</p>
+
+<p>If you are interested in more precise algorithms you could look at: StatLib: http://lib.stat.cmu.edu/apstat/ Applied Statistics Algorithms by Griffiths, P. and Hill, I.D., Ellis Horwood: Chichester (1985)</p>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Michael Kospach, mike.perl@gmx.at Nice formating, simplification and bug repair by Matthias Trautner Kromann, mtk@id.cbs.dk</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

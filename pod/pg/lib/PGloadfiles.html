@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>PGloadfiles</title>
+</head>
+<body>
+<h1>PGloadfiles</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#loadMacros">loadMacros</a>
+        <ul>
+          <li><a href="#Overloading-macro-files">Overloading macro files</a></li>
+          <li><a href="#Modifying-existing-macros">Modifying existing macros</a></li>
+        </ul>
+      </li>
+      <li><a href="#sourceAlias">sourceAlias</a></li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="loadMacros">loadMacros</h2>
+
+<pre><code>        loadMacros(@macroFiles)</code></pre>
+
+<p>loadMacros takes a list of file names and evaluates the contents of each file. This is used to load macros which define and augment the PG language. The macro files are searched for in the directories specified by the array referenced by $macrosPath, which by default is the current course&#39;s macros directory followed by WeBWorK&#39;s pg/macros directory. The latter is where the default behaviour of the PG language is defined. The default path is set in the global.conf file.</p>
+
+<p>Macro files named PG.pl or IO.pl will be loaded with no opcode restrictions, hence any code in those files will be able to execute privileged operations. This is true no matter which macro directory the file is in. For example, if $macrosPath contains the path to a problem library macros directory which contains a PG.pl file, this file will be loaded and allowed to engage in privileged behavior.</p>
+
+<h3 id="Overloading-macro-files">Overloading macro files</h3>
+
+<p>An individual course can modify the PG language, for that course only, by duplicating one of the macro files in the system-wide macros directory and placing this file in the macros directory for the course. The new file in the course&#39;s macros directory will now be used instead of the file in the system-wide macros directory.</p>
+
+<p>The new file in the course macros directory can by modified by adding macros or modifying existing macros.</p>
+
+<h3 id="Modifying-existing-macros">Modifying existing macros</h3>
+
+<p><i>Modifying macros is for users with some experience.</i></p>
+
+<p>Modifying existing macros might break other standard macros or problems which depend on the unmodified behavior of these macors so do this with great caution. In addition problems which use new macros defined in these files or which depend on the modified behavior of existing macros will not work in other courses unless the macros are also transferred to the new course. It helps to document the problems by indicating any special macros which the problems require.</p>
+
+<p>There is no facility for modifying or overloading a single macro. The entire file containing the macro must be overloaded.</p>
+
+<p>Modifications to files in the course macros directory affect only that course, they will not interfere with the normal behavior of WeBWorK in other courses.</p>
+
+<h2 id="sourceAlias">sourceAlias</h2>
+
+<pre><code>        sourceAlias($path_to_PG_file);</code></pre>
+
+<p>Returns a relative URL to the <i>source.pl</i> script, which may be installed in a course&#39;s <i>html</i> directory to allow formatted viewing of the problem source.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

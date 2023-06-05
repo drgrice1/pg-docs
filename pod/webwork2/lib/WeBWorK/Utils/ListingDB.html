@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::ListingDB</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::ListingDB</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#AUTHOR">AUTHOR</a></li>
+</ul>
+
+<dl>
+
+<dt>getProblemTags($path) and setProblemTags($path, $subj, $chap, $sect) Get and set tags using full path and Tagging module</dt>
+<dd>
+
+</dd>
+<dt>kwtidy($s) and keywordcleaner($s) Both take a string and perform utility functions related to keywords. keywordcleaner splits a string, and uses kwtidy to regularize punctuation and case for an individual entry.</dt>
+<dd>
+
+</dd>
+<dt>getDBextras($path) Get flags for whether a pg file uses Math Objects, and if it is static</dt>
+<dd>
+
+<p>$c is a WeBWorK::Controller object so we can get the right table names</p>
+
+<p>$path is the path to the file</p>
+
+<p>Output is an array reference: [MO, static]</p>
+
+</dd>
+<dt>getDBTextbooks($c) Returns textbook dependent entries.</dt>
+<dd>
+
+<p>$c is a WeBWorK::Controller object so we can extract whatever parameters we want</p>
+
+<p>$thing is a string of either &#39;textbook&#39;, &#39;textchapter&#39;, or &#39;textsection&#39; to specify what to return.</p>
+
+<p>If we are to return textbooks, then return an array of textbook names consistent with the DB subject, chapter, section selected.</p>
+
+</dd>
+<dt>getAllDBsubjects($c) Returns an array of DBsubject names</dt>
+<dd>
+
+<p>$c is the WeBWorK::Controller object</p>
+
+</dd>
+<dt>getAllDBchapters($c) Returns an array of DBchapter names</dt>
+<dd>
+
+<p>$c is the WeBWorK::Controller object</p>
+
+</dd>
+<dt>getAllDBsections($c) Returns an array of DBsection names</dt>
+<dd>
+
+<p>$c is the WeBWorK::Controller object</p>
+
+</dd>
+<dt>getDBListings($c) Returns an array of hash references with the keys: path, filename.</dt>
+<dd>
+
+<p>$c is a WeBWorK::Controller object that has all needed data inside of it</p>
+
+<p>Here, we search on all known fields out of r</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module provides access to the database of classify in the system. This includes the filenames, along with the table of search terms.</p>
+
+<a href="#_podtop_"><h1 id="AUTHOR">AUTHOR</h1></a>
+
+<p>Written by Bill Ziemer. Modified by John Jones.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

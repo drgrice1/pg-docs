@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>contexts/contextTF.pl</title>
+</head>
+<body>
+<h1>contexts/contextTF.pl</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextTF.pl - Imlements contexts for true/false problems.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Implements contexts for string-valued answers especially for matching problems (where you match against T and F).</p>
+
+<pre><code>        Context(&quot;TF&quot;);</code></pre>
+
+<p>You can add new strings to the context as needed (or remove old ones) via the Context()-&gt;strings-&gt;add() and Context()-strings-&gt;remove() methods.</p>
+
+<p>Use:</p>
+
+<pre><code>        ANS(string_cmp(&quot;T&quot;,&quot;F&quot;));</code></pre>
+
+<p>when there are two answers, the first being &quot;T&quot; and the second being &quot;F&quot;.</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::PG::RestrictedClosureClass</title>
+</head>
+<body>
+<h1>WeBWorK::PG::RestrictedClosureClass</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+  <li><a href="#LIMITATIONS">LIMITATIONS</a></li>
+  <li><a href="#SEE-ALSO">SEE ALSO</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::PG::RestrictedClosureClass - Protect instance data and only allow calling of specified methods.</p>
+
+<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+
+<pre><code>    package MyScaryClass;
+    
+    sub new { return bless { @_[1..$#_] }, ref $_[0] || $_[0] }
+    sub get_secret { return $_[0]-&gt;{secret_data} }
+    sub set_secret { $_[0]-&gt;{secret_data} = $_[1] }
+    sub use_secret { print &quot;Secret length is &quot;.length($_[0]-&gt;get_secret) }
+    sub call_for_help { print &quot;HELP!!&quot; }
+    
+    package main;
+    use WeBWorK::PG::RestrictedClosureClass;
+    
+    my $unlocked = new MyScaryClass(secret_data =&gt; &quot;pErL iS gReAt&quot;);
+    my $locked = new WeBWorK::PG::RestrictedClosureClass($obj, qw/use_secret call_for_help/);
+    
+    $unlocked-&gt;get_secret;                # OK
+    $unlocked-&gt;set_secret(&quot;fOoBaR&quot;);      # OK
+    $unlocked-&gt;use_secret;                # OK
+    $unlocked-&gt;call_for_help;             # OK
+    print $unlocked-&gt;{secret_data};       # OK
+    $unlocked-&gt;{secret_data} = &quot;WySiWyG&quot;; # OK
+    
+    $locked-&gt;get_secret;                  # NG (not in method list)
+    $locked-&gt;set_secret(&quot;fOoBaR&quot;);        # NG (not in method list)
+    $locked-&gt;use_secret;                  # OK
+    $locked-&gt;call_for_help;               # OK
+    print $locked-&gt;{secret_data};         # NG (not a hash reference)
+    $locked-&gt;{secret_data} = &quot;WySiWyG&quot;;   # NG (not a hash reference)</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>RestrictedClosureClass generates a wrapper object for a given object that prevents access to the objects instance data and only allows specified method calls. The wrapper object is a closure that calls methods of the underlying object, if permitted.</p>
+
+<p>This is great for exposing a limited API to an untrusted environment, i.e. the PG Safe compartment.</p>
+
+<a href="#_podtop_"><h1 id="CONSTRUCTOR">CONSTRUCTOR</h1></a>
+
+<dl>
+
+<dt>$wrapper_object = CLASS-&gt;new($object, @methods)</dt>
+<dd>
+
+<p>Generate a wrapper object for the given $object. Only calls to the methods listed in @methods will be permitted.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="LIMITATIONS">LIMITATIONS</h1></a>
+
+<p>You can&#39;t call SUPER methods, or methods with an explicit class given:</p>
+
+<pre><code>    $locked-&gt;SUPER::call_for_help         # NG, would be superclass of RestrictedClosureClass</code></pre>
+
+<a href="#_podtop_"><h1 id="SEE-ALSO">SEE ALSO</h1></a>
+
+<p><a href="https://metacpan.org/pod/perltoot#Closures-as-Objects">&quot;Closures-as-Objects&quot; in perltoot</a></p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

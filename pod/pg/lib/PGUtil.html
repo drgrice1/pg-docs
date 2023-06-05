@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>PGUtil</title>
+</head>
+<body>
+<h1>PGUtil</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li>
+    <ul>
+      <li><a href="#Utility-Macros">Utility Macros</a>
+        <ul>
+          <li>
+            <ul>
+              <li><a href="#not_null">not_null</a></li>
+              <li><a href="#pretty_print">pretty_print</a></li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+
+<h2 id="Utility-Macros">Utility Macros</h2>
+
+<h4 id="not_null">not_null</h4>
+
+<pre><code>  not_null(item)  returns 1 or 0
+     
+     empty arrays, empty hashes, strings containing only whitespace are all NULL and return 0
+     all undefined quantities are null and return 0</code></pre>
+
+<h4 id="pretty_print">pretty_print</h4>
+
+<pre><code>        Usage: warn pretty_print( $rh_hash_input, displayMode, level)
+                   TEXT(pretty_print($ans_hash, displayMode, level));
+                   TEXT(pretty_print(~~%envir, displayMode, level ));</code></pre>
+
+<p>This can be very useful for printing out HTML messages about objects while debugging</p>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

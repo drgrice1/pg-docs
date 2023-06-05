@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::SortRecords</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::SortRecords</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
+  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::SortRecords - utilities for sorting database records.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>    use WeBWorK::Utils::SortRecords qw/getSortsForClass/;
+
+    # Get a list of sorts
+    my $sorts = getSortsForClass(ref $users[0], $default_sort);
+
+    use WeBWorK::Utils::SortRecords qw/sortRecords/;
+
+    # Start with a list of records
+    my @users = $db-&gt;getUsers($db-&gt;listUsers);
+
+    # Sort the records using a preset.
+    @sortedUsers = sortRecords(&#39;lnfn&#39;, @users);
+
+    # Sort on a database field for the records.
+    @sortedUsers = sortRecords(&#39;section&#39;, @users);</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module provides record sorting functions, and a collection of preset sorts for the standard WeBWorK record classes. Sorts are specified by a list of field names. Sorts are performed lexicographically.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>getSortsForClass($class, $default_sort)</dt>
+<dd>
+
+<p>Given the name of a record class, returns the sort methods available for that class.</p>
+
+<p>The return value is a reference to a list of two element lists. The first element in each list is a a string description of the sort method and the second element is the sort name. The return value is suitable for passing as the second value argument to the Mojolicious select_field tag helper method.</p>
+
+<p>If the <code>$default_sort</code> is provided then that sort will be marked as the default selected sort. Otherwise the first sort will be marked as the default selected sort.</p>
+
+</dd>
+<dt>sortRecords($preset_sort, @records)</dt>
+<dd>
+
+<p>Given a preset format or a field from a database record class, and a list of records, returns a list of the same records in order according to the sort.</p>
+
+<p>The <code>$preset_sort</code> must be provided. It must either be one of the presets defined above, or the name of a field in the database record class.</p>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

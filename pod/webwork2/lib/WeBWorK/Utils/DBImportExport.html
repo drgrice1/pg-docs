@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>WeBWorK::Utils::DBImportExport</title>
+</head>
+<body>
+<h1>WeBWorK::Utils::DBImportExport</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#NAME">NAME</a></li>
+  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::DBImportExport - import and export the database.</p>
+
+<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+
+<dl>
+
+<dt>listTables()</dt>
+<dd>
+
+<p>List the names of the tables supported for export.</p>
+
+</dd>
+<dt>dbExport(%options)</dt>
+<dd>
+
+<p>Exports data from a WeBWorK database to a WWDBv2 XML document.</p>
+
+<p>%options can contain:</p>
+
+<dl>
+
+<dt>db</dt>
+<dd>
+
+<p>A WeBWorK::DB instance. Data will be exported from this database.</p>
+
+</dd>
+<dt>xml</dt>
+<dd>
+
+<p>A file handle, opened for writing. The XML output will we written to this file handle.</p>
+
+</dd>
+<dt>tables</dt>
+<dd>
+
+<p>A reference to a list specifying the set of tables from which to export data.</p>
+
+</dd>
+<dt>records</dt>
+<dd>
+
+<p>Unimplemented.</p>
+
+</dd>
+</dl>
+
+</dd>
+<dt>dbImport(%options)</dt>
+<dd>
+
+<p>Imports the data from a WWDBv2 XML document into a WeBWorK database.</p>
+
+<p>In this version, the entire XML parse tree is held in RAM during the import. This can be very memory intensive for large import files.</p>
+
+<p>%options can contain:</p>
+
+<dl>
+
+<dt>xml</dt>
+<dd>
+
+<p>A string containing WWDBv2 XML data or a file handle opened for reading from a WWDBv2 XML document.</p>
+
+</dd>
+<dt>db</dt>
+<dd>
+
+<p>A WeBWorK::DB instance. Imported data will be added to this database.</p>
+
+</dd>
+<dt>tables</dt>
+<dd>
+
+<p>A reference to a list specifying the set of tables from which to import data.</p>
+
+</dd>
+<dt>records</dt>
+<dd>
+
+<p>Unimplemented.</p>
+
+</dd>
+<dt>conflict</dt>
+<dd>
+
+<p>A string, containing either &quot;skip&quot; or &quot;replace&quot;, indicating what to do with duplicate records. If not set, duplicate records are skipped.</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+

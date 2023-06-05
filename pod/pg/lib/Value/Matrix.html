@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset='UTF-8'>
+<link rel="icon" href="/favicon.ico">
+<title>Value::Matrix</title>
+</head>
+<body>
+<h1>Value::Matrix</h1>
+<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
+<hr>
+<div id="_podtop_">
+
+
+<ul id="index">
+  <li><a href="#Value::Matrix-class">Value::Matrix class</a></li>
+</ul>
+
+<a href="#_podtop_"><h1 id="Value::Matrix-class">Value::Matrix class</h1></a>
+
+<p>References:</p>
+
+<p>MathObject Matrix methods: <a href="http://webwork.maa.org/wiki/Matrix_(MathObject_Class)">http://webwork.maa.org/wiki/Matrix_(MathObject_Class)</a> MathObject Contexts: <a href="http://webwork.maa.org/wiki/Common_Contexts">http://webwork.maa.org/wiki/Common_Contexts</a> CPAN RealMatrix docs: <a href="http://search.cpan.org/~leto/Math-MatrixReal-2.09/lib/Math/MatrixReal.pm">http://search.cpan.org/~leto/Math-MatrixReal-2.09/lib/Math/MatrixReal.pm</a></p>
+
+<p>Allowing Matrices in Fractions: <a href="http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2978">http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2978</a></p>
+
+<pre><code>     Context()-&gt;parens-&gt;set(&quot;[&quot; =&gt; {formMatrix =&gt; 1});</code></pre>
+
+<p>Files interacting with Matrices:</p>
+
+<p><a href="//pg/lib/MatrixReal1.html">&quot;MatrixReal1.pm&quot; in lib</a></p>
+
+<p><a href="//pg/macros/math/MatrixReduce.html">&quot;MatrixReduce.pl&quot; in macros</a></p>
+
+<p><a href="//pg/lib/Matrix.html">&quot;Matrix.pm&quot; in lib</a></p>
+
+<p><a href="//pg/macros/math/MatrixCheckers.html">&quot;MatrixCheckers.pl&quot; in macros</a> -- checking whether vectors form a basis</p>
+
+<p><a href="//pg/macros/math/MatrixReduce.html">&quot;MatrixReduce.pl&quot; in macros</a> -- tools for row reduction via elementary matrices</p>
+
+<p><a href="//pg/macros/math/MatrixUnits.html">&quot;MatrixUnits.pl&quot; in macros</a> -- Generates unimodular matrices with real entries</p>
+
+<p><a href="//pg/macros/math/PGmatrixmacros.html">&quot;PGmatrixmacros.pl&quot; in macros</a></p>
+
+<p><a href="//pg/macros/math/PGmorematrixmacros.html">&quot;PGmorematrixmacros.pl&quot; in macros</a></p>
+
+<p><a href="//pg/macros/math/PGnumericalmacros.html">&quot;PGnumericalmacros.pl&quot; in macros</a></p>
+
+<p><a href="//pg/macros/math/tableau.html">&quot;tableau.pl&quot; in macros</a></p>
+
+<p><a href="//pg/macros/ui/quickMatrixEntry.html">&quot;quickMatrixEntry.pl&quot; in macros</a></p>
+
+<p><a href="//pg/macros/math/LinearProgramming.html">&quot;LinearProgramming.pl&quot; in macros</a></p>
+
+<p>Contexts</p>
+
+<pre><code>        Matrix -- allows students to enter [[3,4],[3,6]] 
+               -- formMatrix =&gt;1 also allows this?
+        Complex-Matrix -- allows complex entries</code></pre>
+
+<p>Creation methods</p>
+
+<pre><code>                 $M1 = Matrix([1,2],[3,4]);
+                 $M2 = Matrix([5,6],[7,8]);
+          $v = Vector(9,10);
+          $w = ColumnVector(9,10); # differs in how it is printed
+  </code></pre>
+
+<p>Commands added in Value::matrix</p>
+
+<pre><code>        Conversion
+                $matrix-&gt;values produces [[3,4,5],[1,3,4]] recursive array references of numbers (not MathObjects)
+                $matrix-&gt;wwMatrix   produces CPAN MatrixReal1 matrix, used for computation subroutines
+
+        Information
+                $matrix-&gt;dimension:  ARRAY
+
+        Access values
+
+                row : MathObjectMatrix
+                column : MathObjectMatrix
+                element : Real or Complex value
+
+        Assign values
+
+                these need to be added:
+                </code></pre>
+
+<p>see <code>change_matrix_entry()</code> in MatrixReduce and <a href="http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2970">http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2970</a></p>
+
+<pre><code>        Advanced
+                $matrix-&gt;data:  ARRAY reference (internal data) of MathObjects (Real,Complex, Fractions)
+                                stored at each location.</code></pre>
+
+<p>Passthrough methods covering subroutines in Matrix.pm which overrides or augment CPAN&#39;s MatrixReal1.pm. Matrix is a specialized subclass of MatrixReal1.pm</p>
+
+<p>The actual calculations for these methods are done in <code>pg/lib/Matrix.pm</code></p>
+
+<pre><code>        trace 
+        proj 
+        proj_coeff 
+        L 
+        R 
+        PL 
+        PR</code></pre>
+
+<p>Passthrough methods covering subroutines in <code>pg/lib/MatrixReal1.pm</code> (this has been modified to handle complex numbers) The actual calculations are done in <code>MatrixReal1.pm</code> subroutines The commands below are Value::Matrix <b>methods</b> unless otherwise noted.</p>
+
+<pre><code>        condition
+        det 
+        inverse 
+        is_symmetric
+        decompose_LR 
+        dim 
+        norm_one 
+        norm_max 
+        kleene 
+        normalize 
+        solve_LR($v)    - LR decomposition
+        solve($M,$v)    - function version of solve_LR
+        order_LR        - order of LR decomposition matrix (number of non-zero equations)(also order() )
+        order($M)       - function version of order_LR
+        solve_GSM 
+        solve_SSM 
+        solve_RM 
+ </code></pre>
+
+</div>
+<hr>
+<div id="column-one">
+<h5>Site Navigation</h5>
+<div>
+<ul>
+<li><a href="/pod">WeBWorK POD Home</a></li>
+<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+</ul>
+</div>
+</div>
+</body>
+</html>
+
+
