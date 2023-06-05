@@ -32,9 +32,12 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends --no-install-suggests \
-            libtext-multimarkdown-perl \
+            cpanminus \
+            pandoc \
             libmojolicious-perl \
             libyaml-libyaml-perl
+      - name: Install other perl modules from CPAN
+        run: cpanm --sudo -fi --notest Pandoc
 
       # Runs a set of commands using the runners shell
       - name: parse sample problems
