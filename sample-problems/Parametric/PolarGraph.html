@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,16 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Polar Graph</h1>
-		<p>Parametric equations: graphing a polar curve</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,11 +52,10 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
-loadMacros(&#39;PGstandard.pl&#39;,&#39;PGML.pl&#39;,&#39;PGtikz.pl&#39;, &#39;unionTables.pl&#39;,&#39;PGcourse.pl&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-$refreshCachedImages = 1;
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -66,48 +64,50 @@ $refreshCachedImages = 1;
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl','PGML.pl','PGtikz.pl', 'unionTables.pl','PGcourse.pl');
 
-$refreshCachedImages = 1;
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We use <code>PGgraphmacros.pl</code> to generate the graph, and unionTables.pl to put the text
- and the graph side-by-side. We should set <code>$refreshCachedImages = 1</code>; so that changes
- in the graph will show up (not get stuck by old images in the browser cache).</p>
-
+					<p>We use <code>PGgraphmacros.pl</code> to generate the graph.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;are(t=&gt;&#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
 
 $graph = createTikZImage();
+$graph-&gt;tikzLibraries(&#39;arrows.meta&#39;);
 $graph-&gt;BEGIN_TIKZ
-\draw[-&gt;] (-3.25,0) -- (3.25,0) node[above right] {\(x\)};
-\draw[-&gt;] (0,-3.25) -- (0,3.25) node[above right] {\(y\)};
-\draw[DarkGreen, very thick] plot [samples=250,domain=0:{2*pi},variable=\t]
-  ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)});
-\fill[opacity=0.5, fill=DarkGreen] (0,0) -- plot [samples=250,domain={-pi/10}:{pi/10},variable=\t]
-  ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)}) -- cycle;
+\tikzset{&gt;={Stealth[scale=1.5]}}
+\filldraw[
+    draw=LightBlue,
+    fill=white,
+    rounded corners=10pt,
+    thick,use as bounding box
+] (-3.5,-3.5) rectangle (3.5,3.5);
+\draw[-&gt;] (-3.5,0) -- (3.5,0) node[above left,outer sep=3pt] {\(x\)};
+\draw[-&gt;] (0,-3.5) -- (0,3.5) node[below right,outer sep=3pt] {\(y\)};
+\draw[DarkGreen,very thick]
+    plot [samples=250,domain=0:{2*pi},variable=\t]
+    ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)});
+\fill[opacity=0.5,fill=DarkGreen]
+    (0,0) -- plot[samples=250,domain={-pi/10}:{pi/10},variable=\t]
+    ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)}) -- cycle;
 END_TIKZ
 
+BEGIN_PGML
+Find the area enclosed by one petal of the rose curve
+[`r = f(\theta) = \cos(5\theta)`].
 
-$column1 = PGML::Format(&lt;&lt;END_PGML);
-Find the area enclosed by one petal of the
-rose curve [` r = f(\theta) = \cos(5\theta) `].
+&gt;&gt;[@ image($graph, width =&gt; 300) @]*&lt;&lt;
 
-Area = [_____]{Real(&#39;pi/20&#39;)}
+&gt;&gt;Graph of [`r = \cos(5\theta)`]&lt;&lt;
+
+Area = [_____]{&#39;pi/20&#39;}
 END_PGML
-# note: the answer above is intentionally incorrect
-
-$column2 = $BCENTER.image($graph, width=&gt;300).$PAR.
-&quot;Graph of \( r = \cos(5\theta) \)&quot;.
-$ECENTER;
-
-TEXT(ColumnTable($column1, $column2, indent =&gt; 0, separation =&gt; 30, valign =&gt; &#39;TOP&#39;));
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -115,50 +115,49 @@ TEXT(ColumnTable($column1, $column2, indent =&gt; 0, separation =&gt; 30, valign
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->are(t=>'Real');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
 
 $graph = createTikZImage();
-$graph->BEGIN_TIKZ
-\draw[->] (-3.25,0) -- (3.25,0) node[above right] {\(x\)};
-\draw[->] (0,-3.25) -- (0,3.25) node[above right] {\(y\)};
-\draw[DarkGreen, very thick] plot [samples=250,domain=0:{2*pi},variable=\t]
-  ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)});
-\fill[opacity=0.5, fill=DarkGreen] (0,0) -- plot [samples=250,domain={-pi/10}:{pi/10},variable=\t]
-  ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)}) -- cycle;
+$graph-&gt;tikzLibraries(&#39;arrows.meta&#39;);
+$graph-&gt;BEGIN_TIKZ
+\tikzset{&gt;={Stealth[scale=1.5]}}
+\filldraw[
+    draw=LightBlue,
+    fill=white,
+    rounded corners=10pt,
+    thick,use as bounding box
+] (-3.5,-3.5) rectangle (3.5,3.5);
+\draw[-&gt;] (-3.5,0) -- (3.5,0) node[above left,outer sep=3pt] {\(x\)};
+\draw[-&gt;] (0,-3.5) -- (0,3.5) node[below right,outer sep=3pt] {\(y\)};
+\draw[DarkGreen,very thick]
+    plot [samples=250,domain=0:{2*pi},variable=\t]
+    ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)});
+\fill[opacity=0.5,fill=DarkGreen]
+    (0,0) -- plot[samples=250,domain={-pi/10}:{pi/10},variable=\t]
+    ({3*cos(5*\t r)*cos(\t r)},{3*cos(5*\t r)*sin(\t r)}) -- cycle;
 END_TIKZ
 
+BEGIN_PGML
+Find the area enclosed by one petal of the rose curve
+[`r = f(\theta) = \cos(5\theta)`].
 
-$column1 = PGML::Format(<<END_PGML);
-Find the area enclosed by one petal of the
-rose curve [` r = f(\theta) = \cos(5\theta) `].
+&gt;&gt;[@ image($graph, width =&gt; 300) @]*&lt;&lt;
 
-Area = [_____]{Real('pi/20')}
+&gt;&gt;Graph of [`r = \cos(5\theta)`]&lt;&lt;
+
+Area = [_____]{&#39;pi/20&#39;}
 END_PGML
-# note: the answer above is intentionally incorrect
-
-$column2 = $BCENTER.image($graph, width=>300).$PAR.
-"Graph of \( r = \cos(5\theta) \)".
-$ECENTER;
-
-TEXT(ColumnTable($column1, $column2, indent => 0, separation => 30, valign => 'TOP'));
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The package <code>PGtikz.pl</code> is used to produce the curve.  The plotting routine used in
- this way plots parametrically and we plot the polar curve parametrically.</p>
-
-<p>The problem is formatted by taking two columns and using the <code>ColumnTable</code> from the
- <code>unionTables.pl</code> macro to produce the side-by-side problem format.</p>
-
-<p>The last line produce the entire problem so no <code>BEGIN_PGML/END_PGML</code> is needed.</p>
-
+					<p>The package <code>PGtikz.pl</code> is used to produce the curve. The plotting routine used in this way plots parametrically and we plot the polar curve parametrically.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -178,13 +177,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

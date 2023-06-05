@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,16 +35,16 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Contour Plot</h1>
-		<p>Multivariable differential calculus: creating a contour plot</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,11 +53,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
-$refreshCachedImages       = 1;
+loadMacros(
+    &#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
+
 $showPartialCorrectAnswers = 0;
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -68,36 +71,47 @@ $showPartialCorrectAnswers = 0;
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserPopUp.pl', 'PGtikz.pl', 'PGcourse.pl');
-$refreshCachedImages       = 1;
+loadMacros(
+    &#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
+
 $showPartialCorrectAnswers = 0;
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We will use <code>PGtikz.pl</code> for constructing the graph. The setting <code>$refreshCachedImages = 1;</code>
- will force the browser to reload any images. The macro <code>parserPopUp.pl</code> is
- used to include the popup.</p>
-
+					<p>We will use <code>PGtikz.pl</code> for constructing the graph. The macro <code>parserPopUp.pl</code> is used to include the popup.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$graph = createTikZImage();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="$graph = createTikZImage();
+$graph-&gt;tikzLibraries(&#39;arrows.meta&#39;);
 $graph-&gt;BEGIN_TIKZ
-\clip[draw] (-6.5,-6.5) rectangle (6.5,6.5);
+\tikzset{&gt;={Stealth[scale=2]}}
+\Large % Make the fonts a little bigger.
+\filldraw[
+    draw=LightBlue,
+    fill=white,
+    rounded corners=10pt,
+    thick,use as bounding box
+] (-7,-7) rectangle (7,7);
 \foreach \n in {0,...,7} {
-  \pgfmathsetmacro\k{100-\n*10}
-  \filldraw[fill=blue!\k!white,fill opacity=0.5, draw=black] (0,0) circle [radius={sqrt(64-8*\n)}];
+    \pgfmathsetmacro\k{100-\n*10}
+    \filldraw[fill=blue!\k!white,fill opacity=0.5]
+        (0,0) circle [radius={sqrt(64-8*\n)}];
 }
-\draw[-&gt;] (-6,0) -- (6,0) node[above right] {\(x\)};
-\foreach \x in {-5,-4,...,-1,1,2,...,5} \draw(\x,0.1) -- (\x,-0.1) node [below] {\x};
-\draw[-&gt;] (0,-6) -- (0,6) node[above right] {\(y\)};
-\foreach \y in {-5,-4,...,-1,1,2,...,5} \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+\draw[-&gt;] (-7,0) -- (7,0) node[above left,outer sep=3pt] {\(x\)};
+\foreach \x in {-6,...,-1,1,2,...,6}
+    \draw(\x,5pt) -- (\x,-5pt) node [below] {\(\x\)};
+\draw[-&gt;] (0,-7) -- (0,7) node[below right,outer sep=3pt] {\(y\)};
+\foreach \y in {-6,...,-1,1,2,...,6}
+    \draw (5pt,\y) -- (-5pt,\y) node[left] {\(\y\)};
 END_TIKZ
 
-$pop = DropDownTF(&#39;false&#39;, placeholder =&gt; &#39;Select One&#39;);
+$popup = DropDownTF(&#39;false&#39;, placeholder =&gt; &#39;Select One&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -106,37 +120,46 @@ $pop = DropDownTF(&#39;false&#39;, placeholder =&gt; &#39;Select One&#39;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$graph = createTikZImage();
-$graph->BEGIN_TIKZ
-\clip[draw] (-6.5,-6.5) rectangle (6.5,6.5);
+$graph-&gt;tikzLibraries(&#39;arrows.meta&#39;);
+$graph-&gt;BEGIN_TIKZ
+\tikzset{&gt;={Stealth[scale=2]}}
+\Large % Make the fonts a little bigger.
+\filldraw[
+    draw=LightBlue,
+    fill=white,
+    rounded corners=10pt,
+    thick,use as bounding box
+] (-7,-7) rectangle (7,7);
 \foreach \n in {0,...,7} {
-  \pgfmathsetmacro\k{100-\n*10}
-  \filldraw[fill=blue!\k!white,fill opacity=0.5, draw=black] (0,0) circle [radius={sqrt(64-8*\n)}];
+    \pgfmathsetmacro\k{100-\n*10}
+    \filldraw[fill=blue!\k!white,fill opacity=0.5]
+        (0,0) circle [radius={sqrt(64-8*\n)}];
 }
-\draw[->] (-6,0) -- (6,0) node[above right] {\(x\)};
-\foreach \x in {-5,-4,...,-1,1,2,...,5} \draw(\x,0.1) -- (\x,-0.1) node [below] {\x};
-\draw[->] (0,-6) -- (0,6) node[above right] {\(y\)};
-\foreach \y in {-5,-4,...,-1,1,2,...,5} \draw (0.1,\y) -- (-0.1,\y) node[left] {\y};
+\draw[-&gt;] (-7,0) -- (7,0) node[above left,outer sep=3pt] {\(x\)};
+\foreach \x in {-6,...,-1,1,2,...,6}
+    \draw(\x,5pt) -- (\x,-5pt) node [below] {\(\x\)};
+\draw[-&gt;] (0,-7) -- (0,7) node[below right,outer sep=3pt] {\(y\)};
+\foreach \y in {-6,...,-1,1,2,...,6}
+    \draw (5pt,\y) -- (-5pt,\y) node[left] {\(\y\)};
 END_TIKZ
 
-$pop = DropDownTF('false', placeholder => 'Select One');
+$popup = DropDownTF(&#39;false&#39;, placeholder =&gt; &#39;Select One&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The contour plot is created in tikz by overlaying circles with differing
- shades of blue. See the POD and the tikz manual for more information on
- create plots.</p>
-
+					<p>The contour plot is created with TikZ by overlaying circles with differing shades of blue. See the POD and the <a href="https://tikz.dev/">TikZ manual</a> for more information.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-[__]{$pop} This could be a contour plot for [` f(x,y) = x^2 - y^2 `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Determine if the following statement is true or false.
 
-&gt;&gt; [@ image($graph,width=&gt;300,height=&gt;300,tex_size=&gt;450) @]* &lt;&lt;
+[_]{$popup} This could be a contour plot for [`f(x,y) = x^2 - y^2`].
 
+&gt;&gt; [@ image($graph, width =&gt; 300, height =&gt; 300, tex_size =&gt; 450) @]* &lt;&lt;
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -146,23 +169,23 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-[__]{$pop} This could be a contour plot for [` f(x,y) = x^2 - y^2 `].
+Determine if the following statement is true or false.
 
->> [@ image($graph,width=>300,height=>300,tex_size=>450) @]* <<
+[_]{$popup} This could be a contour plot for [`f(x,y) = x^2 - y^2`].
 
+&gt;&gt; [@ image($graph, width =&gt; 300, height =&gt; 300, tex_size =&gt; 450) @]* &lt;&lt;
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -182,13 +205,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

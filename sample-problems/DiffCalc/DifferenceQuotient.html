@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Difference Quotient</h1>
-		<p>Differential calculus: difference quotients</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserDifferenceQuotient.html">parserDifferenceQuotient.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserDifferenceQuotient.html">parserDifferenceQuotient.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,10 +52,13 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserDifferenceQuotient.pl&#39;, &#39;PGcourse.pl&#39;);
+loadMacros(
+    &#39;PGstandard.pl&#39;,               &#39;PGML.pl&#39;,
+    &#39;parserDifferenceQuotient.pl&#39;, &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -65,21 +68,23 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserDifferenceQuot
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserDifferenceQuotient.pl', 'PGcourse.pl');
+loadMacros(
+    &#39;PGstandard.pl&#39;,               &#39;PGML.pl&#39;,
+    &#39;parserDifferenceQuotient.pl&#39;, &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We need to include the macros file <code>parserDifferenceQuotient.pl</code>.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$limit = DifferenceQuotient(&quot;2*x+h&quot;, &#39;h&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="$limit = DifferenceQuotient(&#39;2 * x + h&#39;, &#39;h&#39;);
 
-$fp = Compute(&quot;2 x&quot;);
+$fp = Compute(&#39;2 x&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -87,27 +92,27 @@ $fp = Compute(&quot;2 x&quot;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$limit = DifferenceQuotient("2*x+h", 'h');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$limit = DifferenceQuotient(&#39;2 * x + h&#39;, &#39;h&#39;);
 
-$fp = Compute("2 x");
+$fp = Compute(&#39;2 x&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The routine DifferenceQuotient("function","variable") takes the simplified function
- and a variable name. If the variable is omitted, dx is used by default.</p>
-
+					<p>The routine DifferenceQuotient(‘function’, ‘variable’) takes the simplified function and a variable name. If the variable is omitted, dx is used by default.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 Simplify and then evaluate the limit.
 
-[`` \frac{d}{dx}\big(x ^ 2 \big) = \lim_ { h \to 0 } \frac { (x +h) ^ 2 -x ^ 2 }{h}
-        = \lim_{h \to 0}\big(``]
-[_______________]{$limit} [`` \big) = ``] [_______________]{$fp}
+[``
+    \frac{d}{dx} \big( x^2 \big)
+    = \lim_{h \to 0} \frac{(x+h)^2-x^2}{h}
+    = \lim_{h \to 0} \Big(
+``] [_]{$limit}{15} [``\Big) =``] [_]{$fp}{15}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -119,22 +124,23 @@ END_PGML
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Simplify and then evaluate the limit.
 
-[`` \frac{d}{dx}\big(x ^ 2 \big) = \lim_ { h \to 0 } \frac { (x +h) ^ 2 -x ^ 2 }{h}
-        = \lim_{h \to 0}\big(``]
-[_______________]{$limit} [`` \big) = ``] [_______________]{$fp}
+[``
+    \frac{d}{dx} \big( x^2 \big)
+    = \lim_{h \to 0} \frac{(x+h)^2-x^2}{h}
+    = \lim_{h \to 0} \Big(
+``] [_]{$limit}{15} [``\Big) =``] [_]{$fp}{15}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -154,13 +160,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

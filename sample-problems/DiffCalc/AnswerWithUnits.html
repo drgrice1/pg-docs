@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,16 +35,16 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Answer with Units</h1>
-		<p>Differential calculus: answer is a number or formula with units</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserNumberWithUnits.html">parserNumberWithUnits.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserFormulaWithUnits.html">parserFormulaWithUnits.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserNumberWithUnits.html">parserNumberWithUnits.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserFormulaWithUnits.html">parserFormulaWithUnits.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,10 +53,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserNumberWithUnits.pl&#39;, &#39;parserFormulaWithUnits.pl&#39;, &#39;PGcourse.pl&#39;);
+loadMacros(
+    &#39;PGstandard.pl&#39;,            &#39;PGML.pl&#39;,
+    &#39;parserNumberWithUnits.pl&#39;, &#39;parserFormulaWithUnits.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -66,28 +70,31 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserNumberWithUnit
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserNumberWithUnits.pl', 'parserFormulaWithUnits.pl', 'PGcourse.pl');
+loadMacros(
+    &#39;PGstandard.pl&#39;,            &#39;PGML.pl&#39;,
+    &#39;parserNumberWithUnits.pl&#39;, &#39;parserFormulaWithUnits.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We load <code>parserNumberWithUnits.pl</code> and <code>parserFormulaWithUnits.pl</code>.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
 
-$h  = Formula(&quot;-16 t^2 + 16&quot;);
+$h  = Formula(&#39;-16 t^2 + 16&#39;);
 $v  = $h-&gt;D(&#39;t&#39;);
 $v1 = $v-&gt;eval(t =&gt; 1);
 $a  = $v-&gt;D(&#39;t&#39;);
 
-$ans1 = FormulaWithUnits(&quot;$v&quot;, &quot;ft/s&quot;);
-$ans2 = NumberWithUnits(&quot;$v1&quot;, &quot;ft/s&quot;);
-$ans3 = FormulaWithUnits(&quot;$a&quot;, &quot;ft/s^2&quot;);
+$ans1 = FormulaWithUnits(&quot;$v&quot;, &#39;ft/s&#39;);
+$ans2 = NumberWithUnits(&quot;$v1&quot;, &#39;ft/s&#39;);
+$ans3 = FormulaWithUnits(&quot;$a&quot;, &#39;ft/s^2&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -95,45 +102,42 @@ $ans3 = FormulaWithUnits(&quot;$a&quot;, &quot;ft/s^2&quot;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->are(t => 'Real');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
 
-$h  = Formula("-16 t^2 + 16");
-$v  = $h->D('t');
-$v1 = $v->eval(t => 1);
-$a  = $v->D('t');
+$h  = Formula(&#39;-16 t^2 + 16&#39;);
+$v  = $h-&gt;D(&#39;t&#39;);
+$v1 = $v-&gt;eval(t =&gt; 1);
+$a  = $v-&gt;D(&#39;t&#39;);
 
-$ans1 = FormulaWithUnits("$v", "ft/s");
-$ans2 = NumberWithUnits("$v1", "ft/s");
-$ans3 = FormulaWithUnits("$a", "ft/s^2");
+$ans1 = FormulaWithUnits(&quot;$v&quot;, &#39;ft/s&#39;);
+$ans2 = NumberWithUnits(&quot;$v1&quot;, &#39;ft/s&#39;);
+$ans3 = FormulaWithUnits(&quot;$a&quot;, &#39;ft/s^2&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We use the differentiation operator <code>-&gt;D('t')</code> and the evaluation method <code>-&gt;eval()</code> to
- construct the derivative and evaluate it as a function. If we were writing several
- questions like this with different height functions, using the differentiation and
- evaluation methods would really speed up the writing.</p>
-
+					<p>We use the differentiation operator <code>-&gt;D('t')</code> and the evaluation method <code>-&gt;eval()</code> to construct the derivative and evaluate it as a function. If we were writing several questions like this with different height functions, using the differentiation and evaluation methods would really speed up the writing.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 Suppose the height of a falling object, in feet above the ground, is given
-by [` h(t) = [$h] `] for [` t \geq 0 `], where time is measured in seconds.
+by [`h(t) = [$h]`] for [`t \geq 0`], where time is measured in seconds.
 
 a. What is the velocity of the object?  Include units in your answer.
 
-    [______________]{$ans1}
+    [_]{$ans1}{15}
 
-b. What is the velocity of the object when it hits the ground?  Include units in your answer.
+b. What is the velocity of the object when it hits the ground?  Include units in
+your answer.
 
-    [______________]{$ans2}
+    [_]{$ans2}{15}
 
 c. What is the acceleration of the object?  Include units in your answer.
 
-    [______________]{$ans3}
+    [_]{$ans3}{15}
 
 Note: use units in all answers. [@ helpLink(&#39;units&#39;) @]*
 END_PGML
@@ -146,35 +150,34 @@ END_PGML
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Suppose the height of a falling object, in feet above the ground, is given
-by [` h(t) = [$h] `] for [` t \geq 0 `], where time is measured in seconds.
+by [`h(t) = [$h]`] for [`t \geq 0`], where time is measured in seconds.
 
 a. What is the velocity of the object?  Include units in your answer.
 
-    [______________]{$ans1}
+    [_]{$ans1}{15}
 
-b. What is the velocity of the object when it hits the ground?  Include units in your answer.
+b. What is the velocity of the object when it hits the ground?  Include units in
+your answer.
 
-    [______________]{$ans2}
+    [_]{$ans2}{15}
 
 c. What is the acceleration of the object?  Include units in your answer.
 
-    [______________]{$ans3}
+    [_]{$ans3}{15}
 
-Note: use units in all answers. [@ helpLink('units') @]*
+Note: use units in all answers. [@ helpLink(&#39;units&#39;) @]*
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>Don't forget to use <code>helpLink('units')</code> so your students will have access to the
- complete list of units that WeBWorK understands.</p>
-
+					<p>Don’t forget to use <code>helpLink('units')</code> so your students will have access to the complete list of units that WeBWorK understands.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -194,13 +197,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

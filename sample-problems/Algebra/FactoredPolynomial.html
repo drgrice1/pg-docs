@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,16 +35,16 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Factored Polynomial</h1>
-		<p>Algebra: factored polynomial</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextPolynomialFactors.html">contextPolynomialFactors.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextLimitedPowers.html">contextLimitedPowers.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextPolynomialFactors.html">contextPolynomialFactors.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextLimitedPowers.html">contextLimitedPowers.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,10 +53,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextPolynomialFactors.pl&#39;, &#39;contextLimitedPowers.pl&#39;, &#39;PGcourse.pl&#39;);
+loadMacros(
+    &#39;PGstandard.pl&#39;,               &#39;PGML.pl&#39;,
+    &#39;contextPolynomialFactors.pl&#39;, &#39;contextLimitedPowers.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -66,30 +70,34 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextPolynomialFac
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'contextPolynomialFactors.pl', 'contextLimitedPowers.pl', 'PGcourse.pl');
+loadMacros(
+    &#39;PGstandard.pl&#39;,               &#39;PGML.pl&#39;,
+    &#39;contextPolynomialFactors.pl&#39;, &#39;contextLimitedPowers.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We require additional contexts provided by <code>contextPolynomialFactors.pl</code> and <code>contextLimitedPowers.pl</code></p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="# Expanded form
-$poly = Compute(&quot;8x^2+28x+12&quot;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="# Expanded form
+Context(&#39;Numeric&#39;);
+$poly = Compute(&#39;8x^2 + 28x + 12&#39;);
 
 # Factored form
-Context(&quot;PolynomialFactors-Strict&quot;);
+Context(&#39;PolynomialFactors-Strict&#39;);
 Context()-&gt;flags-&gt;set(singleFactors =&gt; 0);
 LimitedPowers::OnlyIntegers(
     minPower =&gt; 0,
     maxPower =&gt; 1,
-    message  =&gt; &quot;either 0 or 1&quot;,
+    message  =&gt; &#39;either 0 or 1&#39;,
 );
-$factored = Compute(&quot;4(2x+1)(x+3)&quot;);
+$factored = Compute(&#39;4(2x+1)(x+3)&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -98,41 +106,32 @@ $factored = Compute(&quot;4(2x+1)(x+3)&quot;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll"># Expanded form
-$poly = Compute("8x^2+28x+12");
+Context(&#39;Numeric&#39;);
+$poly = Compute(&#39;8x^2 + 28x + 12&#39;);
 
 # Factored form
-Context("PolynomialFactors-Strict");
-Context()->flags->set(singleFactors => 0);
+Context(&#39;PolynomialFactors-Strict&#39;);
+Context()-&gt;flags-&gt;set(singleFactors =&gt; 0);
 LimitedPowers::OnlyIntegers(
-    minPower => 0,
-    maxPower => 1,
-    message  => "either 0 or 1",
+    minPower =&gt; 0,
+    maxPower =&gt; 1,
+    message  =&gt; &#39;either 0 or 1&#39;,
 );
-$factored = Compute("4(2x+1)(x+3)");
+$factored = Compute(&#39;4(2x+1)(x+3)&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>For the factored form we need to change to the <code>PolynomialFactors-Strict</code> context
- and restrict the allowed powers to either 0 or 1 using the <code>LimitedPowers::OnlyIntegers</code>
- block of code. Note: restricting all exponents to 0 or 1 means that repeated factors
- will have to be entered in the form <code>k(ax+b)(ax+b)</code> instead of <code>k(ax+b)^2</code>. Also,
- restricting all exponents to 0 or 1 means that the polynomial must factor as a
- product of linear factors (no irreducible quadratic factors can appear). Of course,
- we could allow exponents to be 0, 1, or 2, but then students would be allowed to
- enter reducible quadratic factors. There are no restrictions on the coefficients, i.e.,
- the quadratic could have any nonzero leading coefficient. We set <code>singleFactors=&gt;0</code>
- so that repeated, non-simplified factors do not generate errors.</p>
-
+					<p>For the factored form we need to change to the <code>PolynomialFactors-Strict</code> context and restrict the allowed powers to either 0 or 1 using the <code>LimitedPowers::OnlyIntegers</code> block of code. Note: restricting all exponents to 0 or 1 means that repeated factors will have to be entered in the form <code>k(ax+b)(ax+b)</code> instead of <code>k(ax+b)^2</code>. Also, restricting all exponents to 0 or 1 means that the polynomial must factor as a product of linear factors (no irreducible quadratic factors can appear). Of course, we could allow exponents to be 0, 1, or 2, but then students would be allowed to enter reducible quadratic factors. There are no restrictions on the coefficients, i.e., the quadratic could have any nonzero leading coefficient. We set <code>singleFactors =&gt; 0</code> so that repeated, non-simplified factors do not generate errors.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Write the quadratic expression [` [$poly] `] in factored form [` k(ax+b)(cx+d) `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Write the quadratic expression [`[$poly]`] in factored form [`k(ax+b)(cx+d)`].
 
-[____________________]{$factored}
+[_]{$factored}{20}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -142,22 +141,21 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Write the quadratic expression [` [$poly] `] in factored form [` k(ax+b)(cx+d) `].
+Write the quadratic expression [`[$poly]`] in factored form [`k(ax+b)(cx+d)`].
 
-[____________________]{$factored}
+[_]{$factored}{20}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					<p>We should explicitly tell students to enter answers in the form <code>k(ax+b)(cx+d)</code>.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -177,13 +175,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

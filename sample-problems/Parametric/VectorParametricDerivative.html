@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Parametric Vector Function with Derivative</h1>
-		<p>Parametric equations: parametric curve in space</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserVectorUtils.html">parserVectorUtils.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserVectorUtils.html">parserVectorUtils.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserVectorUtils.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,30 +65,31 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserVectorUtils.pl
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserVectorUtils.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserVectorUtils.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>Although not necessary for the code below, we load <code>parserVectorUtils.pl</code> because you may
- want to use some of its methods when you use this template file.</p>
-
+					<p>Although not necessary for the code below, we load <code>parserVectorUtils.pl</code> because you may want to use some of its methods when you use this template file.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Vector2D&#39;);
-Context()-&gt;variables-&gt;are(t=&gt;&#39;Real&#39;);
-Context()-&gt;variables-&gt;set(t=&gt;{limits=&gt;[0,5]});
-Context()-&gt;flags-&gt;set( ijk=&gt;0, ijkAnyDimension =&gt; 1 );
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Vector2D&#39;);
+Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
+Context()-&gt;variables-&gt;set(t =&gt; { limits =&gt; [ 0, 5 ] });
+Context()-&gt;flags-&gt;set(ijk =&gt; 0, ijkAnyDimension =&gt; 1);
 
-$ans = Vector(&quot;&lt;2t,(2t)^2&gt;&quot;)-&gt;cmp(checker =&gt; sub {
-    my ($correct, $student, $ansHash) = @_;
-  my $xstu = $student . Vector(1,0);
-  my $ystu = $student . Vector(0,1);
-  return ( ($xstu-&gt;D(&#39;t&#39;)==Formula(&#39;2&#39;)) &amp;&amp; ($ystu-&gt;D(&#39;t&#39;)==Formula(&#39;8t&#39;)) ) ? 1 : 0;
-});
+$ans = Vector(&quot;&lt;2t,(2t)^2&gt;&quot;)-&gt;cmp(
+    checker =&gt; sub {
+        my ($correct, $student, $ansHash) = @_;
+        my $xstu = $student . Vector(1, 0);
+        my $ystu = $student . Vector(0, 1);
+        return (($xstu-&gt;D(&#39;t&#39;) == Formula(&#39;2&#39;))
+                &amp;&amp; ($ystu-&gt;D(&#39;t&#39;) == Formula(&#39;8t&#39;))) ? 1 : 0;
+    }
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -96,42 +97,38 @@ $ans = Vector(&quot;&lt;2t,(2t)^2&gt;&quot;)-&gt;cmp(checker =&gt; sub {
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Vector2D');
-Context()->variables->are(t=>'Real');
-Context()->variables->set(t=>{limits=>[0,5]});
-Context()->flags->set( ijk=>0, ijkAnyDimension => 1 );
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Vector2D&#39;);
+Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
+Context()-&gt;variables-&gt;set(t =&gt; { limits =&gt; [ 0, 5 ] });
+Context()-&gt;flags-&gt;set(ijk =&gt; 0, ijkAnyDimension =&gt; 1);
 
-$ans = Vector("<2t,(2t)^2>")->cmp(checker => sub {
-    my ($correct, $student, $ansHash) = @_;
-  my $xstu = $student . Vector(1,0);
-  my $ystu = $student . Vector(0,1);
-  return ( ($xstu->D('t')==Formula('2')) && ($ystu->D('t')==Formula('8t')) ) ? 1 : 0;
-});
+$ans = Vector(&quot;&lt;2t,(2t)^2&gt;&quot;)-&gt;cmp(
+    checker =&gt; sub {
+        my ($correct, $student, $ansHash) = @_;
+        my $xstu = $student . Vector(1, 0);
+        my $ystu = $student . Vector(0, 1);
+        return (($xstu-&gt;D(&#39;t&#39;) == Formula(&#39;2&#39;))
+                &amp;&amp; ($ystu-&gt;D(&#39;t&#39;) == Formula(&#39;8t&#39;))) ? 1 : 0;
+    }
+);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We choose not to display the answer using ijk notation. Also, use <code>ijkAnyDimension =&gt; 1</code> to
- require a dimension match between i,j,k
- vectors and either the student or the correct answer when doing vector operations.</p>
-
-<p>The custom answer checker is used to check if the derivative matching the questioned asked.
- Use dot products of the student answer with the vectors <code>Vector(1,0)</code> and <code>Vector(0,1)</code> to
- get the components <code>$xstu</code> and <code>$ystu</code> of the student answer. Then, we can differentiate
- the components just like any <code>MathObject</code> formula.</p>
-
+					<p>We choose not to display the answer using ijk notation. Also, use <code>ijkAnyDimension =&gt; 1</code> to require a dimension match between i,j,k vectors and either the student or the correct answer when doing vector operations.</p>
+<p>The custom answer checker is used to check if the derivative matching the questioned asked. Use dot products of the student answer with the vectors <code>Vector(1,0)</code> and <code>Vector(0,1)</code> to get the components <code>$xstu</code> and <code>$ystu</code> of the student answer. Then, we can differentiate the components just like any <code>MathObject</code> formula.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Find a vector parametric function [` \vec{r}(t) `]
-for a bug that moves along the parabola [` y = x^2 `]
-with velocity [` \vec{v}(t) = \langle 2, 8t \rangle `]
-for all [` t `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Find a vector parametric function [`\vec{r}(t)`]
+for a bug that moves along the parabola [`y = x^2`]
+with velocity [`\vec{v}(t) = \langle 2, 8t \rangle`]
+for all [`t`].
 
-[` \vec{r}(t) = `] [______________]{$ans}
+[`\vec{r}(t) =`] [_]{$ans}{15}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -141,25 +138,24 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Find a vector parametric function [` \vec{r}(t) `]
-for a bug that moves along the parabola [` y = x^2 `]
-with velocity [` \vec{v}(t) = \langle 2, 8t \rangle `]
-for all [` t `].
+Find a vector parametric function [`\vec{r}(t)`]
+for a bug that moves along the parabola [`y = x^2`]
+with velocity [`\vec{v}(t) = \langle 2, 8t \rangle`]
+for all [`t`].
 
-[` \vec{r}(t) = `] [______________]{$ans}
+[`\vec{r}(t) =`] [_]{$ans}{15}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -179,13 +175,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

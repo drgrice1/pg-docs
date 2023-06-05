@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,16 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Heaviside or Step Function</h1>
-		<p>Differential Equations: adding the Heaviside function to the context.</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserFunction.html">parserFunction.pl</a></li>
+					<li class="text-danger">AnswerFormatHelp.pl</li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserFunction.html">parserFunction.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,10 +53,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserFunction.pl&#39;, &#39;PGcourse.pl&#39;);
+loadMacros(
+    &#39;PGstandard.pl&#39;,       &#39;PGML.pl&#39;,
+    &#39;AnswerFormatHelp.pl&#39;, &#39;parserFunction.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -65,20 +70,22 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserFunction.pl&#3
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserFunction.pl', 'PGcourse.pl');
+loadMacros(
+    &#39;PGstandard.pl&#39;,       &#39;PGML.pl&#39;,
+    &#39;AnswerFormatHelp.pl&#39;, &#39;parserFunction.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We load <code>parserFunction.pl</code> to make adding a named function to the context easier.
- Please see the POD documentation <code>parserFunction.pl</code>.</p>
-
+					<p>We load <code>parserFunction.pl</code> to make adding a named function to the context easier. Please see the POD documentation <code>parserFunction.pl</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
 Context()-&gt;functions-&gt;add(
     step =&gt; {
         class =&gt; &#39;Parser::Legacy::Numeric&#39;,
@@ -86,16 +93,20 @@ Context()-&gt;functions-&gt;add(
     },
 );
 
-parserFunction(&quot;u(t)&quot; =&gt; &quot;step(t)&quot;);
+parserFunction(&#39;u(t)&#39; =&gt; &#39;step(t)&#39;);
 
 $a = random(3, 6);
+
 $f = Formula(&quot;5 u(t-$a)&quot;);
 
-$ans1 = List($f-&gt;eval(t =&gt; $a - 1), $f-&gt;eval(t =&gt; $a), $f-&gt;eval(t =&gt; $a + 1));
+$answer1 =
+    List($f-&gt;eval(t =&gt; $a - 1), $f-&gt;eval(t =&gt; $a), $f-&gt;eval(t =&gt; $a + 1));
 
-$ans2 = $f-&gt;with(
-    limits     =&gt; [ $a - 5,     $a + 5 ],
-    test_at    =&gt; [ [ $a - 1 ], [ $a - 0.0000001 ], [$a], [ $a + 0.0000001 ], [ $a + 1 ] ],
+$answer2 = $f-&gt;with(
+    limits  =&gt; [ $a - 5, $a + 5 ],
+    test_at =&gt; [
+        [ $a - 1 ], [ $a - 0.0000001 ], [$a], [ $a + 0.0000001 ], [ $a + 1 ]
+    ],
     num_points =&gt; 10,
 );
 " aria-label="copy to clipboard">
@@ -105,89 +116,65 @@ $ans2 = $f-&gt;with(
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->are(t => 'Real');
-Context()->functions->add(
-    step => {
-        class => 'Parser::Legacy::Numeric',
-        perl  => 'Parser::Legacy::Numeric::do_step'
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(t =&gt; &#39;Real&#39;);
+Context()-&gt;functions-&gt;add(
+    step =&gt; {
+        class =&gt; &#39;Parser::Legacy::Numeric&#39;,
+        perl  =&gt; &#39;Parser::Legacy::Numeric::do_step&#39;
     },
 );
 
-parserFunction("u(t)" => "step(t)");
+parserFunction(&#39;u(t)&#39; =&gt; &#39;step(t)&#39;);
 
 $a = random(3, 6);
-$f = Formula("5 u(t-$a)");
 
-$ans1 = List($f->eval(t => $a - 1), $f->eval(t => $a), $f->eval(t => $a + 1));
+$f = Formula(&quot;5 u(t-$a)&quot;);
 
-$ans2 = $f->with(
-    limits     => [ $a - 5,     $a + 5 ],
-    test_at    => [ [ $a - 1 ], [ $a - 0.0000001 ], [$a], [ $a + 0.0000001 ], [ $a + 1 ] ],
-    num_points => 10,
+$answer1 =
+    List($f-&gt;eval(t =&gt; $a - 1), $f-&gt;eval(t =&gt; $a), $f-&gt;eval(t =&gt; $a + 1));
+
+$answer2 = $f-&gt;with(
+    limits  =&gt; [ $a - 5, $a + 5 ],
+    test_at =&gt; [
+        [ $a - 1 ], [ $a - 0.0000001 ], [$a], [ $a + 0.0000001 ], [ $a + 1 ]
+    ],
+    num_points =&gt; 10,
 );
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We add the step function to the context with the name step. The function
- <code>step(t)</code> is the Heaviside function and takes the value 1 when $t > 0$, and the value
- 0 when $t \leq 0$. We will use the function step when evaluating the Heaviside function
- to obtain an answer that is a number.</p>
-
-<p>For more details on adding the Heaviside function to the context, see the forum
- discussion on the Heaviside step function</p>
-
-<p>For the second question, since answers are checked numerically by comparing the student
- answer to the correct answer at several randomly points in the domain (the default is 5 points)
- in an interval (the default is <code>[-1,1]</code>), the function <code>step(t) = u(t)</code> is not very robust when
- checking answers using these defaults. For example, if a student types in the answer <code>u(t-0.1)</code> and
- the correct answer is u(t), there is a good chance that the student's answer will be marked correct,
- since the probability that a test point was chosen in the interval (0,0.1) is much less than 100%.
- Also, if the correct answer were u(t-5), then a student could enter the answer 0 and be marked correct
- because the correct answer is identically zero on the interval <code>[-1,1]</code>.</p>
-
-<p>To make the answer checking robust, in $answer2 we specify a larger domain centered at $a using limits,
- we require four of the test points always be used, and that there should be 10 test points total (the
- four we specified and six others generated at random). Notice that we used the construction <code>$f-&gt;with(...)</code>
- to do this (using <code>$f-&gt;{test_at} = [[1],[2]]</code> would generate an error because the functions we added to the
- context aren't "blessed" with enough permissions to modify $f in that way).</p>
-
-<p>In part (b), since the students never actually see the values of the function u(t),
- we could have defined the function as</p>
-
-<p><code>parserFunction("u(t)" =&gt;
-  "1.5 * sin(e*t) + 5*pi/3 + arctan(t)"
- );</code>
- If we had defined <code>u(t)</code> this way, we would not have had to add the function <code>step(t)</code> to the context
- and we could have used the defaults for the answer checker. Notice that the function <code>u(t)</code> is never
- zero, is not constant, is differentiable, and takes moderately sized values, which makes its answer
- checking very robust using the defaults for the answer checker. Further, because of the arctangent,
- it is not periodic and so <code>u(t)-u(t-a)</code> should never be identically zero. Also, the formula for <code>u(t)</code> is
- not something students are likely to input as an answer out of nowhere. The function <code>u(t)</code> is great as a
- named function that stands in for the Heaviside function when the answer is a function. However, if the
- answer is a number obtained by evaluating the Heaviside function, then step(t) should be used or the function
- <code>u(t)</code> should be properly defined as the Heaviside function for obvious reasons.</p>
-
+					<p>We add the step function to the context with the name <code>step</code>. The function <code>step(t)</code> is the Heaviside function and takes the value 1 when <span class="math inline"><em>t</em> &gt; 0</span>, and the value 0 when <span class="math inline"><em>t</em> ≤ 0</span>. We will use the function <code>step</code> when evaluating the Heaviside function to obtain an answer that is a number.</p>
+<p>For more details on adding the Heaviside function to the context, see the forum discussion on the <a href="https://webwork.maa.org/moodle/mod/forum/discuss.php?d=458">Heaviside step function</a>.</p>
+<p>For the second question, since answers are checked numerically by comparing the student answer to the correct answer at several randomly points in the domain (the default is 5 points) in an interval (the default is <code>[-1,1]</code>), the function <code>step(t) = u(t)</code> is not very robust when checking answers using these defaults. For example, if a student types in the answer <code>u(t-0.1)</code> and the correct answer is u(t), there is a good chance that the student’s answer will be marked correct, since the probability that a test point was chosen in the interval (0,0.1) is much less than 100%. Also, if the correct answer were u(t-5), then a student could enter the answer 0 and be marked correct because the correct answer is identically zero on the interval <code>[-1,1]</code>.</p>
+<p>To make the answer checking robust, in $answer2 we specify a larger domain centered at <span class="math inline">$a using limits,  we require four of the test points always be used, and that there should be 10 test points total (the  four we specified and six others generated at random). Notice that we used the construction `$</span>f-&gt;with(…)<code>to do this (using</code>$f-&gt;{test_at} = [[1],[2]]` would generate an error because the functions we added to the context aren’t “blessed” with enough permissions to modify $f in that way).</p>
+<p>In part (b), since the students never actually see the values of the function u(t), we could have defined the function as</p>
+<div class="sourceCode" id="parser-function-call"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="parser-function-call-1"><a href="#parser-function-call-1" aria-hidden="true"></a>parserFunction(<span class="kw">&quot;</span><span class="st">u(t)</span><span class="kw">&quot;</span> =&gt; <span class="kw">&quot;</span><span class="st">1.5 * sin(e*t) + 5*pi/3 + arctan(t)</span><span class="kw">&quot;</span>);</span></code></pre></div>
+<p>If we had defined <code>u(t)</code> this way, we would not have had to add the function <code>step(t)</code> to the context and we could have used the defaults for the answer checker. Notice that the function <code>u(t)</code> is never zero, is not constant, is differentiable, and takes moderately sized values, which makes its answer checking very robust using the defaults for the answer checker. Further, because of the arctangent, it is not periodic and so <code>u(t)-u(t-a)</code> should never be identically zero. Also, the formula for <code>u(t)</code> is not something students are likely to input as an answer out of nowhere. The function <code>u(t)</code> is great as a named function that stands in for the Heaviside function when the answer is a function. However, if the answer is a number obtained by evaluating the Heaviside function, then step(t) should be used or the function <code>u(t)</code> should be properly defined as the Heaviside function for obvious reasons.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Let [` u(t) `] be the Heaviside step function defined by
-[`` u(t) =\left\{\begin{array}{lcl}
-    0 &amp;&amp; \mbox {if}\quad x \leq 0, \\
-    1 &amp;&amp; \mbox {if}\quad x &gt; 0.
-\end{array}\right . ``]
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Let [`u(t)`] be the Heaviside step function defined by
+[``
+    u(t) = \left\{
+        \begin{array}{lcl}
+            0 &amp;&amp; \text{ if } x \leq 0, \\
+            1 &amp;&amp; \text{ if } x &gt; 0.
+        \end{array}
+    \right.
+``]
 
-a. Evaluate the function [`[$f]`] when [`t`] is [`[$a-1], [$a] `],
-and [` [$a+1] `] and enter your answers as a comma separated list.
+a. Evaluate the function [`[$f]`] when [`t`] is [`[$a - 1]`], [`[$a]`], and
+[`[$a + 1]`] and enter your answers as a comma separated list.
 
-    [________________]{$ans1-&gt;cmp(ordered =&gt; 1)}
+    + [_]{ $answer1-&gt;cmp(ordered =&gt; 1) }{15} [@ AnswerFormatHelp(&#39;numbers&#39;) @]*
 
-b. Suppose the answer is the function [` [$f] `] .
+b. Suppose the answer is the function [`[$f]`].
 
-    [________________]{$ans2}
+    + [_]{$answer2}{15} [@ AnswerFormatHelp(&#39;formulas&#39;) @]*
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -197,33 +184,36 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Let [` u(t) `] be the Heaviside step function defined by
-[`` u(t) =\left\{\begin{array}{lcl}
-    0 && \mbox {if}\quad x \leq 0, \\
-    1 && \mbox {if}\quad x > 0.
-\end{array}\right . ``]
+Let [`u(t)`] be the Heaviside step function defined by
+[``
+    u(t) = \left\{
+        \begin{array}{lcl}
+            0 &amp;&amp; \text{ if } x \leq 0, \\
+            1 &amp;&amp; \text{ if } x &gt; 0.
+        \end{array}
+    \right.
+``]
 
-a. Evaluate the function [`[$f]`] when [`t`] is [`[$a-1], [$a] `],
-and [` [$a+1] `] and enter your answers as a comma separated list.
+a. Evaluate the function [`[$f]`] when [`t`] is [`[$a - 1]`], [`[$a]`], and
+[`[$a + 1]`] and enter your answers as a comma separated list.
 
-    [________________]{$ans1->cmp(ordered => 1)}
+    + [_]{ $answer1-&gt;cmp(ordered =&gt; 1) }{15} [@ AnswerFormatHelp(&#39;numbers&#39;) @]*
 
-b. Suppose the answer is the function [` [$f] `] .
+b. Suppose the answer is the function [`[$f]`].
 
-    [________________]{$ans2}
+    + [_]{$answer2}{15} [@ AnswerFormatHelp(&#39;formulas&#39;) @]*
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -243,13 +233,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

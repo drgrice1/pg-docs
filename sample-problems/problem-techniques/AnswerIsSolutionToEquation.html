@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Answer is a Solution to an Equation</h1>
-		<p>The answer is a solution to an equation.</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserSolutionFor.html">parserSolutionFor.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserSolutionFor.html">parserSolutionFor.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,9 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserSolutionFor.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -63,23 +64,23 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserSolutionFor.pl
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserSolutionFor.pl', 'PGcourse.pl');
+
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserSolutionFor.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We need to include the macros file <code>parserSolutionFor.pl</code></p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Vector&#39;)-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;);
-$f = SolutionFor(&quot;x^2 = cos(y)&quot;, &quot;(1,0)&quot;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Vector&#39;)-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;);
 
-#$f = SolutionFor(&quot;x^2 - y = 0&quot;,[2,4]);
-#$f = SolutionFor(&quot;x^2 - y = 0&quot;,Point(4,2),vars=&gt;[&#39;y&#39;,&#39;x&#39;]);
+$f = SolutionFor(&quot;x^2 = cos(y)&quot;, &quot;(1,0)&quot;);
+#$f = SolutionFor(&quot;x^2 - y = 0&quot;, [ 2, 4 ]);
+#$f = SolutionFor(&quot;x^2 - y = 0&quot;, Point(4, 2), vars =&gt; [ &#39;y&#39;, &#39;x&#39; ]);
 
 BEGIN_PGML
 A solution to [`[@$f-&gt;{f}@]`] is [`(x,y) =`] [___]{$f}
@@ -92,31 +93,27 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Vector')->variables->are(x => 'Real', y => 'Real');
-$f = SolutionFor("x^2 = cos(y)", "(1,0)");
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Vector&#39;)-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;);
 
-#$f = SolutionFor("x^2 - y = 0",[2,4]);
-#$f = SolutionFor("x^2 - y = 0",Point(4,2),vars=>['y','x']);
+$f = SolutionFor(&quot;x^2 = cos(y)&quot;, &quot;(1,0)&quot;);
+#$f = SolutionFor(&quot;x^2 - y = 0&quot;, [ 2, 4 ]);
+#$f = SolutionFor(&quot;x^2 - y = 0&quot;, Point(4, 2), vars =&gt; [ &#39;y&#39;, &#39;x&#39; ]);
 
 BEGIN_PGML
-A solution to [`[@$f->{f}@]`] is [`(x,y) =`] [___]{$f}
+A solution to [`[@$f-&gt;{f}@]`] is [`(x,y) =`] [___]{$f}
 END_PGML
 
 ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The routine SolutionFor('equation',point,options) takes an equation, a point that
- satisfies that equation, and options such as <code>vars=&gt;['y','x']</code> in case you want to change
- the order in which the variables appear in order pairs (the default is lexicographic ordering of the variables).
- section=statement</p>
-
+					<p>The routine SolutionFor(‘equation’,point,options) takes an equation, a point that satisfies that equation, and options such as <code>vars=&gt;['y','x']</code> in case you want to change the order in which the variables appear in order pairs (the default is lexicographic ordering of the variables). section = statement</p>
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

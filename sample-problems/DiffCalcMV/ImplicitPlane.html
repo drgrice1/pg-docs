@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,16 +35,16 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Implicit Plane</h1>
-		<p>Multivariable differential calculus: answer is an equation for a plane</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserImplicitPlane.html">parserImplicitPlane.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserVectorUtils.html">parserVectorUtils.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserImplicitPlane.html">parserImplicitPlane.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserVectorUtils.html">parserVectorUtils.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,10 +53,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserImplicitPlane.pl&#39;, &#39;parserVectorUtils.pl&#39;, &#39;PGcourse.pl&#39;);
+loadMacros(
+    &#39;PGstandard.pl&#39;,          &#39;PGML.pl&#39;,
+    &#39;parserImplicitPlane.pl&#39;, &#39;parserVectorUtils.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -66,31 +70,33 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserImplicitPlane.
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserImplicitPlane.pl', 'parserVectorUtils.pl', 'PGcourse.pl');
+loadMacros(
+    &#39;PGstandard.pl&#39;,          &#39;PGML.pl&#39;,
+    &#39;parserImplicitPlane.pl&#39;, &#39;parserVectorUtils.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<ul>
 <li>The parserVectorUtils.pl macro is used for the non_zero_point3D function below.</li>
-<li>The parserImplicitPlane.pl macro includes the context and the ImplicitPlane
-function to parse and create implicit planes.</li>
+<li>The parserImplicitPlane.pl macro includes the context and the ImplicitPlane function to parse and create implicit planes.</li>
 </ul>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;ImplicitPlane&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;ImplicitPlane&#39;);
 Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, z =&gt; &#39;Real&#39;);
 
-$A = non_zero_point3D(-5, 5, 1);
-$N = non_zero_vector3D(-5, 5, 1);
+$A = non_zero_point3D(-5, 5);
+$N = non_zero_vector3D(-5, 5);
 
 $ans1 = ImplicitPlane($A, $N);
-$ans2 = ImplicitPlane(&quot;4x+3y=12&quot;);
-$ans3 = ImplicitPlane(&quot;x=3&quot;);
+$ans2 = ImplicitPlane(&#39;4x + 3y = 12&#39;);
+$ans3 = ImplicitPlane(&#39;x = 3&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -98,49 +104,41 @@ $ans3 = ImplicitPlane(&quot;x=3&quot;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('ImplicitPlane');
-Context()->variables->are(x => 'Real', y => 'Real', z => 'Real');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;ImplicitPlane&#39;);
+Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, z =&gt; &#39;Real&#39;);
 
-$A = non_zero_point3D(-5, 5, 1);
-$N = non_zero_vector3D(-5, 5, 1);
+$A = non_zero_point3D(-5, 5);
+$N = non_zero_vector3D(-5, 5);
 
 $ans1 = ImplicitPlane($A, $N);
-$ans2 = ImplicitPlane("4x+3y=12");
-$ans3 = ImplicitPlane("x=3");
+$ans2 = ImplicitPlane(&#39;4x + 3y = 12&#39;);
+$ans3 = ImplicitPlane(&#39;x = 3&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The first answer is a standard mulitivariable calculus question. There are several
- different ways to specify the input to <code>ImplicitPlane</code>, which are detailed in the POD
- documentation. It is also possible to do some more complicated manipulations with
- the vectors and points, which is detailed in the problem techniques section.</p>
-
-<p>When the <code>ImplicitPlane</code> context has only two variables, it rephrases error messages
- in terms of lines. If you want students to be able to enter an equation for a line
- in the most general form, or if you have a vertical line to check (or just a
- constant equation such as <code>x=3</code>), you can use the <code>ImplicitPlane</code> context to reliably
- check these answers.</p>
-
+					<p>The first answer is a standard mulitivariable calculus question. There are several different ways to specify the input to <code>ImplicitPlane</code>, which are detailed in the POD documentation. It is also possible to do some more complicated manipulations with the vectors and points, which is detailed in the problem techniques section.</p>
+<p>When the <code>ImplicitPlane</code> context has only two variables, it rephrases error messages in terms of lines. If you want students to be able to enter an equation for a line in the most general form, or if you have a vertical line to check (or just a constant equation such as <code>x = 3</code>), you can use the <code>ImplicitPlane</code> context to reliably check these answers.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+a. Enter an equation for the plane through the point [`[$A]`] and perpendicular
+to [`[$N]`].
 
-a. Enter an equation for the plane through the point [` [$A] `] and perpendicular to [` [$N] `] .
+    + [_]{$ans1}{15}
 
-    [______________]{$ans1}
+b. Enter an equation for the line in the [`xy`]-plane with [`x`]-intercept [`3`]
+and [`y`]-intercept [`4`].
 
-b. Enter an equation for the line in the [` xy `] -plane with [` x `] -intercept [` 3 `]
-    and [` y `] -intercept [` 4 `].
+    + [_]{$ans2}{15}
 
-    [______________]{$ans2}
+c. Enter an equation for the vertical line in the [`xy`]-plane through the
+point [`(3,1)`].
 
-c. Enter an equation for the vertical line in the [` xy `] -plane through the point [` (3,1) `].
-
-    [______________]{$ans3}
+    + [_]{$ans3}{15}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -150,32 +148,32 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+a. Enter an equation for the plane through the point [`[$A]`] and perpendicular
+to [`[$N]`].
 
-a. Enter an equation for the plane through the point [` [$A] `] and perpendicular to [` [$N] `] .
+    + [_]{$ans1}{15}
 
-    [______________]{$ans1}
+b. Enter an equation for the line in the [`xy`]-plane with [`x`]-intercept [`3`]
+and [`y`]-intercept [`4`].
 
-b. Enter an equation for the line in the [` xy `] -plane with [` x `] -intercept [` 3 `]
-    and [` y `] -intercept [` 4 `].
+    + [_]{$ans2}{15}
 
-    [______________]{$ans2}
+c. Enter an equation for the vertical line in the [`xy`]-plane through the
+point [`(3,1)`].
 
-c. Enter an equation for the vertical line in the [` xy `] -plane through the point [` (3,1) `].
-
-    [______________]{$ans3}
+    + [_]{$ans3}{15}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -195,13 +193,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

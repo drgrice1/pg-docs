@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Embedding an IFrame</h1>
-		<p>Iframe embedding template</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -64,30 +64,37 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;);
-
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="
 $slideshow = MODES(
-    HTML =&gt;
-        &quot;&lt;iframe src=&#39;https://docs.google.com/presentation/d/1pk0FxsamBuZsVh1WGGmHGEb5AlfC68KUlz7zRRIYAUg/embed#slide=id.i0&#39;
-frameborder=&#39;0&#39; width=&#39;555&#39; height=&#39;451&#39;&gt;&lt;/iframe&gt;&quot;,
-    TeX =&gt; &quot;An embedded Google slide show.&quot;
+    HTML =&gt; tag(
+        &#39;iframe&#39;,
+        src =&gt;
+            &#39;https://docs.google.com/presentation/d/1pk0FxsamBuZsVh1WGGmHGEb5AlfC68KUlz7zRRIYAUg/embed#slide=id.i0&#39;,
+        width  =&gt; &#39;555&#39;,
+        height =&gt; &#39;451&#39;
+    ),
+    TeX =&gt; &#39;An embedded Google slide show.&#39;
 );
 
 $video = MODES(
-    HTML =&gt;
-        &#39;&lt;iframe width=&quot;420&quot; height=&quot;315&quot; src=&quot;//www.youtube.com/embed/M4vqr3_ROIk&quot; frameborder=&quot;0&quot; allowfullscreen&gt;&lt;/iframe&gt;&#39;,
+    HTML =&gt; tag(
+        &#39;iframe&#39;,
+        src             =&gt; &#39;https://www.youtube.com/embed/M4vqr3_ROIk&#39;,
+        width           =&gt; &#39;420&#39;,
+        height          =&gt; &#39;315&#39;,
+        allowfullscreen =&gt; undef
+    ),
     TeX =&gt; &quot;An embedded YouTube video.&quot;
 );
 " aria-label="copy to clipboard">
@@ -97,52 +104,53 @@ $video = MODES(
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric');
-
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">
 $slideshow = MODES(
-    HTML =>
-        "<iframe src='https://docs.google.com/presentation/d/1pk0FxsamBuZsVh1WGGmHGEb5AlfC68KUlz7zRRIYAUg/embed#slide=id.i0'
-frameborder='0' width='555' height='451'></iframe>",
-    TeX => "An embedded Google slide show."
+    HTML =&gt; tag(
+        &#39;iframe&#39;,
+        src =&gt;
+            &#39;https://docs.google.com/presentation/d/1pk0FxsamBuZsVh1WGGmHGEb5AlfC68KUlz7zRRIYAUg/embed#slide=id.i0&#39;,
+        width  =&gt; &#39;555&#39;,
+        height =&gt; &#39;451&#39;
+    ),
+    TeX =&gt; &#39;An embedded Google slide show.&#39;
 );
 
 $video = MODES(
-    HTML =>
-        '<iframe width="420" height="315" src="//www.youtube.com/embed/M4vqr3_ROIk" frameborder="0" allowfullscreen></iframe>',
-    TeX => "An embedded YouTube video."
+    HTML =&gt; tag(
+        &#39;iframe&#39;,
+        src             =&gt; &#39;https://www.youtube.com/embed/M4vqr3_ROIk&#39;,
+        width           =&gt; &#39;420&#39;,
+        height          =&gt; &#39;315&#39;,
+        allowfullscreen =&gt; undef
+    ),
+    TeX =&gt; &quot;An embedded YouTube video.&quot;
 );
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We create a mode dependent variable <code>$slideshow</code> that displays a
-Google slideshow inside an html <code>iframe</code> when in html mode, and
- the message "An embedded Google slide show." in TeX mode.  If you omit the
-TeX mode stuff, then there will be errors when the pdf hardcopy is generated.
-Similarly for the <code>$video</code>.  (Searching the web for "YouTube embed
-video" should bring up instructions for how to get the code to embed a YouTube
-video into a webpage.)</p>
-
+					<p>We create a mode dependent variable <code>$slideshow</code> that displays a Google slideshow inside an html <code>iframe</code> when in html mode, and the message “An embedded Google slide show.” in TeX mode. If you omit the TeX mode stuff, then there will be errors when the pdf hardcopy is generated. Similarly for the <code>$video</code>. (Searching the web for “YouTube embed video” should bring up instructions for how to get the code to embed a YouTube video into a webpage.)</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 # Embedded Google slides
 
 &gt;&gt; [$slideshow]* &lt;&lt;
 
-Google slides embedded using an iframe.
+&gt;&gt;Google slides embedded using an iframe.&lt;&lt;
 
 # Embedded YouTube video
 
 &gt;&gt; [$video]* &lt;&lt;
 
-YouTube video of Arthur Benjamin, mathemagician, embedded using an iframe. If the
-video does not work,
-
-&gt;&gt; [@ htmlLink(&quot;http://www.youtube.com/embed/M4vqr3_ROIk&quot;, &quot;click here to go to YouTube directly.&quot;) @]* &lt;&lt;
+&gt;&gt;YouTube video of Arthur Benjamin, mathemagician, embedded using an iframe.&lt;&lt;
+&gt;&gt;If the video does not work,
+[@ htmlLink(&quot;https://www.youtube.com/embed/M4vqr3_ROIk&quot;,
+    &quot;click here to go to YouTube directly.&quot;) @]*&lt;&lt;
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -154,31 +162,30 @@ END_PGML
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 # Embedded Google slides
 
->> [$slideshow]* <<
+&gt;&gt; [$slideshow]* &lt;&lt;
 
-Google slides embedded using an iframe.
+&gt;&gt;Google slides embedded using an iframe.&lt;&lt;
 
 # Embedded YouTube video
 
->> [$video]* <<
+&gt;&gt; [$video]* &lt;&lt;
 
-YouTube video of Arthur Benjamin, mathemagician, embedded using an iframe. If the
-video does not work,
-
->> [@ htmlLink("http://www.youtube.com/embed/M4vqr3_ROIk", "click here to go to YouTube directly.") @]* <<
+&gt;&gt;YouTube video of Arthur Benjamin, mathemagician, embedded using an iframe.&lt;&lt;
+&gt;&gt;If the video does not work,
+[@ htmlLink(&quot;https://www.youtube.com/embed/M4vqr3_ROIk&quot;,
+    &quot;click here to go to YouTube directly.&quot;) @]*&lt;&lt;
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					<p>Include the <code>$slideshow</code> and <code>$video</code> wherever you like.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -200,13 +207,12 @@ ENDDOCUMENT();
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

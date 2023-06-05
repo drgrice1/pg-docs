@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Logarithms</h1>
-		<p>Algebra: laws of logarithms</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -64,33 +64,33 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, z =&gt; &#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, z =&gt; &#39;Real&#39;);
 Context()-&gt;variables-&gt;set(x =&gt; { limits =&gt; [ 2, 3 ] });
 Context()-&gt;variables-&gt;set(y =&gt; { limits =&gt; [ 2, 3 ] });
 Context()-&gt;variables-&gt;set(z =&gt; { limits =&gt; [ 2, 3 ] });
 
-$a = random(20, 40, 1);
-$b = random(20, 40, 1);
-do { $c = random(20, 40, 1); } until ($c != $b);
+$a = random(20, 40);
+$b = random(20, 40);
+do { $c = random(20, 40); } until ($c != $b);
 
-#  TeX
-$expr = &quot;\displaystyle \ln \left( \frac{ x^{$a} y^{$b} }{ z^{$c} } \right)&quot;;
+# TeX
+$expr =
+    &quot;\displaystyle \ln \left( \frac{ x^{$a} y^{$b} }{ z^{$c} } \right)&quot;;
 
 $answer = Compute(&quot;$a * ln(x) + $b * ln(y) - $c * ln(z)&quot;);
 
-Context()-&gt;operators-&gt;undefine(&quot;/&quot;, &quot;^&quot;, &quot;**&quot;);
+Context()-&gt;operators-&gt;undefine(&#39;/&#39;, &#39;^&#39;, &#39;**&#39;);
 Context()-&gt;functions-&gt;undefine(&#39;sqrt&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -99,46 +99,39 @@ Context()-&gt;functions-&gt;undefine(&#39;sqrt&#39;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->are(x => 'Real', y => 'Real', z => 'Real');
-Context()->variables->set(x => { limits => [ 2, 3 ] });
-Context()->variables->set(y => { limits => [ 2, 3 ] });
-Context()->variables->set(z => { limits => [ 2, 3 ] });
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, z =&gt; &#39;Real&#39;);
+Context()-&gt;variables-&gt;set(x =&gt; { limits =&gt; [ 2, 3 ] });
+Context()-&gt;variables-&gt;set(y =&gt; { limits =&gt; [ 2, 3 ] });
+Context()-&gt;variables-&gt;set(z =&gt; { limits =&gt; [ 2, 3 ] });
 
-$a = random(20, 40, 1);
-$b = random(20, 40, 1);
-do { $c = random(20, 40, 1); } until ($c != $b);
+$a = random(20, 40);
+$b = random(20, 40);
+do { $c = random(20, 40); } until ($c != $b);
 
-#  TeX
-$expr = "\displaystyle \ln \left( \frac{ x^{$a} y^{$b} }{ z^{$c} } \right)";
+# TeX
+$expr =
+    &quot;\displaystyle \ln \left( \frac{ x^{$a} y^{$b} }{ z^{$c} } \right)&quot;;
 
-$answer = Compute("$a * ln(x) + $b * ln(y) - $c * ln(z)");
+$answer = Compute(&quot;$a * ln(x) + $b * ln(y) - $c * ln(z)&quot;);
 
-Context()->operators->undefine("/", "^", "**");
-Context()->functions->undefine('sqrt');
+Context()-&gt;operators-&gt;undefine(&#39;/&#39;, &#39;^&#39;, &#39;**&#39;);
+Context()-&gt;functions-&gt;undefine(&#39;sqrt&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We add the variables to the context and reset their limits since logarithms are
- not defined on the default domain [-1,1]. After defining <code>$answer</code>, then we
- undefine certain operators and functions so that students will have to simplify
- their answer. Since the answer requires multiplication no matter how it is written,
- we cannot prevent students from entering an answer such as <code>ln(x*x*x...)</code> instead
- of <code>$a * ln(x)</code>, but by choosing large values for <code>$a, $b, $c</code>, we can strongly
- discourage them from entering <code>ln(x*x*x...)</code>.</p>
-
+					<p>We add the variables to the context and reset their limits since logarithms are not defined on the default domain [-1,1]. After defining <code>$answer</code>, then we undefine certain operators and functions so that students will have to simplify their answer. Since the answer requires multiplication no matter how it is written, we cannot prevent students from entering an answer such as <code>ln(x*x*x...)</code> instead of <code>$a * ln(x)</code>, but by choosing large values for <code>$a, $b, $c</code>, we can strongly discourage them from entering <code>ln(x*x*x...)</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Using laws of logarithms, write the expression
-below using sums and/or differences
-of logarithmic expressions which do not contain
-the logarithms of products, quotients, or powers.
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Using laws of logarithms, write the expression below using sums and/or
+differences of logarithmic expressions which do not contain the logarithms of
+products, quotients, or powers.
 
-[` \displaystyle [$expr] = `] [____________________]{$answer}
+[`\displaystyle [$expr] =`] [_]{$answer}{20}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -148,25 +141,23 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Using laws of logarithms, write the expression
-below using sums and/or differences
-of logarithmic expressions which do not contain
-the logarithms of products, quotients, or powers.
+Using laws of logarithms, write the expression below using sums and/or
+differences of logarithmic expressions which do not contain the logarithms of
+products, quotients, or powers.
 
-[` \displaystyle [$expr] = `] [____________________]{$answer}
+[`\displaystyle [$expr] =`] [_]{$answer}{20}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -186,13 +177,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

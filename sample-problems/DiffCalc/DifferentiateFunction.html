@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Differentiate a Function</h1>
-		<p>Differential calculus: difference quotients</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -64,38 +64,37 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;add(k =&gt; &#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;add(k =&gt; &#39;Real&#39;);
 Context()-&gt;flags-&gt;set(
     reduceConstants         =&gt; 0,           # no decimals
-    reduceConstantFunctions =&gt; 1,           # combine 4+5*2?
+    reduceConstantFunctions =&gt; 1,           # simplify 4 + 5 * 2?
     formatStudentAnswer     =&gt; &#39;parsed&#39;,    # no decimals
 );
 
-$a = random(6, 9, 1);
-$k = random(3, 5, 1);
+$a = random(6, 9);
+$k = random(3, 5);
 
-$f  = Formula(&quot;k x^2&quot;);
+$f  = Formula(&#39;k x^2&#39;);
 $fx = $f-&gt;D(&#39;x&#39;);
 
 $ans1 = $fx;
 
 $ans2 = $fx-&gt;substitute(k =&gt; $k);    # formula
-# $ans2 = $fx-&gt;eval(k=&gt;$k); # gives errors, must eval to real
+# $ans2 = $fx-&gt;eval(k =&gt; $k); # gives errors, must eval to real
 
 $ans3 = $fx-&gt;substitute(x =&gt; $a * pi, k =&gt; $k);    # formula
-#$ans3 = $fx-&gt;eval(x=&gt;$a*pi,k=&gt;$k); # real
+# $ans3 = $fx-&gt;eval(x =&gt; $a * pi, k =&gt; $k); # real
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -103,71 +102,52 @@ $ans3 = $fx-&gt;substitute(x =&gt; $a * pi, k =&gt; $k);    # formula
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->add(k => 'Real');
-Context()->flags->set(
-    reduceConstants         => 0,           # no decimals
-    reduceConstantFunctions => 1,           # combine 4+5*2?
-    formatStudentAnswer     => 'parsed',    # no decimals
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;add(k =&gt; &#39;Real&#39;);
+Context()-&gt;flags-&gt;set(
+    reduceConstants         =&gt; 0,           # no decimals
+    reduceConstantFunctions =&gt; 1,           # simplify 4 + 5 * 2?
+    formatStudentAnswer     =&gt; &#39;parsed&#39;,    # no decimals
 );
 
-$a = random(6, 9, 1);
-$k = random(3, 5, 1);
+$a = random(6, 9);
+$k = random(3, 5);
 
-$f  = Formula("k x^2");
-$fx = $f->D('x');
+$f  = Formula(&#39;k x^2&#39;);
+$fx = $f-&gt;D(&#39;x&#39;);
 
 $ans1 = $fx;
 
-$ans2 = $fx->substitute(k => $k);    # formula
-# $ans2 = $fx->eval(k=>$k); # gives errors, must eval to real
+$ans2 = $fx-&gt;substitute(k =&gt; $k);    # formula
+# $ans2 = $fx-&gt;eval(k =&gt; $k); # gives errors, must eval to real
 
-$ans3 = $fx->substitute(x => $a * pi, k => $k);    # formula
-#$ans3 = $fx->eval(x=>$a*pi,k=>$k); # real
+$ans3 = $fx-&gt;substitute(x =&gt; $a * pi, k =&gt; $k);    # formula
+# $ans3 = $fx-&gt;eval(x =&gt; $a * pi, k =&gt; $k); # real
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
 					<p>The partial differentiation operator is <code>-&gt;D('x')</code>.</p>
-
 <p>The main difference between <code>eval()</code> and <code>substitute()</code> is</p>
-
 <ul>
 <li><code>eval()</code> returns a <code>Real</code> (a number)</li>
 <li><code>substitute()</code> returns a <code>Formula</code></li>
 </ul>
-
-<p>Since plugging a particular number <code>$k</code> into the Formula <code>$f</code> returns a Formula <code>$k x</code>,
- if we had used the eval method <code>$ans2 = $fx-&gt;eval(k=&gt;$k);</code> instead of the <code>substitute</code>
- method, we would get errors because <code>$k x</code> is a Formula, not a Real. Note: You cannot
- use eval or substitute to perform function composition, i.e., you can only plug in
- numbers, not formulas.</p>
-
-<p>When the answer is a constant, we can use either the eval method, in which case the
- answer would be a Real, or the substitute method, in which case the answer would
- be a constant Formula. If you use the eval method, <code>$ans3 = $fx-&gt;eval(x=&gt;$a*pi,k=&gt;$k);</code>
- the answer will be a Real and will display as a single number in decimal format.
- If you use the substitute method instead, you have more control over how the answer
- will be displayed. In particular, the context flag reduceConstants controls whether
- the answer will be reduced to a single number in decimal format, the flag
- reduceConstantFunctions controls whether or not expressions such as <code>4+5*2</code> are
- reduced to 14, and setting the context flag <code>formatStudentAnswer=&gt;'parsed'</code> will
- prevent the student's answer from being reduced to a single number in decimal
- format and will also display pi instead of 3.14159...</p>
-
-<p>For more details, see eval versus substitute, formatting correct answers, and
- constants in problems.</p>
-
+<p>Since plugging a particular number <code>$k</code> into the Formula <code>$f</code> returns a Formula <code>$k x</code>, if we had used the eval method <code>$ans2 = $fx-&gt;eval(k =&gt; $k);</code> instead of the <code>substitute</code> method, we would get errors because <code>$k x</code> is a Formula, not a Real. Note: You cannot use eval or substitute to perform function composition, i.e., you can only plug in numbers, not formulas.</p>
+<p>When the answer is a constant, we can use either the eval method, in which case the answer would be a Real, or the substitute method, in which case the answer would be a constant Formula. If you use the eval method, <code>$ans3 = $fx-&gt;eval(x =&gt; $a * pi, k =&gt; $k);</code> the answer will be a Real and will display as a single number in decimal format. If you use the substitute method instead, you have more control over how the answer will be displayed. In particular, the context flag reduceConstants controls whether the answer will be reduced to a single number in decimal format, the flag reduceConstantFunctions controls whether or not expressions such as <code>4 + 5 * 2</code> are reduced to 14, and setting the context flag <code>formatStudentAnswer =&gt; 'parsed'</code> will prevent the student’s answer from being reduced to a single number in decimal format and will also display pi instead of 3.14159…</p>
+<p>For more details, see eval versus substitute, formatting correct answers, and constants in problems.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Suppose [` f(x) = [$f] `] where [` k `] is a constant.
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Suppose [`f(x) = [$f]`] where [`k`] is a constant.
 
-a. [` f &#39; (x) = `] [_____]{$ans1}
-b. If [` k = [$k] `] then [` f &#39; (x) = `] [_____]{$ans2}
-c. If [` k = [$k] `] then [` f &#39; ([$a]\pi) = `] [_____]{$ans3}
+a. [`f&#39;(x) =`] [_____]{$ans1}
+
+b. If [`k = [$k]`] then [`f&#39;(x) =`] [_____]{$ans2}
+
+c. If [`k = [$k]`] then [`f&#39;([$a]\pi) =`] [_____]{$ans3}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -177,24 +157,25 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Suppose [` f(x) = [$f] `] where [` k `] is a constant.
+Suppose [`f(x) = [$f]`] where [`k`] is a constant.
 
-a. [` f ' (x) = `] [_____]{$ans1}
-b. If [` k = [$k] `] then [` f ' (x) = `] [_____]{$ans2}
-c. If [` k = [$k] `] then [` f ' ([$a]\pi) = `] [_____]{$ans3}
+a. [`f&#39;(x) =`] [_____]{$ans1}
+
+b. If [`k = [$k]`] then [`f&#39;(x) =`] [_____]{$ans2}
+
+c. If [`k = [$k]`] then [`f&#39;([$a]\pi) =`] [_____]{$ans3}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -214,13 +195,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

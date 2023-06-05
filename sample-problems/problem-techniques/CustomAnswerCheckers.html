@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Custom Answer Checker</h1>
-		<p>This shows how to check "arbitrary" conditions on the student's answer.</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,19 +62,18 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$ans = Compute(&#39;pi/3&#39;)-&gt;cmp(
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="$ans = Compute(&#39;pi/3&#39;)-&gt;cmp(
     checker =&gt; sub {
         my ($correct, $student, $ansHash) = @_;
         return cos($correct) == cos($student);
@@ -94,13 +93,13 @@ END_PGML
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$ans = Compute('pi/3')->cmp(
-    checker => sub {
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$ans = Compute(&#39;pi/3&#39;)-&gt;cmp(
+    checker =&gt; sub {
         my ($correct, $student, $ansHash) = @_;
         return cos($correct) == cos($student);
     }
 );
-$val = Compute('cos(pi/3)');
+$val = Compute(&#39;cos(pi/3)&#39;);
 
 BEGIN_PGML
 Enter a value of [`x`] for which [`\cos(x) = [$val]`]
@@ -111,42 +110,26 @@ END_PGML
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>To set up the custom answer checker we will override the answer checker routine for the <code>MathObject</code>
- that we're using to check the answer. Thus our answer object should be of the same type (e.g., <code>Real</code>,
- <code>Formula</code>, etc.) as what we want the student to be entering. For example, here we're going to ask for a
- value of x such that <code>cos(x)=cos($ans)</code>. Thus we set up the answer to be a real number.</p>
-
-<p>The <code>$ans</code> object overrides the <code>checker</code> part of the MathObject.  This is a subroutine
- which checks that the cosine of the student answer equals the cosine of the correct
- answer.  This also values like <code>pi/3</code>, <code>-pi/3</code> or <code>pi/3+2pi</code> to be considered correct.</p>
-
-<p>We can set an error message in the answer checker by using Value->Error("message"). This will
- set the message that is displayed to the student and exit the checker with an incorrect
- return value. For example:</p>
-
-<p><code>
- $ans = Compute('pi/3')-&gt;cmp( checker=&gt;sub {
-    my ($correct, $student, $ansHash) = @_;
-    Value-&gt;Error("Try again") if cos($student)==sqrt(3)/2;
-    return cos($correct) == cos($student);
- });
-</code></p>
-
-<p>Another handle tip for troubleshooting. To see all of the keys and values in the
- <code>$ansHash</code> when the submit answers button is pressed, include this in your custom answer checker:</p>
-
-<p><code>
-foreach my $key ( keys %{$ansHash} ) {
-  warn "key: $key, value: $ansHash-&gt;{$key}";
-}
-</code></p>
-
+					<p>To set up the custom answer checker we will override the answer checker routine for the <code>MathObject</code> that we’re using to check the answer. Thus our answer object should be of the same type (e.g., <code>Real</code>, <code>Formula</code>, etc.) as what we want the student to be entering. For example, here we’re going to ask for a value of x such that <code>cos(x) = cos($ans)</code>. Thus we set up the answer to be a real number.</p>
+<p>The <code>$ans</code> object overrides the <code>checker</code> part of the MathObject. This is a subroutine which checks that the cosine of the student answer equals the cosine of the correct answer. This also values like <code>pi/3</code>, <code>-pi/3</code> or <code>pi/3 + 2pi</code> to be considered correct.</p>
+<p>We can set an error message in the answer checker by using Value-&gt;Error(“message”). This will set the message that is displayed to the student and exit the checker with an incorrect return value. For example:</p>
+<div class="sourceCode" id="value-error"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="value-error-1"><a href="#value-error-1" aria-hidden="true"></a><span class="dt">$ans</span> = Compute(<span class="kw">&#39;</span><span class="st">pi/3</span><span class="kw">&#39;</span>)-&gt;<span class="kw">cmp</span>(</span>
+<span id="value-error-2"><a href="#value-error-2" aria-hidden="true"></a>    checker =&gt; <span class="kw">sub </span>{</span>
+<span id="value-error-3"><a href="#value-error-3" aria-hidden="true"></a>        <span class="kw">my</span> (<span class="dt">$correct</span>, <span class="dt">$student</span>, <span class="dt">$ansHash</span>) = <span class="dt">@_</span>;</span>
+<span id="value-error-4"><a href="#value-error-4" aria-hidden="true"></a>        Value-&gt;Error(<span class="kw">&quot;</span><span class="st">Try again</span><span class="kw">&quot;</span>) <span class="kw">if</span> <span class="fu">cos</span>(<span class="dt">$student</span>) == <span class="fu">sqrt</span>(<span class="dv">3</span>) / <span class="dv">2</span>;</span>
+<span id="value-error-5"><a href="#value-error-5" aria-hidden="true"></a>        <span class="kw">return</span> <span class="fu">cos</span>(<span class="dt">$correct</span>) == <span class="fu">cos</span>(<span class="dt">$student</span>);</span>
+<span id="value-error-6"><a href="#value-error-6" aria-hidden="true"></a>    }</span>
+<span id="value-error-7"><a href="#value-error-7" aria-hidden="true"></a>);</span></code></pre></div>
+<p>Another handle tip for troubleshooting. To see all of the keys and values in the <code>$ansHash</code> when the submit answers button is pressed, include this in your custom answer checker:</p>
+<pre><code>foreach my $key ( keys %{$ansHash} ) {
+  warn &quot;key: $key, value: $ansHash-&gt;{$key}&quot;;
+}</code></pre>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -166,13 +149,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 
