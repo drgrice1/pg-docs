@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Numerical Tolerance</h1>
-		<p>Explains the difference in tolerance type and numerical tolerance.</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,19 +62,18 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$ans1 = Compute(&#39;1.5708&#39;)-&gt;cmp(
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="$ans1 = Compute(&#39;1.5708&#39;)-&gt;cmp(
     tolType   =&gt; &#39;absolute&#39;,
     tolerance =&gt; .0001,
 );
@@ -93,46 +92,35 @@ $ans3 = Compute(&#39;1.5708&#39;);" aria-label="copy to clipboard">
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$ans1 = Compute('1.5708')->cmp(
-    tolType   => 'absolute',
-    tolerance => .0001,
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$ans1 = Compute(&#39;1.5708&#39;)-&gt;cmp(
+    tolType   =&gt; &#39;absolute&#39;,
+    tolerance =&gt; .0001,
 );
 
-$ans2 = Compute('1.5708');
+$ans2 = Compute(&#39;1.5708&#39;);
 
-Context('Numeric')->flags->set(
-    tolerance => 0.0001,
-    tolType   => "absolute",
+Context(&#39;Numeric&#39;)-&gt;flags-&gt;set(
+    tolerance =&gt; 0.0001,
+    tolType   =&gt; &quot;absolute&quot;,
 );
 
-$ans3 = Compute('1.5708');</pre>
+$ans3 = Compute(&#39;1.5708&#39;);</pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>This shows three different ways of setting the toltype and tolerance of the answer. The
- <code>tolType</code> can be <code>absolute</code> (specifying a decimal distance from the correct answer that
- will be allowed) or <code>relative</code> (specifying a percent error that will be allowed).</p>
-
-<p>Thus if the correct answer is 17, a tolerance of 0.01 will mean that the student answer
- must be in the interval (16.99,17.01) if the tolType is absolute, and in the interval
- (16.83,17.17) if tolType is relative (or omitted, as relative tolerance is the default).</p>
-
-<ol>
-<li><p>The default Context('Numeric') is used (but not needed) and within the Compute call,
-the tolerance type and level is set.</p></li>
-<li><p>The tolerance and toltype is set on the answer check with the cmp call.  See the
-problem statement below.</p></li>
-<li><p>The tolerance and toltype can be set on the Context.  This is useful if the desired
-toltype and/or tolerance is the same for many answer.  Typically this would go at the
-top of the setup section.</p></li>
+					<p>This shows three different ways of setting the toltype and tolerance of the answer. The <code>tolType</code> can be <code>absolute</code> (specifying a decimal distance from the correct answer that will be allowed) or <code>relative</code> (specifying a percent error that will be allowed).</p>
+<p>Thus if the correct answer is 17, a tolerance of 0.01 will mean that the student answer must be in the interval (16.99,17.01) if the tolType is absolute, and in the interval (16.83,17.17) if tolType is relative (or omitted, as relative tolerance is the default).</p>
+<ol type="1">
+<li><p>The default Context(‘Numeric’) is used (but not needed) and within the Compute call, the tolerance type and level is set.</p></li>
+<li><p>The tolerance and toltype is set on the answer check with the cmp call. See the problem statement below.</p></li>
+<li><p>The tolerance and toltype can be set on the Context. This is useful if the desired toltype and/or tolerance is the same for many answer. Typically this would go at the top of the setup section.</p></li>
 </ol>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 For each of the following Enter your answer accurate to four decimal places .
 
 1. Enter [`` \frac{\pi}{2}= ``] [____]{$ans1}
@@ -157,9 +145,9 @@ For each of the following Enter your answer accurate to four decimal places .
 
 1. Enter [`` \frac{\pi}{2}= ``] [____]{$ans1}
 
-2. Enter [`` \frac{\pi}{2}= ``] [____]{$ans2->cmp(
-    tolType   => 'absolute',
-    tolerance => .0001,
+2. Enter [`` \frac{\pi}{2}= ``] [____]{$ans2-&gt;cmp(
+    tolType   =&gt; &#39;absolute&#39;,
+    tolerance =&gt; .0001,
 )}
 
 3. Enter [`` \frac{\pi}{2}= ``] [____]{$ans3}
@@ -170,13 +158,12 @@ END_PGML
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -196,13 +183,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

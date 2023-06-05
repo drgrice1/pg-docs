@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Matrix Operation</h1>
-		<p>Answer is a matrix</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserRadioMultiAnswer.html">parserRadioMultiAnswer.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserRadioMultiAnswer.html">parserRadioMultiAnswer.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,9 +52,13 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserRadioMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
+loadMacros(
+    &#39;PGstandard.pl&#39;,             &#39;PGML.pl&#39;,
+    &#39;parserRadioMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -63,35 +67,56 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserRadioMultiAnsw
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserRadioMultiAnswer.pl', 'PGcourse.pl');
+
+loadMacros(
+    &#39;PGstandard.pl&#39;,             &#39;PGML.pl&#39;,
+    &#39;parserRadioMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>This uses <code>parserRadioMultiAnswer.pl</code>, so it needs to be loaded.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Matrix&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Matrix&#39;);
 
 $A = Matrix([
-        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
-        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ]
-    ]);
-
-$B = Matrix([
-    [ non_zero_random(-5, 5), non_zero_random(-5, 5), non_zero_random(-5, 5) ],
-    [ non_zero_random(-5, 5), non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+    [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+    [ non_zero_random(-5, 5), non_zero_random(-5, 5) ]
 ]);
 
-$rma1 = RadioMultiAnswer([ [&#39;The product \(AB\) does not exist.&#39;],
-    [ &#39;The product \(AB\) is %s*&#39;, Compute($A * $B) ] ], 1);
+$B = Matrix([
+    [
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5)
+    ],
+    [
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5)
+    ],
+]);
 
-$rma2 = RadioMultiAnswer([ [&#39;The product \(BA\) does not exist.&#39;],
-    [ &#39;The product \(BA\) is %s*&#39;, Compute($A * $B) ] ], 0);
+$rma1 = RadioMultiAnswer(
+    [
+        [&#39;The product \(AB\) does not exist.&#39;],
+        [ &#39;The product \(AB\) is %s*&#39;, $A * $B ]
+    ],
+    1
+);
+
+$rma2 = RadioMultiAnswer(
+    [
+        [&#39;The product \(BA\) does not exist.&#39;],
+        [ &#39;The product \(BA\) is %s*&#39;, $A * $B ]
+    ],
+    0
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -99,57 +124,65 @@ $rma2 = RadioMultiAnswer([ [&#39;The product \(BA\) does not exist.&#39;],
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Matrix');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Matrix&#39;);
 
 $A = Matrix([
-        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
-        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ]
-    ]);
-
-$B = Matrix([
-    [ non_zero_random(-5, 5), non_zero_random(-5, 5), non_zero_random(-5, 5) ],
-    [ non_zero_random(-5, 5), non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+    [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+    [ non_zero_random(-5, 5), non_zero_random(-5, 5) ]
 ]);
 
-$rma1 = RadioMultiAnswer([ ['The product \(AB\) does not exist.'],
-    [ 'The product \(AB\) is %s*', Compute($A * $B) ] ], 1);
+$B = Matrix([
+    [
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5)
+    ],
+    [
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5)
+    ],
+]);
 
-$rma2 = RadioMultiAnswer([ ['The product \(BA\) does not exist.'],
-    [ 'The product \(BA\) is %s*', Compute($A * $B) ] ], 0);
+$rma1 = RadioMultiAnswer(
+    [
+        [&#39;The product \(AB\) does not exist.&#39;],
+        [ &#39;The product \(AB\) is %s*&#39;, $A * $B ]
+    ],
+    1
+);
+
+$rma2 = RadioMultiAnswer(
+    [
+        [&#39;The product \(BA\) does not exist.&#39;],
+        [ &#39;The product \(BA\) is %s*&#39;, $A * $B ]
+    ],
+    0
+);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
 					<p>First, the two matrices are defined.</p>
-
-<p>A <code>RadioMultiAnswer</code> produces a set of radio buttons for each of the given statements.
- The format is</p>
-
-<pre>
- RadioMultiAnswer([
-    [statement1],
-    [statement2],
-    ...
-    [last statement]
-], correct index, options)
- </pre>
-
-<p>Answer blanks can be added with the <code>%s</code> in the string and if a matrix is desired,
- <code>%s*</code> should be used.  See the POD for more details.</p>
-
+<p>A <code>RadioMultiAnswer</code> produces a set of radio buttons for each of the given statements. The format is <code>{#radio-multi-answer-usage .perl}  RadioMultiAnswer([      [statement1],      [statement2],      ...      [last statement]  ], correct index, options)</code> Answer blanks can be added with the <code>%s</code> in the string and if a matrix is desired, <code>%s*</code> should be used. See the POD for more details.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 Let
-&gt;&gt; [`` A = [$A], \quad B = [$B] . ``] &lt;&lt;
+&gt;&gt; [``A = [$A] \quad\text{and}\quad B = [$B].``] &lt;&lt;
 
-1) Select One [____]{$rma1}
+1) Select the correct choice below, and fill in any answer boxes within that
+choice.
 
-2) Select One [____]{$rma2}
+    [____]{$rma1}
 
+2) Select the correct choice below, and fill in any answer boxes within that
+choice.
+
+    [____]{$rma2}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -160,25 +193,29 @@ END_PGML
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Let
->> [`` A = [$A], \quad B = [$B] . ``] <<
+&gt;&gt; [``A = [$A] \quad\text{and}\quad B = [$B].``] &lt;&lt;
 
-1) Select One [____]{$rma1}
+1) Select the correct choice below, and fill in any answer boxes within that
+choice.
 
-2) Select One [____]{$rma2}
+    [____]{$rma1}
 
+2) Select the correct choice below, and fill in any answer boxes within that
+choice.
+
+    [____]{$rma2}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -198,13 +235,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

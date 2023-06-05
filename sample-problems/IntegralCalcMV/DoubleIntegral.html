@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Double Integral</h1>
-		<p>Multivariable integral calculus: setting up double integrals</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserMultiAnswer.html">parserMultiAnswer.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserMultiAnswer.html">parserMultiAnswer.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,9 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -63,20 +64,19 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserMultiAnswer.pl
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserMultiAnswer.pl', 'PGcourse.pl');
+
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>Since there are multiple answer blanks that are dependent upon each other, we use <code>parserMultiAnswer.pl</code></p>
-
+					<p>Since there are multiple answer blanks that are dependent upon each other, we use <code>parserMultiAnswer.pl</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;);
-Context()-&gt;variables-&gt;are(
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(
     x  =&gt; &#39;Real&#39;,
     dx =&gt; &#39;Real&#39;,
     y  =&gt; &#39;Real&#39;,
@@ -84,103 +84,111 @@ Context()-&gt;variables-&gt;are(
 );
 Context()-&gt;flags-&gt;set(reduceConstants =&gt; 0);
 
-#  limits of integration
+# limits of integration
 
 $a = random(1, 5, 1);
 $b = $a + random(1, 4, 1);
 do { $c = random(1, 5, 1); }      until ($c != $a);
 do { $d = $c + random(1, 4, 1); } until ($d != $b);
 
-
 # integrand and volume
 
-$f = Formula(&quot;x*y&quot;);
+$f = Formula(&#39;x * y&#39;);
 $V = Formula(&quot;($b^2-$a^2) * ($d^2-$c^2) / 4&quot;);
 
-
-#  differentials and limits of integration
-#
-#  Case 0, element 0 of each array below, is if the order of integration is dx dy
-#
-#  Case 1, element 1 of each array below, is if the order of integration is dy dx
-#
-#  &#39;id&#39; and &#39;od&#39; stand for inner and outer differential
+# differentials and limits of integration
+# Case 0, element 0 of each array below, is if the order of integration is dx dy
+# Case 1, element 1 of each array below, is if the order of integration is dy dx
+# &#39;id&#39; and &#39;od&#39; stand for inner and outer differential
 
 @id = (Formula(&#39;dx&#39;), Formula(&#39;dy&#39;));    # (case 0, case 1)
 @od = (Formula(&#39;dy&#39;), Formula(&#39;dx&#39;));    # (case 0, case 1)
 
-#  A = outer integral, lower limit
-#  B = outer integral, upper limit
-#  C = inner integral, lower limit
-#  D = inner integral, upper limit
+# A = outer integral, lower limit
+# B = outer integral, upper limit
+# C = inner integral, lower limit
+# D = inner integral, upper limit
 
-@A = (Formula(&quot;$c&quot;), Formula(&quot;$a&quot;));    # (case 0, case 1)
-@B = (Formula(&quot;$d&quot;), Formula(&quot;$b&quot;));    # (case 0, case 1)
-@C = (Formula(&quot;$a&quot;), Formula(&quot;$c&quot;));    # (case 0, case 1)
-@D = (Formula(&quot;$b&quot;), Formula(&quot;$d&quot;));    # (case 0, case 1)
+@A = (Formula($c), Formula($a));    # (case 0, case 1)
+@B = (Formula($d), Formula($b));    # (case 0, case 1)
+@C = (Formula($a), Formula($c));    # (case 0, case 1)
+@D = (Formula($b), Formula($d));    # (case 0, case 1)
 
 $multians = MultiAnswer($f, $id[0], $od[0], $A[0], $B[0], $C[0], $D[0])-&gt;with(
     singleResult =&gt; 1,
     checker      =&gt; sub {
         my ($correct, $student, $self) = @_;
-        my ($fstu, $idstu, $odstu, $Astu, $Bstu, $Cstu, $Dstu) = @{$student};
-        if (($f == $fstu
-                    &amp;&amp; $id[0] == $idstu
-                    &amp;&amp; $od[0] == $odstu
-                    &amp;&amp; $A[0] == $Astu
-                    &amp;&amp; $B[0] == $Bstu
-                    &amp;&amp; $C[0] == $Cstu
-                    &amp;&amp; $D[0] == $Dstu) ||
-                ($f == $fstu
-                    &amp;&amp; $id[1] == $idstu
-                    &amp;&amp; $od[1] == $odstu
-                    &amp;&amp; $A[1] == $Astu
-                    &amp;&amp; $B[1] == $Bstu
-                    &amp;&amp; $C[1] == $Cstu
-                    &amp;&amp; $D[1] == $Dstu)){
-            return 1;
-        }
-        elsif (( $f == $fstu
-                        &amp;&amp; $id[0] == $idstu
-                        &amp;&amp; $od[0] == $odstu
-                        &amp;&amp; ($A[0] != $Astu || $B[0] != $Bstu)
-                        &amp;&amp; $C[0] == $Cstu
-                        &amp;&amp; $D[0] == $Dstu) ||
-                    ($f == $fstu
-                        &amp;&amp; $id[1] == $idstu
-                        &amp;&amp; $od[1] == $odstu
-                        &amp;&amp; ($A[1] != $Astu || $B[1] != $Bstu)
-                        &amp;&amp; $C[1] == $Cstu
-                        &amp;&amp; $D[1] == $Dstu)
-                || ($f == $fstu
-                    &amp;&amp; $id[0] == $idstu
-                    &amp;&amp; $od[0] == $odstu
-                    &amp;&amp; $A[0] == $Astu
-                    &amp;&amp; $B[0] == $Bstu
-                    &amp;&amp; ($C[0] != $Cstu || $D[0] != $Dstu))
-                || ($f == $fstu
-                    &amp;&amp; $id[1] == $idstu
-                    &amp;&amp; $od[1] == $odstu
-                    &amp;&amp; $A[1] == $Astu
-                    &amp;&amp; $B[1] == $Bstu
-                    &amp;&amp; ($C[1] != $Cstu || $D[1] != $Dstu))
+        my ($fstu, $idstu, $odstu, $Astu, $Bstu, $Cstu, $Dstu) =
+            @{$student};
+        if (
+            (
+                $f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; $A[0] == $Astu
+                &amp;&amp; $B[0] == $Bstu
+                &amp;&amp; $C[0] == $Cstu
+                &amp;&amp; $D[0] == $Dstu
+            )
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; $A[1] == $Astu
+                &amp;&amp; $B[1] == $Bstu
+                &amp;&amp; $C[1] == $Cstu
+                &amp;&amp; $D[1] == $Dstu)
             )
         {
-            $self-&gt;setMessage(1, &quot;Check your limits of integration.&quot;);
+            return 1;
+        } elsif (
+            (
+                $f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; ($A[0] != $Astu || $B[0] != $Bstu)
+                &amp;&amp; $C[0] == $Cstu
+                &amp;&amp; $D[0] == $Dstu
+            )
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; ($A[1] != $Astu || $B[1] != $Bstu)
+                &amp;&amp; $C[1] == $Cstu
+                &amp;&amp; $D[1] == $Dstu)
+            || ($f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; $A[0] == $Astu
+                &amp;&amp; $B[0] == $Bstu
+                &amp;&amp; ($C[0] != $Cstu || $D[0] != $Dstu))
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; $A[1] == $Astu
+                &amp;&amp; $B[1] == $Bstu
+                &amp;&amp; ($C[1] != $Cstu || $D[1] != $Dstu))
+            )
+        {
+            $self-&gt;setMessage(1, &#39;Check your limits of integration.&#39;);
             return 0.94;
-        }
-        elsif (($f == $fstu
-                    &amp;&amp; $id[0] == $idstu
-                    &amp;&amp; $od[0] == $odstu
-                    &amp;&amp; ($A[0] != $Astu || $B[0] != $Bstu)
-                    &amp;&amp; ($C[0] != $Cstu || $D[0] != $Dstu))
-                || ($f == $fstu
-                    &amp;&amp; $id[1] == $idstu
-                    &amp;&amp; $od[1] == $odstu
-                    &amp;&amp; ($A[1] != $Astu || $B[1] != $Bstu)
-                    &amp;&amp; ($C[1] != $Cstu || $D[1] != $Dstu))
-            ) {
-            $self-&gt;setMessage(1, &quot;Check your limits of integration and order of integration.&quot;);
+        } elsif (
+            (
+                $f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; ($A[0] != $Astu || $B[0] != $Bstu)
+                &amp;&amp; ($C[0] != $Cstu || $D[0] != $Dstu)
+            )
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; ($A[1] != $Astu || $B[1] != $Bstu)
+                &amp;&amp; ($C[1] != $Cstu || $D[1] != $Dstu))
+            )
+        {
+            $self-&gt;setMessage(1,
+                &#39;Check your limits of integration and order of integration.&#39;
+            );
             return 0.47;
         } else {
             return 0;
@@ -194,112 +202,119 @@ $multians = MultiAnswer($f, $id[0], $od[0], $A[0], $B[0], $C[0], $D[0])-&gt;with
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric');
-Context()->variables->are(
-    x  => 'Real',
-    dx => 'Real',
-    y  => 'Real',
-    dy => 'Real'
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(
+    x  =&gt; &#39;Real&#39;,
+    dx =&gt; &#39;Real&#39;,
+    y  =&gt; &#39;Real&#39;,
+    dy =&gt; &#39;Real&#39;
 );
-Context()->flags->set(reduceConstants => 0);
+Context()-&gt;flags-&gt;set(reduceConstants =&gt; 0);
 
-#  limits of integration
+# limits of integration
 
 $a = random(1, 5, 1);
 $b = $a + random(1, 4, 1);
 do { $c = random(1, 5, 1); }      until ($c != $a);
 do { $d = $c + random(1, 4, 1); } until ($d != $b);
 
-
 # integrand and volume
 
-$f = Formula("x*y");
-$V = Formula("($b^2-$a^2) * ($d^2-$c^2) / 4");
+$f = Formula(&#39;x * y&#39;);
+$V = Formula(&quot;($b^2-$a^2) * ($d^2-$c^2) / 4&quot;);
 
+# differentials and limits of integration
+# Case 0, element 0 of each array below, is if the order of integration is dx dy
+# Case 1, element 1 of each array below, is if the order of integration is dy dx
+# &#39;id&#39; and &#39;od&#39; stand for inner and outer differential
 
-#  differentials and limits of integration
-#
-#  Case 0, element 0 of each array below, is if the order of integration is dx dy
-#
-#  Case 1, element 1 of each array below, is if the order of integration is dy dx
-#
-#  'id' and 'od' stand for inner and outer differential
+@id = (Formula(&#39;dx&#39;), Formula(&#39;dy&#39;));    # (case 0, case 1)
+@od = (Formula(&#39;dy&#39;), Formula(&#39;dx&#39;));    # (case 0, case 1)
 
-@id = (Formula('dx'), Formula('dy'));    # (case 0, case 1)
-@od = (Formula('dy'), Formula('dx'));    # (case 0, case 1)
+# A = outer integral, lower limit
+# B = outer integral, upper limit
+# C = inner integral, lower limit
+# D = inner integral, upper limit
 
-#  A = outer integral, lower limit
-#  B = outer integral, upper limit
-#  C = inner integral, lower limit
-#  D = inner integral, upper limit
+@A = (Formula($c), Formula($a));    # (case 0, case 1)
+@B = (Formula($d), Formula($b));    # (case 0, case 1)
+@C = (Formula($a), Formula($c));    # (case 0, case 1)
+@D = (Formula($b), Formula($d));    # (case 0, case 1)
 
-@A = (Formula("$c"), Formula("$a"));    # (case 0, case 1)
-@B = (Formula("$d"), Formula("$b"));    # (case 0, case 1)
-@C = (Formula("$a"), Formula("$c"));    # (case 0, case 1)
-@D = (Formula("$b"), Formula("$d"));    # (case 0, case 1)
-
-$multians = MultiAnswer($f, $id[0], $od[0], $A[0], $B[0], $C[0], $D[0])->with(
-    singleResult => 1,
-    checker      => sub {
+$multians = MultiAnswer($f, $id[0], $od[0], $A[0], $B[0], $C[0], $D[0])-&gt;with(
+    singleResult =&gt; 1,
+    checker      =&gt; sub {
         my ($correct, $student, $self) = @_;
-        my ($fstu, $idstu, $odstu, $Astu, $Bstu, $Cstu, $Dstu) = @{$student};
-        if (($f == $fstu
-                    && $id[0] == $idstu
-                    && $od[0] == $odstu
-                    && $A[0] == $Astu
-                    && $B[0] == $Bstu
-                    && $C[0] == $Cstu
-                    && $D[0] == $Dstu) ||
-                ($f == $fstu
-                    && $id[1] == $idstu
-                    && $od[1] == $odstu
-                    && $A[1] == $Astu
-                    && $B[1] == $Bstu
-                    && $C[1] == $Cstu
-                    && $D[1] == $Dstu)){
-            return 1;
-        }
-        elsif (( $f == $fstu
-                        && $id[0] == $idstu
-                        && $od[0] == $odstu
-                        && ($A[0] != $Astu || $B[0] != $Bstu)
-                        && $C[0] == $Cstu
-                        && $D[0] == $Dstu) ||
-                    ($f == $fstu
-                        && $id[1] == $idstu
-                        && $od[1] == $odstu
-                        && ($A[1] != $Astu || $B[1] != $Bstu)
-                        && $C[1] == $Cstu
-                        && $D[1] == $Dstu)
-                || ($f == $fstu
-                    && $id[0] == $idstu
-                    && $od[0] == $odstu
-                    && $A[0] == $Astu
-                    && $B[0] == $Bstu
-                    && ($C[0] != $Cstu || $D[0] != $Dstu))
-                || ($f == $fstu
-                    && $id[1] == $idstu
-                    && $od[1] == $odstu
-                    && $A[1] == $Astu
-                    && $B[1] == $Bstu
-                    && ($C[1] != $Cstu || $D[1] != $Dstu))
+        my ($fstu, $idstu, $odstu, $Astu, $Bstu, $Cstu, $Dstu) =
+            @{$student};
+        if (
+            (
+                $f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; $A[0] == $Astu
+                &amp;&amp; $B[0] == $Bstu
+                &amp;&amp; $C[0] == $Cstu
+                &amp;&amp; $D[0] == $Dstu
+            )
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; $A[1] == $Astu
+                &amp;&amp; $B[1] == $Bstu
+                &amp;&amp; $C[1] == $Cstu
+                &amp;&amp; $D[1] == $Dstu)
             )
         {
-            $self->setMessage(1, "Check your limits of integration.");
+            return 1;
+        } elsif (
+            (
+                $f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; ($A[0] != $Astu || $B[0] != $Bstu)
+                &amp;&amp; $C[0] == $Cstu
+                &amp;&amp; $D[0] == $Dstu
+            )
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; ($A[1] != $Astu || $B[1] != $Bstu)
+                &amp;&amp; $C[1] == $Cstu
+                &amp;&amp; $D[1] == $Dstu)
+            || ($f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; $A[0] == $Astu
+                &amp;&amp; $B[0] == $Bstu
+                &amp;&amp; ($C[0] != $Cstu || $D[0] != $Dstu))
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; $A[1] == $Astu
+                &amp;&amp; $B[1] == $Bstu
+                &amp;&amp; ($C[1] != $Cstu || $D[1] != $Dstu))
+            )
+        {
+            $self-&gt;setMessage(1, &#39;Check your limits of integration.&#39;);
             return 0.94;
-        }
-        elsif (($f == $fstu
-                    && $id[0] == $idstu
-                    && $od[0] == $odstu
-                    && ($A[0] != $Astu || $B[0] != $Bstu)
-                    && ($C[0] != $Cstu || $D[0] != $Dstu))
-                || ($f == $fstu
-                    && $id[1] == $idstu
-                    && $od[1] == $odstu
-                    && ($A[1] != $Astu || $B[1] != $Bstu)
-                    && ($C[1] != $Cstu || $D[1] != $Dstu))
-            ) {
-            $self->setMessage(1, "Check your limits of integration and order of integration.");
+        } elsif (
+            (
+                $f == $fstu
+                &amp;&amp; $id[0] == $idstu
+                &amp;&amp; $od[0] == $odstu
+                &amp;&amp; ($A[0] != $Astu || $B[0] != $Bstu)
+                &amp;&amp; ($C[0] != $Cstu || $D[0] != $Dstu)
+            )
+            || ($f == $fstu
+                &amp;&amp; $id[1] == $idstu
+                &amp;&amp; $od[1] == $odstu
+                &amp;&amp; ($A[1] != $Astu || $B[1] != $Bstu)
+                &amp;&amp; ($C[1] != $Cstu || $D[1] != $Dstu))
+            )
+        {
+            $self-&gt;setMessage(1,
+                &#39;Check your limits of integration and order of integration.&#39;
+            );
             return 0.47;
         } else {
             return 0;
@@ -310,39 +325,34 @@ $multians = MultiAnswer($f, $id[0], $od[0], $A[0], $B[0], $C[0], $D[0])->with(
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>There are two separate cases: integrating with respect to dx dy (which we call case
- 0) or with respect to dy dx (which we call case 1). The zeroth and first entries
- in each of the arrays <code>@id, @od, @A, @B, @C, @D</code> hold the values for case 0 and case 1,
-  respectively. We used constant limits of integration to keep this example easy to follow,
-  but we encourage you to write questions over non-rectangular regions.</p>
-
-<p>The <code>$multians</code> object has been compartmentalized, so you shouldn't need to change it
- unless you want to fiddle with the weighted score for each answer blank (by changing
- the return values). The return values are set so that the percentages come out nicely.</p>
-
+					<p>There are two separate cases: integrating with respect to dx dy (which we call case 0) or with respect to dy dx (which we call case 1). The zeroth and first entries in each of the arrays <code>@id, @od, @A, @B, @C, @D</code> hold the values for case 0 and case 1, respectively. We used constant limits of integration to keep this example easy to follow, but we encourage you to write questions over non-rectangular regions.</p>
+<p>The <code>$multians</code> object has been compartmentalized, so you shouldn’t need to change it unless you want to fiddle with the weighted score for each answer blank (by changing the return values). The return values are set so that the percentages come out nicely.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Set up a double integral in rectangular coordinates for calculating the volume of
-the solid under the graph of the function [` f(x,y) = [$f] `] over the region [` [$a] \leq x \leq [$b] `]
-and [` [$c] \leq y \leq [$d] `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Set up a double integral in rectangular coordinates for calculating the volume
+of the solid under the graph of the function [`f(x,y) = [$f]`] over the region
+[`[$a] \leq x \leq [$b]`] and [`[$c] \leq y \leq [$d]`].
 
-_Instructions:_ Please enter the integrand in the first answer box . Depending on the order of
-integration you choose, enter _dx_ and _dy_ in either order into the second and third answer
-boxes with only one _dx_ or _dy_ in each box . Then, enter the limits of integration
-and evaluate the integral to find the volume.
+_Instructions:_ Please enter the integrand in the first answer box . Depending
+on the order of integration you choose, enter _dx_ and _dy_ in either order into
+the second and third answer boxes with only one _dx_ or _dy_ in each box . Then,
+enter the limits of integration and evaluate the integral to find the volume.
 
-[`` \int_A ^ B \int_C ^ D ``] [___________]{$multians} [_____]{$multians} [_____]{$multians}
+[``\int_A^B \int_C^D``] [_]{$multians}{10} [_]{$multians}{5} [_]{$multians}{5}
 
-A = [_____________]{$multians}
-B = [_____________]{$multians}
-C = [_____________]{$multians}
-D = [_____________]{$multians}
+A = [_]{$multians}{10}
 
-Volume = [___________________________]{$V}
+B = [_]{$multians}{10}
+
+C = [_]{$multians}{10}
+
+D = [_]{$multians}{10}
+
+Volume = [_]{$V}{10}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -352,37 +362,38 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Set up a double integral in rectangular coordinates for calculating the volume of
-the solid under the graph of the function [` f(x,y) = [$f] `] over the region [` [$a] \leq x \leq [$b] `]
-and [` [$c] \leq y \leq [$d] `].
+Set up a double integral in rectangular coordinates for calculating the volume
+of the solid under the graph of the function [`f(x,y) = [$f]`] over the region
+[`[$a] \leq x \leq [$b]`] and [`[$c] \leq y \leq [$d]`].
 
-_Instructions:_ Please enter the integrand in the first answer box . Depending on the order of
-integration you choose, enter _dx_ and _dy_ in either order into the second and third answer
-boxes with only one _dx_ or _dy_ in each box . Then, enter the limits of integration
-and evaluate the integral to find the volume.
+_Instructions:_ Please enter the integrand in the first answer box . Depending
+on the order of integration you choose, enter _dx_ and _dy_ in either order into
+the second and third answer boxes with only one _dx_ or _dy_ in each box . Then,
+enter the limits of integration and evaluate the integral to find the volume.
 
-[`` \int_A ^ B \int_C ^ D ``] [___________]{$multians} [_____]{$multians} [_____]{$multians}
+[``\int_A^B \int_C^D``] [_]{$multians}{10} [_]{$multians}{5} [_]{$multians}{5}
 
-A = [_____________]{$multians}
-B = [_____________]{$multians}
-C = [_____________]{$multians}
-D = [_____________]{$multians}
+A = [_]{$multians}{10}
 
-Volume = [___________________________]{$V}
+B = [_]{$multians}{10}
+
+C = [_]{$multians}{10}
+
+D = [_]{$multians}{10}
+
+Volume = [_]{$V}{10}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>The only interesting thing to note here is that you must use <code>$multians</code> for each
- answer blank (except the last one, which is independent.)</p>
-
+					<p>The only interesting thing to note here is that you must use <code>$multians</code> for each answer blank (except the last one, which is independent.)</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -399,20 +410,19 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 Solution explanation goes here.
 END_PGML_SOLUTION
 
-COMMENT('Allows integration in either order.');
+COMMENT(&#39;Allows integration in either order.&#39;);
 
 ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

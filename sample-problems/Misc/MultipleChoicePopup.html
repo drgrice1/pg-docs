@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Multiple Choice with Popup</h1>
-		<p>Multiple choice template</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,25 +65,25 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;,
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserPopUp.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>The macro <code>parserPopUp.pl</code> must be loaded.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$showPartialCorrectAnswers = 0;
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="$showPartialCorrectAnswers = 0;
 
-$popup = PopUp([ &quot;?&quot;, &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Blue&#39;);
+$popup = PopUp([ &#39;?&#39;, &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Blue&#39;);
 
 $dropdown1 = DropDown([ &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Green&#39;);
 
-$dropdown2 = DropDown([ &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Red&#39;, placeholder =&gt; &#39;Select One&#39;);
+$dropdown2 =
+    DropDown([ &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Red&#39;, placeholder =&gt; &#39;Select One&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -93,43 +93,34 @@ $dropdown2 = DropDown([ &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;R
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$showPartialCorrectAnswers = 0;
 
-$popup = PopUp([ "?", 'Red', 'Blue', 'Green' ], 'Blue');
+$popup = PopUp([ &#39;?&#39;, &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Blue&#39;);
 
-$dropdown1 = DropDown([ 'Red', 'Blue', 'Green' ], 'Green');
+$dropdown1 = DropDown([ &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Green&#39;);
 
-$dropdown2 = DropDown([ 'Red', 'Blue', 'Green' ], 'Red', placeholder => 'Select One');
+$dropdown2 =
+    DropDown([ &#39;Red&#39;, &#39;Blue&#39;, &#39;Green&#39; ], &#39;Red&#39;, placeholder =&gt; &#39;Select One&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>To create a radio object, use <code>$popup = PopUp([choices,...],correct);</code>
-For details, see parserPopUp.pl The context is not really necessary, but multiple
-choice questions are often follow-up questions, so we leave it in.</p>
-
-<p>The <code>parsePopUp.pl</code> macro has two methods <code>PopUp</code> and <code>DropDown</code>. The former requires
-that a default <code>?</code> is coded in the first element.  The latter will put that in
-unless the <code>placeholder</code> option is there.</p>
-
-<p>Note: setting the <code>$showPartialCorrectAnswers</code> to 0 is often desirable for
-multiple choice problems so students don't know which part is incorrect and
-could therefore just guess the answer.</p>
-
+					<p>To create a radio object, use <code>$popup = PopUp([choices,...],correct);</code> For details, see parserPopUp.pl The context is not really necessary, but multiple choice questions are often follow-up questions, so we leave it in.</p>
+<p>The <code>parsePopUp.pl</code> macro has two methods <code>PopUp</code> and <code>DropDown</code>. The former requires that a default <code>?</code> is coded in the first element. The latter will put that in unless the <code>placeholder</code> option is there.</p>
+<p>Note: setting the <code>$showPartialCorrectAnswers</code> to 0 is often desirable for multiple choice problems so students don’t know which part is incorrect and could therefore just guess the answer.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Select my favorite color [__]{$popup}
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Select my favorite color [_]{$popup}
 
 **Same thing, but using DropDown**
 
-Select my favorite color [__]{$dropdown1}
+Select my favorite color [_]{$dropdown1}
 
 **Same thing, but using DropDown with placeholder option**
 
-Select my favorite color [__]{$dropdown2}
-
+Select my favorite color [_]{$dropdown2}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -139,33 +130,30 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Select my favorite color [__]{$popup}
+Select my favorite color [_]{$popup}
 
 **Same thing, but using DropDown**
 
-Select my favorite color [__]{$dropdown1}
+Select my favorite color [_]{$dropdown1}
 
 **Same thing, but using DropDown with placeholder option**
 
-Select my favorite color [__]{$dropdown2}
-
+Select my favorite color [_]{$dropdown2}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
-
-* The first correct answer is [@ $popup-&gt;correct_ans() @].
-*The second correct answer is [@ $dropdown1-&gt;correct_ans() @].
-*The third correct answer is [@ $dropdown2-&gt;correct_ans() @].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
+* The first correct answer is [$popup-&gt;correct_ans].
+* The second correct answer is [$dropdown1-&gt;correct_ans].
+* The third correct answer is [$dropdown2-&gt;correct_ans].
 END_PGML_SOLUTION
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
@@ -176,10 +164,9 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
-
-* The first correct answer is [@ $popup->correct_ans() @].
-*The second correct answer is [@ $dropdown1->correct_ans() @].
-*The third correct answer is [@ $dropdown2->correct_ans() @].
+* The first correct answer is [$popup-&gt;correct_ans].
+* The second correct answer is [$dropdown1-&gt;correct_ans].
+* The third correct answer is [$dropdown2-&gt;correct_ans].
 END_PGML_SOLUTION
 
 ENDDOCUMENT();</pre>
@@ -187,13 +174,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

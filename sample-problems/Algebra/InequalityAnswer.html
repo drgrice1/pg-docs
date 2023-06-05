@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Answer as an Inequality</h1>
-		<p>Algebra: answer is an inequality</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextInequalities.html">contextInequalities.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextInequalities.html">contextInequalities.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextInequalities.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,22 +65,21 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextInequalities.
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'contextInequalities.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextInequalities.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We must load <code>contextInequalities.pl</code>.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&quot;Inequalities-Only&quot;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Inequalities-Only&#39;);
 Context()-&gt;flags-&gt;set(formatStudentAnswer =&gt; &#39;parsed&#39;);
 
-$a = random(3, 9, 1);
+$a = random(3, 9);
 
 $ineq = &quot;-$a x \leq 10&quot;;    # TeX
 
@@ -92,36 +91,30 @@ $answer = Compute(&quot;x &gt;= -10 / $a&quot;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context("Inequalities-Only");
-Context()->flags->set(formatStudentAnswer => 'parsed');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Inequalities-Only&#39;);
+Context()-&gt;flags-&gt;set(formatStudentAnswer =&gt; &#39;parsed&#39;);
 
-$a = random(3, 9, 1);
+$a = random(3, 9);
 
-$ineq = "-$a x \leq 10";    # TeX
+$ineq = &quot;-$a x \leq 10&quot;;    # TeX
 
-$answer = Compute("x >= -10 / $a");
+$answer = Compute(&quot;x &gt;= -10 / $a&quot;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We require students to use inequalities by using <code>Context('Inequalities-Only')</code>.
- If we had used <code>Context('Inequalities')</code> instead, then students could also enter
- their answer using interval notation. For more details, please see
- <a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextInequalities.html">contextInequalities.pl</a>.</p>
-
-<p>We use <code>formatStudentAnswer=&gt;'parsed'</code> and <code>Compute()</code> so that the student's
- answer are left as fractions rather than reduced to decimals.</p>
-
+					<p>We require students to use inequalities by using <code>Context('Inequalities-Only')</code>. If we had used <code>Context('Inequalities')</code> instead, then students could also enter their answer using interval notation. For more details, please see <a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextInequalities.html">contextInequalities.pl</a>.</p>
+<p>We use <code>formatStudentAnswer =&gt; 'parsed'</code> and <code>Compute()</code> so that the student’s answer is left as a fraction rather than reduced to a decimal.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Solve the inequality [` \displaystyle [$ineq] `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Solve the inequality [`\displaystyle [$ineq]`].
 Enter your answer using inequality notation.
 
-[_________________]{$answer}
+[_]{$answer}{20}
 
 [@ helpLink(&#39;inequalities&#39;) @]*
 END_PGML
@@ -133,30 +126,28 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Solve the inequality [` \displaystyle [$ineq] `].
+Solve the inequality [`\displaystyle [$ineq]`].
 Enter your answer using inequality notation.
 
-[_________________]{$answer}
+[_]{$answer}{20}
 
-[@ helpLink('inequalities') @]*
+[@ helpLink(&#39;inequalities&#39;) @]*
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
-ENDDOCUMENT();
-" aria-label="copy to clipboard">
+ENDDOCUMENT();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
 							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
@@ -167,19 +158,17 @@ ENDDOCUMENT();
 Solution explanation goes here.
 END_PGML_SOLUTION
 
-ENDDOCUMENT();
-</pre>
+ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

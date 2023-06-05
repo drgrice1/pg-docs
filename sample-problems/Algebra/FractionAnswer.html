@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Fraction Answer</h1>
-		<p>fraction answer</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextFraction.html">contextFraction.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextFraction.html">contextFraction.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextFraction.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,21 +65,20 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextFraction.pl&#
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'contextFraction.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextFraction.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>The macro <code>contextFraction.pl</code> must be loaded.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&quot;Fraction-NoDecimals&quot;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Fraction-NoDecimals&#39;);
 
-$answer = Compute(&quot;3/2&quot;);
+$answer = Compute(&#39;3/2&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -87,38 +86,32 @@ $answer = Compute(&quot;3/2&quot;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context("Fraction-NoDecimals");
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Fraction-NoDecimals&#39;);
 
-$answer = Compute("3/2");
+$answer = Compute(&#39;3/2&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
 					<p>The macro <code>contextFraction.pl</code> provides four contexts:</p>
-
-<pre>
- Context("Fraction");
- Context("Fraction-NoDecimals");
- Context("LimitedFraction");
- Context("LimitedProperFraction");
-</pre>
-
-<p>For the differences among these, see the POD documentation for
- <a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextFraction.html">contextFraction.pl</a>.</p>
-
+<div class="sourceCode" id="contexts"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="contexts-1"><a href="#contexts-1" aria-hidden="true"></a> Context(<span class="kw">&#39;</span><span class="st">Fraction</span><span class="kw">&#39;</span>);</span>
+<span id="contexts-2"><a href="#contexts-2" aria-hidden="true"></a> Context(<span class="kw">&#39;</span><span class="st">Fraction-NoDecimals</span><span class="kw">&#39;</span>);</span>
+<span id="contexts-3"><a href="#contexts-3" aria-hidden="true"></a> Context(<span class="kw">&#39;</span><span class="st">LimitedFraction</span><span class="kw">&#39;</span>);</span>
+<span id="contexts-4"><a href="#contexts-4" aria-hidden="true"></a> Context(<span class="kw">&#39;</span><span class="st">LimitedProperFraction</span><span class="kw">&#39;</span>);</span></code></pre></div>
+<p>For the differences among these, see the POD documentation for <a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextFraction.html">contextFraction.pl</a>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Simplify [`` \frac {6}{4} ``].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Simplify [``\frac{6}{4}``].
 
-Answer = [_______________]{$answer-&gt;cmp(
-            studentsMustReduceFractions =&gt; 1,
-            reduceFractions             =&gt; 1,
-            allowMixedNumbers           =&gt; 0,
-        )}
+Answer = [_]{$answer-&gt;cmp(
+    studentsMustReduceFractions =&gt; 1,
+    reduceFractions =&gt; 1,
+    allowMixedNumbers =&gt; 0
+)}{15}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -128,28 +121,26 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Simplify [`` \frac {6}{4} ``].
+Simplify [``\frac{6}{4}``].
 
-Answer = [_______________]{$answer->cmp(
-            studentsMustReduceFractions => 1,
-            reduceFractions             => 1,
-            allowMixedNumbers           => 0,
-        )}
+Answer = [_]{$answer-&gt;cmp(
+    studentsMustReduceFractions =&gt; 1,
+    reduceFractions =&gt; 1,
+    allowMixedNumbers =&gt; 0
+)}{15}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>There are many context flags that control how fraction answers are checked.
- See the POD documentation for <a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextFraction.html">contextFraction.pl</a>.</p>
-
+					<p>There are many context flags that control how fraction answers are checked. See the POD documentation for <a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextFraction.html">contextFraction.pl</a>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
-Factor and cancel to obtain [` \displaystyle [$answer]  `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
+Factor and cancel to obtain [`\displaystyle [$answer]`].
 END_PGML_SOLUTION
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
@@ -160,7 +151,7 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
-Factor and cancel to obtain [` \displaystyle [$answer]  `].
+Factor and cancel to obtain [`\displaystyle [$answer]`].
 END_PGML_SOLUTION
 
 ENDDOCUMENT();</pre>
@@ -168,13 +159,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

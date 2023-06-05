@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Answer Blank in the Exponent</h1>
-		<p>Answer blank in the exponent</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;unionTables.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,36 +65,40 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;unionTables.pl&#39;,
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'unionTables.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;unionTables.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>The macro <code>unionTables.pl</code> provides a simple table for formatting.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;variables-&gt;are(a =&gt; &#39;Real&#39;, b =&gt; &#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(a =&gt; &#39;Real&#39;, b =&gt; &#39;Real&#39;);
 
-$n = random(3, 9, 1);
+$n = random(3, 9);
 
-#  TeX
+# TeX
 $expression = &quot;a^{$n} b^{$n}&quot;;
 
-#  MathObjects
+# MathObjects
 $base     = Formula(&quot;a*b&quot;);
 $exponent = Formula(&quot;$n&quot;);
 
 # Display exponents nicely
 Context()-&gt;texStrings;
 if ($displayMode eq &#39;TeX&#39;) {
-    $showpower = &quot;\( \displaystyle $expression = (&quot; . ans_rule(4) . &quot;)^{&quot; . ans_rule(4) . &quot;}\)&quot;;
+    $showpower =
+        &quot;\( \displaystyle $expression = (&quot;
+        . ans_rule(4) . &quot;)^{&quot;
+        . ans_rule(4) . &quot;}\)&quot;;
 } else {
     $showpower = ColumnTable(
-        &quot;\( \displaystyle $expression = \Big( \)&quot; . ans_rule(4) . &quot;\( \Big) \)&quot;,
+        &quot;\( \displaystyle $expression = \Big( \)&quot;
+            . ans_rule(4)
+            . &quot;\( \Big) \)&quot;,
         ans_rule(4) . $BR . $BR,
         indent     =&gt; 0,
         separation =&gt; 0,
@@ -109,46 +113,48 @@ Context()-&gt;normalStrings;
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->variables->are(a => 'Real', b => 'Real');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(a =&gt; &#39;Real&#39;, b =&gt; &#39;Real&#39;);
 
-$n = random(3, 9, 1);
+$n = random(3, 9);
 
-#  TeX
-$expression = "a^{$n} b^{$n}";
+# TeX
+$expression = &quot;a^{$n} b^{$n}&quot;;
 
-#  MathObjects
-$base     = Formula("a*b");
-$exponent = Formula("$n");
+# MathObjects
+$base     = Formula(&quot;a*b&quot;);
+$exponent = Formula(&quot;$n&quot;);
 
 # Display exponents nicely
-Context()->texStrings;
-if ($displayMode eq 'TeX') {
-    $showpower = "\( \displaystyle $expression = (" . ans_rule(4) . ")^{" . ans_rule(4) . "}\)";
+Context()-&gt;texStrings;
+if ($displayMode eq &#39;TeX&#39;) {
+    $showpower =
+        &quot;\( \displaystyle $expression = (&quot;
+        . ans_rule(4) . &quot;)^{&quot;
+        . ans_rule(4) . &quot;}\)&quot;;
 } else {
     $showpower = ColumnTable(
-        "\( \displaystyle $expression = \Big( \)" . ans_rule(4) . "\( \Big) \)",
+        &quot;\( \displaystyle $expression = \Big( \)&quot;
+            . ans_rule(4)
+            . &quot;\( \Big) \)&quot;,
         ans_rule(4) . $BR . $BR,
-        indent     => 0,
-        separation => 0,
-        valign     => 'BOTTOM'
+        indent     =&gt; 0,
+        separation =&gt; 0,
+        valign     =&gt; &#39;BOTTOM&#39;
     );
 }
-Context()->normalStrings;
+Context()-&gt;normalStrings;
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We have a some code to display the answer blanks nicely in different modes,
- which you shouldn't need to change except perhaps the width for each answer blank.</p>
-
+					<p>We have a some code to display the answer blanks nicely in different modes, which you shouldn’t need to change except perhaps the width for each answer blank.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 Rewrite the following using a single exponent.
-
 [$showpower]***
 END_PGML
 " aria-label="copy to clipboard">
@@ -160,7 +166,6 @@ END_PGML
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Rewrite the following using a single exponent.
-
 [$showpower]***
 END_PGML
 </pre>
@@ -168,13 +173,12 @@ END_PGML
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					<p>We insert the nicely formatted answer blanks using <code>$showpower</code>.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="ANS($base-&gt;cmp());
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="ANS($base-&gt;cmp());
 ANS($exponent-&gt;cmp());
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -183,21 +187,19 @@ ANS($exponent-&gt;cmp());
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">ANS($base->cmp());
-ANS($exponent->cmp());
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">ANS($base-&gt;cmp());
+ANS($exponent-&gt;cmp());
 </pre>
 				</div>
 				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Answer</b></p>
-					<p>Because the answer blanks are traditional ans_rule, then we need to use this
- style of answer checking.</p>
-
+					<p>Because the answer blanks are traditional ans_rule, then we need to use this style of answer checking.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -217,13 +219,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

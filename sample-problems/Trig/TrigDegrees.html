@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Degrees in Trigonometric Functions</h1>
-		<p>Trigonometry: trig functions in degrees using context TrigDegrees</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/contexts/contextTrigDegrees.pl">contextTrigDegrees.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/contexts/contextTrigDegrees.pl">contextTrigDegrees.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,9 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextTrigDegrees.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -63,19 +64,19 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextTrigDegrees.p
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'contextTrigDegrees.pl', 'PGcourse.pl');
+
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;contextTrigDegrees.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We load the <code>contextTrigDegrees.pl</code> macro to help with trig functions with degrees.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;TrigDegrees&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;TrigDegrees&#39;);
 
 $ans1 = Compute(&quot;sin(30)&quot;);
 $ans2 = Compute(&quot;arcsin(0.5)&quot;);
@@ -86,28 +87,22 @@ $ans2 = Compute(&quot;arcsin(0.5)&quot;);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('TrigDegrees');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;TrigDegrees&#39;);
 
-$ans1 = Compute("sin(30)");
-$ans2 = Compute("arcsin(0.5)");
+$ans1 = Compute(&quot;sin(30)&quot;);
+$ans2 = Compute(&quot;arcsin(0.5)&quot;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>To override the WeBWorK default of evaluating trig functions in radians, use the <code>TrigDegrees</code> context,
- which redefines the standard trig functions to be in degrees, both in any formulas that appear
- later in the PG code and in any formulas that students enter in answer blanks.</p>
-
-<p>These redefined functions allow students to enter inverse functions using syntax such as
- <code>atan(x)</code>, or <code>arctan(x)</code>, or <code>tan^(-1)(x)</code>. You may want to mention the syntax options in the
- main text section of the problem.</p>
-
+					<p>To override the WeBWorK default of evaluating trig functions in radians, use the <code>TrigDegrees</code> context, which redefines the standard trig functions to be in degrees, both in any formulas that appear later in the PG code and in any formulas that students enter in answer blanks.</p>
+<p>These redefined functions allow students to enter inverse functions using syntax such as <code>atan(x)</code>, or <code>arctan(x)</code>, or <code>tan^(-1)(x)</code>. You may want to mention the syntax options in the main text section of the problem.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 1. [`\sin(30)=`] [___]{$ans1}
 2. [`\arcsin(1/2)=`] [___]{$ans2}
 
@@ -131,13 +126,12 @@ END_PGML
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -154,20 +148,19 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 Solution explanation goes here.
 END_PGML_SOLUTION
 
-COMMENT("Redefines trig functions to be in degrees (not radians).");
+COMMENT(&quot;Redefines trig functions to be in degrees (not radians).&quot;);
 
 ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

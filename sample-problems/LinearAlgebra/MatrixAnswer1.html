@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Matrix Answer</h1>
-		<p>Answer is a matrix</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,9 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,25 +63,29 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Matrix&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Matrix&#39;);
 
-$A = Matrix([ [ random(-5, 5), random(-5, 5), random(-5, 5) ],
-    [ random(-5, 5), random(-5, 5), random(-5, 5) ], ]);
+$A = Matrix([
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+]);
 
-$B = Matrix([ [ random(-5, 5), random(-5, 5), random(-5, 5) ],
-    [ random(-5, 5), random(-5, 5), random(-5, 5) ], ]);
+$B = Matrix([
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+]);
 
 $answer = $A * ($B-&gt;transpose);
 " aria-label="copy to clipboard">
@@ -90,41 +95,37 @@ $answer = $A * ($B-&gt;transpose);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Matrix');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Matrix&#39;);
 
-$A = Matrix([ [ random(-5, 5), random(-5, 5), random(-5, 5) ],
-    [ random(-5, 5), random(-5, 5), random(-5, 5) ], ]);
+$A = Matrix([
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+]);
 
-$B = Matrix([ [ random(-5, 5), random(-5, 5), random(-5, 5) ],
-    [ random(-5, 5), random(-5, 5), random(-5, 5) ], ]);
+$B = Matrix([
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+    [ random(-5, 5), random(-5, 5), random(-5, 5) ],
+]);
 
-$answer = $A * ($B->transpose);
+$answer = $A * ($B-&gt;transpose);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>Use <code>Context('Matrix');</code>. MathObject matrices are constructed using the <code>Matrix()</code>
- constructor. The matrix <code>A</code> has two rows and three columns, and is constructed by
- <code>[[row 1 entries], [row 2 entries]]</code>, and this construction generalizes in the
- obvious way. If a matrix has only one row, such as <code>B</code>, then it is entered as
- <code>[row 1 entries]</code> and not as <code>[ [row 1 entries] ]</code>. If <code>$B = Matrix([a,b,c]);</code>, then
- the matrix <code>$B-&gt;transpose</code> is equivalent to <code>Matrix([[a],[b],[c]]);</code> which has an outer
- pair of brackets enclosing all of the rows, where each row encloses its single element
- with brackets.</p>
-
+					<p>Use <code>Context('Matrix');</code>. MathObject matrices are constructed using the <code>Matrix()</code> constructor. The matrix <code>A</code> has two rows and three columns, and is constructed by <code>[[row 1 entries], [row 2 entries]]</code>, and this construction generalizes in the obvious way. If a matrix has only one row, such as <code>B</code>, then it is entered as <code>[row 1 entries]</code> and not as <code>[ [row 1 entries] ]</code>. If <code>$B = Matrix([a,b,c]);</code>, then the matrix <code>$B-&gt;transpose</code> is equivalent to <code>Matrix([[a],[b],[c]]);</code> which has an outer pair of brackets enclosing all of the rows, where each row encloses its single element with brackets.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 Suppose
 
-&gt;&gt; [`` A = [$A]``] and [``B = [$B] . ``] &lt;&lt;
+&gt;&gt; [``A = [$A]``] and [``B = [$B].``] &lt;&lt;
 
 Evaluate the following matrix product.
 
-[` A B^T = `][_____]*{$answer}
+[`A B^T =`] [_____]*{$answer}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -136,24 +137,23 @@ END_PGML
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Suppose
 
->> [`` A = [$A]``] and [``B = [$B] . ``] <<
+&gt;&gt; [``A = [$A]``] and [``B = [$B].``] &lt;&lt;
 
 Evaluate the following matrix product.
 
-[` A B^T = `][_____]*{$answer}
+[`A B^T =`] [_____]*{$answer}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -173,13 +173,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

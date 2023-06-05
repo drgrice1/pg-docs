@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Two-D Vector Field</h1>
-		<p>Vector Calculus: graph of a 2D vector field</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -63,19 +63,18 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGtikz.pl&#39;, &#39
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGtikz.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>The macro <code>PGtikz.pl</code> is used to produced the vector field.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$graph = createTikZImage();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="$graph = createTikZImage();
 $graph-&gt;texPackages([&#39;ifthen&#39;]);
 $graph-&gt;BEGIN_TIKZ
 \draw[dotted] (-5,-5) grid (5,5);
@@ -99,17 +98,17 @@ END_TIKZ
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$graph = createTikZImage();
-$graph->texPackages(['ifthen']);
-$graph->BEGIN_TIKZ
+$graph-&gt;texPackages([&#39;ifthen&#39;]);
+$graph-&gt;BEGIN_TIKZ
 \draw[dotted] (-5,-5) grid (5,5);
-\draw[->] (-5,0) -- (5.25,0) node[above right] {\(x\)};
+\draw[-&gt;] (-5,0) -- (5.25,0) node[above right] {\(x\)};
 \foreach \x in {-5,...,-1,1,2,...,5} \draw(\x,-5) node [below] {\x};
-\draw[->] (0,-5) -- (0,5.25) node[above right] {\(y\)};
+\draw[-&gt;] (0,-5) -- (0,5.25) node[above right] {\(y\)};
 \foreach \y in {-5,...,-1,1,2,...,5} \draw(-5,\y) node [left] {\y};
 \foreach \x in {-4,...,4} {
     \foreach \y in {-4,...,4} {
         \ifthenelse{\equal{\x}{0} \AND \equal{\y}{0}}{}{
-            \draw[thick, blue,->] (\x,\y) -- ({\x+\x/(\x*\x+\y*\y)},{\y+\y/(\x*\x+\y*\y)});
+            \draw[thick, blue,-&gt;] (\x,\y) -- ({\x+\x/(\x*\x+\y*\y)},{\y+\y/(\x*\x+\y*\y)});
             }
     }
 }
@@ -118,19 +117,14 @@ END_TIKZ
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The vector field is created directly.  The vector field is
- <x/(x^2+y^2), y/(x^2+y^2)> which is not defined at the origin.  Therefore,
- we don't draw the vector there and use the <code>ifthen</code> package to load the <code>\ifthenelse</code>
- latex command.</p>
-
+					<p>The vector field is created directly. The vector field is &lt;x/(x<sup>2+y</sup>2), y/(x<sup>2+y</sup>2)&gt; which is not defined at the origin. Therefore, we don’t draw the vector there and use the <code>ifthen</code> package to load the <code>\ifthenelse</code> latex command.</p>
 <p>The vector is created using the <code>\draw</code> command.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 This is a velocity vector field for an explosion at the origin
 that decreases in speed the farther the distance is from the origin.
 
@@ -149,22 +143,21 @@ END_PGML
 This is a velocity vector field for an explosion at the origin
 that decreases in speed the farther the distance is from the origin.
 
-[``\vec{v} =  \left< \frac{x}{x^2+y^2}, \frac{y}{x^2+y^2} \right>``]
+[``\vec{v} =  \left&lt; \frac{x}{x^2+y^2}, \frac{y}{x^2+y^2} \right&gt;``]
 
->> [@ image($graph, width=> 400) @]* <<
+&gt;&gt; [@ image($graph, width=&gt; 400) @]* &lt;&lt;
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					<p>This shows the vector field graph.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -186,13 +179,12 @@ ENDDOCUMENT();
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

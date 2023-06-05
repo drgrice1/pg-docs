@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Vector Operations</h1>
-		<p>Vector Calculus: Basic vector operations</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/parsers/parserVectorUtils.html">parserVectorUtils.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserVectorUtils.html">parserVectorUtils.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserVectorUtils.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,19 +65,18 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserVectorUtils.pl
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'parserVectorUtils.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserVectorUtils.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					<p>We load <code>parserVectorUtils.pl</code> to have access to functions on vectors like norm and unit.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Vector&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Vector&#39;);
 
 $U = non_zero_vector3D(-9,9,1);
 $V = non_zero_vector3D(-9,9,1);
@@ -123,13 +122,13 @@ END_PGML
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Vector');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Vector&#39;);
 
 $U = non_zero_vector3D(-9,9,1);
 $V = non_zero_vector3D(-9,9,1);
 
 # value works only for vectors of constants
-@Uarray = $U->value;
+@Uarray = $U-&gt;value;
 $Ucomp2 = $Uarray[1];
 
 $UdotV = $U . $V;
@@ -140,8 +139,8 @@ $Vunit = unit($V);
 # Prevent students from entering the dot and cross products,
 # and the vector functions norm and unit.
 
-Context()->operators->undefine('.',"><");
-Context()->functions->disable('Vector');
+Context()-&gt;operators-&gt;undefine(&#39;.&#39;,&quot;&gt;&lt;&quot;);
+Context()-&gt;functions-&gt;disable(&#39;Vector&#39;);
 
 
 BEGIN_PGML
@@ -157,29 +156,22 @@ d. [` \left\| \vec{v} \right\| = `] [___________]{$Vlength}
 
 e. Enter a unit vector in the direction of [` \vec{v} `]. [______________]{$Vunit}
 
-f. Enter a vector parallel to [` \vec{v} `]. [________________]{$V->cmp( parallel=>1 )}
+f. Enter a vector parallel to [` \vec{v} `]. [________________]{$V-&gt;cmp( parallel=&gt;1 )}
 
 g. Enter a vector in the same direction as [` \vec{v} `].
-[__________]{$V->cmp( parallel=>1, sameDirection=>1 )}
+[__________]{$V-&gt;cmp( parallel=&gt;1, sameDirection=&gt;1 )}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We use <code>non_zero_vector3D(low,high,increment)</code> to randomly generate some vectors. Calling <code>$U-&gt;value</code>
- returns a (Perl) array of numbers. (Note that <code>-&gt;value</code> does not work on a vector whose
- components are non-constant formulas.) MathObjects defines the operators <code>.</code> and <code>x</code> to be the
- dot product and cross product when they occur between two vectors (that is, these operations
- are overloaded). The functions norm and unit calculate the length of a vector and a unit
- vector in the same direction. We undefine the dot and cross product as well as the functions
- norm and unit so that students cannot enter them in their answers.</p>
-
+					<p>We use <code>non_zero_vector3D(low,high,increment)</code> to randomly generate some vectors. Calling <code>$U-&gt;value</code> returns a (Perl) array of numbers. (Note that <code>-&gt;value</code> does not work on a vector whose components are non-constant formulas.) MathObjects defines the operators <code>.</code> and <code>x</code> to be the dot product and cross product when they occur between two vectors (that is, these operations are overloaded). The functions norm and unit calculate the length of a vector and a unit vector in the same direction. We undefine the dot and cross product as well as the functions norm and unit so that students cannot enter them in their answers.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -201,13 +193,12 @@ ENDDOCUMENT();
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

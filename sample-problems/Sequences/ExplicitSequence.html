@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Explicit Sequence</h1>
-		<p>Integral calculus: sequences</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -64,20 +64,18 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;);
-Context()-&gt;variables-&gt;are(n =&gt; &#39;Real&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(n =&gt; &#39;Real&#39;);
 
 $answer = Compute(&#39;(-1)^n / n!&#39;);
 $answer-&gt;{test_points} = [ [1], [2], [3], [4], [5], [6] ];
@@ -92,7 +90,7 @@ $answer-&gt;{test_points} = [ [1], [2], [3], [4], [5], [6] ];
     &quot;\ldots&quot;
 );
 
-$sequence = join(&quot;, &quot;, @seq);
+$sequence = join(&#39;, &#39;, @seq);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -100,42 +98,36 @@ $sequence = join(&quot;, &quot;, @seq);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric');
-Context()->variables->are(n => 'Real');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(n =&gt; &#39;Real&#39;);
 
-$answer = Compute('(-1)^n / n!');
-$answer->{test_points} = [ [1], [2], [3], [4], [5], [6] ];
+$answer = Compute(&#39;(-1)^n / n!&#39;);
+$answer-&gt;{test_points} = [ [1], [2], [3], [4], [5], [6] ];
 
 @seq = (
-    "a_0 = 1",
-    "a_1 = -1",
-    "a_2 = \frac{1}{2}",
-    "a_3 = -\frac{1}{6}",
-    "a_4 = \frac{1}{24}",
-    "a_5 = -\frac{1}{120}",
-    "\ldots"
+    &quot;a_0 = 1&quot;,
+    &quot;a_1 = -1&quot;,
+    &quot;a_2 = \frac{1}{2}&quot;,
+    &quot;a_3 = -\frac{1}{6}&quot;,
+    &quot;a_4 = \frac{1}{24}&quot;,
+    &quot;a_5 = -\frac{1}{120}&quot;,
+    &quot;\ldots&quot;
 );
 
-$sequence = join(", ", @seq);
+$sequence = join(&#39;, &#39;, @seq);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We set the test points to be positive integers to avoid errors when evaluating
- the answer. Even if you expect students to enter answers such as <code>cos(pi * n) / n!</code>,
- you should still restrict the domain to positive integers, because some students
- may simplify this to <code>(-1)^n / n!</code> and receive errors because the answer checker
- is substituting things such as <code>n=0.5</code> into their formula.</p>
-
+					<p>We set the test points to be positive integers to avoid errors when evaluating the answer. Even if you expect students to enter answers such as <code>cos(pi * n) / n!</code>, you should still restrict the domain to positive integers, because some students may simplify this to <code>(-1)^n / n!</code> and receive errors because the answer checker is substituting things such as n=0.5 into their formula.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Find a formula for [` n^{th} `] term of the sequence [` [$sequence] `].
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Find a formula for [`n^{th}`] term of the sequence [`[$sequence]`].
 
-[` a_n = `] [__________________]{$answer}
+[`a_n =`] [_]{$answer}{20}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -145,22 +137,21 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Find a formula for [` n^{th} `] term of the sequence [` [$sequence] `].
+Find a formula for [`n^{th}`] term of the sequence [`[$sequence]`].
 
-[` a_n = `] [__________________]{$answer}
+[`a_n =`] [_]{$answer}{20}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -180,13 +171,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

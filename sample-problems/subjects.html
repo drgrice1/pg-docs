@@ -14,34 +14,48 @@
 			margin-top: 70px;
 		}
 		#sidebar {
-			--bs-offcanvas-width: 250px;
+			--bs-offcanvas-width: 300px;
 		}
 		@media only screen and (min-width: 768px) {
 			#sidebar {
+				width: 275px;
 				height: calc(100vh - 70px);
 			}
 		}
 	</style>
-	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.min.js" defer></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" defer></script>
 </head>
 
 <body>
 	<nav class="navbar fixed-top bg-primary border-bottom border-dark" data-bs-theme="dark">
 		<div class="container-fluid">
-			<h1 class="navbar-brand fs-3 m-0 p-0">PG Sample Problems</h1>
-
-			<ul class="nav nav-pills nav-fill">
-				<li class="nav-item">
-					<a class="nav-link" href="categories.html">Sample Problems</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="techniques.html">Problem Techniques</a>
-				</li>
+			<ul class="nav nav-pills">
 				<li class="nav-item dropdown">
-					<a class="nav-link" href="subjects.html">Subject Area Problems</a>
+					<a class="nav-link fs-3 dropdown-toggle active" href="#" role="button"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						Subject Area Problems					</a>
+					<ul class="dropdown-menu">
+						<li>
+							<a class="dropdown-item "
+								href="categories.html" >
+								Sample Problems
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item "
+								href="techniques.html" >
+								Problem Techniques
+							</a>
+						</li>
+						<li>
+							<a class="dropdown-item active"
+								href="subjects.html" aria-current="page">
+								Subject Area Problems
+							</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
-
 			<button class="navbar-toggler d-md-none" type="button" data-bs-toggle="offcanvas"
 				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
 				<span class="navbar-toggler-icon"></span>
@@ -49,110 +63,71 @@
 		</div>
 	</nav>
 	<div class="d-flex">
-		<div class="offcanvas-md offcanvas-start overflow-y-auto border-end border-dark" tabindex="-1" id="sidebar"
-			aria-labelledby="sidebar-label">
-				<div class="offcanvas-header">
-				<h2 class="offcanvas-title fs-3" id="categories-label">Subject Areas</h2>
-				<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
-					data-bs-target="#subjects" aria-label="Close">
-				</button>
-			</div>
+		<div class="offcanvas-md offcanvas-start overflow-y-auto border-end border-dark flex-shrink-0" tabindex="-1"
+			id="sidebar" aria-labelledby="sidebar-label">
+			<div class="offcanvas-header">
+	<h2 class="offcanvas-title fs-3" id="sidebar-label">Subject Areas</h2>
+	<button type="button" class="btn-close" data-bs-dismiss="offcanvas"
+		data-bs-target="#sidebar" aria-label="Close">
+	</button>
+</div>
 
 <h2 class="fs-3 d-none d-md-block px-3 pt-3">Subject Areas</h2>
-<div class="offcanvas-body px-md-3 pb-md-3">
-	<ul class="nav nav-pills flex-column" role="tablist" aria-orientation="vertical">
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="algebra-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#algebra" role="tab"
-					aria-controls="algebra" aria-selected="false">
-					algebra
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="chemistry-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#chemistry" role="tab"
-					aria-controls="chemistry" aria-selected="false">
-					chemistry
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="differential_calculus-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#differential_calculus" role="tab"
-					aria-controls="differential_calculus" aria-selected="false">
-					differential calculus
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="differential_equations-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#differential_equations" role="tab"
-					aria-controls="differential_equations" aria-selected="false">
-					differential equations
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="integral_calculus-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#integral_calculus" role="tab"
-					aria-controls="integral_calculus" aria-selected="false">
-					integral calculus
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="linear_algebra-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#linear_algebra" role="tab"
-					aria-controls="linear_algebra" aria-selected="false">
-					linear algebra
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="multivariate_calculus-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#multivariate_calculus" role="tab"
-					aria-controls="multivariate_calculus" aria-selected="false">
-					multivariate calculus
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="parametric-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#parametric" role="tab"
-					aria-controls="parametric" aria-selected="false">
-					parametric
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="precalculus-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#precalculus" role="tab"
-					aria-controls="precalculus" aria-selected="false">
-					precalculus
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="proof-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#proof" role="tab"
-					aria-controls="proof" aria-selected="false">
-					proof
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="sequences_and_series-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#sequences_and_series" role="tab"
-					aria-controls="sequences_and_series" aria-selected="false">
-					sequences and series
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="trigonometry-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#trigonometry" role="tab"
-					aria-controls="trigonometry" aria-selected="false">
-					trigonometry
-				</a>
-			</li>
-			<li class="nav-item">
-				<a class="nav-link px-3 py-1" id="vector_calculus-tab" href="#" data-bs-toggle="pill"
-					data-bs-target="#vector_calculus" role="tab"
-					aria-controls="vector_calculus" aria-selected="false">
-					vector calculus
-				</a>
-			</li>
-	</ul>
+<div class="offcanvas-body px-md-3 pb-md-3 w-100">
+	<div class="list-group w-100" role="tablist" id="sidebar-list">
+			<a class="list-group-item list-group-item-action" id="algebra-tab" href="#algebra"
+				data-bs-toggle="list" role="tab" aria-controls="algebra">
+				algebra
+			</a>
+			<a class="list-group-item list-group-item-action" id="chemistry-tab" href="#chemistry"
+				data-bs-toggle="list" role="tab" aria-controls="chemistry">
+				chemistry
+			</a>
+			<a class="list-group-item list-group-item-action" id="differential_calculus-tab" href="#differential_calculus"
+				data-bs-toggle="list" role="tab" aria-controls="differential_calculus">
+				differential calculus
+			</a>
+			<a class="list-group-item list-group-item-action" id="differential_equations-tab" href="#differential_equations"
+				data-bs-toggle="list" role="tab" aria-controls="differential_equations">
+				differential equations
+			</a>
+			<a class="list-group-item list-group-item-action" id="integral_calculus-tab" href="#integral_calculus"
+				data-bs-toggle="list" role="tab" aria-controls="integral_calculus">
+				integral calculus
+			</a>
+			<a class="list-group-item list-group-item-action" id="linear_algebra-tab" href="#linear_algebra"
+				data-bs-toggle="list" role="tab" aria-controls="linear_algebra">
+				linear algebra
+			</a>
+			<a class="list-group-item list-group-item-action" id="multivariate_calculus-tab" href="#multivariate_calculus"
+				data-bs-toggle="list" role="tab" aria-controls="multivariate_calculus">
+				multivariate calculus
+			</a>
+			<a class="list-group-item list-group-item-action" id="parametric-tab" href="#parametric"
+				data-bs-toggle="list" role="tab" aria-controls="parametric">
+				parametric
+			</a>
+			<a class="list-group-item list-group-item-action" id="precalculus-tab" href="#precalculus"
+				data-bs-toggle="list" role="tab" aria-controls="precalculus">
+				precalculus
+			</a>
+			<a class="list-group-item list-group-item-action" id="proof-tab" href="#proof"
+				data-bs-toggle="list" role="tab" aria-controls="proof">
+				proof
+			</a>
+			<a class="list-group-item list-group-item-action" id="sequences_and_series-tab" href="#sequences_and_series"
+				data-bs-toggle="list" role="tab" aria-controls="sequences_and_series">
+				sequences and series
+			</a>
+			<a class="list-group-item list-group-item-action" id="trigonometry-tab" href="#trigonometry"
+				data-bs-toggle="list" role="tab" aria-controls="trigonometry">
+				trigonometry
+			</a>
+			<a class="list-group-item list-group-item-action" id="vector_calculus-tab" href="#vector_calculus"
+				data-bs-toggle="list" role="tab" aria-controls="vector_calculus">
+				vector calculus
+			</a>
+	</div>
 </div>
 
 		</div>
@@ -160,38 +135,41 @@
 			<div class="tab-content p-3">
 					<div class="tab-pane fade" id="algebra" role="tabpanel" aria-labelledby="algebra-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: algebra</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: algebra</h1>
 		<ul>
 				<li><a href="Algebra/AnswerBlankInExponent.html">Answer Blank in the Exponent</a></li>
 				<li><a href="Algebra/InequalityAnswer.html">Answer as an Inequality</a></li>
 				<li><a href="Algebra/EquationDefiningFunction.html">Answer is an Equation</a></li>
-				<li><a href="Precalc/AnswerUpToMultiplication.html">Answer up to a Constant Multiple</a></li>
-				<li><a href="Precalc/PointAnswers.html">Answers are a list of points</a></li>
-				<li><a href="Precalc/DynamicGraph.html">Dynamic Graph</a></li>
+				<li><a href="Algebra/AnswerUpToMultiplication.html">Answer up to a Constant Multiple</a></li>
+				<li><a href="Algebra/PointAnswers.html">Answers are a list of points</a></li>
+				<li><a href="Algebra/DomainRange.html">Domain and Range of a Function</a></li>
+				<li><a href="Algebra/DynamicGraph.html">Dynamic Graph</a></li>
 				<li><a href="Algebra/ExpandedPolynomial.html">Expanded Polynomial</a></li>
 				<li><a href="Algebra/FactoredPolynomial.html">Factored Polynomial</a></li>
 				<li><a href="Misc/FormulaAnswer.html">Formula Answer</a></li>
-				<li><a href="Algebra/FractionAnswer.html">Fraction Answer</a></li>
-				<li><a href="Precalc/FunctionDecomposition.html">Function Decomposition</a></li>
+				<li><a href="Algebra/AlgebraicFractionAnswer.html">Fraction Answer</a></li>
+				<li><a href="Algebra/FunctionDecomposition.html">Function Decomposition</a></li>
 				<li><a href="Algebra/EquationImplicitFunction.html">Implicit Function as an Equation</a></li>
+				<li><a href="Algebra/GraphTool.html">Interactive graphing tool problems</a></li>
 				<li><a href="Algebra/Logarithms.html">Logarithms</a></li>
+				<li><a href="Algebra/ScalingTranslating.html">Scaling and Translating a Function</a></li>
 				<li><a href="Misc/FormulaDomain.html">Setting the Domain for Answer Checking</a></li>
 				<li><a href="Algebra/SolutionForEquation.html">Solution for an Equation</a></li>
-				<li><a href="Precalc/StringOrOtherType.html">String or Other Type</a></li>
-				<li><a href="Precalc/TableOfValues.html">Table of Values</a></li>
+				<li><a href="Algebra/StringOrOtherType.html">String or Other Type</a></li>
+				<li><a href="Algebra/TableOfValues.html">Table of Values</a></li>
 				<li><a href="Algebra/UnorderedAnswers.html">Unordered Answers</a></li>
 		</ul>
 	</div>
 	<div class="tab-pane fade" id="chemistry" role="tabpanel" aria-labelledby="chemistry-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: chemistry</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: chemistry</h1>
 		<ul>
 				<li><a href="Misc/ChemicalReaction.html">Chemical Reaction</a></li>
 		</ul>
 	</div>
 	<div class="tab-pane fade" id="differential_calculus" role="tabpanel" aria-labelledby="differential_calculus-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: differential calculus</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: differential calculus</h1>
 		<ul>
 				<li><a href="DiffCalc/AnswerWithUnits.html">Answer with Units</a></li>
 				<li><a href="DiffCalc/DifferenceQuotient.html">Difference Quotient</a></li>
@@ -201,7 +179,7 @@
 	</div>
 	<div class="tab-pane fade" id="differential_equations" role="tabpanel" aria-labelledby="differential_equations-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: differential equations</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: differential equations</h1>
 		<ul>
 				<li><a href="DiffEq/GeneralSolutionODE.html">General Solution to a Differential Equation</a></li>
 				<li><a href="DiffEq/HeavisideStep.html">Heaviside or Step Function</a></li>
@@ -210,7 +188,7 @@
 	</div>
 	<div class="tab-pane fade" id="integral_calculus" role="tabpanel" aria-labelledby="integral_calculus-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: integral calculus</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: integral calculus</h1>
 		<ul>
 				<li><a href="IntegralCalc/LimitsOfIntegration.html">Answer Blanks in Limits of Integration</a></li>
 				<li><a href="IntegralCalc/GraphShading.html">Graph Shading</a></li>
@@ -218,11 +196,12 @@
 				<li><a href="IntegralCalc/RiemannSums.html">Riemann Sums</a></li>
 				<li><a href="IntegralCalc/Volume1.html">Volume of Solids of Revolution 1</a></li>
 				<li><a href="IntegralCalc/Volume2.html">Volume of Solids of Revolution 2</a></li>
+				<li><a href="IntegralCalc/Volume3.html">Volume of Solids of Revolution 3</a></li>
 		</ul>
 	</div>
 	<div class="tab-pane fade" id="linear_algebra" role="tabpanel" aria-labelledby="linear_algebra-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: linear algebra</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: linear algebra</h1>
 		<ul>
 				<li><a href="LinearAlgebra/MatrixCustomAnswerChecker.html">Custom Matrix Answer Checker</a></li>
 				<li><a href="LinearAlgebra/MatrixAnswer1.html">Matrix Answer</a></li>
@@ -233,7 +212,7 @@
 	</div>
 	<div class="tab-pane fade" id="multivariate_calculus" role="tabpanel" aria-labelledby="multivariate_calculus-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: multivariate calculus</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: multivariate calculus</h1>
 		<ul>
 				<li><a href="DiffCalcMV/ContourPlot.html">Contour Plot</a></li>
 				<li><a href="IntegralCalcMV/DoubleIntegral.html">Double Integral</a></li>
@@ -242,11 +221,11 @@
 	</div>
 	<div class="tab-pane fade" id="parametric" role="tabpanel" aria-labelledby="parametric-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: parametric</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: parametric</h1>
 		<ul>
 				<li><a href="Parametric/VectorParametricLines.html">Parametric Lines</a></li>
 				<li><a href="Parametric/VectorParametricDerivative.html">Parametric Vector Function with Derivative</a></li>
-				<li><a href="Parametric/Spacecurve.html">Polar Graph</a></li>
+				<li><a href="Parametric/PolarGraph.html">Polar Graph</a></li>
 				<li><a href="Parametric/SpaceCurveGraph.html">Space Curve Graph</a></li>
 				<li><a href="Parametric/SurfaceGraph.html">Surface Graph</a></li>
 				<li><a href="Parametric/VectorParametricFunction.html">Vector Parametric Function</a></li>
@@ -254,40 +233,46 @@
 	</div>
 	<div class="tab-pane fade" id="precalculus" role="tabpanel" aria-labelledby="precalculus-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: precalculus</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: precalculus</h1>
 		<ul>
 				<li><a href="Algebra/AnswerBlankInExponent.html">Answer Blank in the Exponent</a></li>
 				<li><a href="Algebra/InequalityAnswer.html">Answer as an Inequality</a></li>
 				<li><a href="Algebra/EquationDefiningFunction.html">Answer is an Equation</a></li>
-				<li><a href="Precalc/AnswerUpToMultiplication.html">Answer up to a Constant Multiple</a></li>
-				<li><a href="Precalc/PointAnswers.html">Answers are a list of points</a></li>
-				<li><a href="Precalc/DomainRange.html">Domain and Range of a Function</a></li>
-				<li><a href="Precalc/DynamicGraph.html">Dynamic Graph</a></li>
+				<li><a href="Algebra/AnswerUpToMultiplication.html">Answer up to a Constant Multiple</a></li>
+				<li><a href="Algebra/PointAnswers.html">Answers are a list of points</a></li>
+				<li><a href="Trig/TrigDegrees.html">Degrees in Trigonometric Functions</a></li>
+				<li><a href="Trig/DisableFunctions.html">Diabled Functions</a></li>
+				<li><a href="Algebra/DomainRange.html">Domain and Range of a Function</a></li>
+				<li><a href="Algebra/DynamicGraph.html">Dynamic Graph</a></li>
 				<li><a href="Algebra/ExpandedPolynomial.html">Expanded Polynomial</a></li>
 				<li><a href="Algebra/FactoredPolynomial.html">Factored Polynomial</a></li>
 				<li><a href="Misc/FormulaAnswer.html">Formula Answer</a></li>
-				<li><a href="Algebra/FractionAnswer.html">Fraction Answer</a></li>
-				<li><a href="Precalc/FunctionDecomposition.html">Function Decomposition</a></li>
+				<li><a href="Algebra/AlgebraicFractionAnswer.html">Fraction Answer</a></li>
+				<li><a href="Algebra/FunctionDecomposition.html">Function Decomposition</a></li>
 				<li><a href="Algebra/EquationImplicitFunction.html">Implicit Function as an Equation</a></li>
+				<li><a href="Algebra/GraphTool.html">Interactive graphing tool problems</a></li>
 				<li><a href="Algebra/Logarithms.html">Logarithms</a></li>
-				<li><a href="Precalc/ScalingTranslating.html">Scaling and Translating a Function</a></li>
+				<li><a href="Trig/PeriodicAnswers.html">Periodic Answers</a></li>
+				<li><a href="Trig/ProvingTrigIdentities.html">Proving Identities</a></li>
+				<li><a href="Algebra/ScalingTranslating.html">Scaling and Translating a Function</a></li>
 				<li><a href="Misc/FormulaDomain.html">Setting the Domain for Answer Checking</a></li>
 				<li><a href="Algebra/SolutionForEquation.html">Solution for an Equation</a></li>
-				<li><a href="Precalc/StringOrOtherType.html">String or Other Type</a></li>
-				<li><a href="Precalc/TableOfValues.html">Table of Values</a></li>
+				<li><a href="Algebra/StringOrOtherType.html">String or Other Type</a></li>
+				<li><a href="Algebra/TableOfValues.html">Table of Values</a></li>
+				<li><a href="Trig/TrigIdentities.html">Trigonometric Identities</a></li>
 				<li><a href="Algebra/UnorderedAnswers.html">Unordered Answers</a></li>
 		</ul>
 	</div>
 	<div class="tab-pane fade" id="proof" role="tabpanel" aria-labelledby="proof-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: proof</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: proof</h1>
 		<ul>
 				<li><a href="Misc/DraggableProof.html">Draggable Proof</a></li>
 		</ul>
 	</div>
 	<div class="tab-pane fade" id="sequences_and_series" role="tabpanel" aria-labelledby="sequences_and_series-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: sequences and series</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: sequences and series</h1>
 		<ul>
 				<li><a href="Sequences/ExplicitSequence.html">Explicit Sequence</a></li>
 				<li><a href="Sequences/AnswerOrderedList.html">Ordered List</a></li>
@@ -297,14 +282,18 @@
 	</div>
 	<div class="tab-pane fade" id="trigonometry" role="tabpanel" aria-labelledby="trigonometry-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: trigonometry</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: trigonometry</h1>
 		<ul>
 				<li><a href="Trig/TrigDegrees.html">Degrees in Trigonometric Functions</a></li>
+				<li><a href="Trig/DisableFunctions.html">Diabled Functions</a></li>
+				<li><a href="Trig/PeriodicAnswers.html">Periodic Answers</a></li>
+				<li><a href="Trig/ProvingTrigIdentities.html">Proving Identities</a></li>
+				<li><a href="Trig/TrigIdentities.html">Trigonometric Identities</a></li>
 		</ul>
 	</div>
 	<div class="tab-pane fade" id="vector_calculus" role="tabpanel" aria-labelledby="vector_calculus-tab"
 		tabindex="0">
-		<h2 class="fs-3">Sample Problems for Subject Area: vector calculus</h2>
+		<h1 class="fs-3">Sample Problems for Subject Area: vector calculus</h1>
 		<ul>
 				<li><a href="VectorCalc/VectorFieldGraph3D1/VectorFieldGraph3D1.html">Three-D Vector Field Graph</a></li>
 				<li><a href="VectorCalc/VectorFieldGraph2D.html">Two-D Vector Field</a></li>
@@ -317,13 +306,9 @@
 	</div>
 	<script type="module">
 		const offcanvas = bootstrap.Offcanvas.getOrCreateInstance(document.getElementById('sidebar'));
-		for (const link of document.querySelectorAll('.nav .nav-item .nav-link')) {
+		for (const link of document.querySelectorAll('#sidebar-list .list-group-item-action')) {
 			link.addEventListener('click', () => offcanvas.hide());
 		}
-		// Set the link active in the header bar.
-		const page = location.href.split('/').at(-1);
-		var els = document.querySelectorAll(`a[href='${page}']`);
-		els[0].classList.add('active');
 	</script>
 </body>
 

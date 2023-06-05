@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,10 +35,10 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Matrix Answer Alternative</h1>
-		<p>Answer is a matrix</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
@@ -51,8 +51,9 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -62,53 +63,53 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Matrix&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Matrix&#39;);
 
 $example1 = Matrix([ [ 1, 2, 3 ], [ 4, 5, 6 ] ]);
 $example2 = $example1-&gt;column(1);
 $example3 = $example1-&gt;row(1);
 
 BEGIN_PGML
-The purpose of this question is to show you the syntax needed to enter
-matrices in WeBWorK when there is only one answer box for entering a matrix
-(which is not obvious) or when there are multiple answer boxes for entering a matrix (which is obvious).
-The examples below should be self-explanatory, so you can jump to them if you want;
-however, a detailed explanation follows if you want to read more.
+The purpose of this question is to show you the syntax needed to enter matrices
+in WeBWorK when there is only one answer box for entering a matrix (which is not
+obvious) or when there are multiple answer boxes for entering a matrix (which is
+obvious).  The examples below should be self-explanatory, so you can jump to
+them if you want; however, a detailed explanation follows if you want to read
+more.
 
-Matrices use square brackets to enclose items in lists.
-A matrix with one row, such as a row vector, is a comma separated list enclosed by square brackets.
-A matrix with more than one row or a column vector is a comma separated list of lists, where each list
-uses square brackets to enclose its items.
-Your answers must use square brackets to enclose each row in a matrix or in a
-column vector.  Also, a pair of square brackets is needed to enclose
-a matrix with more than one row (e.g., a [` 2 \times 3 `] matrix
-and a [` 2 \times 1 `] column vector have multiple rows so they need extra
-square brackets, but a [` 1 \times 3 `] row vector has only one row so it does
-not need extra square brackets).  Your answers may have spaces and line breaks in them,
-such as
+Matrices use square brackets to enclose items in lists.  A matrix with one row,
+such as a row vector, is a comma separated list enclosed by square brackets.  A
+matrix with more than one row or a column vector is a comma separated list of
+lists, where each list uses square brackets to enclose its items.  Your answers
+must use square brackets to enclose each row in a matrix or in a column vector.
+Also, a pair of square brackets is needed to enclose a matrix with more than one
+row (e.g., a [`2 \times 3`] matrix and a [`2 \times 1`] column vector have
+multiple rows so they need extra square brackets, but a [`1 \times 3`] row
+vector has only one row so it does not need extra square brackets).  Your
+answers may have spaces and line breaks in them, such as
 
-&gt;&gt; [|  [ [1, 2, 3], |] &lt;&lt;
+&gt;&gt; [| [ [1, 2, 3], |] &lt;&lt;
 &gt;&gt; [| [4, 5, 6] ]  |] &lt;&lt;
 
-+ Enter the matrix [`` [$example1] ``] as [@ $example1-&gt;string @]*
++ Enter the matrix [``[$example1]``] as [@ $example1-&gt;string @]*
 [@ ans_box(3,30) @]*
 
-+ Enter the column vector [`` [$example2] ``] as [@ $example2-&gt;string @]*
++ Enter the column vector [``[$example2]``] as [@ $example2-&gt;string @]*
 [@ ans_box(3,30) @]*
 
-+ Enter the row vector [`` [$example3] ``] as [@ $example3-&gt;string @]*
++ Enter the row vector [``[$example3]``] as [@ $example3-&gt;string @]*
 [@ ans_box(3,30) @]*
 END_PGML
 " aria-label="copy to clipboard">
@@ -118,41 +119,41 @@ END_PGML
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Matrix');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Matrix&#39;);
 
 $example1 = Matrix([ [ 1, 2, 3 ], [ 4, 5, 6 ] ]);
-$example2 = $example1->column(1);
-$example3 = $example1->row(1);
+$example2 = $example1-&gt;column(1);
+$example3 = $example1-&gt;row(1);
 
 BEGIN_PGML
-The purpose of this question is to show you the syntax needed to enter
-matrices in WeBWorK when there is only one answer box for entering a matrix
-(which is not obvious) or when there are multiple answer boxes for entering a matrix (which is obvious).
-The examples below should be self-explanatory, so you can jump to them if you want;
-however, a detailed explanation follows if you want to read more.
+The purpose of this question is to show you the syntax needed to enter matrices
+in WeBWorK when there is only one answer box for entering a matrix (which is not
+obvious) or when there are multiple answer boxes for entering a matrix (which is
+obvious).  The examples below should be self-explanatory, so you can jump to
+them if you want; however, a detailed explanation follows if you want to read
+more.
 
-Matrices use square brackets to enclose items in lists.
-A matrix with one row, such as a row vector, is a comma separated list enclosed by square brackets.
-A matrix with more than one row or a column vector is a comma separated list of lists, where each list
-uses square brackets to enclose its items.
-Your answers must use square brackets to enclose each row in a matrix or in a
-column vector.  Also, a pair of square brackets is needed to enclose
-a matrix with more than one row (e.g., a [` 2 \times 3 `] matrix
-and a [` 2 \times 1 `] column vector have multiple rows so they need extra
-square brackets, but a [` 1 \times 3 `] row vector has only one row so it does
-not need extra square brackets).  Your answers may have spaces and line breaks in them,
-such as
+Matrices use square brackets to enclose items in lists.  A matrix with one row,
+such as a row vector, is a comma separated list enclosed by square brackets.  A
+matrix with more than one row or a column vector is a comma separated list of
+lists, where each list uses square brackets to enclose its items.  Your answers
+must use square brackets to enclose each row in a matrix or in a column vector.
+Also, a pair of square brackets is needed to enclose a matrix with more than one
+row (e.g., a [`2 \times 3`] matrix and a [`2 \times 1`] column vector have
+multiple rows so they need extra square brackets, but a [`1 \times 3`] row
+vector has only one row so it does not need extra square brackets).  Your
+answers may have spaces and line breaks in them, such as
 
->> [|  [ [1, 2, 3], |] <<
->> [| [4, 5, 6] ]  |] <<
+&gt;&gt; [| [ [1, 2, 3], |] &lt;&lt;
+&gt;&gt; [| [4, 5, 6] ]  |] &lt;&lt;
 
-+ Enter the matrix [`` [$example1] ``] as [@ $example1->string @]*
++ Enter the matrix [``[$example1]``] as [@ $example1-&gt;string @]*
 [@ ans_box(3,30) @]*
 
-+ Enter the column vector [`` [$example2] ``] as [@ $example2->string @]*
++ Enter the column vector [``[$example2]``] as [@ $example2-&gt;string @]*
 [@ ans_box(3,30) @]*
 
-+ Enter the row vector [`` [$example3] ``] as [@ $example3->string @]*
++ Enter the row vector [``[$example3]``] as [@ $example3-&gt;string @]*
 [@ ans_box(3,30) @]*
 END_PGML
 </pre>
@@ -160,17 +161,15 @@ END_PGML
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
 					<p>Use <code>Context('Matrix');</code>. We construct a 2 by 3 matrix and extract its first column and first row.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="$showPartialCorrectAnswers = 1;
-
-ANS($example1-&gt;cmp());
-ANS($example2-&gt;cmp());
-ANS($example3-&gt;cmp());
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="
+ANS($example1-&gt;cmp);
+ANS($example2-&gt;cmp);
+ANS($example3-&gt;cmp);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -178,23 +177,21 @@ ANS($example3-&gt;cmp());
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$showPartialCorrectAnswers = 1;
-
-ANS($example1->cmp());
-ANS($example2->cmp());
-ANS($example3->cmp());
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">
+ANS($example1-&gt;cmp);
+ANS($example2-&gt;cmp);
+ANS($example3-&gt;cmp);
 </pre>
 				</div>
 				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Answer</b></p>
 					<p>Because an <code>ans_box</code> is used, we need to use the older style answer checkers.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Matrix&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Matrix&#39;);
 
 $example4 = Matrix([ [ 1, 2, 3 ], [ 4, 5, 6 ] ]);
 " aria-label="copy to clipboard">
@@ -204,22 +201,20 @@ $example4 = Matrix([ [ 1, 2, 3 ], [ 4, 5, 6 ] ]);
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Matrix');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Matrix&#39;);
 
 $example4 = Matrix([ [ 1, 2, 3 ], [ 4, 5, 6 ] ]);
 </pre>
 				</div>
 				<div class="explanation setup2 col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup2</b></p>
-					<p>Reset the context because the matrix answer checker gets confused
- when the <code>ans_box</code> and <code>ans_array</code> methods are co-mingled.</p>
-
+					<p>Reset the context because the matrix answer checker gets confused when the <code>ans_box</code> and <code>ans_array</code> methods are co-mingled.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 [$BR]*
 + Entering a matrix using multiple answer blanks is straightforward --
 just put each matrix entry into its own answer blank.
@@ -247,13 +242,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation statement2 col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement2</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

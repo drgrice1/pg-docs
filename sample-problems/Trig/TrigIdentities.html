@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,15 +35,15 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Trigonometric Identities</h1>
-		<p>Trigonometry: trig identities</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
 					<li class="text-danger">PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/answers/answerHints.html">answerHints.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/answers/answerHints.html">answerHints.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -52,8 +52,8 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;answerHints.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
@@ -65,22 +65,21 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;answerHints.pl&#39;,
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'answerHints.pl', 'PGcourse.pl');
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;answerHints.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;)-&gt;functions-&gt;remove(&#39;tan&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;functions-&gt;remove(&#39;tan&#39;);
 
 package NewFunc;
-# this next line makes the function a function from reals to reals
+# This line makes the function a function from reals to reals.
 our @ISA = qw(Parser::Function::numeric);
 
 sub tan {
@@ -90,13 +89,16 @@ sub tan {
 }
 
 package main;
-# Make it work on formulas as well as numbers
+
+# Make it work on formulas as well as numbers.
 sub tan { Parser::Function-&gt;call(&#39;tan&#39;, @_) }
-#  Add the new functions to the Context
+
+# Add the new function to the Context.
 Context()-&gt;functions-&gt;add(tan =&gt; { class =&gt; &#39;NewFunc&#39;, TeX =&gt; &#39;\tan&#39; },);
 
-$answer_cmp = Formula(&quot;sin(x)&quot;)-&gt;cmp()-&gt;withPostFilter(AnswerHints(
-    Compute(&quot;tan(x)*cos(x)&quot;) =&gt; &quot;No credit for entering what you were given.&quot;,
+$answer_cmp = Formula(&#39;sin(x)&#39;)-&gt;cmp()-&gt;withPostFilter(AnswerHints(
+    Compute(&#39;tan(x)*cos(x)&#39;) =&gt;
+        &#39;No credit for entering what you were given.&#39;,
 ));
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -105,10 +107,10 @@ $answer_cmp = Formula(&quot;sin(x)&quot;)-&gt;cmp()-&gt;withPostFilter(AnswerHin
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric')->functions->remove('tan');
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;functions-&gt;remove(&#39;tan&#39;);
 
 package NewFunc;
-# this next line makes the function a function from reals to reals
+# This line makes the function a function from reals to reals.
 our @ISA = qw(Parser::Function::numeric);
 
 sub tan {
@@ -118,29 +120,31 @@ sub tan {
 }
 
 package main;
-# Make it work on formulas as well as numbers
-sub tan { Parser::Function->call('tan', @_) }
-#  Add the new functions to the Context
-Context()->functions->add(tan => { class => 'NewFunc', TeX => '\tan' },);
 
-$answer_cmp = Formula("sin(x)")->cmp()->withPostFilter(AnswerHints(
-    Compute("tan(x)*cos(x)") => "No credit for entering what you were given.",
+# Make it work on formulas as well as numbers.
+sub tan { Parser::Function-&gt;call(&#39;tan&#39;, @_) }
+
+# Add the new function to the Context.
+Context()-&gt;functions-&gt;add(tan =&gt; { class =&gt; &#39;NewFunc&#39;, TeX =&gt; &#39;\tan&#39; },);
+
+$answer_cmp = Formula(&#39;sin(x)&#39;)-&gt;cmp()-&gt;withPostFilter(AnswerHints(
+    Compute(&#39;tan(x)*cos(x)&#39;) =&gt;
+        &#39;No credit for entering what you were given.&#39;,
 ));
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We redefine the function whose name is tan(x) to take values exp(pi * x)</p>
-
+					<p>Redefine the function tan(x) to be exp(pi * x).</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Simplify the expression as much as possible .
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Simplify the expression as much as possible.
 
-[` \tan(x) \cos(x) = `] [________________]{$answer_cmp}
+[`\tan(x) \cos(x) =`] [_]{$answer_cmp}{15}
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -150,27 +154,28 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Simplify the expression as much as possible .
+Simplify the expression as much as possible.
 
-[` \tan(x) \cos(x) = `] [________________]{$answer_cmp}
+[`\tan(x) \cos(x) =`] [_]{$answer_cmp}{15}
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
 					
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
-COMMENT(&quot;Prevents students from entering trivial identities (entering what they &quot;
-    . &quot;were given).  Redefines &#39;tan(x)&#39; internally as &#39;exp(pi*x)&#39;.&quot;);
+COMMENT(
+    &quot;Prevents students from entering trivial identities (entering what they &quot;
+        . &quot;were given).  Redefines &#39;tan(x)&#39; internally as &#39;exp(pi*x)&#39;.  Uses PGML.&quot;
+);
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -183,21 +188,22 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 Solution explanation goes here.
 END_PGML_SOLUTION
 
-COMMENT("Prevents students from entering trivial identities (entering what they "
-    . "were given).  Redefines 'tan(x)' internally as 'exp(pi*x)'.");
+COMMENT(
+    &quot;Prevents students from entering trivial identities (entering what they &quot;
+        . &quot;were given).  Redefines &#39;tan(x)&#39; internally as &#39;exp(pi*x)&#39;.  Uses PGML.&quot;
+);
 
 ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

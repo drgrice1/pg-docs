@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,17 +35,17 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Matching Problem</h1>
-		<p>Matching question template</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/PGchoicemacros.html">PGchoicemacros.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/answers/PGgraders.html">PGgraders.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/PGchoicemacros.html">PGchoicemacros.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/answers/PGgraders.html">PGgraders.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -54,10 +54,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGchoicemacros.pl&#39;, &#39;PGgraders.pl&#39;, &#39;unionTables.pl&#39;, &#39;PGcourse.pl&#39;);
+loadMacros(
+    &#39;PGstandard.pl&#39;,     &#39;PGML.pl&#39;,
+    &#39;PGchoicemacros.pl&#39;, &#39;PGgraders.pl&#39;,
+    &#39;unionTables.pl&#39;,    &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -67,25 +71,41 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGchoicemacros.pl&#3
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros('PGstandard.pl', 'PGML.pl', 'PGchoicemacros.pl', 'PGgraders.pl', 'unionTables.pl', 'PGcourse.pl');
+loadMacros(
+    &#39;PGstandard.pl&#39;,     &#39;PGML.pl&#39;,
+    &#39;PGchoicemacros.pl&#39;, &#39;PGgraders.pl&#39;,
+    &#39;unionTables.pl&#39;,    &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We use <code>PGchoicemacros.pl</code> to construct the list of matching object, and the
-custom problem grader fluid from <code>PGgraders.pl</code> for incremental grading.</p>
-
+					<p>The <code>PGchoicemacros.pl</code> macro is used to construct the list of multiple choice items, and the custom problem grader fluid from <code>PGgraders.pl</code> is used for incremental grading.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="
+$showPartialCorrectAnswers = 0;
+
+# Incremental grader
+install_problem_grader(~~&amp;custom_problem_grader_fluid);
+$ENV{grader_numright} = [ 2,   4,   6 ];
+$ENV{grader_scores}   = [ 0.3, 0.6, 1 ];
+$ENV{grader_message} =
+    &#39;You can earn &#39;
+    . &#39;30% partial credit for 2 - 3 correct answers, and &#39;
+    . &#39;60% partial credit for 4 - 5 correct answers.&#39;;
+
+# All or nothing grader
+# install_problem_grader(~~&amp;std_problem_grader);
+
 # Create a matching list and use popups
 $ml = new_match_list();
 $ml-&gt;rf_print_q(~~&amp;pop_up_list_print_q);
 $ml-&gt;ra_pop_up_list([
-    &quot;No answer&quot; =&gt; &quot;?&quot;,
+    &#39;No answer&#39; =&gt; &#39;?&#39;,
     &#39;A&#39;         =&gt; &#39;A&#39;,
     &#39;B&#39;         =&gt; &#39;B&#39;,
     &#39;C&#39;         =&gt; &#39;C&#39;,
@@ -99,26 +119,26 @@ $ml-&gt;ra_pop_up_list([
 
 # Add correct questions and answers
 $ml-&gt;qa(
-    &quot;Question a?&quot;,
-    &quot;Answer a&quot;,
-    &quot;Question b?&quot;,
-    &quot;Answer b&quot;,
-    &quot;Question c?&quot;,
-    &quot;Answer c&quot;,
-    &quot;Question d?&quot;,
-    &quot;Answer d&quot;,
-    &quot;Question e?&quot;,
-    &quot;Answer e&quot;,
-    &quot;Question f?&quot;,
-    &quot;Answer f&quot;,
+    &#39;Question a?&#39;,
+    &#39;Answer a&#39;,
+    &#39;Question b?&#39;,
+    &#39;Answer b&#39;,
+    &#39;Question c?&#39;,
+    &#39;Answer c&#39;,
+    &#39;Question d?&#39;,
+    &#39;Answer d&#39;,
+    &#39;Question e?&#39;,
+    &#39;Answer e&#39;,
+    &#39;Question f?&#39;,
+    &#39;Answer f&#39;,
 );
 $ml-&gt;choose(6);
 
 # Add extra incorrect answers
-$ml-&gt;extra(&quot;Extra answer 1&quot;, &quot;Extra answer 2&quot;,);
+$ml-&gt;extra(&#39;Extra answer 1&#39;, &#39;Extra answer 2&#39;,);
 $ml-&gt;choose_extra(2);
 
-$ml-&gt;makeLast(&quot;None of the above&quot;);
+$ml-&gt;makeLast(&#39;None of the above&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -127,62 +147,76 @@ $ml-&gt;makeLast(&quot;None of the above&quot;);
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">
+$showPartialCorrectAnswers = 0;
+
+# Incremental grader
+install_problem_grader(~~&amp;custom_problem_grader_fluid);
+$ENV{grader_numright} = [ 2,   4,   6 ];
+$ENV{grader_scores}   = [ 0.3, 0.6, 1 ];
+$ENV{grader_message} =
+    &#39;You can earn &#39;
+    . &#39;30% partial credit for 2 - 3 correct answers, and &#39;
+    . &#39;60% partial credit for 4 - 5 correct answers.&#39;;
+
+# All or nothing grader
+# install_problem_grader(~~&amp;std_problem_grader);
+
 # Create a matching list and use popups
 $ml = new_match_list();
-$ml->rf_print_q(~~&pop_up_list_print_q);
-$ml->ra_pop_up_list([
-    "No answer" => "?",
-    'A'         => 'A',
-    'B'         => 'B',
-    'C'         => 'C',
-    'D'         => 'D',
-    'E'         => 'E',
-    'F'         => 'F',
-    'G'         => 'G',
-    'H'         => 'H',
-    'I'         => 'I',
+$ml-&gt;rf_print_q(~~&amp;pop_up_list_print_q);
+$ml-&gt;ra_pop_up_list([
+    &#39;No answer&#39; =&gt; &#39;?&#39;,
+    &#39;A&#39;         =&gt; &#39;A&#39;,
+    &#39;B&#39;         =&gt; &#39;B&#39;,
+    &#39;C&#39;         =&gt; &#39;C&#39;,
+    &#39;D&#39;         =&gt; &#39;D&#39;,
+    &#39;E&#39;         =&gt; &#39;E&#39;,
+    &#39;F&#39;         =&gt; &#39;F&#39;,
+    &#39;G&#39;         =&gt; &#39;G&#39;,
+    &#39;H&#39;         =&gt; &#39;H&#39;,
+    &#39;I&#39;         =&gt; &#39;I&#39;,
 ]);
 
 # Add correct questions and answers
-$ml->qa(
-    "Question a?",
-    "Answer a",
-    "Question b?",
-    "Answer b",
-    "Question c?",
-    "Answer c",
-    "Question d?",
-    "Answer d",
-    "Question e?",
-    "Answer e",
-    "Question f?",
-    "Answer f",
+$ml-&gt;qa(
+    &#39;Question a?&#39;,
+    &#39;Answer a&#39;,
+    &#39;Question b?&#39;,
+    &#39;Answer b&#39;,
+    &#39;Question c?&#39;,
+    &#39;Answer c&#39;,
+    &#39;Question d?&#39;,
+    &#39;Answer d&#39;,
+    &#39;Question e?&#39;,
+    &#39;Answer e&#39;,
+    &#39;Question f?&#39;,
+    &#39;Answer f&#39;,
 );
-$ml->choose(6);
+$ml-&gt;choose(6);
 
 # Add extra incorrect answers
-$ml->extra("Extra answer 1", "Extra answer 2",);
-$ml->choose_extra(2);
+$ml-&gt;extra(&#39;Extra answer 1&#39;, &#39;Extra answer 2&#39;,);
+$ml-&gt;choose_extra(2);
 
-$ml->makeLast("None of the above");
+$ml-&gt;makeLast(&#39;None of the above&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>Since we are choosing 6 questions and 2 extra answers and have 1 entry in <code>makeLast</code>, we must create a popup list with 9 entries A through I.</p>
-
+					<p>Withhold feedback when answers are submitted by setting <code>$showPartialCorrectAnswers = 0;</code>.</p>
+<p>This problem uses an incremental grader called the <code>custom_problem_grader_fluid</code>. With this problem grader, the number of correct answers <code>[2, 4, 6]</code> and their corresponding scores <code>[0.3, 0.6, 1]</code> must be specified. The last entry in the <code>grader_numright</code> array must be the total number of questions asked, and the last entry in the <code>grader_scores</code> array must be 1 (otherwise nobody can earn full credit!). The grader message can also be customized by setting the value of <code>grader_message</code> to the desired custom message.</p>
+<p>If a grader is desired that awards full credit when all questions are correct and no credit otherwise, use the commented out standard problem grader code instead.</p>
+<p>Create a list of 6 questions and answers, 2 extra answers, and a ‘None of the above’ answer that will be made last with <code>makeLast</code>. So the popup list must have 9 entries A through I.</p>
 <p>For more details, see MatchingProblems from the Problem Techniques documentation.</p>
-
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
 Match each question with its answer.
 
 [@ ColumnMatchTable($ml) @]***
-
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -195,35 +229,18 @@ END_PGML
 Match each question with its answer.
 
 [@ ColumnMatchTable($ml) @]***
-
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>The <code>ColumnMatchTable()</code> is provided by the macro file <code>unionTables.pl</code>.</p>
-
+					<p>The <code>ColumnMatchTable()</code> method is provided by the macro file <code>unionTables.pl</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="
-$showPartialCorrectAnswers = 0;
-
-# Incremental grader
-install_problem_grader(~~&amp;custom_problem_grader_fluid);
-$ENV{&#39;grader_numright&#39;} = [ 2,   4,   6 ];
-$ENV{&#39;grader_scores&#39;}   = [ 0.3, 0.6, 1 ];
-$ENV{&#39;grader_message&#39;} =
-    &quot;You can earn &quot;
-    . &quot;30% partial credit for 2 - 3 correct answers, and &quot;
-    . &quot;60% partial credit for 4 - 5 correct answers.&quot;;
-
-# All or nothing grader
-# install_problem_grader(~~&amp;std_problem_grader);
-
-ANS(str_cmp($ml-&gt;ra_correct_ans));
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="ANS(str_cmp($ml-&gt;ra_correct_ans));
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -231,44 +248,19 @@ ANS(str_cmp($ml-&gt;ra_correct_ans));
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">
-$showPartialCorrectAnswers = 0;
-
-# Incremental grader
-install_problem_grader(~~&custom_problem_grader_fluid);
-$ENV{'grader_numright'} = [ 2,   4,   6 ];
-$ENV{'grader_scores'}   = [ 0.3, 0.6, 1 ];
-$ENV{'grader_message'} =
-    "You can earn "
-    . "30% partial credit for 2 - 3 correct answers, and "
-    . "60% partial credit for 4 - 5 correct answers.";
-
-# All or nothing grader
-# install_problem_grader(~~&std_problem_grader);
-
-ANS(str_cmp($ml->ra_correct_ans));
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">ANS(str_cmp($ml-&gt;ra_correct_ans));
 </pre>
 				</div>
 				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Answer</b></p>
-					<p>We must withhold feedback from students by setting <code>$showPartialCorrectAnswers = 0;</code>
-We use an incremental grader called <code>custom_problem_grader_fluid</code>. With this
-problem grader, you must specify the number of correct answers [2,4,6] and their
-corresponding scores [0.3,0.6,1] and update the grader message accordingly.
-The last entry in the array for grader_numright must be the total number of
-questions asked, and the last entry in the array for grader_scores must be 1
-(otherwise nobody can earn full credit!).</p>
-
-<p>If you want a grader that awards full credit when all questions are correct and
-no credit otherwise, uncomment the standard problem grader.</p>
-
+					
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="@correct      = @{ $ml-&gt;ra_correct_ans() };
-$answerstring = join(&quot;, &quot;, @correct);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="@correct      = @{ $ml-&gt;ra_correct_ans() };
+$answerstring = join(&#39;, &#39;, @correct);
 
 BEGIN_PGML_SOLUTION
 The correct answers are [$answerstring].
@@ -281,8 +273,8 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">@correct      = @{ $ml->ra_correct_ans() };
-$answerstring = join(", ", @correct);
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">@correct      = @{ $ml-&gt;ra_correct_ans() };
+$answerstring = join(&#39;, &#39;, @correct);
 
 BEGIN_PGML_SOLUTION
 The correct answers are [$answerstring].
@@ -293,13 +285,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					<p>Extract the correct answers from the MatchList object and reformat.</p>
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 

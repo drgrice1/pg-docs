@@ -4,7 +4,7 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>MatrixCustomAnswerChecker</title>
+	<title>FormulasToConstants</title>
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
@@ -37,13 +37,13 @@
 
 <body>
 	<div class="container-fluid p-3">
-		<h1>Custom Matrix Answer Checker</h1>
+		<h1>Formulas up to additive constants</h1>
 		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserMultiAnswer.html">parserMultiAnswer.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserFormulaUpToConstant.html">parserFormulaUpToConstant.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,12 +53,12 @@
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
 					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
-						type="button" data-code="
-DOCUMENT();
+						type="button" data-code="DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;);
-
-$showPartialCorrectAnswers = 0;
+loadMacros(
+    &#39;PGstandard.pl&#39;,                &#39;PGML.pl&#39;,
+    &#39;parserFormulaUpToConstant.pl&#39;, &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -66,37 +66,25 @@ $showPartialCorrectAnswers = 0;
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">
-DOCUMENT();
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;);
-
-$showPartialCorrectAnswers = 0;
+loadMacros(
+    &#39;PGstandard.pl&#39;,                &#39;PGML.pl&#39;,
+    &#39;parserFormulaUpToConstant.pl&#39;, &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>Since the answer will depend on the two matrices input, we need to use <code>parserMultiAnswer.pl</code>.</p>
+					<p>There are two types of comparison demonstrated here. One is “an antiderivative of f(x)”, and the other is “the most general antiderivative of f(x)”. The former requires that the student answers F(x), F(x) + 1, F(x) - sqrt(8), etc., all be marked correct, and the latter, that F(x) + C, F(x) + 5 - k, etc., all be marked correct.</p>
+<p>To check the most general antiderivative of a function, that is, a formula up to an arbitrary additive constant, the <code>parserFormulaUpToConstant.pl</code> macro is used. To evaluate an antiderivative of a function, that is, a formula that is unique up to a (specified) additive constant, this macro is not needed.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
 					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
-						type="button" data-code="Context(&#39;Matrix&#39;);
-
-$A = Matrix([ [ 1, 1 ], [ 0, 1 ] ]);
-$B = Matrix([ [ 1, 0 ], [ 1, 1 ] ]);
-
-$multians = MultiAnswer($A, $B)-&gt;with(
-    singleResult =&gt; 1,
-    checker      =&gt; sub {
-        my ($correct, $student, $answerHash) = @_;
-        my @s = @{$student};
-        $s0 = Matrix($s[0]);
-        $s1 = Matrix($s[1]);
-        return $s0 * $s1 != $s1 * $s0;
-    }
-);
+						type="button" data-code="$func  = Formula(&#39;sin(x)&#39;);
+$gfunc = FormulaUpToConstant(&#39;sin(x) + C&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -104,67 +92,23 @@ $multians = MultiAnswer($A, $B)-&gt;with(
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Matrix&#39;);
-
-$A = Matrix([ [ 1, 1 ], [ 0, 1 ] ]);
-$B = Matrix([ [ 1, 0 ], [ 1, 1 ] ]);
-
-$multians = MultiAnswer($A, $B)-&gt;with(
-    singleResult =&gt; 1,
-    checker      =&gt; sub {
-        my ($correct, $student, $answerHash) = @_;
-        my @s = @{$student};
-        $s0 = Matrix($s[0]);
-        $s1 = Matrix($s[1]);
-        return $s0 * $s1 != $s1 * $s0;
-    }
-);
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$func  = Formula(&#39;sin(x)&#39;);
+$gfunc = FormulaUpToConstant(&#39;sin(x) + C&#39;);
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>Construct two matrices <code>$A</code> and <code>$B</code> that do not commute and therefore serve as a correct answer. Use a $multians object with a custom answer checker subroutine. The answer checker uses <code>my ( $correct, $student, $answerHash ) = @_;</code> to grab the inputs (the correct answer, the student answer, and the answer hash table info). Then, put the student’s two answers into an array using <code>my @s = @{$student};</code>. Make sure the student’s first matrix <code>$s[0]</code> is converted to a <code>MathObject</code> matrix using <code>$s0 = Matrix($s[0]);</code> and similarly for the student’s second matrix. The return value, which is boolean, is the truth value of the statement <code>$s0 * $s1 != $s1 * $s0</code>.</p>
+					<p>Define an antiderivative function <code>$func</code> and the most general antiderivative function <code>$gfunc</code>. For the latter is is not required to include <code>+ C</code>. It would be equivalent to specify <code>$gfunc = FormulaUpToConstant('sin(x)')</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
 					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML
-Give an example of two [`2 \times 2`] matrices [`A`] and [`B`] such that
-[`AB \ne BA`] .
+An antiderivative of [`\cos(x)`] is [_]{$func-&gt;cmp(upToConstant =&gt; 1)}
 
-    [`A =`] [_____]*{$multians}
-
-    [`B =`] [_____]*{$multians}
+The most general antiderivative is [_]{$gfunc}
 END_PGML
-" aria-label="copy to clipboard">
-						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
-						</svg>
-					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Give an example of two [`2 \times 2`] matrices [`A`] and [`B`] such that
-[`AB \ne BA`] .
-
-    [`A =`] [_____]*{$multians}
-
-    [`B =`] [_____]*{$multians}
-END_PGML
-</pre>
-				</div>
-				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
-					<p><b>Statement</b></p>
-					<p>Make sure that both answer arrays are called as methods on the <code>$multians</code> object</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
-						type="button" data-code="BEGIN_PGML_SOLUTION
-Solution explanation goes here.
-END_PGML_SOLUTION
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -173,15 +117,17 @@ ENDDOCUMENT();" aria-label="copy to clipboard">
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
-Solution explanation goes here.
-END_PGML_SOLUTION
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+An antiderivative of [`\cos(x)`] is [_]{$func-&gt;cmp(upToConstant =&gt; 1)}
+
+The most general antiderivative is [_]{$gfunc}
+END_PGML
 
 ENDDOCUMENT();</pre>
 				</div>
-				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
-					<p><b>Solution</b></p>
-					
+				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Statement</b></p>
+					<p>Call the MathObjects cmp() method and specify the <code>upToConstant =&gt; 1</code> flag. This allows the student’s answer to differ from the correct answer by any constant. Both <code>sin(x)</code> and <code>sin(x) + 5</code> would be marked correct, but <code>sin(x) + C</code> is not correct since it is a family of answers and not a specific antiderivative. Note that for the formula up to an arbitrary constant the comparison will correctly mark student’s answers that have different arbitrary constants. Thus, a student answer to the second question of <code>sin(x) + k</code> will be marked correct as will <code>sin(x) + c</code>.</p>
 				</div>
 			</div>
 	</div>

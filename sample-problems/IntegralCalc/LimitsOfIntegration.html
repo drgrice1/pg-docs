@@ -11,7 +11,7 @@
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
-	<script src="https://pstaabp.github.io/pg-docs/sample-problems/PG.js" defer></script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
 
 	<style>
 		.explanation {
@@ -35,16 +35,16 @@
 	</style>
 </head>
 
-<body class="p-3">
-	<div class="container-fluid">
+<body>
+	<div class="container-fluid p-3">
 		<h1>Answer Blanks in Limits of Integration</h1>
-		<p>Integral calculus: Answer blanks in the limits of integration</p>
+		<p></p>
 		<h2>POD for Macro Files</h2>
 		<ul>
-					<li class="text-danger">PGstandard.pl</li>
+					<li class="text-danger">    PGstandard.pl</li>
 					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
-					<li><a href="https://pstaabp.github.io/pg-docs/pod/pg/macros/answers/answerHints.html">answerHints.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
+					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/answers/answerHints.html">answerHints.pl</a></li>
 					<li class="text-danger">PGcourse.pl</li>
 		</ul>
 		<div class="row">
@@ -53,9 +53,14 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="DOCUMENT();
-loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;unionTables.pl&#39;, &#39;answerHints.pl&#39;, &#39;PGcourse.pl&#39;);
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+
+loadMacros(
+    &#39;PGstandard.pl&#39;,  &#39;PGML.pl&#39;,
+    &#39;unionTables.pl&#39;, &#39;answerHints.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
 							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
@@ -64,21 +69,23 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;unionTables.pl&#39;,
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
-loadMacros('PGstandard.pl', 'PGML.pl', 'unionTables.pl', 'answerHints.pl', 'PGcourse.pl');
+
+loadMacros(
+    &#39;PGstandard.pl&#39;,  &#39;PGML.pl&#39;,
+    &#39;unionTables.pl&#39;, &#39;answerHints.pl&#39;,
+    &#39;PGcourse.pl&#39;
+);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We must use <code>unionTables.pl</code> for table formatting commands we will use to put the answer blanks in the limits of integration.
- We use <code>answerHints.pl</code> to help guide students toward the correct answer.</p>
-
+					<p>We must use <code>unionTables.pl</code> for table formatting commands we will use to put the answer blanks in the limits of integration. We use <code>answerHints.pl</code> to help guide students toward the correct answer.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="Context(&#39;Numeric&#39;);
-Context()-&gt;variables-&gt;are(
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context()-&gt;variables-&gt;are(
     x  =&gt; &#39;Real&#39;,
     dx =&gt; &#39;Real&#39;,
     t  =&gt; &#39;Real&#39;,
@@ -103,8 +110,17 @@ if ($displayMode eq &#39;TeX&#39;) {
     $integral = BeginTable(center =&gt; 0)
         . Row(
             [
-                &#39;\(f(x)=\)&#39; . $SPACE . ans_rule(4) . $SPACE . &#39;\(+\displaystyle\int\)&#39;,
-                &#39;\( t = \)&#39; . ans_rule(4) . $BR . $BR . &#39;\( t = \)&#39; . ans_rule(4),
+                &#39;\(f(x)=\)&#39;
+                . $SPACE
+                . ans_rule(4)
+                . $SPACE
+                . &#39;\(+\displaystyle\int\)&#39;,
+                &#39;\( t = \)&#39;
+                . ans_rule(4)
+                . $BR
+                . $BR
+                . &#39;\( t = \)&#39;
+                . ans_rule(4),
                 ans_rule(20)
             ],
             separation =&gt; 2
@@ -118,56 +134,61 @@ Context()-&gt;normalStrings;
 							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context('Numeric');
-Context()->variables->are(
-    x  => 'Real',
-    dx => 'Real',
-    t  => 'Real',
-    dt => 'Real'
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(
+    x  =&gt; &#39;Real&#39;,
+    dx =&gt; &#39;Real&#39;,
+    t  =&gt; &#39;Real&#39;,
+    dt =&gt; &#39;Real&#39;
 );
 
-$fpx = Formula("sin(x)");
-$fpt = Formula("sin(t)");
+$fpx = Formula(&quot;sin(x)&quot;);
+$fpt = Formula(&quot;sin(t)&quot;);
 
 #  Display the answer blanks properly in different modes
-Context()->texStrings;
-if ($displayMode eq 'TeX') {
+Context()-&gt;texStrings;
+if ($displayMode eq &#39;TeX&#39;) {
     $integral =
-        '\(\displaystyle f(x) = '
+        &#39;\(\displaystyle f(x) = &#39;
         . ans_rule(4)
-        . '+ \int_{t = '
+        . &#39;+ \int_{t = &#39;
         . ans_rule(4)
-        . '}^{t = '
-        . ans_rule(4) . '}'
-        . ans_rule(20) . '\)';
+        . &#39;}^{t = &#39;
+        . ans_rule(4) . &#39;}&#39;
+        . ans_rule(20) . &#39;\)&#39;;
 } else {
-    $integral = BeginTable(center => 0)
+    $integral = BeginTable(center =&gt; 0)
         . Row(
             [
-                '\(f(x)=\)' . $SPACE . ans_rule(4) . $SPACE . '\(+\displaystyle\int\)',
-                '\( t = \)' . ans_rule(4) . $BR . $BR . '\( t = \)' . ans_rule(4),
+                &#39;\(f(x)=\)&#39;
+                . $SPACE
+                . ans_rule(4)
+                . $SPACE
+                . &#39;\(+\displaystyle\int\)&#39;,
+                &#39;\( t = \)&#39;
+                . ans_rule(4)
+                . $BR
+                . $BR
+                . &#39;\( t = \)&#39;
+                . ans_rule(4),
                 ans_rule(20)
             ],
-            separation => 2
+            separation =&gt; 2
         ) . EndTable();
 }
-Context()->normalStrings;
+Context()-&gt;normalStrings;
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The block of code that puts the answer blanks into the exponents correctly in
- HTML and TeX modes probably does not need to be modified.</p>
-
+					<p>The block of code that puts the answer blanks into the exponents correctly in HTML and TeX modes probably does not need to be modified.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML
-Find a formula for the function [` f(x) `] such that
-[`` f &#39;(x) = [$fpx] ``] and [` f(2)=5 `].  Use [`t`] as the variable of integration
-inside the integral.
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML
+Find a formula for the function [`f(x)`] such that [`f &#39;(x) = [$fpx]`] and
+[`f(2) = 5`].  Use [`t`] as the variable of integration inside the integral.
 
 [$integral]***
 END_PGML
@@ -179,9 +200,8 @@ END_PGML
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
-Find a formula for the function [` f(x) `] such that
-[`` f '(x) = [$fpx] ``] and [` f(2)=5 `].  Use [`t`] as the variable of integration
-inside the integral.
+Find a formula for the function [`f(x)`] such that [`f &#39;(x) = [$fpx]`] and
+[`f(2) = 5`].  Use [`t`] as the variable of integration inside the integral.
 
 [$integral]***
 END_PGML
@@ -189,15 +209,13 @@ END_PGML
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>To display the integral with answer blanks in the limits of integration properly,
- we insert it using <code>$integral</code>.</p>
-
+					<p>To display the integral with answer blanks in the limits of integration properly, we insert it using <code>$integral</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="
 ANS(Compute(&#39;5&#39;)-&gt;cmp());
 ANS(Compute(&#39;x&#39;)-&gt;cmp());
 ANS(Compute(&#39;2&#39;)-&gt;cmp());
@@ -216,29 +234,27 @@ ANS(
 						</svg>
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">
-ANS(Compute('5')->cmp());
-ANS(Compute('x')->cmp());
-ANS(Compute('2')->cmp());
+ANS(Compute(&#39;5&#39;)-&gt;cmp());
+ANS(Compute(&#39;x&#39;)-&gt;cmp());
+ANS(Compute(&#39;2&#39;)-&gt;cmp());
 ANS(
-    Compute("$fpt * dt")->cmp()->withPostFilter(AnswerHints(
-        Formula("$fpx")    => "Are you using the correct variable?",
-        Formula("$fpx*dx") => "Are you using the correct variable?",
-        Formula("$fpt")    => "Don't forget the differential dt",
+    Compute(&quot;$fpt * dt&quot;)-&gt;cmp()-&gt;withPostFilter(AnswerHints(
+        Formula(&quot;$fpx&quot;)    =&gt; &quot;Are you using the correct variable?&quot;,
+        Formula(&quot;$fpx*dx&quot;) =&gt; &quot;Are you using the correct variable?&quot;,
+        Formula(&quot;$fpt&quot;)    =&gt; &quot;Don&#39;t forget the differential dt&quot;,
     ))
 );
 </pre>
 				</div>
 				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Answer</b></p>
-					<p>The answer blanks are written out as <code>ans_rule</code>, so we must use this style of
- answer checking.  We use <code>AnswerHints</code> to guide the students to the correct answer.</p>
-
+					<p>The answer blanks are written out as <code>ans_rule</code>, so we must use this style of answer checking. We use <code>AnswerHints</code> to guide the students to the correct answer.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1"
-						style="z-index: 10" type="button" data-code="BEGIN_PGML_SOLUTION
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -258,13 +274,12 @@ ENDDOCUMENT();</pre>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
 					
-
 				</div>
 			</div>
 	</div>
 
 	<script type="module">
-		for (const pre of document.body.getElementsByTagName('pre')) {
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
 			CodeMirror.runMode(pre.textContent, 'PG', pre);
 		}
 
