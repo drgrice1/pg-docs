@@ -35,9 +35,8 @@ jobs:
             cpanminus \
             pandoc \
             libmojolicious-perl \
-            libyaml-libyaml-perl
-      - name: Install other perl modules from CPAN
-        run: cpanm --sudo -fi --notest Pandoc
+            libyaml-libyaml-perl \
+            libpandoc-wrapper-perl
 
       # Runs a set of commands using the runners shell
       - name: parse sample problems
