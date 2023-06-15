@@ -38,15 +38,18 @@
 <body>
 	<div class="container-fluid p-3">
 		<h1>Contour Plot</h1>
-		<p></p>
-		<h2>POD for Macro Files</h2>
-		<ul>
-					<li class="text-danger">    PGstandard.pl</li>
-					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
-					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
-					<li class="text-danger">PGcourse.pl</li>
-		</ul>
+		<p>Creating a contour plot</p>
+		<div class="row">
+			<div class="col">
+					<h2>POD for Macro Files</h2>
+					<ul>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
+					</ul>
+			</div>
+			<div class="col">
+			</div>
+		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
 			<div class="col text-center"><h2 class="fw-bold fs-3">Explanation</h2></div>
@@ -56,10 +59,7 @@
 					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="DOCUMENT();
 
-loadMacros(
-    &#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;,
-    &#39;PGcourse.pl&#39;
-);
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
 
 $showPartialCorrectAnswers = 0;
 " aria-label="copy to clipboard">
@@ -71,10 +71,7 @@ $showPartialCorrectAnswers = 0;
 					</button>
 					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
-loadMacros(
-    &#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;,
-    &#39;PGcourse.pl&#39;
-);
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;parserPopUp.pl&#39;, &#39;PGtikz.pl&#39;, &#39;PGcourse.pl&#39;);
 
 $showPartialCorrectAnswers = 0;
 </pre>
@@ -149,6 +146,8 @@ $popup = DropDownTF(&#39;false&#39;, placeholder =&gt; &#39;Select One&#39;);
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
 					<p>The contour plot is created with TikZ by overlaying circles with differing shades of blue. See the POD and the <a href="https://tikz.dev/">TikZ manual</a> for more information.</p>
+<p>If the colored contour plot is not desired, replace the <code>\filldraw</code> line with the following:</p>
+<div class="sourceCode" id="change-contour"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="change-contour-1"><a href="#change-contour-1" aria-hidden="true"></a> \draw (<span class="dv">0</span>,<span class="dv">0</span>) circle [radius={<span class="fu">sqrt</span>(<span class="dv">64-8</span><span class="dt">*\</span>n)}];</span></code></pre></div>
 				</div>
 			</div>
 			<div class="row">

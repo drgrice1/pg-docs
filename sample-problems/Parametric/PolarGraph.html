@@ -38,14 +38,17 @@
 <body>
 	<div class="container-fluid p-3">
 		<h1>Polar Graph</h1>
-		<p></p>
-		<h2>POD for Macro Files</h2>
-		<ul>
-					<li class="text-danger">PGstandard.pl</li>
-					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
-					<li class="text-danger">PGcourse.pl</li>
-		</ul>
+		<p>Graphing a polar curve given by r=f(theta)</p>
+		<div class="row">
+			<div class="col">
+					<h2>POD for Macro Files</h2>
+					<ul>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
+					</ul>
+			</div>
+			<div class="col">
+			</div>
+		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
 			<div class="col text-center"><h2 class="fw-bold fs-3">Explanation</h2></div>
@@ -70,7 +73,7 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGtikz.pl&#39;, &#39
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We use <code>PGgraphmacros.pl</code> to generate the graph.</p>
+					<p>We use <code>PGtikz.pl</code> to generate the graph.</p>
 				</div>
 			</div>
 			<div class="row">

@@ -38,14 +38,17 @@
 <body>
 	<div class="container-fluid p-3">
 		<h1>Draggable Proof</h1>
-		<p></p>
-		<h2>POD for Macro Files</h2>
-		<ul>
-					<li class="text-danger">PGstandard.pl</li>
-					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/math/draggableProof.html">draggableProof.pl</a></li>
-					<li class="text-danger">PGcourse.pl</li>
-		</ul>
+		<p>A Simple draggable proof.</p>
+		<div class="row">
+			<div class="col">
+					<h2>POD for Macro Files</h2>
+					<ul>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/math/draggableProof.html">draggableProof.pl</a></li>
+					</ul>
+			</div>
+			<div class="col">
+			</div>
+		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
 			<div class="col text-center"><h2 class="fw-bold fs-3">Explanation</h2></div>
@@ -129,7 +132,7 @@ $proof = DraggableProof(
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The <code>DraggableProof</code> function takes an arrayref of correct statements, followed (optionally) by extra statements. See <a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/math/draggableProof.html">the POD</a> for more options.</p>
+					<p>The <code>DraggableProof</code> function takes an arrayref of correct statements, followed (optionally) by extra statements. See <a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/math/draggableProof.html">the Draggable Proof POD</a> for more options.</p>
 				</div>
 			</div>
 			<div class="row">

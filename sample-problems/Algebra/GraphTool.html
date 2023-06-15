@@ -38,14 +38,17 @@
 <body>
 	<div class="container-fluid p-3">
 		<h1>Interactive graphing tool problems</h1>
-		<p></p>
-		<h2>POD for Macro Files</h2>
-		<ul>
-					<li class="text-danger">PGstandard.pl</li>
-					<li class="text-danger">PGML.pl</li>
-					<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/parserGraphTool.html">parserGraphTool.pl</a></li>
-					<li class="text-danger">PGcourse.pl</li>
-		</ul>
+		<p>Interactive graphing tool problems.</p>
+		<div class="row">
+			<div class="col">
+					<h2>POD for Macro Files</h2>
+					<ul>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/parserGraphTool.html">parserGraphTool.pl</a></li>
+					</ul>
+			</div>
+			<div class="col">
+			</div>
+		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
 			<div class="col text-center"><h2 class="fw-bold fs-3">Explanation</h2></div>
@@ -231,7 +234,7 @@ $gt = GraphTool(&quot;{circle, solid, ($h, $k), ($h + $r, $k)}&quot;)-&gt;with(
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>The variables $h, $k and $r randomly pick a center and radius of the circle.</p>
+					<p>The variables <code>$h</code>, <code>$k</code> and <code>$r</code> randomly pick a center and radius of the circle.</p>
 <p>The lines</p>
 <div class="sourceCode" id="equation"><pre class="sourceCode perl"><code class="sourceCode perl"><span id="equation-1"><a href="#equation-1" aria-hidden="true"></a>Context()-&gt;variables-&gt;add(<span class="kw">y </span>=&gt; <span class="kw">&#39;</span><span class="st">Real</span><span class="kw">&#39;</span>);</span>
 <span id="equation-2"><a href="#equation-2" aria-hidden="true"></a><span class="dt">$circle_eq_lhs</span> = Formula(<span class="kw">&quot;</span><span class="st">(x - </span><span class="dt">$h</span><span class="st">)^2 + (y - </span><span class="dt">$k</span><span class="st">)^2</span><span class="kw">&quot;</span>)-&gt;reduce;</span></code></pre></div>

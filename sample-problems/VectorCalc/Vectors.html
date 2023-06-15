@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Vectors</title>
+
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
+	</script>
+	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
+
+	<style>
+		.explanation {
+			--bs-code-color: #971556;
+		}
+		.preamble {
+			background-color: lightblue;
+		}
+		.setup {
+			background-color: #ddffdd;
+		}
+		.statement {
+			background-color: #eeb08199;
+		}
+		.answer {
+			background-color: #ffffdd;
+		}
+		.solution {
+			background-color: #ffb6c199;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="container-fluid p-3">
+		<h1>Vectors</h1>
+		<p>This shows how to use intervals in a problem.</p>
+		<div class="row">
+			<div class="col">
+			</div>
+			<div class="col">
+			</div>
+		</div>
+		<div class="row">
+			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
+			<div class="col text-center"><h2 class="fw-bold fs-3">Explanation</h2></div>
+		</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="DOCUMENT();
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
+" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
+loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
+</pre>
+				</div>
+				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Preamble</b></p>
+					
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="Context(&#39;Vector&#39;);
+## display vectors in ijk format
+# Context()-&gt;flags-&gt;set( ijk=&gt;1 );
+## set the appearance of the ijk vectors
+##    this sets them to be overset with
+##    vector arrows, instead of boldface
+# Context()-&gt;constants-&gt;set(
+#   i =&gt; {TeX =&gt; &quot;\mathit{\vec i}&quot;},
+#   j =&gt; {TeX =&gt; &quot;\mathit{\vec j}&quot;},
+#   k =&gt; {TeX =&gt; &quot;\mathit{\vec k}&quot;},
+# );
+
+$v1 = Vector(&quot;&lt;1,3&gt;&quot;);
+$v2 = Compute(&quot;&lt;-3,1&gt;&quot;);
+$v3 = 3*i + 2*j - 4*k;
+$v4 = Vector(1,1,0);
+
+# create an array of the components of $v3
+@v3comp = $v3-&gt;value;
+
+$a = 3*i + j;
+# $b = $a + $v1; # this results in an error
+$c = norm($v3);    # vector length
+$v5 = unit($v3);   # unit vector in same direction
+$d = $v1 . $v2;    # dot product
+$v6 = $v3 x $v4;      # cross product
+$v3-&gt;isParallel($v4); # =1 if parallel, =0 if skew
+
+BEGIN_PGML
+[`\vec{v}_1=[$v1]`]
+
+[`\vec{v}_2=[$v2]`]
+
+[`\vec{v}_3=[$v3]`]
+
+[`\vec{v}_4=[$v4]`]
+
+[`\vec{a} = [$a]`]
+
+[`\vec{v}_1+\vec{v}_2 = [$v1+$v2]`]
+
+[`||\vec{v}_3|| = [$c]`]
+
+[`[$v5]`] is a unit vector in the same direction as [`[$v3]`]
+
+[`\vec{v}_1 \cdot \vec{v}_2=[$d]`]
+
+[`\vec{v}_3 \times \vec{v}_4=[$v6]`]
+
+[`\vec{v}_3`] [@ $v3-&gt;isParallel($v4) ? &#39;is&#39; : &#39;is not&#39; @]
+parallel to [`\vec{v}_4`]
+
+The first element of [`\vec{v}_3`] is [@ $v3-&gt;extract(1) @]
+
+The third element of [`\vec{v}_4`] is [@ $v4-&gt;extract(3) @]
+END_PGML
+
+" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context(&#39;Vector&#39;);
+## display vectors in ijk format
+# Context()-&gt;flags-&gt;set( ijk=&gt;1 );
+## set the appearance of the ijk vectors
+##    this sets them to be overset with
+##    vector arrows, instead of boldface
+# Context()-&gt;constants-&gt;set(
+#   i =&gt; {TeX =&gt; &quot;\mathit{\vec i}&quot;},
+#   j =&gt; {TeX =&gt; &quot;\mathit{\vec j}&quot;},
+#   k =&gt; {TeX =&gt; &quot;\mathit{\vec k}&quot;},
+# );
+
+$v1 = Vector(&quot;&lt;1,3&gt;&quot;);
+$v2 = Compute(&quot;&lt;-3,1&gt;&quot;);
+$v3 = 3*i + 2*j - 4*k;
+$v4 = Vector(1,1,0);
+
+# create an array of the components of $v3
+@v3comp = $v3-&gt;value;
+
+$a = 3*i + j;
+# $b = $a + $v1; # this results in an error
+$c = norm($v3);    # vector length
+$v5 = unit($v3);   # unit vector in same direction
+$d = $v1 . $v2;    # dot product
+$v6 = $v3 x $v4;      # cross product
+$v3-&gt;isParallel($v4); # =1 if parallel, =0 if skew
+
+BEGIN_PGML
+[`\vec{v}_1=[$v1]`]
+
+[`\vec{v}_2=[$v2]`]
+
+[`\vec{v}_3=[$v3]`]
+
+[`\vec{v}_4=[$v4]`]
+
+[`\vec{a} = [$a]`]
+
+[`\vec{v}_1+\vec{v}_2 = [$v1+$v2]`]
+
+[`||\vec{v}_3|| = [$c]`]
+
+[`[$v5]`] is a unit vector in the same direction as [`[$v3]`]
+
+[`\vec{v}_1 \cdot \vec{v}_2=[$d]`]
+
+[`\vec{v}_3 \times \vec{v}_4=[$v6]`]
+
+[`\vec{v}_3`] [@ $v3-&gt;isParallel($v4) ? &#39;is&#39; : &#39;is not&#39; @]
+parallel to [`\vec{v}_4`]
+
+The first element of [`\vec{v}_3`] is [@ $v3-&gt;extract(1) @]
+
+The third element of [`\vec{v}_4`] is [@ $v4-&gt;extract(3) @]
+END_PGML
+
+</pre>
+				</div>
+				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Setup</b></p>
+					<p>We indicate that we are working in a vector context by setting the <code>Context</code> to be <code>Vector</code>. If we want to have vectors displayed, by default, as a sum of <code>i,j,k</code> components, we can set the ijk flag in the <code>Context</code>. This is commented out here; uncommenting it would result in the vector <code>$v1</code> here being shown as <code>$v1 = i + 3j</code> instead of <code>$v1 = &lt;1,3&gt;</code>, etc. Similarly, if we wanted to change the default display of the <code>i, j</code> and <code>k</code> vectors, say to have them display with overset arrows, we can redefine the TeX formatting of those constants, as shown in the second comment.</p>
+<p>Then, we can define vectors as we might expect: either with the Vector or Compute constructors, or by using the predefined vector constants <code>i, j</code> and <code>k</code>. Any vector constructed with <code>i, j</code> and/or <code>k</code> will be three-dimensional vectors even if the vector <code>k</code> is not used. That is <code>Vector('&lt;1,2&gt;')</code> is not equal to <code>i+2j</code>.</p>
+<p>Also if we define the vector using the constants i, j and k, as in the definition of <code>$v3</code>here, then the default display of that vector will be in <code>i,j,k</code>format even if we don’t set the corresponding Context flag.</p>
+<p>To explicitly require that the vectors be two-dimensional rather than three-dimensional, we would use <code>Context('Vector2D')</code> instead of <code>Context('Vector')</code>.</p>
+<p>The components of MathObjects vectors are available as an array from <code>$v-&gt;value;</code> thus, we could save the three components of the vector <code>$v3</code> in the array <code>@v3comp</code> using <code>@v3comp = $v3-&gt;value</code>. Then, we can access the first component using <code>$v3comp[0]</code>, the second component using <code>$v3comp[1]</code>, etc. Better still, to get the first component of the vector <code>$v3</code> we could use <code>$v3-&gt;extract(1)</code> instead of <code>($v3-&gt;value)[0]</code>. Note that index of <code>extract</code> starts at 1, not 0.</p>
+<p>Lastly, there is other functionality associated with Vectors. See the WeBWorK wiki page on <a href="https://webwork.maa.org/wiki/Vector_(MathObject_Class)">vectors</a></p>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
+					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+						type="button" data-code="BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();" aria-label="copy to clipboard">
+						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
+							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+						</svg>
+					</button>
+					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();</pre>
+				</div>
+				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
+					<p><b>Solution</b></p>
+					
+				</div>
+			</div>
+	</div>
+
+	<script type="module">
+		for (const pre of document.body.querySelectorAll('pre.CodeMirror')) {
+			CodeMirror.runMode(pre.textContent, 'PG', pre);
+		}
+
+		for (const btn of document.querySelectorAll('.clipboard-btn')) {
+			btn.addEventListener('click', () => navigator.clipboard.writeText(btn.dataset.code));
+		}
+	</script>
+</body>
+
+</html>
