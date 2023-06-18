@@ -1,0 +1,27 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'answerComposition.pl', 'PGcourse.pl');
+
+Context()->variables->add(u => 'Real');
+
+$a = random(2, 9);
+
+$f = Formula("sqrt(u)");
+$g = Formula("x^2+$a");
+
+BEGIN_PGML
+Express the function [`y = \sqrt{x^2 + [$a]}`] as a composition [`y = f(g(x))`]
+of two simpler functions [`y = f(u)`] and [`u = g(x)`].
+
+* [`f(u) =`] [_]{ width => 15 }
+
+* [`g(x) =`]  [_]{ width => 15 }
+END_PGML
+
+COMPOSITION_ANS($f, $g, vars => [ 'u', 'x' ], showVariableHints => 1);
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

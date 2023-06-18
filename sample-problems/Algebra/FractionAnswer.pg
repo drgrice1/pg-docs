@@ -1,0 +1,23 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'contextFraction.pl', 'PGcourse.pl');
+
+Context('Fraction-NoDecimals');
+
+$answer = Compute('3/2');
+
+BEGIN_PGML
+Simplify [``\frac{6}{4}``].
+
+Answer = [_]{$answer->cmp(
+    studentsMustReduceFractions => 1,
+    reduceFractions => 1,
+    allowMixedNumbers => 0
+)}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Factor and cancel to obtain [`\displaystyle [$answer]`].
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

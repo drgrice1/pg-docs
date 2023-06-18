@@ -1,0 +1,21 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'plotly3D.pl', 'PGcourse.pl');
+
+$graph = Graph3D(
+    height => 300,
+    width  => 300,
+    title  => 'Sphere',
+);
+
+$graph->addSurface(
+    [ '3*sin(v)*cos(u)', '3*sin(v)*sin(u)', '3*cos(v)' ],
+    [ 0,                 2 * pi,            30 ],
+    [ 0,                 pi,                30 ]
+);
+
+BEGIN_PGML
+[@ $graph->Print @]*
+END_PGML
+
+ENDDOCUMENT();

@@ -1,0 +1,16 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'unionTables.pl', 'PGcourse.pl');
+
+Context()->constants->add(k => 0.01);
+
+# This means that student answers are not reduced to the numerical value
+# specified in the Context
+Context()->flags->set(formatStudentAnswer => 'parsed');
+
+$ans = Compute('k');
+
+BEGIN_PGML
+[`f(x) = x - k`] (where [`k > 0`] is constant) is zero when [`x =`] [___]{$ans}
+END_PGML
+
+ENDDOCUMENT();

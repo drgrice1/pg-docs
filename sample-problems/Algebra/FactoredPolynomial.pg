@@ -1,0 +1,33 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',               'PGML.pl',
+    'contextPolynomialFactors.pl', 'contextLimitedPowers.pl',
+    'PGcourse.pl'
+);
+
+# Expanded form
+Context('Numeric');
+$poly = Compute('8x^2 + 28x + 12');
+
+# Factored form
+Context('PolynomialFactors-Strict');
+Context()->flags->set(singleFactors => 0);
+LimitedPowers::OnlyIntegers(
+    minPower => 0,
+    maxPower => 1,
+    message  => 'either 0 or 1',
+);
+$factored = Compute('4(2x+1)(x+3)');
+
+BEGIN_PGML
+Write the quadratic expression [`[$poly]`] in factored form [`k(ax+b)(cx+d)`].
+
+[_]{$factored}{20}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

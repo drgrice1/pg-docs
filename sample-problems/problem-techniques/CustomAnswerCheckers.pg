@@ -1,0 +1,22 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+$ans = Compute('pi/3')->cmp(
+    checker => sub {
+        my ($correct, $student, $ansHash) = @_;
+        return cos($correct) == cos($student);
+    }
+);
+$val = Compute('cos(pi/3)');
+
+BEGIN_PGML
+Enter a value of [`x`] for which [`\cos(x) = [$val]`]
+
+[`x=`] [___]{$ans}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

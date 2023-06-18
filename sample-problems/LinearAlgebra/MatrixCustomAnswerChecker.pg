@@ -1,0 +1,37 @@
+
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserMultiAnswer.pl', 'PGcourse.pl');
+
+$showPartialCorrectAnswers = 0;
+
+Context('Matrix');
+
+$A = Matrix([ [ 1, 1 ], [ 0, 1 ] ]);
+$B = Matrix([ [ 1, 0 ], [ 1, 1 ] ]);
+
+$multians = MultiAnswer($A, $B)->with(
+    singleResult => 1,
+    checker      => sub {
+        my ($correct, $student, $answerHash) = @_;
+        my @s = @{$student};
+        $s0 = Matrix($s[0]);
+        $s1 = Matrix($s[1]);
+        return $s0 * $s1 != $s1 * $s0;
+    }
+);
+
+BEGIN_PGML
+Give an example of two [`2 \times 2`] matrices [`A`] and [`B`] such that
+[`AB \ne BA`] .
+
+    [`A =`] [_____]*{$multians}
+
+    [`B =`] [_____]*{$multians}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

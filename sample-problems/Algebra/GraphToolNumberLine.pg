@@ -1,0 +1,41 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserGraphTool.pl',
+  'PGcourse.pl');
+
+
+#  * availableTools: this determines which tools should be shown on the
+$x1 = random(1, 5);
+
+$gt1 = GraphTool("{interval,(-$x1,$x1]}")->with(
+    availableTools => [ 'PointTool', 'IntervalTool', 'IncludeExcludePointTool' ],
+    numberLine     => 1,
+    bBox           => [ -6, 6 ],
+    ticksDistanceX => 1,
+    minorTicksX    => 0,
+    useBracketEnds => 1
+);
+
+$x2 = random(-5,5);
+
+$gt2 = GraphTool("{interval,(-inf,$x2)}")->with(
+    availableTools => [ 'PointTool', 'IntervalTool', 'IncludeExcludePointTool' ],
+    numberLine     => 1,
+    bBox           => [ -6, 6 ],
+    ticksDistanceX => 1,
+    minorTicksX    => 0,
+    useBracketEnds => 0
+);
+
+BEGIN_PGML
+Graph the solution set for the linear inequality [`-[$x1] < x \leq [$x1]`].
+
+[_]{$gt1}
+
+Graph the solution set for the linear inequality [`x < [$x2]`].
+
+[_]{$gt2}
+END_PGML
+
+
+ENDDOCUMENT();

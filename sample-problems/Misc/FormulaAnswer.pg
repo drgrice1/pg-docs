@@ -1,0 +1,22 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl');
+
+
+$a = non_zero_random(-9, 9);
+do { $b = random(2, 9) } until ($b != $a);
+
+$answer1 = Compute("$a");
+$answer2 = Compute("($a x^($b) + $b)/x")->reduce();
+
+BEGIN_PGML
+Enter [`[$answer1]`]: [____]{$answer1}
+
+Enter [``[$answer2]``]: [____]{$answer2}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

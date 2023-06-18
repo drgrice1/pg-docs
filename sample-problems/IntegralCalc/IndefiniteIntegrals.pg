@@ -1,0 +1,27 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',                'PGML.pl',
+    'parserFormulaUpToConstant.pl', 'PGcourse.pl'
+);
+
+
+# Specific antiderivative:  Marks correct e^x, e^x + pi, etc
+$specific = Formula("e^x");
+
+#  General antiderivative: Marks correct e^x + C, e^x + C - 3, e^x + K, etc.
+$general = FormulaUpToConstant("e^x");
+
+BEGIN_PGML
+a. Enter a specific antiderivative for [`e^x`]:
+[_]{ $specific->cmp(upToConstant => 1) }{10}
+
+b. Enter the most general antiderivative for [`e^x`]:
+[_]{$general}{10}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

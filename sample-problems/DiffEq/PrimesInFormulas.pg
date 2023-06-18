@@ -1,0 +1,34 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',             'PGML.pl',
+    'parserImplicitEquation.pl', 'PGcourse.pl'
+);
+
+Context('ImplicitEquation');
+Context()->variables->{namePattern} = qr/[ty]'*/i;
+Context()->variables->are(
+    'y'   => 'Real',
+    "y'"  => 'Real',
+    "y''" => 'Real',
+    't'   => 'Real',
+);
+
+$diffeq = ImplicitEquation("y'' + 2y' + y = cos(t)");
+
+BEGIN_PGML
+Suppose this is a word problem that asks students to set up a differential
+equation and enter their differential equation as the answer.
+
+Enter your differential equation below in terms of [`y`], [`y^{\prime}`],
+[`y^{\prime\prime}`], [`t`].
+(Suppose the answer is the differential equation [`[$diffeq]`].)
+
+[_]{$diffeq}{20} [@ helpLink('equations') @]*
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

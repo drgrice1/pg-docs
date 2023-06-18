@@ -8,48 +8,40 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/eclipse.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
 	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
-
-	<style>
-		.explanation {
-			--bs-code-color: #971556;
-		}
-		.preamble {
-			background-color: lightblue;
-		}
-		.setup {
-			background-color: #ddffdd;
-		}
-		.statement {
-			background-color: #eeb08199;
-		}
-		.answer {
-			background-color: #ffffdd;
-		}
-		.solution {
-			background-color: #ffb6c199;
-		}
-	</style>
+	<link rel="stylesheet" href="https://openwebwork.github.io/pg-docs/sample-problems/sample-problem.css" >
 </head>
+
 
 <body>
 	<div class="container-fluid p-3">
-		<h1>Riemann Sums</h1>
-		<p>Integral calculus: Interpreting Riemann sums in terms of area</p>
 		<div class="row">
 			<div class="col">
+				<h1>Riemann Sums</h1>
+				<p>Integral calculus: Interpreting Riemann sums in terms of area</p>
+			</div>
+			<div class="col text-end">
+				<a href="https://openwebwork.github.io/pg-docs/sample-problems/index.html">Return to the PG docs home</a>
+</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h2>Complete Code</h2>
+				<p>
+				Download file: <a href="RiemannSums.pg">RiemannSums.pg</a>
+</p>
+			</div>
+				<div class="col">
 					<h2>POD for Macro Files</h2>
 					<ul>
-								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/core/weightedGrader.html">weightedGrader.pl</a></li>
-								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
 								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/graph/PGtikz.html">PGtikz.pl</a></li>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserPopUp.html">parserPopUp.pl</a></li>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/core/weightedGrader.html">weightedGrader.pl</a></li>
 					</ul>
-			</div>
-			<div class="col">
-			</div>
+				</div>
 		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
@@ -57,7 +49,7 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="DOCUMENT();
 
 loadMacros(
@@ -69,12 +61,11 @@ loadMacros(
 install_weighted_grader();
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
 loadMacros(
     &#39;PGstandard.pl&#39;,     &#39;PGML.pl&#39;,
@@ -87,13 +78,13 @@ install_weighted_grader();
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>The <code>weightedGrader.pl</code> macro is used because we want to give different parts of the answer different weights, the <code>parserPopUp.pl</code> macro is used to create drop down menus, and the <code>PGtikz.pl</code> macro is used to produce the graphs.</p>
+						<p>The <code>weightedGrader.pl</code> macro is used because we want to give different parts of the answer different weights, the <code>parserPopUp.pl</code> macro is used to create drop down menus, and the <code>PGtikz.pl</code> macro is used to produce the graphs.</p>
 <p>To use the weighted grader call <code>install_weighted_grader();</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="$c = random(9, 13);       # a constant for scaling the function
 $f = Compute(&quot;x^2/$c&quot;);
 $a = random(2, 5);        # left endpoint of interval
@@ -191,12 +182,11 @@ $rightEstimateDropDown = DropDown(
 );
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">$c = random(9, 13);       # a constant for scaling the function
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">$c = random(9, 13);       # a constant for scaling the function
 $f = Compute(&quot;x^2/$c&quot;);
 $a = random(2, 5);        # left endpoint of interval
 $b = $a + 2;              # right endpoint of interval
@@ -295,7 +285,7 @@ $rightEstimateDropDown = DropDown(
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>First generate a random constant for the function and the interval endpoints. Note that you should be careful to choose ranges for the parameters such that all possibilities work well in the graphs.</p>
+						<p>First generate a random constant for the function and the interval endpoints. Note that you should be careful to choose ranges for the parameters such that all possibilities work well in the graphs.</p>
 <p>Then compute the left and right Riemann sums, first by storing the x and y values in arrays and summing over the arrays.</p>
 <p>Next, generate the graphs of the function with the rectangles whose areas are summed in the Riemann sums.</p>
 <p>Finally, construct drop down menu answers that ask the student to relate the Riemann sum estimates to the area of the region specified in the problem.</p>
@@ -303,7 +293,7 @@ $rightEstimateDropDown = DropDown(
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML
 Suppose [``f(x) = \frac{x^2}{[$c]}``].
 
@@ -331,12 +321,11 @@ by [`y = f(x)`], the [`x`]-axis, and the vertical lines [`x = [$a]`] and
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Suppose [``f(x) = \frac{x^2}{[$c]}``].
 
 a. The rectangles in the graph below illustrate a left endpoint Riemann sum for
@@ -365,12 +354,12 @@ END_PGML
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>The weights for the weighted grader are assigned by passing the <code>weight</code> flag to the <code>cmp</code> method.</p>
+						<p>The weights for the weighted grader are assigned by passing the <code>weight</code> flag to the <code>cmp</code> method.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML_SOLUTION
 a. The left endpoint Riemann sum is
 [```
@@ -388,12 +377,11 @@ END_PGML_SOLUTION
 ENDDOCUMENT();
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
 a. The left endpoint Riemann sum is
 [```
     f([$x[0]]) \cdot 0.5 + f([$x[1]]) \cdot 0.5 + \cdots + f([$x[ $n - 1]]) \cdot 0.5
@@ -412,7 +400,7 @@ ENDDOCUMENT();
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
-					
+						A solution should be provided here.
 				</div>
 			</div>
 	</div>

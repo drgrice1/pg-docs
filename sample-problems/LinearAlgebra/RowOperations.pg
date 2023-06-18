@@ -1,0 +1,28 @@
+Context('Matrix');
+
+do {
+    $A = Matrix([
+        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+        [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+    ]);
+} until (($A->row(1) != $A->row(2))
+        && ($A->row(1) != $A->row(3))
+        && ($A->row(2) != $A->row(3)));
+
+$k  = random(2, 9);
+$op = "R_{1} + $k R_{2} \rightarrow R_{1}";
+
+$ans = Matrix([ $A->row(1) + $k * ($A->row(2)), $A->row(2), $A->row(3), ]);
+
+BEGIN_PGML
+Give the result of applying the row operation [`[$op]`] to the given matrix.
+
+[``[$A] \mathop{\longrightarrow}^{[$op]}``] [_____]*{$ans}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

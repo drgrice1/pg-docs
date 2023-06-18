@@ -1,0 +1,53 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl', 'PGML.pl', 'parserPopUp.pl', 'PGgraders.pl',
+    'PGcourse.pl'
+);
+
+
+$showPartialCorrectAnswers = 0;
+
+# Incremental grader
+install_problem_grader(~~&custom_problem_grader_fluid);
+$ENV{grader_numright} = [ 2,   4,   6 ];
+$ENV{grader_scores}   = [ 0.3, 0.6, 1 ];
+$ENV{grader_message} =
+    'You can earn '
+    . '30% partial credit for 2 - 3 correct answers, and '
+    . '60% partial credit for 4 - 5 correct answers.';
+
+# All or nothing grader
+# install_problem_grader(~~&std_problem_grader);
+
+# Questions and answers
+@s_and_a = (
+    [ 'All continuous functions are differentiable.',            'False' ],
+    [ 'All differentiable functions are continuous.',            'True' ],
+    [ 'All polynomials are differentiable.',                     'True' ],
+    [ 'All functions with positive derivatives are increasing.', 'True' ],
+    [ 'All rational functions are continuous.',                  'False' ],
+    [ 'All exponential functions are differentiable.',           'True' ],
+    [ 'All exponential functions are rational functions.',       'False' ],
+);
+
+# Select six of the statements and answers to use.
+@statements = random_subset(6, @s_and_a);
+
+BEGIN_PGML
+Are the following statements true or false?
+
+[@ join("\n\n", map {
+    '[_]{DropDownTF($statements[' . $_ . '][1])} [$statements[' . $_ . '][0]]'
+} 0 .. $#statements) @]**
+END_PGML
+
+BEGIN_PGML_SOLUTION
+The answers are
+
+[@ join("\n\n", map {
+       '[$statements[' . $_ . '][1]]: [$statements[' . $_ . '][0]]'
+} 0 .. $#statements) @]**
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

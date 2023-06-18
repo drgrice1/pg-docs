@@ -1,0 +1,30 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',               'PGML.pl',
+    'contextLimitedPolynomial.pl', 'PGcourse.pl'
+);
+
+Context('Numeric');
+$h          = 3;
+$k          = 5;
+$vertexform = Compute("(x-$h)^2-$k");
+
+# Expanded form
+Context('LimitedPolynomial-Strict');
+$b            = -2 * $h;
+$c            = $h**2 - $k;
+$expandedform = Formula("x^2 + $b x + $c")->reduce();
+
+BEGIN_PGML
+The quadratic expression [`[$vertexform]`] is written in vertex form.
+Write the expression in expanded form [`ax^2 + bx + c`].
+
+[_]{$expandedform}{20}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

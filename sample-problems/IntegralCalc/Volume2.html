@@ -8,48 +8,40 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/eclipse.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
 	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
-
-	<style>
-		.explanation {
-			--bs-code-color: #971556;
-		}
-		.preamble {
-			background-color: lightblue;
-		}
-		.setup {
-			background-color: #ddffdd;
-		}
-		.statement {
-			background-color: #eeb08199;
-		}
-		.answer {
-			background-color: #ffffdd;
-		}
-		.solution {
-			background-color: #ffb6c199;
-		}
-	</style>
+	<link rel="stylesheet" href="https://openwebwork.github.io/pg-docs/sample-problems/sample-problem.css" >
 </head>
+
 
 <body>
 	<div class="container-fluid p-3">
-		<h1>Volume of Solids of Revolution 2</h1>
-		<p>Volume of solids of revolution</p>
 		<div class="row">
 			<div class="col">
+				<h1>Volume of Solids of Revolution 2</h1>
+				<p>Volume of solids of revolution</p>
+			</div>
+			<div class="col text-end">
+				<a href="https://openwebwork.github.io/pg-docs/sample-problems/index.html">Return to the PG docs home</a>
+</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h2>Complete Code</h2>
+				<p>
+				Download file: <a href="Volume2.pg">Volume2.pg</a>
+</p>
+			</div>
+				<div class="col">
 					<h2>POD for Macro Files</h2>
 					<ul>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
 								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/answers/answerHints.html">answerHints.pl</a></li>
 								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/core/weightedGrader.html">weightedGrader.pl</a></li>
-								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
 					</ul>
-			</div>
-			<div class="col">
-			</div>
+				</div>
 		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
@@ -57,7 +49,7 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="DOCUMENT();
 
 loadMacros(
@@ -68,12 +60,11 @@ loadMacros(
 
 install_weighted_grader();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
 loadMacros(
     &#39;PGstandard.pl&#39;,     &#39;PGML.pl&#39;,
@@ -85,13 +76,13 @@ install_weighted_grader();</pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We load <code>weightedGrader.pl</code> and install it. We load <code>answerHints.pl</code> to give student feedback on particular incorrect answers. We load <code>unionTables.pl</code> so that we can construct tables in HTML mode that will make the answer blanks for the limits of integration appear at the top and bottom of the integral symbol.</p>
+						<p>We load <code>weightedGrader.pl</code> and install it. We load <code>answerHints.pl</code> to give student feedback on particular incorrect answers. We load <code>unionTables.pl</code> so that we can construct tables in HTML mode that will make the answer blanks for the limits of integration appear at the top and bottom of the integral symbol.</p>
 <p>If the weighted grader is to be used, the command <code>install_weighted_grader();</code> must be called.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, dx =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, dy =&gt; &#39;Real&#39;);
 
 $f = Compute(&#39;x&#39;);
@@ -132,12 +123,11 @@ if ($displayMode eq &#39;TeX&#39;) {
 }
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, dx =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, dy =&gt; &#39;Real&#39;);
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, dx =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;, dy =&gt; &#39;Real&#39;);
 
 $f = Compute(&#39;x&#39;);
 $g = Compute(&#39;x^2&#39;);
@@ -179,12 +169,12 @@ if ($displayMode eq &#39;TeX&#39;) {
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>Notice that for the final answer (volume) we use <code>ans_rule(width)</code>, while for the answer blanks that involve setting up the integral we use <code>NAMED_ANS_RULE(name, width)</code>.</p>
+						<p>Notice that for the final answer (volume) we use <code>ans_rule(width)</code>, while for the answer blanks that involve setting up the integral we use <code>NAMED_ANS_RULE(name, width)</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML
 Set up and evaluate an integral for the volume of the solid of revolution
 obtained by rotating the region bounded by [`y = [$f]`] and [`y = [$g]`] about
@@ -208,12 +198,11 @@ END_HTML
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Set up and evaluate an integral for the volume of the solid of revolution
 obtained by rotating the region bounded by [`y = [$f]`] and [`y = [$g]`] about
 the [`x`] -axis.
@@ -238,12 +227,12 @@ END_PGML
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					
+						This is the problem statement in PGML.
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="#; which can provide full credit, we use
 NAMED_WEIGHTED_ANS(upperlimit =&gt; $upper-&gt;cmp, $weights[0]);
 NAMED_WEIGHTED_ANS(lowerlimit =&gt; $lower-&gt;cmp, $weights[1]);
@@ -260,12 +249,11 @@ NAMED_WEIGHTED_ANS(
 CREDIT_ANS($vol-&gt;cmp, [ &#39;upperlimit&#39;, &#39;lowerlimit&#39;, &#39;integrand&#39; ], $weights[3]);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">#; which can provide full credit, we use
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">#; which can provide full credit, we use
 NAMED_WEIGHTED_ANS(upperlimit =&gt; $upper-&gt;cmp, $weights[0]);
 NAMED_WEIGHTED_ANS(lowerlimit =&gt; $lower-&gt;cmp, $weights[1]);
 NAMED_WEIGHTED_ANS(
@@ -283,12 +271,12 @@ CREDIT_ANS($vol-&gt;cmp, [ &#39;upperlimit&#39;, &#39;lowerlimit&#39;, &#39;inte
 				</div>
 				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Answer</b></p>
-					<p>Notice that we use <code>NAMED_WEIGHTED_ANS(name =&gt; $answer-&gt;cmp()-&gt;withPostFilter(), weight)</code> for the questions that have named answer blanks above. For the final answer, <code>CREDIT_ANS( $answer-&gt;cmp(), ['name1', 'name2', ...], weight)</code> for this answer to provide credit for the answers with names in the list <code>['name1', 'name2', ...]</code>.</p>
+						<p>Notice that we use <code>NAMED_WEIGHTED_ANS(name =&gt; $answer-&gt;cmp()-&gt;withPostFilter(), weight)</code> for the questions that have named answer blanks above. For the final answer, <code>CREDIT_ANS( $answer-&gt;cmp(), ['name1', 'name2', ...], weight)</code> for this answer to provide credit for the answers with names in the list <code>['name1', 'name2', ...]</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
@@ -299,12 +287,11 @@ COMMENT(
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -316,7 +303,7 @@ ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
-					
+						A solution should be provided here.
 				</div>
 			</div>
 	</div>

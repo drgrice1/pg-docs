@@ -1,0 +1,20 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserSolutionFor.pl', 'PGcourse.pl');
+
+Context('Vector');
+
+$r      = random(3, 6);
+$answer = SolutionFor("x^2 + y^2 + z^2 = $r^2", [ $r, 0, 0 ]);
+
+$eqn = $answer->{f};
+
+BEGIN_PGML
+A solution to the equation [`[$eqn]`] is [`(x, y, z) =`] [_]{$answer}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

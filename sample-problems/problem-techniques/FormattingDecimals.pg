@@ -1,0 +1,48 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+Context("Numeric");
+Context()->variables->set(x=>{limits=>[2,4]});
+
+$a = random(3,7,1);
+
+# both ln and log are natural log (base e)
+$b = sprintf("%0.3f", ln($a) );
+$ans1 = Real("$b");
+
+$f = Formula("ln(x)"); # or log(x)
+$ans2 = $f->eval(x=>$a);
+
+
+# log base 10 is log10, logten,
+# ln(x)/ln(10), or log(x)/log(10)
+
+$c = sprintf("%0.3f", ln($a)/ln(10) ); # or log($a)/log(10)
+$ans3 = Real("$c");
+
+$g = Formula("ln(x)/ln(10)"); # or log(x)/log(10)
+$ans4 = $g->eval(x=>$a);
+
+BEGIN_PGML
+Notice the formatting and rounding differences
+between [` [$ans1] `] and [` [$ans2] `].
+
+Try entering [` \ln([$a]), \log([$a]), \ln([$a])/\ln(10), \log([$a])/\log(10),
+\mathrm{logten}([$a]), \mathrm{log10}([$a]) `].
+
+
+1. [` \ln([$a]) = `] [_____]{$ans1}
+
+2. [` \ln([$a]) = `] [_____]{$ans2}
+
+3. [` \log_{10}([$a]) = `] [_____]{$ans3}
+
+4. [` \log_{10}([$a]) = `] [_____]{$ans4}
+END_PGML
+
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

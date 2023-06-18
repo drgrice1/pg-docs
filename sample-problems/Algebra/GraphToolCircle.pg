@@ -1,0 +1,37 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserGraphTool.pl', 'PGcourse.pl');
+
+$h = non_zero_random(-5, 5);
+$k = non_zero_random(-5, 5);
+$r = random(1, 4);
+
+Context()->variables->add('y' => 'Real');
+$circle_eq_lhs = Formula("(x-$h)^2 + (y-$k)^2")->reduce;
+
+$gt = GraphTool("{circle, solid, ($h, $k), ($h + $r, $k)}")
+    ->with(bBox => [ -11, 11, 11, -11 ]);
+
+BEGIN_PGML
+Graph the circle given by the following equation.
+
+    [`[$circle_eq_lhs] = [$r ** 2]`]
+
+[_]{$gt}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+The equation of the circle of the form:
+
+    [`[$circle_eq_lhs] = [$r ** 2]`]
+
+has a center at [`([$h],[$k])`] and radius [$r].  To enter the graph, click the
+circle tool, then click the center at [`([$h],[$k])`] and then click a second
+point that is [$r] units from the center.  This is easist going left, right, up
+or down from the center.
+
+The solution is
+[@ $gt->generateAnswerGraph @]*
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

@@ -1,0 +1,19 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+Context()->flags->set(tolType => 'digits', tolerance => 3, tolTruncation => 1);
+$ans = Real("pi");
+BEGIN_PGML
+
+This section is with [|tolTruncation|] set to true (1).  The exact answer
+is [`\pi`].   Enter 3.14, 3.15, 3.141, 3.142 to see if it accepts the answer.
+
+[`\pi=`][_]{$ans}
+
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

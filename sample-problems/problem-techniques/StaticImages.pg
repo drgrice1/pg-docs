@@ -1,0 +1,12 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+
+BEGIN_PGML
+[@ image('image.png') @]*
+
+[@ image('image.png', width => 400, tex_size => 600,
+  extra_html_tags => 'An graph of a decreasing exponential function.') @]*
+END_PGML
+
+ENDDOCUMENT();

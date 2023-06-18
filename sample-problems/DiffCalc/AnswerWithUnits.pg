@@ -1,0 +1,44 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',            'PGML.pl',
+    'parserNumberWithUnits.pl', 'parserFormulaWithUnits.pl',
+    'PGcourse.pl'
+);
+
+Context()->variables->are(t => 'Real');
+
+$h  = Formula('-16 t^2 + 16');
+$v  = $h->D('t');
+$v1 = $v->eval(t => 1);
+$a  = $v->D('t');
+
+$ans1 = FormulaWithUnits("$v", 'ft/s');
+$ans2 = NumberWithUnits("$v1", 'ft/s');
+$ans3 = FormulaWithUnits("$a", 'ft/s^2');
+
+BEGIN_PGML
+Suppose the height of a falling object, in feet above the ground, is given
+by [`h(t) = [$h]`] for [`t \geq 0`], where time is measured in seconds.
+
+a. What is the velocity of the object?  Include units in your answer.
+
+    [_]{$ans1}{15}
+
+b. What is the velocity of the object when it hits the ground?  Include units in
+your answer.
+
+    [_]{$ans2}{15}
+
+c. What is the acceleration of the object?  Include units in your answer.
+
+    [_]{$ans3}{15}
+
+Note: use units in all answers. [@ helpLink('units') @]*
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

@@ -1,0 +1,28 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'contextLimitedPoint.pl', 'PGcourse.pl');
+
+Context('LimitedPoint');
+
+$f = Compute("x^2 - 1");
+
+$xint = List(Point("(1, 0)"), Point("(-1, 0)"));
+$yint = List(Point("(0, -1)"));
+
+BEGIN_PGML
+Enter the [`x`]-intercept(s) and [`y`]-intercept(s) of [`y = [$f]`].  Enter a
+point as [`(a,b)`], including the parentheses.  If there is more than one
+correct answer, enter a comma separated list of points.
+
++ [`x`]-intercept(s): [_]{$xint}{15}
+
++ [`y`]-intercept(s): [_]{$yint}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+COMMENT('MathObject version. Uses PGML.');
+
+ENDDOCUMENT();

@@ -1,0 +1,27 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'answerHints.pl', 'PGcourse.pl');
+
+Context()->variables->are(t => 'Real', u => 'Real');
+
+$f   = Formula('2 t');
+$ans = Formula('6 u')->cmp->withPostFilter(AnswerHints(
+    Formula('6 t') => 'Are you using the correct variable?',
+    Formula('6 u') => 'Good work!'
+));
+
+BEGIN_PGML
+If [`f(t) = [$f]`], then [`f(3u)`] = [____]{$ans}
+
+[@ knowlLink(
+    'Click for a hint',
+    value => 'Substitute \(3u\) wherever you see \(t\) in the formula for \(f\).'
+) @]*
+END_PGML
+
+#; generate the word HINT: before the block of text that is the hint, so you
+BEGIN_PGML_HINT
+Substitute [`3u`] wherever you see [`t`] in the formula for [`f(t) = [$f]`].
+END_PGML_HINT
+
+ENDDOCUMENT();

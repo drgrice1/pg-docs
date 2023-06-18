@@ -1,0 +1,44 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'contextInequalities.pl', 'PGcourse.pl');
+
+
+#; context by calling `Context('Interval')`. Note that `inf` is built-in for
+$a = random(1, 6);
+
+Context('Inequalities-Only')->variables->are(x => 'Real');
+Context()->flags->set(formatStudentAnswer => 'parsed');
+
+$domain = Compute("x >= $a");
+
+Context('Inequalities-Only')->variables->are(y => 'Real');
+Context()->flags->set(formatStudentAnswer => 'parsed');
+
+$range = Compute('y >= 0');
+
+# Interval version of the same domain and range.
+Context('Interval');
+$domain_interval = Compute("[$a, inf)");
+$range_interval  = Compute('[0, inf)');
+
+BEGIN_PGML
+Suppose [`f(x) = \sqrt(x - [$a])`].
+
+Enter inequalities for the domain and range of [`f`].
+
+Domain: [_]{$domain}{15}
+
+Range: [_]{$range}{15}
+
+Use interval notation to give the domain and range of [`f`].
+
+Domain: [____]{$domain_interval}
+
+Range: [____]{$range_interval}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

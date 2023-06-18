@@ -8,47 +8,39 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/eclipse.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
 	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
-
-	<style>
-		.explanation {
-			--bs-code-color: #971556;
-		}
-		.preamble {
-			background-color: lightblue;
-		}
-		.setup {
-			background-color: #ddffdd;
-		}
-		.statement {
-			background-color: #eeb08199;
-		}
-		.answer {
-			background-color: #ffffdd;
-		}
-		.solution {
-			background-color: #ffb6c199;
-		}
-	</style>
+	<link rel="stylesheet" href="https://openwebwork.github.io/pg-docs/sample-problems/sample-problem.css" >
 </head>
+
 
 <body>
 	<div class="container-fluid p-3">
-		<h1>Fraction Answer</h1>
-		<p>Algebraic fraction answer requiring simplification</p>
 		<div class="row">
 			<div class="col">
+				<h1>Fraction Answer</h1>
+				<p>Algebraic fraction answer requiring simplification</p>
+			</div>
+			<div class="col text-end">
+				<a href="https://openwebwork.github.io/pg-docs/sample-problems/index.html">Return to the PG docs home</a>
+</div>
+		</div>
+		<div class="row">
+			<div class="col">
+				<h2>Complete Code</h2>
+				<p>
+				Download file: <a href="AlgebraicFractionAnswer.pg">AlgebraicFractionAnswer.pg</a>
+</p>
+			</div>
+				<div class="col">
 					<h2>POD for Macro Files</h2>
 					<ul>
-								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/unionTables.html">unionTables.pl</a></li>
 								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/parsers/parserMultiAnswer.html">parserMultiAnswer.pl</a></li>
+								<li><a href="https://openwebwork.github.io/pg-docs/pod/pg/macros/ui/niceTables.html">niceTables.pl</a></li>
 					</ul>
-			</div>
-			<div class="col">
-			</div>
+				</div>
 		</div>
 		<div class="row">
 			<div class="col text-center"><h2 class="fw-bold fs-3">PG problem file</h2></div>
@@ -56,46 +48,43 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="DOCUMENT();
 
 loadMacros(
-    &#39;PGstandard.pl&#39;,  &#39;PGML.pl&#39;,
-    &#39;unionTables.pl&#39;, &#39;parserMultiAnswer.pl&#39;,
-    &#39;PGcourse.pl&#39;
+    &#39;PGstandard.pl&#39;,  &#39;PGML.pl&#39;, &#39;niceTables.pl&#39;,
+    &#39;parserMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;
 );
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
 loadMacros(
-    &#39;PGstandard.pl&#39;,  &#39;PGML.pl&#39;,
-    &#39;unionTables.pl&#39;, &#39;parserMultiAnswer.pl&#39;,
-    &#39;PGcourse.pl&#39;
+    &#39;PGstandard.pl&#39;,  &#39;PGML.pl&#39;, &#39;niceTables.pl&#39;,
+    &#39;parserMultiAnswer.pl&#39;, &#39;PGcourse.pl&#39;
 );
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					<p>We include the macros file <code>unionTables.pl</code> to be able to display the answer boxes on top of each other (as a fraction).</p>
+						<p>We include the macros file <code>niceTables.pl</code> to be able to display the answer boxes on top of each other (as a fraction).</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="Context()-&gt;variables-&gt;are(y =&gt; &#39;Real&#39;);
 Context()-&gt;{error}{msg}{&quot;Operands of &#39;*&#39; can&#39;t be words&quot;} = &#39; &#39;;
 
-$a = random(2, 8, 2);
-$b = random(3, 9, 2);
-$c = random(1, 9, 1);
-
-while ($c == $b / $a) { $c = random(1, 9, 1); }
+do {
+    $a = random(2, 8, 2);
+    $b = random(3, 9, 2);
+    $c = random(1, 9, 1);
+} until ($a*$c != $b);
 
 $fraction = &quot;\frac{$a y}{y-$c} + \frac{$b}{$c - y} &quot;;
 
@@ -138,35 +127,37 @@ $multians = MultiAnswer($num, $den)-&gt;with(
 );
 
 # Display the fraction and answer blanks nicely
-Context()-&gt;texStrings;
-if ($displayMode eq &#39;TeX&#39;) {
-    $showfraction =
-        &quot;\[ $fraction = &quot;
-        . $multians-&gt;ans_rule(10)
-        . $multians-&gt;ans_rule(10) . &quot; \]&quot;;
-} else {
-    $showfraction = ColumnTable(
-        &quot;\( \displaystyle $fraction = \)&quot;,
-        $multians-&gt;ans_rule(20) . $BR . $HR . $multians-&gt;ans_rule(20),
-        separation =&gt; 10,
-    );
-}
-Context()-&gt;normalStrings;
+# Context()-&gt;texStrings;
+# if ($displayMode eq &#39;TeX&#39;) {
+#     $showfraction =
+#         &quot;\[ $fraction = &quot;
+#         . $multians-&gt;ans_rule(10)
+#         . $multians-&gt;ans_rule(10) . &quot; \]&quot;;
+# } else {
+#     $showfraction = ColumnTable(
+#         &quot;\( \displaystyle $fraction = \)&quot;,
+#         $multians-&gt;ans_rule(20) . $BR . $HR . $multians-&gt;ans_rule(20),
+#         separation =&gt; 10,
+#     );
+# }
+# Context()-&gt;normalStrings;
+
+$frac = LayoutTable([[[ans_rule(10), rowbottom =&gt; 1]],[ans_rule(10)]],
+    center =&gt; 0, allcellcss =&gt; {padding =&gt; &#39;4pt&#39;});
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(y =&gt; &#39;Real&#39;);
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;variables-&gt;are(y =&gt; &#39;Real&#39;);
 Context()-&gt;{error}{msg}{&quot;Operands of &#39;*&#39; can&#39;t be words&quot;} = &#39; &#39;;
 
-$a = random(2, 8, 2);
-$b = random(3, 9, 2);
-$c = random(1, 9, 1);
-
-while ($c == $b / $a) { $c = random(1, 9, 1); }
+do {
+    $a = random(2, 8, 2);
+    $b = random(3, 9, 2);
+    $c = random(1, 9, 1);
+} until ($a*$c != $b);
 
 $fraction = &quot;\frac{$a y}{y-$c} + \frac{$b}{$c - y} &quot;;
 
@@ -209,102 +200,95 @@ $multians = MultiAnswer($num, $den)-&gt;with(
 );
 
 # Display the fraction and answer blanks nicely
-Context()-&gt;texStrings;
-if ($displayMode eq &#39;TeX&#39;) {
-    $showfraction =
-        &quot;\[ $fraction = &quot;
-        . $multians-&gt;ans_rule(10)
-        . $multians-&gt;ans_rule(10) . &quot; \]&quot;;
-} else {
-    $showfraction = ColumnTable(
-        &quot;\( \displaystyle $fraction = \)&quot;,
-        $multians-&gt;ans_rule(20) . $BR . $HR . $multians-&gt;ans_rule(20),
-        separation =&gt; 10,
-    );
-}
-Context()-&gt;normalStrings;
+# Context()-&gt;texStrings;
+# if ($displayMode eq &#39;TeX&#39;) {
+#     $showfraction =
+#         &quot;\[ $fraction = &quot;
+#         . $multians-&gt;ans_rule(10)
+#         . $multians-&gt;ans_rule(10) . &quot; \]&quot;;
+# } else {
+#     $showfraction = ColumnTable(
+#         &quot;\( \displaystyle $fraction = \)&quot;,
+#         $multians-&gt;ans_rule(20) . $BR . $HR . $multians-&gt;ans_rule(20),
+#         separation =&gt; 10,
+#     );
+# }
+# Context()-&gt;normalStrings;
+
+$frac = LayoutTable([[[ans_rule(10), rowbottom =&gt; 1]],[ans_rule(10)]],
+    center =&gt; 0, allcellcss =&gt; {padding =&gt; &#39;4pt&#39;});
 </pre>
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>We define a string <code>$fraction</code> that will be displayed in TeX mode. We define MathObjects formulas <code>$num</code> and <code>$den</code> that are the correct numerator and denominator for the answer, as well as some bogus answers <code>$numbogus</code> and <code>$denbogus</code> that result from not finding a common denominator. We use MultiAnswer to manipulate both student answers at the same time. In <code>$multians</code> we allow for answers to be left blank, which requires one of two things: either we disable the error message or do type checking on the students input by using <code>ref($f1) eq ref($f1stu)</code> to see if the correct numerator <code>$f1</code> and the student numerator <code>$f1stu</code> have the same type. We used the code <code>Context()-&gt;{error}{msg}{"Operands of '*' can't be words"} = ' ';</code> to disable the error message because this method allows the “Simplify your answer” feature to work more reliably. We also allow for the student to enter the fraction as either <code>(6y-3)/(y-2)</code> or <code>(3-6y)/(2-y)</code>, since both are correct and it is not clear that one is preferable to the other, which requires that we check <code>$f1 == $f1stu || -$f1 == $f1stu</code>. Here <code>||</code> is perl’s “or” operator. We provide some custom answer hints by testing for bogus numerators and denominators and displaying answer messages via <code>$self-&gt;setMessage(1, "Simplify your answer further");</code>, where the 1 stands for the first answer blank.</p>
-<p>We define a mode-dependent string <code>$showfraction</code> that will be the nicely formatted fraction and answer blanks. Notice that each answer rule must be a method of the <code>$multians</code> object via the code <code>$multians-&gt;ans_rule(20)</code>. To display the fraction nicely in TeX mode, we use displaystyle math</p>
-<div class="sourceCode" id="display-math-block"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="display-math-block-1"><a href="#display-math-block-1" aria-hidden="true"></a><span class="ss">\[ ... \]</span></span></code></pre></div>
-<p>and append two concatenated answer blanks to the string <code>$fraction</code>. In other modes (such as html), we use a ColumnTable from PGunion.pl macros to display the answer blanks as a fraction. To get fractions that have a large font size, be sure to use the LaTeX command</p>
-<p><code>\( \displaystyle \frac{a}{b} \)</code></p>
-<p>For fractions over fractions (a/b) / (c/d), to keep the font size large use the LaTeX commands</p>
-<div class="sourceCode" id="display-style-frac"><pre class="sourceCode latex"><code class="sourceCode latex"><span id="display-style-frac-1"><a href="#display-style-frac-1" aria-hidden="true"></a><span class="ss">\(</span></span>
-<span id="display-style-frac-2"><a href="#display-style-frac-2" aria-hidden="true"></a><span class="ss">    </span><span class="sc">\displaystyle\frac</span><span class="ss">{</span></span>
-<span id="display-style-frac-3"><a href="#display-style-frac-3" aria-hidden="true"></a><span class="ss">        </span><span class="sc">\displaystyle\frac</span><span class="ss">{a}{b}</span></span>
-<span id="display-style-frac-4"><a href="#display-style-frac-4" aria-hidden="true"></a><span class="ss">    }{</span></span>
-<span id="display-style-frac-5"><a href="#display-style-frac-5" aria-hidden="true"></a><span class="ss">        </span><span class="sc">\displaystyle\frac</span><span class="ss">{c}{d}</span></span>
-<span id="display-style-frac-6"><a href="#display-style-frac-6" aria-hidden="true"></a><span class="ss">    }</span></span>
-<span id="display-style-frac-7"><a href="#display-style-frac-7" aria-hidden="true"></a><span class="ss">\)</span></span></code></pre></div>
+						<p>We define a string <code>$fraction</code> that will be displayed in TeX mode. We define MathObjects formulas <code>$num</code> and <code>$den</code> that are the correct numerator and denominator for the answer, as well as some bogus answers <code>$numbogus</code> and <code>$denbogus</code> that result from not finding a common denominator. We use MultiAnswer to manipulate both student answers at the same time. In <code>$multians</code> we allow for answers to be left blank, which requires one of two things: either we disable the error message or do type checking on the students input by using <code>ref($f1) eq ref($f1stu)</code> to see if the correct numerator <code>$f1</code> and the student numerator <code>$f1stu</code> have the same type. We used the code <code>Context()-&gt;{error}{msg}{"Operands of '*' can't be words"} = ' ';</code> to disable the error message because this method allows the “Simplify your answer” feature to work more reliably. We also allow for the student to enter the fraction as either <code>(6y-3)/(y-2)</code> or <code>(3-6y)/(2-y)</code>, since both are correct and it is not clear that one is preferable to the other, which requires that we check <code>$f1 == $f1stu || -$f1 == $f1stu</code>. Here <code>||</code> is perl’s “or” operator. We provide some custom answer hints by testing for bogus numerators and denominators and displaying answer messages via <code>$self-&gt;setMessage(1, "Simplify your answer further");</code>, where the 1 stands for the first answer blank.</p>
+<p>The fraction answer is created using a <code>LayoutTable</code> from <code>niceTables.pl</code>. This is just a one-column table with the first row with a horizontal line. The padding is changed to improve the look of the fraction.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML
 Perform the indicated operations.
 Express your answer in reduced form.
 
-[$showfraction]***
+[``[$fraction]=``][$frac]***
+
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Perform the indicated operations.
 Express your answer in reduced form.
 
-[$showfraction]***
+[``[$fraction]=``][$frac]***
+
 END_PGML
 </pre>
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>Everything is as usual. Insert the fraction and answer blanks using <code>$showfraction</code>.</p>
+						<p>Everything is as usual. Insert the fraction and answer blanks using <code>$showfraction</code>.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="ANS($multians-&gt;cmp());
+# ANS($multians-&gt;cmp());
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">ANS($multians-&gt;cmp());
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">ANS($multians-&gt;cmp());
+# ANS($multians-&gt;cmp());
 </pre>
 				</div>
 				<div class="explanation answer col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Answer</b></p>
-					<p>It is necessary to install the answer evaluator with <code>ANS</code>, since <code>ans_rule</code> was used to produce answer blanks.</p>
+						<p>It is necessary to install the answer evaluator with <code>ANS</code>, since <code>ans_rule</code> was used to produce answer blanks.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -312,7 +296,7 @@ ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
-					
+						A solution should be provided here.
 				</div>
 			</div>
 	</div>

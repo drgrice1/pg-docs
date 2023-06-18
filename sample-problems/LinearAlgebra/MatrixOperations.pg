@@ -1,0 +1,63 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',             'PGML.pl',
+    'parserRadioMultiAnswer.pl', 'PGcourse.pl'
+);
+
+Context('Matrix');
+
+$A = Matrix([
+    [ non_zero_random(-5, 5), non_zero_random(-5, 5) ],
+    [ non_zero_random(-5, 5), non_zero_random(-5, 5) ]
+]);
+
+$B = Matrix([
+    [
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5)
+    ],
+    [
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5),
+        non_zero_random(-5, 5)
+    ],
+]);
+
+$rma1 = RadioMultiAnswer(
+    [
+        ['The product \(AB\) does not exist.'],
+        [ 'The product \(AB\) is %s*', $A * $B ]
+    ],
+    1
+);
+
+$rma2 = RadioMultiAnswer(
+    [
+        ['The product \(BA\) does not exist.'],
+        [ 'The product \(BA\) is %s*', $A * $B ]
+    ],
+    0
+);
+
+BEGIN_PGML
+Let
+>> [``A = [$A] \quad\text{and}\quad B = [$B].``] <<
+
+1) Select the correct choice below, and fill in any answer boxes within that
+choice.
+
+    [____]{$rma1}
+
+2) Select the correct choice below, and fill in any answer boxes within that
+choice.
+
+    [____]{$rma2}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

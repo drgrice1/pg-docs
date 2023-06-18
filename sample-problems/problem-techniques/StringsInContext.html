@@ -8,41 +8,31 @@
 
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/lib/codemirror.min.css">
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/theme/tomorrow-night-eighties.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.56.0/theme/eclipse.min.css">
 	<script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.11/addon/runmode/runmode-standalone.min.js" defer>
 	</script>
 	<script src="https://openwebwork.github.io/pg-docs/sample-problems/PG.js" defer></script>
-
-	<style>
-		.explanation {
-			--bs-code-color: #971556;
-		}
-		.preamble {
-			background-color: lightblue;
-		}
-		.setup {
-			background-color: #ddffdd;
-		}
-		.statement {
-			background-color: #eeb08199;
-		}
-		.answer {
-			background-color: #ffffdd;
-		}
-		.solution {
-			background-color: #ffb6c199;
-		}
-	</style>
+	<link rel="stylesheet" href="https://openwebwork.github.io/pg-docs/sample-problems/sample-problem.css" >
 </head>
+
 
 <body>
 	<div class="container-fluid p-3">
-		<h1>Adding Strings to a Context</h1>
-		<p>Shows how to add strings to the context.</p>
 		<div class="row">
 			<div class="col">
+				<h1>Adding Strings to a Context</h1>
+				<p>Shows how to add strings to the context.</p>
 			</div>
+			<div class="col text-end">
+				<a href="https://openwebwork.github.io/pg-docs/sample-problems/index.html">Return to the PG docs home</a>
+</div>
+		</div>
+		<div class="row">
 			<div class="col">
+				<h2>Complete Code</h2>
+				<p>
+				Download file: <a href="StringsInContext.pg">StringsInContext.pg</a>
+</p>
 			</div>
 		</div>
 		<div class="row">
@@ -51,30 +41,29 @@
 		</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">DOCUMENT();
 
 loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 </pre>
 				</div>
 				<div class="explanation preamble col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Preamble</b></p>
-					
+						These standard macros need to be loaded.
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="Context()-&gt;strings-&gt;add(none =&gt; {});
 
 # or, if we wanted a case-sensitive string,
@@ -82,12 +71,11 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 # Context()-&gt;strings-&gt;add(none=&gt;{caseSensitive=&gt;1});
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;strings-&gt;add(none =&gt; {});
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">Context()-&gt;strings-&gt;add(none =&gt; {});
 
 # or, if we wanted a case-sensitive string,
 #    we would instead use
@@ -96,7 +84,7 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 				</div>
 				<div class="explanation setup col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Setup</b></p>
-					<p>Add the strings that are to be allowed in answers to the Context. Note that the add call has the form string =&gt; { options }. The most common use of options is to allow “aliases”, i.e., strings that are marked the same as others, e.g.,</p>
+						<p>Add the strings that are to be allowed in answers to the Context. Note that the add call has the form string =&gt; { options }. The most common use of options is to allow “aliases”, i.e., strings that are marked the same as others, e.g.,</p>
 <p>Context()-&gt;strings-&gt;add(none =&gt; {}, N =&gt; { alias =&gt; “none” }); (Which would allow “N” to be used instead of “none”.)</p>
 <p>By default, strings are case-insensitive. To make them case sensitive, include this as an option in the Context call.</p>
 <p>There are some shortcuts available if you need to add many allowable strings all at once. See parserAutoStrings.pl</p>
@@ -104,7 +92,7 @@ loadMacros(&#39;PGstandard.pl&#39;, &#39;PGML.pl&#39;, &#39;PGcourse.pl&#39;);
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML
 Enter the positive real value of [`x`] for which [`x^2 = -2`] :
 
@@ -114,12 +102,11 @@ _(Enter **none** if there are no values that satisfy the equation .) _
 END_PGML
 " aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML
 Enter the positive real value of [`x`] for which [`x^2 = -2`] :
 
 [`x = `] [___]{&#39;none&#39;}
@@ -130,24 +117,23 @@ END_PGML
 				</div>
 				<div class="explanation statement col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Statement</b></p>
-					<p>It’s usually a good idea to include some indication of what strings are expected or allowed in the answer.</p>
+						<p>It’s usually a good idea to include some indication of what strings are expected or allowed in the answer.</p>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12 col-md-6 order-md-first order-last p-0 position-relative overflow-x-hidden">
-					<button class="clipboard-btn btn btn-sm btn-dark position-absolute top-0 end-0 me-1 mt-1 z-1"
+					<button class="clipboard-btn btn btn-sm btn-secondary position-absolute top-0 end-0 me-1 mt-1 z-1"
 						type="button" data-code="BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
 ENDDOCUMENT();" aria-label="copy to clipboard">
 						<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-							class="bi bi-clipboard" viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-							<path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
-							<path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+							class="bi bi-clipboard-fill" viewBox="0 0 16 16">
+							<path fill-rule="evenodd" d="M10 1.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h3a.5.5 0 0 0 .5-.5v-1Zm-5 0A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5v1A1.5 1.5 0 0 1 9.5 4h-3A1.5 1.5 0 0 1 5 2.5v-1Zm-2 0h1v1A2.5 2.5 0 0 0 6.5 5h3A2.5 2.5 0 0 0 12 2.5v-1h1a2 2 0 0 1 2 2V14a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V3.5a2 2 0 0 1 2-2Z"/>
 						</svg>
 					</button>
-					<pre class="CodeMirror cm-s-tomorrow-night-eighties m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
+					<pre class="CodeMirror cm-s-eclipse m-0 h-100 p-3 border border-secondary overflow-x-scroll">BEGIN_PGML_SOLUTION
 Solution explanation goes here.
 END_PGML_SOLUTION
 
@@ -155,7 +141,7 @@ ENDDOCUMENT();</pre>
 				</div>
 				<div class="explanation solution col-sm-12 col-md-6 order-md-last order-first border border-dark">
 					<p><b>Solution</b></p>
-					
+						A solution should be provided here.
 				</div>
 			</div>
 	</div>

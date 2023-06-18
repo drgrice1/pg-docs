@@ -1,0 +1,19 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+BEGIN_PGML
+Here is a knowl
+[@ knowlLink("click me", value =>
+  'This is the inside of a knowl.  If you click again, I will go away') @]*
+
+Here is another knowl
+[@ knowlLink("click me",
+  url=>'https://openwebwork.org') @]*
+
+
+[@ knowlLink("a math knowl",
+value=>escapeSolutionHTML(EV3P("the sine function is \\(\\frac{2}{3}\\)")), base64=>1);
+@]*
+END_PGML
+
+ENDDOCUMENT();

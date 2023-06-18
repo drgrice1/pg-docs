@@ -1,0 +1,40 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserMultiAnswer.pl', 'PGcourse.pl');
+
+$showPartialCorrectAnswers = 0;
+
+Context()->variables->are(t => 'Real');
+Context()->variables->set(t => { limits => [ 0, 10 ] });
+
+$a = random(-5, -2);
+$x = Formula("$a * t^2");
+$y = Formula('0');
+$z = Formula('t');
+
+$multians = MultiAnswer($x, $y, $z)->with(
+    singleResult => 1,
+    checker      => sub {
+        my ($correct, $student, $self) = @_;
+        my ($xstu,    $ystu,    $zstu) = @{$student};
+        return 0 unless $xstu->isFormula;
+        return (($xstu == $a * $zstu**2) && ($ystu == 0)) ? 1 : 0;
+    }
+);
+
+BEGIN_PGML
+Find a parametrization of the curve [`x = [$a] z^2`] in the [`xz`]-plane.  Use
+[`t`] as the parameter for all of your answers.
+
+[`x(t) =`] [_]{$multians}{15}
+
+[`y(t) =`] [_]{$multians}{15}
+
+[`z(t) =`] [_]{$multians}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

@@ -1,0 +1,26 @@
+DOCUMENT();
+loadMacros('PGstandard.pl', 'PGML.pl', 'weightedGrader.pl', 'PGcourse.pl');
+
+BEGIN_PGML
+
+* This answer is worth 20%.  Enter 1 [___]
+
+* This answer is worth 50%. Enter 3 [___]
+
+* This answer is worth 30%. Enter 7 [___]
+END_PGML
+
+install_weighted_grader();
+
+WEIGHTED_ANS(
+  Real(1)->cmp, 20,
+  Real(3)->cmp, 50,
+  Real(7)->cmp, 30
+);
+
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

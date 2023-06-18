@@ -1,0 +1,23 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'contextTrigDegrees.pl', 'PGcourse.pl');
+
+Context('TrigDegrees');
+
+$ans1 = Compute("sin(30)");
+$ans2 = Compute("arcsin(0.5)");
+
+BEGIN_PGML
+1. [`\sin(30)=`] [___]{$ans1}
+2. [`\arcsin(1/2)=`] [___]{$ans2}
+
+Interpret arguments of the sine and arcsine in terms of degrees.
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+COMMENT("Redefines trig functions to be in degrees (not radians).");
+
+ENDDOCUMENT();

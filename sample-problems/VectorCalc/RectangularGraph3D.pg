@@ -1,0 +1,25 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'plotly3D.pl', 'PGcourse.pl');
+
+
+
+$gr = Graph3D();
+$gr->addSurface(
+    ['x', 'y', 'x^2+y^2'],
+    [-3, 3, 30],
+    [-3, 3, 30],
+    variables => ['x','y']
+);
+
+BEGIN_PGML
+The following is the plot of [`z=x^2+y^2`]
+
+[@ $gr->Print @]*
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

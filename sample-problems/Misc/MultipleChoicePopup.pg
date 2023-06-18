@@ -1,0 +1,32 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserPopUp.pl', 'PGcourse.pl');
+
+$showPartialCorrectAnswers = 0;
+
+$popup = PopUp([ '?', 'Red', 'Blue', 'Green' ], 'Blue');
+
+$dropdown1 = DropDown([ 'Red', 'Blue', 'Green' ], 'Green');
+
+$dropdown2 =
+    DropDown([ 'Red', 'Blue', 'Green' ], 'Red', placeholder => 'Select One');
+
+BEGIN_PGML
+Select my favorite color [_]{$popup}
+
+**Same thing, but using DropDown**
+
+Select my favorite color [_]{$dropdown1}
+
+**Same thing, but using DropDown with placeholder option**
+
+Select my favorite color [_]{$dropdown2}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+* The first correct answer is [$popup->correct_ans].
+* The second correct answer is [$dropdown1->correct_ans].
+* The third correct answer is [$dropdown2->correct_ans].
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

@@ -1,0 +1,20 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'parserFunction.pl', 'PGcourse.pl');
+
+parserFunction(f => 'sin(e * x) + 5.5 * pi * x^2');
+
+$answer = Formula('f(x - 2) + 1');
+
+BEGIN_PGML
+A function [`f(x)`] is shifted to the right [`2`] units and up [`1`] unit.  Find
+a formula for this shifted function in terms of the function [`f(x)`].
+
+[_]{$answer}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

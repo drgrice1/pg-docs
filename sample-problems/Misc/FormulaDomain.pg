@@ -1,0 +1,23 @@
+DOCUMENT();
+
+loadMacros('PGstandard.pl', 'PGML.pl', 'PGcourse.pl');
+
+$a = random(2, 5);
+
+$answer1 = Compute("sqrt(x - $a)");
+$answer1->{limits} = [ $a + 1, $a + 4 ];
+
+$answer2 = Compute("ln(abs(x / (x - $a)))");
+$answer2->{test_points} = [ [-5], [-4], [1], [ $a - 1 ], [7], [8] ];
+
+BEGIN_PGML
+a. Enter the answer [``[$answer1] =``] [_]{$answer1}{15}
+
+b. Enter the answer [``[$answer2] =``] [_]{$answer2}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();

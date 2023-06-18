@@ -1,0 +1,26 @@
+DOCUMENT();
+
+loadMacros(
+    'PGstandard.pl',               'PGML.pl',
+    'parserDifferenceQuotient.pl', 'PGcourse.pl'
+);
+
+$limit = DifferenceQuotient('2 * x + h', 'h');
+
+$fp = Compute('2 x');
+
+BEGIN_PGML
+Simplify and then evaluate the limit.
+
+[``
+    \frac{d}{dx} \big( x^2 \big)
+    = \lim_{h \to 0} \frac{(x+h)^2-x^2}{h}
+    = \lim_{h \to 0} \Big(
+``] [_]{$limit}{15} [``\Big) =``] [_]{$fp}{15}
+END_PGML
+
+BEGIN_PGML_SOLUTION
+Solution explanation goes here.
+END_PGML_SOLUTION
+
+ENDDOCUMENT();
