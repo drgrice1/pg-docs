@@ -12,7 +12,7 @@ on:
 jobs:
   create-pod:
     # The type of runner that the job will run on
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
@@ -20,7 +20,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends --no-install-suggests \
-            libpod-parser-perl
+            libpod-parser-perl libmojolicious-perl
       - name: Checkout pg-docs code
         uses: actions/checkout@v3
         with:
