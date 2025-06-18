@@ -17,15 +17,15 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - name: Checkout pg-docs code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout PG code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: pstaabp/pg
-          ref: sample-problems-doc
+          ref: PG-2.20
           path: pg
           persist-credentials: false
       - name: Install Ubuntu dependencies

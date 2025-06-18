@@ -27,7 +27,7 @@ jobs:
           persist-credentials: false
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout PG code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: openwebwork/pg
           ref: PG-2.20
@@ -35,7 +35,7 @@ jobs:
           persist-credentials: false
 
       - name: Checkout WW code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           repository: openwebwork/webwork2
           ref: WeBWorK-2.20
