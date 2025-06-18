@@ -22,7 +22,7 @@ jobs:
           sudo apt-get install -y --no-install-recommends --no-install-suggests \
             libpod-parser-perl libmojolicious-perl
       - name: Checkout pg-docs code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
         with:
           persist-credentials: false
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
