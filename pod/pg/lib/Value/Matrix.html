@@ -1,142 +1,648 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>Value::Matrix</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Value::Matrix</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>Value::Matrix</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">Value::Matrix</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#Value::Matrix-class">Value::Matrix class</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#References">References:</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Matrix-Related-libraries-and-macros">Matrix-Related libraries and macros:</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Contexts">Contexts</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Creation-of-Matrix-MathObjects">Creation of Matrix MathObjects</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Commands-added-in-Value::matrix">Commands added in Value::matrix</a>
+        <ul class="nav flex-column w-100">
+          <li class="nav-item"><a class="nav-link p-0" href="#Conversion">Conversion</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#Information">Information</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#Access-values">Access values</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#Update-values-these-need-to-be-added">Update values (these need to be added)</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#Advanced">Advanced</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Passthrough-methods">Passthrough methods</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Fractions-in-Matrices">Fractions in Matrices</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#methods">methods</a>
+        <ul class="nav flex-column w-100">
+          <li class="nav-item"><a class="nav-link p-0" href="#value">value</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#dimensions">dimensions</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isSquare">isSquare</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isRow">isRow</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isOne">isOne</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isZero">isZero</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isUpperTriangular">isUpperTriangular</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isLowerTriangular">isLowerTriangular</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isDiagonal">isDiagonal</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isSymmetric">isSymmetric</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isOrthogonal">isOrthogonal</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isREF">isREF</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#isRREF">isRREF</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#slice">slice</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#transpose">transpose</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#I">I</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#E">E</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#P">P</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#Zero">Zero</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#row">row</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#column">column</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#element">element</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
 
-
-<ul id="index">
-  <li><a href="#Value::Matrix-class">Value::Matrix class</a></li>
-</ul>
 
 <a href="#_podtop_"><h1 id="Value::Matrix-class">Value::Matrix class</h1></a>
 
-<p>References:</p>
+<p>This is the Math Object code for a Matrix.</p>
 
-<p>MathObject Matrix methods: <a href="http://webwork.maa.org/wiki/Matrix_(MathObject_Class)">http://webwork.maa.org/wiki/Matrix_(MathObject_Class)</a> MathObject Contexts: <a href="http://webwork.maa.org/wiki/Common_Contexts">http://webwork.maa.org/wiki/Common_Contexts</a> CPAN RealMatrix docs: <a href="http://search.cpan.org/~leto/Math-MatrixReal-2.09/lib/Math/MatrixReal.pm">http://search.cpan.org/~leto/Math-MatrixReal-2.09/lib/Math/MatrixReal.pm</a></p>
+<h2 id="References">References:</h2>
 
-<p>Allowing Matrices in Fractions: <a href="http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2978">http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2978</a></p>
+<dl>
 
-<pre><code>     Context()-&gt;parens-&gt;set(&quot;[&quot; =&gt; {formMatrix =&gt; 1});</code></pre>
+<dt><a href="http://webwork.maa.org/wiki/Matrix_(MathObject_Class)">MathObject Matrix methods</a></dt>
+<dd>
 
-<p>Files interacting with Matrices:</p>
+</dd>
+<dt><a href="http://webwork.maa.org/wiki/Common_Contexts">MathObject Contexts</a></dt>
+<dd>
 
-<p><a href="//pg/lib/MatrixReal1.html">&quot;MatrixReal1.pm&quot; in lib</a></p>
+</dd>
+<dt><a href="http://search.cpan.org/~leto/Math-MatrixReal-2.09/lib/Math/MatrixReal.pm">CPAN RealMatrix docs</a></dt>
+<dd>
 
-<p><a href="//pg/macros/math/MatrixReduce.html">&quot;MatrixReduce.pl&quot; in macros</a></p>
+</dd>
+</dl>
 
-<p><a href="//pg/lib/Matrix.html">&quot;Matrix.pm&quot; in lib</a></p>
+<h2 id="Matrix-Related-libraries-and-macros">Matrix-Related libraries and macros:</h2>
 
-<p><a href="//pg/macros/math/MatrixCheckers.html">&quot;MatrixCheckers.pl&quot; in macros</a> -- checking whether vectors form a basis</p>
+<dl>
 
-<p><a href="//pg/macros/math/MatrixReduce.html">&quot;MatrixReduce.pl&quot; in macros</a> -- tools for row reduction via elementary matrices</p>
+<dt><a href="//pg/lib/MatrixReal1.html">MatrixReal1</a></dt>
+<dd>
 
-<p><a href="//pg/macros/math/MatrixUnits.html">&quot;MatrixUnits.pl&quot; in macros</a> -- Generates unimodular matrices with real entries</p>
+</dd>
+<dt><a href="//pg/macros/math/MatrixReduce.html">MatrixReduce.pl</a></dt>
+<dd>
 
-<p><a href="//pg/macros/math/PGmatrixmacros.html">&quot;PGmatrixmacros.pl&quot; in macros</a></p>
+</dd>
+<dt><a href="//pg/lib/Matrix.html">Matrix</a></dt>
+<dd>
 
-<p><a href="//pg/macros/math/PGmorematrixmacros.html">&quot;PGmorematrixmacros.pl&quot; in macros</a></p>
+</dd>
+<dt><a href="//pg/macros/math/MatrixCheckers.html">MatrixCheckers.pl</a> -- checking whether vectors form a basis</dt>
+<dd>
 
-<p><a href="//pg/macros/math/PGnumericalmacros.html">&quot;PGnumericalmacros.pl&quot; in macros</a></p>
+</dd>
+<dt><a href="//pg/macros/math/MatrixReduce.html">MatrixReduce.pl</a> -- tools for row reduction via elementary matrices</dt>
+<dd>
 
-<p><a href="//pg/macros/math/tableau.html">&quot;tableau.pl&quot; in macros</a></p>
+</dd>
+<dt><a href="//pg/macros/math/MatrixUnits.html">MatrixUnits.pl</a> -- Generates unimodular matrices with real entries</dt>
+<dd>
 
-<p><a href="//pg/macros/ui/quickMatrixEntry.html">&quot;quickMatrixEntry.pl&quot; in macros</a></p>
+</dd>
+<dt><a href="//pg/macros/math/PGmatrixmacros.html">PGmatrixmacros.pl</a></dt>
+<dd>
 
-<p><a href="//pg/macros/math/LinearProgramming.html">&quot;LinearProgramming.pl&quot; in macros</a></p>
+</dd>
+<dt><a href="//pg/macros/math/PGmorematrixmacros.html">PGmorematrixmacros.pl</a></dt>
+<dd>
 
-<p>Contexts</p>
+</dd>
+<dt><a href="//pg/macros/math/PGnumericalmacros.html">PGnumericalmacros.pl</a></dt>
+<dd>
 
-<pre><code>        Matrix -- allows students to enter [[3,4],[3,6]] 
-               -- formMatrix =&gt;1 also allows this?
-        Complex-Matrix -- allows complex entries</code></pre>
+</dd>
+<dt><a href="//pg/macros/math/tableau.html">tableau.pl</a></dt>
+<dd>
 
-<p>Creation methods</p>
+</dd>
+<dt><a href="//pg/macros/ui/quickMatrixEntry.html">quickMatrixEntry.pl</a></dt>
+<dd>
 
-<pre><code>                 $M1 = Matrix([1,2],[3,4]);
-                 $M2 = Matrix([5,6],[7,8]);
-          $v = Vector(9,10);
-          $w = ColumnVector(9,10); # differs in how it is printed
-  </code></pre>
+</dd>
+<dt><a href="//pg/macros/math/LinearProgramming.html">LinearProgramming.pl</a></dt>
+<dd>
 
-<p>Commands added in Value::matrix</p>
+</dd>
+</dl>
 
-<pre><code>        Conversion
-                $matrix-&gt;values produces [[3,4,5],[1,3,4]] recursive array references of numbers (not MathObjects)
-                $matrix-&gt;wwMatrix   produces CPAN MatrixReal1 matrix, used for computation subroutines
+<h2 id="Contexts">Contexts</h2>
 
-        Information
-                $matrix-&gt;dimension:  ARRAY
+<dl>
 
-        Access values
+<dt><code>Matrix</code></dt>
+<dd>
 
-                row : MathObjectMatrix
-                column : MathObjectMatrix
-                element : Real or Complex value
+<p>Allows students to enter <code>[[3,4],[3,6]]</code></p>
 
-        Assign values
+</dd>
+<dt><code>Complex-Matrix</code></dt>
+<dd>
 
-                these need to be added:
-                </code></pre>
+<p>Allows complex entries</p>
 
-<p>see <code>change_matrix_entry()</code> in MatrixReduce and <a href="http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2970">http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2970</a></p>
+</dd>
+</dl>
 
-<pre><code>        Advanced
-                $matrix-&gt;data:  ARRAY reference (internal data) of MathObjects (Real,Complex, Fractions)
-                                stored at each location.</code></pre>
+<h2 id="Creation-of-Matrix-MathObjects">Creation of Matrix MathObjects</h2>
 
-<p>Passthrough methods covering subroutines in Matrix.pm which overrides or augment CPAN&#39;s MatrixReal1.pm. Matrix is a specialized subclass of MatrixReal1.pm</p>
+<p>Examples:</p>
 
-<p>The actual calculations for these methods are done in <code>pg/lib/Matrix.pm</code></p>
+<pre><code>$M1 = Matrix(1, 2, 3);    # degree 1 (row vector)
+$M1 = Matrix([1, 2, 3]);
 
-<pre><code>        trace 
-        proj 
-        proj_coeff 
-        L 
-        R 
-        PL 
-        PR</code></pre>
+$M2 = Matrix([1, 2], [3, 4]);    # degree 2 (matrix)
+$M2 = Matrix([[1, 2], [3, 4]]);
 
-<p>Passthrough methods covering subroutines in <code>pg/lib/MatrixReal1.pm</code> (this has been modified to handle complex numbers) The actual calculations are done in <code>MatrixReal1.pm</code> subroutines The commands below are Value::Matrix <b>methods</b> unless otherwise noted.</p>
+$M3 = Matrix([[1, 2], [3, 4]], [[5, 6], [7, 8]]);    # degree 3 (tensor)
+$M3 = Matrix([[[1, 2], [3, 4]], [[5, 6], [7, 8]]]);
 
-<pre><code>        condition
-        det 
-        inverse 
-        is_symmetric
-        decompose_LR 
-        dim 
-        norm_one 
-        norm_max 
-        kleene 
-        normalize 
-        solve_LR($v)    - LR decomposition
-        solve($M,$v)    - function version of solve_LR
-        order_LR        - order of LR decomposition matrix (number of non-zero equations)(also order() )
-        order($M)       - function version of order_LR
-        solve_GSM 
-        solve_SSM 
-        solve_RM 
- </code></pre>
+$M4 = ...</code></pre>
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
+<h2 id="Commands-added-in-Value::matrix">Commands added in Value::matrix</h2>
+
+<h3 id="Conversion">Conversion</h3>
+
+<pre><code>$matrix-&gt;value produces an array of references to nested arrays, except at
+the deepest level, where there will be the more basic MathObjects that make
+up the Matrix (e.g. Real, Complex, Fraction, a mix of these, etc)
+
+$M1-&gt;value is (1, 2, 3)
+$M2-&gt;value is ([1, 2], [3, 4])
+$M3-&gt;value is ([[1, 2], [3, 4]], [[5, 6], [7, 8]])
+
+$matrix-&gt;wwMatrix produces CPAN MatrixReal1 matrix, used for computation subroutines and can only
+be used on a degree 1 or degree 2 Matrix.</code></pre>
+
+<h3 id="Information">Information</h3>
+
+<pre><code>$matrix-&gt;dimensions produces an array. For an n-degree Matrix, the array has n entries for
+the n dimensions.
+
+$matrix-&gt;degree returns the degree of the Matrix (the depth of the nested array).</code></pre>
+
+<h3 id="Access-values">Access values</h3>
+
+<pre><code>row(i) : MathObject Matrix
+    For a degree 1 Matrix, produces a degree 1 Matrix
+    For a degree n Matrix with n &gt; 1, produces a degree (n-1) Matrix
+
+column(j) : MathObject Matrix or Real or Complex
+    For a degree 1 Matrix, produces a Real or Complex
+    For a degree n Matrix with n &gt; 1, produces a degree n Matrix where the 2nd dimesion is length 1
+
+element : Real/Complex/Fraction value when passed the same number of arguments as the degree of the Matrix.
+    If passed more than n arguments, null. If the degree of the Matrix is n and C&lt;element&gt; is passed
+    k arguments with k &lt; n, then this produces the corresponding degree (n-k) tensor.</code></pre>
+
+<h3 id="Update-values-these-need-to-be-added">Update values (these need to be added)</h3>
+
+<pre><code>see C&lt;change_matrix_entry()&gt; in MatrixReduce and L&lt;http://webwork.maa.org/moodle/mod/forum/discuss.php?d=2970&gt;</code></pre>
+
+<h3 id="Advanced">Advanced</h3>
+
+<pre><code>$matrix-&gt;data: ARRAY reference (internal data) of MathObjects (Real, Complex, Fractions)
+    stored at each location.</code></pre>
+
+<h2 id="Passthrough-methods">Passthrough methods</h2>
+
+<p>These cover subroutines in <code>Matrix.pm</code> (which overrides or augment CPAN&#39;s <code>MatrixReal1.pm</code>). <code>Matrix</code> is a specialized subclass of <code>MatrixReal1.pm</code>. The actual calculations for these methods are done in <code>pg/lib/Matrix.pm</code></p>
+
+<pre><code>trace
+proj
+proj_coeff
+L
+R
+PL
+PR</code></pre>
+
+<p>These cover subroutines in <code>pg/lib/MatrixReal1.pm</code> (this has been modified to handle complex numbers) The actual calculations are done in <code>MatrixReal1.pm</code> subroutines. The commands below are <code>Value::Matrix</code> methods unless otherwise noted.</p>
+
+<pre><code>condition
+det
+inverse
+is_symmetric
+decompose_LR
+dim
+norm_one
+norm_max
+kleene
+normalize
+solve_LR($v)    - LR decomposition
+solve($M,$v)    - function version of solve_LR
+order_LR        - order of LR decomposition matrix (number of non-zero equations)(also order() )
+order($M)       - function version of order_LR
+solve_GSM
+solve_SSM
+solve_RM</code></pre>
+
+<h2 id="Fractions-in-Matrices">Fractions in Matrices</h2>
+
+<p>One can use fractions in Matrices by including <code>Context(&quot;Fraction&quot;)</code>. For example</p>
+
+<pre><code>Context(&quot;Fraction&quot;);
+
+$A = Matrix([
+  [Fraction(1,1), Fraction(1,2), Fraction(1,3)],
+  [Fraction(1,2), Fraction(1,3), Fraction(1,4)],
+  [Fraction(1,3), Fraction(1,4), Fraction(1,5)]
+]);</code></pre>
+
+<p>and operations will be done using rational arithmetic. Also helpful is the method <code>apply_fraction_to_matrix_entries</code> in the <a href="//pg/macros/math/MatrixReduce.html">MatrixReduce.pl</a> macro. Some additional information can be found at <a href="https://webwork.maa.org/moodle/mod/forum/discuss.php?d=2978">https://webwork.maa.org/moodle/mod/forum/discuss.php?d=2978</a>.</p>
+
+<h2 id="methods">methods</h2>
+
+<h3 id="value"><code>value</code></h3>
+
+<p>Returns the array of arrayrefs of the matrix.</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A-&gt;value;
+
+# returns ([1,2,3,4],[5,6,7,8],[9,10,11,12])</code></pre>
+
+<h3 id="dimensions"><code>dimensions</code></h3>
+
+<p>Returns the dimensions of the matrix as an array</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A-&gt;dimensions;</code></pre>
+
+<p>returns the array <code>(3,4)</code></p>
+
+<pre><code>$B = Matrix([ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 5, 6 ], [ 7, 8 ] ] ]);
+$B-&gt;dimensions;</code></pre>
+
+<p>returns <code>(2,2,2)</code></p>
+
+<h3 id="isSquare"><code>isSquare</code></h3>
+
+<p>Return true if the Matrix is degree 1 of length 1 or its last two dimensions are equal, false otherwise</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3 ], [ 4, 5, 6 ], [ 7, 8, 9 ] ]);
+$B = Matrix([ [ 1, 0, 0 ], [ 0, 1, 0 ] ]);
+$C = Matrix(1);
+$D = Matrix(1, 2);
+$E = Matrix([ [ [ 1, 2 ], [ 3, 4 ] ] ]);
+$F = Matrix([ [ [ 1, 2 ] ], [ [ 3, 4 ] ] ]);
+
+$A-&gt;isSquare; # is 1  (true)  because it is a 3x3 matrix
+$B-&gt;isSquare; # is &#39;&#39; (false) because it is a 2x3 matrix
+$C-&gt;isSquare; # is 1  (true)  because it is a degree 1 matrix of length 1
+$D-&gt;isSquare; # is &#39;&#39; (false) because it is a degree 1 matrix of length 2
+$E-&gt;isSquare; # is 1  (true)  because it is a 1x2x2 tensor
+$F-&gt;isSquare; # is &#39;&#39; (false) because it is a 2x1x2 tensor</code></pre>
+
+<h3 id="isRow"><code>isRow</code></h3>
+
+<p>Return true if the matix is degree 1 (i.e., is a matrix row)</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$row_vect = Matrix([ 1, 2, 3, 4 ]);
+
+$A-&gt;isRow;         # is &#39;&#39; (false)
+$row_vect-&gt;isRow;  # is 1 (true)</code></pre>
+
+<h3 id="isOne"><code>isOne</code></h3>
+
+<p>Check for identity Matrix (for degree &gt; 2, this means the last two dimensions hold identity matrices)</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ], [13, 14, 15, 16] ]);
+$A-&gt;isOne;  # is false
+
+$B = Matrix([ [ 1, 0, 0 ], [ 0, 1, 0 ], [ 0, 0, 1 ] ]);
+$B-&gt;isOne; # is true;
+
+$C = Matrix(1);
+$C-&gt;isOne; # is true
+
+$D = Matrix([ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ]);
+$D-&gt;isOne; # is true</code></pre>
+
+<h3 id="isZero"><code>isZero</code></h3>
+
+<p>Check for zero Matrix</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ], [13, 14, 15, 16] ]);
+$A-&gt;isZero; # is false
+
+$B = Matrix([ [ 0, 0, 0 ], [ 0, 0, 0 ], [ 0, 0, 0 ] ]);
+$B-&gt;isZero; # is true;
+
+$C = Matrix([ [ [ 1, 0 ], [ 0, 1 ] ], [ [ 1, 0 ], [ 0, 1 ] ] ]);
+$C-&gt;isZero; # is false
+
+$D = Matrix([ [ [ 0, 0 ], [ 0, 0 ] ], [ [ 0, 0 ], [ 0, 0 ] ] ]);
+$D-&gt;isZero; # is true</code></pre>
+
+<h3 id="isUpperTriangular"><code>isUpperTriangular</code></h3>
+
+<p>Check if a Matrix is upper triangular (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="isLowerTriangular"><code>isLowerTriangular</code></h3>
+
+<p>Check if a Matrix is lower triangular (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="isDiagonal"><code>isDiagonal</code></h3>
+
+<p>Check if a Matrix is diagonal (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="isSymmetric"><code>isSymmetric</code></h3>
+
+<p>Check if a Matrix is symmetric (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="isOrthogonal"><code>isOrthogonal</code></h3>
+
+<p>Check if a Matrix is orthogonal (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="isREF"><code>isREF</code></h3>
+
+<p>Check if a Matrix is in row echelon form (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="isRREF"><code>isRREF</code></h3>
+
+<p>Check if a Matrix is in reduced row echelon form (for degree &gt; 2, applies to frontal slice matrices)</p>
+
+<h3 id="slice"><code>slice</code></h3>
+
+<p>Apply this to a degree n Matrix, passing (m, k), and produce the degree (n-1) Matrix defined by taking all entries whose position has mth index with value k. For example if <code>$M</code> is a 4x5x6 Matrix, then m can be 1, 2, or 3. If m is 2, then k can be 1, 2, 3, 4, or 5. <code>$M-&lt;gt</code>slice(2,3)&gt; is the 4x6 Matrix such that the entry at position (i,j) is the entry of <code>$M</code> at position (i,3,j).</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A-&gt;slice(1, 2)
+# Index 1 identifies the 1st, 2nd, or 3rd row above, and with value 2 we get the second one:
+# Matrix([5, 6, 7, 8])
+
+$B = Matrix([ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 5, 6 ], [ 7, 8 ] ] ]);
+$B-&gt;slice(1, 2)
+# Index 1 identifies the two arrays at depth 1, and with value 2 we get the second one:
+# Matrix([ [ 5, 6 ], [ 7, 8 ] ])
+$B-&gt;slice(2, 1)
+# Here we take all entries from $B where the 2nd index is 1: the 1 at position (1,1,1),
+# the 2 at position (1,1,2), the 5 at position (2,1,1), and the 6 at position (2,1,2):
+# Matrix([ [ 1, 2 ], [ 5, 6 ] ])
+$B-&gt;slice(3, 1)
+# Here we take all entries from $B where the 3rd index is 1: the 1 at position (1,1,1),
+# the 3 at position (1,2,1), the 5 at position (2,1,1), and the 7 at position (2,2,1):
+# Matrix([ [ 1, 3 ], [ 5, 7 ] ])</code></pre>
+
+<h3 id="transpose"><code>transpose</code></h3>
+
+<p>Take the transpose of a matrix. For a degree 1 Matrix, first promote to a degree 2 Matrix. For a degree n Matrix, apply a permutation of the indices. The default permutation transposes the last two indices. To specify a permutation, provide an array reference representing a cycle or an array of array references that represents a product of cycles. If a permutation is not specified, the default is the usual transposition of the last two indices.</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([
+    [ 1,  2,  3,  4 ],
+    [ 5,  6,  7,  8 ],
+    [ 9, 10, 11, 12 ]
+]);
+$A-&gt;transpose
+# will be
+# [
+#     [ 1, 5, 9 ],
+#     [ 2, 6, 10 ],
+#     [ 3, 7, 11 ],
+#     [ 4, 8, 12 ]
+# ]
+
+$B = Matrix([
+    [ [ 1, 2 ], [ 3, 4 ] ],
+    [ [ 5, 6 ], [ 7, 8 ] ]
+]);
+$B-&gt;transpose([1, 2, 3])
+# will be
+# [
+#     [ [ 1, 3 ], [ 5, 7 ] ],
+#     [ [ 2, 4 ], [ 6, 8 ] ]
+# ]
+
+$C = Matrix([
+    [ [ [ 1,  2 ], [  3,  4 ] ], [ [  5,  6 ], [  7,  8 ] ] ],
+    [ [ [ 9, 10 ], [ 11, 12 ] ], [ [ 13, 14 ], [ 15, 16 ] ] ]
+]);
+$C-&gt;transpose([ [ 1, 2], [3, 4] ])
+# will be
+# [
+#     [ [ [ 1, 3 ], [ 2, 4 ] ], [ [  9, 11 ], [ 10, 12 ] ] ],
+#     [ [ [ 5, 7 ], [ 6, 8 ] ], [ [ 13, 15 ], [ 14, 16 ] ] ]
+# ]</code></pre>
+
+<h3 id="I"><code>I</code></h3>
+
+<p>Get an identity Matrix of the requested size</p>
+
+<pre><code>Value::Matrix-&gt;I(n)</code></pre>
+
+<p>Usage:</p>
+
+<pre><code>Value::Matrix-&gt;I(3); # returns a 3x3 identity matrix.
+Value::Matrix-&gt;I([2],3);  # returns a 2x3x3 identity Matrix (tensor)
+Value::Matrix-&gt;I([2,4],2);  # returns a 2x4x2x2 identity Matrix (tensor)
+$A-&gt;I; # return an identity matrix of the appropriate degree and dimensions such that I*A = A</code></pre>
+
+<h3 id="E"><code>E</code></h3>
+
+<p>Get a degree 2 elementary matrix of the requested size and type. These include matrix that upon left multiply will perform row operations.</p>
+
 <ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+
+<li><p>Row Swap</p>
+
+<p>To perform a row swap between rows <code>i</code> and <code>j</code>, then <code>E(n,[i, j])</code>.</p>
+
+<p>Usage:</p>
+
+<pre><code>Value::Matrix-&gt;E(3, [ 1, 3 ]);</code></pre>
+
+<p>returns the matrix</p>
+
+<pre><code>[[0, 0, 1],
+[0, 1, 0],
+[1, 0, 0]]</code></pre>
+
+<p>or if the matrix <code>$A</code> exists then</p>
+
+<pre><code>$A-&gt;E([1, 3]);</code></pre>
+
+<p>where the size of the resulting matrix is the number of rows of <code>$A</code>.</p>
+
+</li>
+<li><p>Multiply a row by a constant</p>
+
+<p>To create the matrix that will multiply a row <code>i</code>, by constant <code>k</code>, then <code>E(n,[i],k)</code></p>
+
+<p>Usage:</p>
+
+<pre><code>Value::Matrix-&gt;E(4, [2], 3);</code></pre>
+
+<p>generates the matrix</p>
+
+<pre><code>[ [ 1, 0, 0, 0 ],
+  [ 0, 4, 0, 0 ],
+  [ 0, 0, 1, 0 ],
+  [ 0, 0, 0, 1 ] ]</code></pre>
+
+<p>or if the matrix <code>$A</code> exists then</p>
+
+<pre><code>$A-&gt;E([4], 3);</code></pre>
+
+<p>will generate the elementary matrix of size number of rows of <code>$A</code>, which multiplies row 4 by 3.</p>
+
+</li>
+<li><p>Multiply a row by a constant and add to another row.</p>
+
+<p>To create the matrix that will multiply a row <code>i</code>, by constant <code>k</code> and add to row <code>j</code> then <code>E(n,[i, j],k)</code></p>
+
+<p>Usage:</p>
+
+<pre><code>Value::Matrix-&gt;E(4, [ 3, 2 ], -3);</code></pre>
+
+<p>generates the matrix:</p>
+
+<pre><code>[ [ 1, 0, 0, 0 ],
+  [ 0, 1, 0, 0 ],
+  [ 0, -3, 1, 0 ],
+  [ 0, 0, 0, 1 ] ]</code></pre>
+
+<p>or if the matrix <code>$A</code> exists then</p>
+
+<pre><code>$A-&gt;E([3, 4], -5);</code></pre>
+
+<p>will generate the elementary matrix of size number of rows of <code>$A</code>, which multiplies row 3 by -5 and adds to row 4.</p>
+
+</li>
 </ul>
-</div>
-</div>
+
+<h3 id="P"><code>P</code></h3>
+
+<p>Creates a degree 2 permutation matrix of the requested size.</p>
+
+<p><code>Value::Matrix-&gt;P(n,(cycles))</code> in general where <code>cycles</code> is a sequence of array references of the cycles.</p>
+
+<p>If one has an existing matrix <code>$A</code>, then <code>$A-&gt;P(cycles)</code> generals a permutation matrix of the same size as <code>$A</code>.</p>
+
+<p>Usage:</p>
+
+<pre><code>Value::Matrix-&gt;P(3,[1, 2, 3]);  # corresponds to cycle (123) applied to rows of I_3.</code></pre>
+
+<p>returns the matrix [[0,1,0],[0,0,1],[1,0,0]]</p>
+
+<pre><code>Value::Matrix-&gt;P(6,[1,3],[2,4,6]);  # permutation matrix on cycle product (13)(246)</code></pre>
+
+<p>returns the matrix</p>
+
+<pre><code>[[0,0,1,0,0,0],
+[0,0,0,0,0,1],
+[1,0,0,0,0,0],
+[0,1,0,0,0,0],
+[0,0,0,0,1,0],
+[0,0,0,1,0,0]]
+
+$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ], [13, 14, 15, 16] ]);
+$P3 = $A-&gt;P([1,4]);</code></pre>
+
+<p>returns the matrix [[0,0,0,1],[0,1,0,0],[0,0,1,0],[1,0,0,0]]</p>
+
+<h3 id="Zero"><code>Zero</code></h3>
+
+<p>Create a degree 2 zero matrix of requested size. If called on existing matrix, creates a matrix as the same size as given matrix.</p>
+
+<p>Usage:</p>
+
+<pre><code>Value::Matrix-&gt;Zero(m,n);  # creates a m by n zero matrix.
+Value::Matrix-&gt;Zero(n);    # creates an n ny n zero matrix.
+
+$A1 = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A1-&gt;Zero;    # generates a zero matrix as same size as $A1.</code></pre>
+
+<h3 id="row"><code>row</code></h3>
+
+<p>Extract a given row from the matrix. For a degree 1 Matrix, $M-&gt;row(1) will return $M itself. Otherwise, a &quot;row&quot; is defined by the first index. For an degree n Matrix, a &quot;row&quot; will be a degree (n-1) Matrix.</p>
+
+<p>Usage:</p>
+
+<pre><code>$A1 = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A1-&gt;row(2);  # returns the row Matrix [5,6,7,8]</code></pre>
+
+<h3 id="column"><code>column</code></h3>
+
+<p>Extract a given column from the matrix. For a degree 1 Matrix, <code>$M-</code>column(j)&gt; will return the jth entry. Otherwise, for an degree n Matrix, <code>$M-</code>column(j)&gt; returns an degree n Matrix tensor using j for the second index. To obtain the corresponding degree (n-1) Matrix, see <code>slice()</code>.</p>
+
+<p>Usage:</p>
+
+<pre><code>$A1 = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A1-&gt;column(2);  # returns the column Matrix [[2],[6],[10]]</code></pre>
+
+<h3 id="element"><code>element</code></h3>
+
+<p>Extract an element from the given position.</p>
+
+<p>Usage:</p>
+
+<pre><code>$A = Matrix([ [ 1, 2, 3, 4 ], [ 5, 6, 7, 8 ], [ 9, 10, 11, 12 ] ]);
+$A-&gt;element(2,3); # returns 7
+
+$B = Matrix([ [ [ 1, 2 ], [ 3, 4 ] ], [ [ 5, 6 ], [ 7, 8 ] ] ]);
+$B-&gt;element(1,2,1); # returns 3;
+
+$row = Matrix([4,3,2,1]);
+$row-&gt;element(2); # returns 3;</code></pre>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

@@ -1,54 +1,121 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>PGalias</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>PGalias</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>PGalias</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
-
-
-<ul id="index">
-  <li>
-    <ul>
-      <li><a href="#new">new</a></li>
-      <li><a href="#make_alias">make_alias</a></li>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">PGalias</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#new">new</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#get_resource">get_resource</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#make_alias">make_alias</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#alias_for_html">alias_for_html</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#alias_for_tex">alias_for_tex</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#create_link_to_tmp_file">create_link_to_tmp_file</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#convert_file_to_png_for_tex">convert_file_to_png_for_tex</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#find_file_in_directories">find_file_in_directories</a></li>
     </ul>
-  </li>
-</ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>PGalias - Create aliases for auxiliary resources.</p>
 
 <h2 id="new">new</h2>
 
-<pre><code>  Create one alias object per question (and per PGcore object since there is a unique PGcore per question.)
-  Check that information is intact
-  Construct unique id stub seeds -- the id stub seed is for this PGalias object which is
-       attached to all the resource files (except equations) for this question.
-  Maintain list of links to external resources</code></pre>
+<p>Usage: <code>PGalias-&gt;new($envir, %options)</code></p>
+
+<p>The <code>PGalias</code> constructor. The <code>$envir</code> hash containing the problem environment is required. The <code>%options</code> can contain <code>WARNING_messages</code> and <code>DEBUG_messages</code> which should be array references. These are passed on to all <code>PGresource</code> objects constructed for each problem resource and are used by both modules to store warning and debug messages.</p>
+
+<p>One <code>PGalias</code> object is created for each <code>PGcore</code> object (which is unique for each problem). This object is used to construct unique ids for problem resources and maintain a list of the resources used by a problem. A unique_id_stub is generated for this <code>PGalias</code> object which is the basis for the unique ids generated for resource files (except equation images for the &quot;images&quot; display mode) used by the problem.</p>
+
+<h2 id="get_resource">get_resource</h2>
+
+<p>Usage: <code>$pgAlias-&gt;get_resource($aux_file_id)</code></p>
+
+<p>Returns the <code>PGresource</code> object corresponding to <code>$aux_file_id</code>.</p>
 
 <h2 id="make_alias">make_alias</h2>
 
-<p>This is the workhorse of the PGalias module. It&#39;s front end is alias() in PG.pl.</p>
+<p>Usage: <code>$pgAlias-&gt;make_alias($aux_file_id)</code></p>
 
-<p>make_alias magically takes a name of an external resource ( html file, png file, etc.) and creates full directory addresses and uri&#39;s appropriate to the current displayMode. It also does any necessary conversions behind the scenes.</p>
+<p>This is the workhorse of the <code>PGalias</code> module. Its front end is <code>alias</code> in <a href="//pg/macros/PG.html">PG.pl</a>.</p>
 
-<p>Returns the uri of the resource.</p>
+<p><code>make_alias</code> takes the name of an auxiliary resource (html file, png file, etc.) and creates a file name or URL appropriate to the current display mode. It also does any necessary conversions behind the scenes.</p>
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+<p>It returns the URL of the resource if the display mode is HTML or PTX, and the full file path if the display mode is TeX.</p>
+
+<h2 id="alias_for_html">alias_for_html</h2>
+
+<p>Usage: <code>$pgAlias-&gt;alias_for_html($aux_file_id, $ext)</code></p>
+
+<p>Returns the URL alias for the resource identified by <code>$aux_file_id</code> with the file name extension <code>$ext</code>.</p>
+
+<h2 id="alias_for_tex">alias_for_tex</h2>
+
+<p>Usage: <code>$pgAlias-&gt;alias_for_tex($aux_file_id, $ext)</code></p>
+
+<p>Returns the full file path alias for the resource identified by <code>$aux_file_id</code> with the file name extension <code>$ext</code>.</p>
+
+<h2 id="create_link_to_tmp_file">create_link_to_tmp_file</h2>
+
+<p>Usage: <code>$pgAlias-&gt;create_link_to_tmp_file($resource_object, $subdir)</code></p>
+
+<p>Creates a symbolic link in the subdirectory <code>$subdir</code> of the publicly accessible temporary directory to the file (usually in a course&#39;s templates directory) represented by the <code>PGresource</code> referenced by <code>$resource_object</code>. The link name is the file unique id alias.</p>
+
+<h2 id="convert_file_to_png_for_tex">convert_file_to_png_for_tex</h2>
+
+<p>Usage: <code>$pgAlias-&gt;convert_file_to_png_for_tex($resource_object, $target_directory)</code></p>
+
+<p>Converts a &quot;gif&quot; or &quot;svg&quot; file to a &quot;png&quot; file. The &quot;png&quot; file is saved in <code>$target_directory</code> and the file name is the unique id alias for the <code>PGresource</code> referenced by <code>$resource_object</code>.</p>
+
+<h2 id="find_file_in_directories">find_file_in_directories</h2>
+
+<p>Usage: <code>$pgAlias-&gt;find_file_in_directories($file_name, $directories)</code></p>
+
+<p>Finds the first directory in the array of directory names referenced to by <code>$directories</code> that contains a readable file named <code>$file_name</code>, and returns the full path of that file.</p>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

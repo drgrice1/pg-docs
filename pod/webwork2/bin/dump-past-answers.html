@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>dump-past-answers.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">dump-past-answers.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#SYNOPSIS">SYNOPSIS</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>dump-past-answers.pl: This script dumps past answers from courses into a CSV file.</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<p>dump-past-answers.pl [options]</p>
+
+<pre><code>Options:
+    -c|--course          Course from which to dump past answers
+    -f|--output-file     CSV file name to dump past answers to
+    -h|--help            Show this help</code></pre>
+
+<p>The <code>course</code> option can be repeated multiple times to dump past answers from multiple courses into the same file. If no courses are given via this option, then past answers from all courses will be dumped.</p>
+
+<p>If the <code>output-file</code> option is not given then <code>past-answers-$current_unix_time.csv</code> will be used for the output file name.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>The CSV file that is generated has the following columns:</p>
+
+<p>ID info</p>
+
+<pre><code>0 - Answer ID
+1 - Course ID
+2 - Student ID
+3 - Set ID
+4 - Problem ID</code></pre>
+
+<p>User Info</p>
+
+<pre><code>5 - Permission Level
+6 - User Course Status</code></pre>
+
+<p>Set Info</p>
+
+<pre><code>7 - Set type
+8 - Open Date (unix time)
+9 - Reduced Scoring Date (unix time)
+    10 - Due Date (unix time)
+11 - Answer Date (unix time)
+12 - Final Set Grade (percentage)</code></pre>
+
+<p>Problem Info</p>
+
+<pre><code>13 - Problem Path
+14 - Problem Value
+15 - Problem Max Attempts
+16 - Problem Seed
+17 - Attempted
+18 - Final Incorrect Attempts
+19 - Final Correct Attempts
+20 - Final Status</code></pre>
+
+<p>OPL Info</p>
+
+<pre><code>21 - Subject
+22 - Chapter
+23 - Section
+24 - Keywords</code></pre>
+
+<p>Answer Info</p>
+
+<pre><code>25 - Answer timestamp (unix time)
+26 - Attempt Number
+27 - Raw status of attempt (percentage of correct blanks)
+28 - Number of Answer Blanks
+29/30 etc... - The following columns will come in pairs.  The first will be
+               the text of the answer contained in the answer blank
+               and the second will be the binary 0/1 status of the answer
+               blank.  There will be as many pairs as answer blanks.</code></pre>
+
+		</div>
+	</div>
+</body>
+</html>

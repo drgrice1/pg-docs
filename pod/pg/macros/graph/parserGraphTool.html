@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>graph/parserGraphTool.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">graph/parserGraphTool.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#GRAPH-OBJECTS">GRAPH OBJECTS</a></li><li class="nav-item"><a class="nav-link p-0" href="#CUSTOM-CHECKERS">CUSTOM CHECKERS</a></li><li class="nav-item"><a class="nav-link p-0" href="#OPTIONS">OPTIONS</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>parserGraphTool.pl - Allow students to enter basic graphical answers via interactive JavaScript.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>GraphTool objects let you provide an interactive graphing tool for students to enter graphical answers.</p>
+
+<p>To create a GraphTool object pass a list of graph objects (discussed below) for the students to graph to <code>GraphTool()</code>. For example:</p>
+
+<pre><code>$gt = GraphTool(&quot;{line,solid,(0,0),(1,1)}&quot;, &quot;{circle,dashed,(2,2),(4,2)}&quot;);</code></pre>
+
+<p>or</p>
+
+<pre><code>$gt = GraphTool(&quot;{line,solid,(0,0),(1,1)}&quot;)-&gt;with(bBox =&gt; [-20, 20, 20, -20]);</code></pre>
+
+<p>Then, for standard PG use <code>$gt-&gt;ans_rule()</code> to insert the JavaScript graph into the problem (or a print graph when a hard copy is generated), and <code>$gt-&gt;cmp</code> to produce the answer checker. For example:</p>
+
+<pre><code>BEGIN_TEXT
+Graph the line \(y = x\).
+$PAR
+\{$gt-&gt;ans_rule()\}
+END_TEXT
+
+ANS($gt-&gt;cmp);</code></pre>
+
+<p>For PGML you can just do</p>
+
+<pre><code>BEGIN_PGML
+Graph the line [`y = x`].
+
+[_]{$gt}
+END_PGML</code></pre>
+
+<a href="#_podtop_"><h1 id="GRAPH-OBJECTS">GRAPH OBJECTS</h1></a>
+
+<p>The following types of graph objects can be graphed:</p>
+
+<pre><code>points                          (GraphTool::GraphObject::Point)
+lines                           (GraphTool::GraphObject::Line)
+circles                         (GraphTool::GraphObject::Circle)
+parabolas                       (GraphTool::GraphObject::Parabola)
+quadratics                      (GraphTool::GraphObject::Qudratic)
+cubics                          (GraphTool::GraphObject::Cubic)
+intervals                       (GraphTool::GraphObject::Interval)
+sine waves                      (GraphTool::GraphObject::SineWave)
+triangles                       (GraphTool::GraphObject::Triangle)
+quadrilaterals                  (GraphTool::GraphObject::Quadrilateral)
+line segments                   (GraphTool::GraphObject::Segment)
+vectors                         (GraphTool::GraphObject::Vector)
+fills (or shading of a region)  (GraphTool::GraphObject::Fill)</code></pre>
+
+<p>The syntax for each of these objects to pass to the GraphTool constructor is summarized as follows. Each object must be enclosed in braces. The first element in the braces must be the name of the object. The following elements in the braces depend on the type of element.</p>
+
+<p>For points the name &quot;point&quot; must be followed by the coordinates. For example:</p>
+
+<pre><code>&quot;{point,(3,5)}&quot;</code></pre>
+
+<p>For lines the name &quot;line&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the line is expected to be drawn solid or dashed. That is followed by two distinct points on the line. For example:</p>
+
+<pre><code>&quot;{line,dashed,(1,5),(3,4)}&quot;</code></pre>
+
+<p>For circles the name &quot;circle&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the circle is expected to be drawn solid or dashed. That is followed by the point that is to be the center of circle, and then by a point on the circle. For example:</p>
+
+<pre><code>&quot;{circle,solid,(1,1),(4,5)}&quot;</code></pre>
+
+<p>For parabolas the name &quot;parabola&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the parabola is expected to be drawn solid or dashed. The next element in the braces must be the word &quot;vertical&quot; for a parabola that opens up or down, or &quot;horizontal&quot; for a parabola that opens to the left or right. That is followed by the vertex and then another point on the parabola. For example:</p>
+
+<pre><code>&quot;{parabola,solid,vertical,(1,0),(3,3)}&quot;</code></pre>
+
+<p>For three point quadratics the name &quot;quadratic&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the quadratic is expected to be drawn solid or dashed. That is followed by the three points that define the quadratic. For example:</p>
+
+<pre><code>&quot;{quadratic,solid,(-1,2),(1,0),(3,3)}&quot;</code></pre>
+
+<p>For four point cubics the name &quot;cubic&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the cubic is expected to be drawn solid or dashed. That is followed by the four points that define the cubic. For example:</p>
+
+<pre><code>&quot;{cubic,solid,(1,-3),(-1,2),(4,3),(3,2)}&quot;</code></pre>
+
+<p>For fills the name &quot;fill&quot; must be followed by a point in the region that is to be filled. For example:</p>
+
+<pre><code>&quot;{fill,(5,5)}&quot;</code></pre>
+
+<p>For intervals the name &quot;interval&quot; must be followed by a single interval. Some examples are:</p>
+
+<pre><code>&quot;{interval,[3,10)}&quot;
+&quot;{interval,(-infinity,8]}&quot;
+&quot;{interval,(2,infinity)}&quot;</code></pre>
+
+<p>Note that for an infinite interval endpoint in a correct answer you may use &quot;inf&quot;, or anything that is interpreted into a MathObject infinity. However, for static graph objects it must be &quot;infinity&quot;. The JavaScript will always return &quot;infinity&quot; for student answers.</p>
+
+<p>For sine waves the name &quot;sineWave&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the sine wave is expected to be drawn solid or dashed. That is followed by a point whose x-coordinate gives the phase shift (or x-translation) and y-coordinate gives the y-translation. The last two elements are the period and amplitude. For Example:</p>
+
+<pre><code>&quot;{sineWave,solid,(2,-4),3,5}&quot;</code></pre>
+
+<p>represents the function <code>f(x) = 5 sin((2 pi / 3)(x - (-4))) + 2</code>.</p>
+
+<p>For triangles the name &quot;triangle&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the triangle is expected to be drawn solid or dashed. That is followed by the three vertices of the triangle. For example:</p>
+
+<pre><code>&quot;{triangle,solid,(-1,2),(1,0),(3,3)}&quot;</code></pre>
+
+<p>For quadrilaterals the name &quot;quadrilateral&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the triangle is expected to be drawn solid or dashed. That is followed by the four vertices of the quadrilateral. For example:</p>
+
+<pre><code>&quot;{quadrilateral,solid,(0,0),(4,3),(2,3),(4,-3)}&quot;</code></pre>
+
+<p>For line segments the name &quot;segment&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the segment is expected to be drawn solid or dashed. That is followed by the two points that are at the ends of the line segment. For example:</p>
+
+<pre><code>&quot;{segment,solid,(0,0),(3,4)}&quot;</code></pre>
+
+<p>For vectors the name &quot;vector&quot; must be followed by the word &quot;solid&quot; or &quot;dashed&quot; to indicate if the vector is expected to be drawn solid or dashed. That is followed by the initial point and the terminal point. For example:</p>
+
+<pre><code>&quot;{vector,solid,(0,0),(3,4)}&quot;</code></pre>
+
+<p>The student answers that are returned by the JavaScript will be a list of the list objects discussed above and will be parsed by WeBWorK and passed to the checker as such. The default checker is designed to grade the graph based on appearance. This means that if a student graphs duplicate objects, then the duplicates are ignored. Furthermore, if two objects are graphed whose only difference is that one is solid and the other is dashed (in this case the dashed object is covered by the solid object and only the solid object is really visible), then the dashed object is ignored.</p>
+
+<a href="#_podtop_"><h1 id="CUSTOM-CHECKERS">CUSTOM CHECKERS</h1></a>
+
+<p>A custom list_checker may be provided instead of using the default checker. This can either be passed as part of the <code>cmpOptions</code> hash discussed below, or directly to the GraphTool object&#39;s <code>cmp()</code> method.</p>
+
+<p>In a custom list checker the correct and student answers will have the MathObject class <code>GraphObject</code> and will be objects that derive from the <code>GraphTool::GraphObject</code> package (the specific packages for the various objects are listed above). If the <code>==</code> comparison operator is used between these objects it will return true if the objects are visually exactly the same, and false otherwise. For example, if a correct answer is <code>$correct = {line, solid, (0, 0), (1, 1)}</code> and the student graphs the line that is represented by <code>$student = {line, solid, (-2, -2), (3, 3)}</code>, then <code>$correct == $student</code> will be true.</p>
+
+<p>In addition there are two methods all <code>GraphTool::GraphObject</code>s have that are useful.</p>
+
+<p>The first is the <code>pointCmp</code> method. When it is called for most <code>GraphTool::GraphObject</code>s, passing a MathObject point it will return 0 if the point satisfies the equation of the object, -1 if the equation evaluated at the point is negative, and 1 if the equation evaluated at the point is positive. For a segment or vector it will return 0 if it is a point on the segment or vector, 1 if the point is on the segment or vector extended to infinity but not on the segment or vector, and otherwise it will return the same that it would for a line. For a triangle it will return 0 if the point is on an edge, 1 if it is inside, and -1 if it is outside. For a quadrilateral it will return 0 if the point is on an edge, and -1 if it is outside. But if the point is inside then it depends on if the quadrilateral is crossed or not. If the quadrilateral is not crossed it will return 1. If it is crossed, then it will return a positive number that is different depending on which part of the interior it is in. For a fill, the <code>pointCmp</code> method will return 0 if the point is in the same region as the fill point, and 1 otherwise.</p>
+
+<p>The second method is the <code>cmp</code> method. When it is called for a <code>GraphTool::GraphObject</code> object passing it another <code>GraphTool::GraphObject</code> object it will return 1 if the two objects are visually exactly the same, and 0 otherwise (this is equivalent to using the <code>==</code> operator). A second parameter may be passed and if that parameter is 1, then the method will return 1 if the two objects are the same ignoring if the two objects are solid or dashed, and 0 otherwise. For example, if a correct answer is <code>$correct = {line, solid, (0, 0), (1, 1)}</code> and the student graphs the line that is represented by <code>$student = {line, dashed, (-2, -2), (3, 3)}</code>, then <code>$correct-&gt;cmp($student, 1)</code> will return 1.</p>
+
+<p>Further note that a <code>GraphTool::GraphObject</code> derives from a MathObject <code>List</code>, and so the things that can be done with MathObject <code>List</code>s can also be done with <code>GraphTool::GraphObject</code>s.</p>
+
+<p>An example of a custom checker follows:</p>
+
+<pre><code>$m = 2 * random(1, 4);
+
+$gt = GraphTool(&quot;{line, solid, ($m / 2, 0), (0, -$m)}&quot;)-&gt;with(
+    cmpOptions =&gt; {
+        list_checker =&gt; sub {
+            my ($correct, $student, $ans, $value) = @_;
+
+            my $score = 0;
+            my @errors;
+
+            for (0 .. $#$student) {
+                if ($correct-&gt;[0] == $student-&gt;[$_]) { ++$score; next; }
+
+                my $nth = Value::List-&gt;NameForNumber($_ + 1);
+
+                if ($student-&gt;[$_]-&gt;extract(1) ne &#39;line&#39;) {
+                    push(@errors, &quot;The $nth object graphed is not a line.&quot;);
+                    next;
+                }
+
+                if ($student-&gt;[$_]-&gt;extract(2) ne &#39;solid&#39;) {
+                    push(@errors, &quot;The $nth object graphed should be a solid line.&quot;);
+                    next;
+                }
+
+                if (!$correct-&gt;[0]-&gt;pointCmp($student-&gt;[$_]-&gt;extract(3))
+                    || !$correct-&gt;[0]-&gt;pointCmp($student-&gt;[$_]-&gt;extract(4)))
+                {
+                    $score += 0.5;
+                    push(@errors,
+                        &quot;One of points graphed on the $nth object is incorrect.&quot;
+                    );
+                    next;
+                }
+
+                push(@errors, &quot;The $nth object graphed is incorrect.&quot;);
+            }
+
+            return ($score, @errors);
+        }
+    }
+}</code></pre>
+
+<p><b>The following is deprecated. Do not use it in new problems. Existing problems that use this approach should be rewritten to use the above approach instead.</b></p>
+
+<p>The variable <code>$graphToolObjectCmps</code> can be used in a custom checker and contains a hash whose keys are the types of the objects described above, and whose values are methods that can be called passing a MathObject list constructed from one of the objects described above. When one of these methods is called it will return two methods. The first method when called passing a MathObject point will return 0 if the point satisfies the equation of the object, -1 if the equation evaluated at the point is negative, and 1 if the equation evaluated at the point is positive. The second method when called passing another MathObject list constructed from one of the objects described as above will return 1 if the two objects are exactly the same, and 0 otherwise. A second parameter may be passed and if that parameter is 1, then the method will return 1 if the two objects are the same ignoring if the two objects are solid or dashed, and 0 otherwise.</p>
+
+<p>In the following example, the <code>$lineCmp</code> method is defined to be the second method (indexed by 1) that is returned by calling the <code>&#39;line&#39;</code> method on the first correct answer in the example.</p>
+
+<pre><code>$m = 2 * random(1, 4);
+
+$gt = GraphTool(&quot;{line, solid, ($m / 2, 0), (0, -$m)}&quot;)-&gt;with(
+    bBox       =&gt; [ -11, 11, 11, -11 ],
+    cmpOptions =&gt; {
+        list_checker =&gt; sub {
+            my ($correct, $student, $ans, $value) = @_;
+            return 0 if $ans-&gt;{isPreview};
+
+            my $score = 0;
+            my @errors;
+
+            my $lineCmp = ($graphToolObjectCmps-&gt;{line}-&gt;($correct-&gt;[0]))[1];
+
+         for (0 .. $#$student) {
+                if ($lineCmp-&gt;($student-&gt;[$_])) { ++$score; next; }
+
+                my $nth = Value::List-&gt;NameForNumber($_ + 1);
+
+                if ($student-&gt;[$_]-&gt;extract(1) ne &#39;line&#39;) {
+                    push(@errors, &quot;The $nth object graphed is not a line.&quot;);
+                    next;
+                }
+
+                if ($student-&gt;[$_]-&gt;extract(2) ne &#39;solid&#39;) {
+                    push(@errors, &quot;The $nth object graphed should be a solid line.&quot;);
+                    next;
+                }
+
+                push(@errors, &quot;The $nth object graphed is incorrect.&quot;);
+            }
+
+            return ($score, @errors);
+        }
+    }
+}</code></pre>
+
+<p>Note that for <code>&#39;vector&#39;</code> graph objects the <code>GraphTool</code> object must be passed in addition to the correct <code>&#39;vector&#39;</code> object to compare to. For example,</p>
+
+<pre><code>my $vectorCmp = ($graphToolObjectCmps-&gt;{vector}-&gt;($correct-&gt;[0], $gt))[1];</code></pre>
+
+<p>This is so that the correct methods can be returned that take into account the <code>vectorsArePositional</code> option that is set for the particular <code>$gt</code> object.</p>
+
+<a href="#_podtop_"><h1 id="OPTIONS">OPTIONS</h1></a>
+
+<p>There are a number of options that you can supply to control the appearance and behavior of the JavaScript graph, listed below. These are set as parameters to the <code>with()</code> method called on the <code>GraphTool</code> object.</p>
+
+<dl>
+
+<dt>bBox (Default: <code>bBox =&gt; [-10, 10, 10, -10]</code>)</dt>
+<dd>
+
+<p>This is an array of four numbers that represent the bounding box of the graph. The first two numbers in the array are the coordinates of the top left corner of the graph, and the last two numbers are the coordinates of the bottom right corner of the graph.</p>
+
+</dd>
+<dt>gridX, gridY (Default: <code>gridX =&gt; 1, gridY =&gt; 1</code>)</dt>
+<dd>
+
+<p>These are the distances between successive grid lines in the x and y directions, respectively.</p>
+
+</dd>
+<dt>ticksDistanceX, ticksDistanceY (Default: <code>ticksDistanceX =&gt; 2, ticksDistanceY =&gt; 2</code>)</dt>
+<dd>
+
+<p>These are the distances between successive major (labeled) ticks on the x and y axes, respectively.</p>
+
+</dd>
+<dt>minorTicksX, minorTicksY (Default: <code>minorTicksX =&gt; 1, minorTicksY =&gt; 1</code>)</dt>
+<dd>
+
+<p>These are the number of minor (unlabeled) ticks between major ticks on the x and y axes, respectively.</p>
+
+</dd>
+<dt>scaleX, scaleY (Default: <code>scaleX =&gt; 1, scaleY =&gt; 1</code>)</dt>
+<dd>
+
+<p>These are the scale of the ticks on the x and y axes. That is the distance between two successive ticks on the axis (including both major and minor ticks).</p>
+
+</dd>
+<dt>scaleSymbolX, scaleSymbolY (Default: <code>scaleSymbolX =&gt; &#39;&#39;, scaleSymbolY =&gt; &#39;&#39;</code>)</dt>
+<dd>
+
+<p>These are the scale symbols for the ticks on the x and y axes. The tick labels on the axis will be shown as multiples of this symbol.</p>
+
+<p>This can be used in combination with the <code>scaleX</code> option to show tick labels at multiples of pi, for instance. This can be accomplished using the settings <code>scaleX =&gt; pi-&gt;value</code> and <code>scaleSymbolX =&gt; &#39;\pi&#39;</code>.</p>
+
+</dd>
+<dt>xAxisLabel, yAxisLabel (Default: <code>xAxisLabel =&gt; &#39;x&#39;, yAxisLabel =&gt; &#39;y&#39;</code>)</dt>
+<dd>
+
+<p>Labels that will be added to the ends of the horizontal (x) and vertical (y) axes. Note that the values of these options will be used in MathJax online and in LaTeX math mode in print. These can also be set to the empty string &#39;&#39; to remove the labels.</p>
+
+</dd>
+<dt>ariaDescription (Default: <code>ariaDescription =&gt; &#39;&#39;</code>)</dt>
+<dd>
+
+<p>This will be added to a hidden div that will be referenced in an aria-describedby attribute of the jsxgraph board.</p>
+
+</dd>
+<dt>JSXGraphOptions (Default: <code>undef</code>)</dt>
+<dd>
+
+<p>This is an advanced option that you usually do not want to use. It is usually constructed by the macro internally using the above options. If defined it should be a single string that is formatted in JavaScript object notation, and will override all of the above options. It will be passed to the JavaScript <code>graphTool</code> method which will pass it on to the JSX graph board when it is initialized. It may consist of any of the valid attributes documented for <code>JXG.JSXGraph.initBoard</code> at <a href="https://jsxgraph.org/docs/symbols/JXG.JSXGraph.html#.initBoard">https://jsxgraph.org/docs/symbols/JXG.JSXGraph.html#.initBoard</a>. For example the following value for <code>JSXGraphOptions</code> will give the same result for the JavaScript graph as the default values for the options above:</p>
+
+<pre><code>JSXGraphOptions =&gt; Mojo::JSON::encode_json({
+    boundingBox =&gt; [-10, 10, 10, -10],
+    defaultAxes =&gt; {
+        x =&gt; { ticks =&gt; { ticksDistance =&gt; 2, minorTicks =&gt; 1} },
+        y =&gt; { ticks =&gt; { ticksDistance =&gt; 2, minorTicks =&gt; 1} }
+    },
+    grid =&gt; { gridX =&gt; 1, gridY =&gt; 1 }
+})</code></pre>
+
+</dd>
+<dt>snapSizeX, snapSizeY (Default: <code>snapSizeX =&gt; 1, snapSizeY =&gt; 1</code>)</dt>
+<dd>
+
+<p>These restrict the x coordinate and y coordinate of points that can be graphed to being multiples of the respective parameter. These values must be greater than zero.</p>
+
+</dd>
+<dt>showCoordinateHints (Default: <code>showCoordinateHints =&gt; 1</code>)</dt>
+<dd>
+
+<p>Set this to 0 to disable the display of the coordinates. These are in the lower right corner of the graph for the default 2 dimensional graphing mode, and in the top left corner of the graph for the 1 dimensional mode when numberLine is 1.</p>
+
+</dd>
+<dt>coordinateHintsType (Default: <code>coordinateHintsType =&gt; &#39;decimal&#39;</code>)</dt>
+<dd>
+
+<p>This changes the way coordinate hints and axes tick labels are shown. By default these are displayed as decimal numbers accurate to five decimal places. If this is set to &#39;fraction&#39;, then those decimals will be converted and displayed as fractions. If this is set to &#39;mixed&#39;, then those decimals will be converted and displayed as mixed numbers. For example, if the snapSizeX is set to 1/3, then what would be displayed as 4.66667 with the default &#39;decimal&#39; setting, would be instead be displayed as 14/3 with the &#39;fraction&#39; setting, and &#39;4 2/3&#39; with the &#39;mixed&#39; setting. Note that these fractions are typeset by MathJax.</p>
+
+<p>Make sure that the snap size is given with decent accuracy. For example, if the snap size is set to 0.33333, then instead of 1/3 being displayed, 33333/1000000 will be displayed. It is recommended to actually give an actual fraction for the snap size (like 1/3), and let perl and javascript compute that to get the best result.</p>
+
+</dd>
+<dt>coordinateHintsTypeX (Default: <code>coordinateHintsTypeX =&gt; undef</code>)</dt>
+<dd>
+
+<p>This does the same as the coordinateHintsType option, but only for the x-coordinate and x-axis tick labels. If this is undefined then the coordinateHintsType option is used for the x-coordinate and x-axis tick labels.</p>
+
+</dd>
+<dt>coordinateHintsTypeY (Default: <code>coordinateHintsTypeY =&gt; undef</code>)</dt>
+<dd>
+
+<p>This does the same as the coordinateHintsType option, but only for the y-coordinate and y-axis tick labels. If this is undefined then the coordinateHintsType option is used for the y-coordinate and y-axis tick labels.</p>
+
+</dd>
+<dt>availableTools (Default: <code>availableTools =&gt; [ &quot;LineTool&quot;, &quot;CircleTool&quot;, &quot;VerticalParabolaTool&quot;, &quot;HorizontalParabolaTool&quot;, &quot;FillTool&quot;, &quot;SolidDashTool&quot; ]</code>)</dt>
+<dd>
+
+<p>This is an array of tools that will be made available for students to use in the graph tool. The order the tools are listed here will also be the order the tools are presented in the graph tool button box. In addition to the tools listed in the default options above, the following tools may be used:</p>
+
+<pre><code>&quot;PointTool&quot;
+three point &quot;QuadraticTool&quot;
+four point &quot;CubicTool&quot;
+&quot;IntervalTool&quot;
+&quot;IncludeExcludePointTool&quot;
+&quot;SineWaveTool&quot;
+&quot;TriangleTool&quot;
+&quot;QuadrilateralTool&quot;
+&quot;SegmentTool&quot;
+&quot;VectorTool&quot;</code></pre>
+
+<p>Note that the case of the tool names must match what is shown.</p>
+
+</dd>
+<dt>staticObjects (Default: <code>staticObjects =&gt; []</code>)</dt>
+<dd>
+
+<p>This is an array of fixed objects that will be displayed on the graph. These objects will not be able to be moved around. The format for these objects is the same as those that are passed to the GraphTool constructor as the correct answers.</p>
+
+</dd>
+<dt>printGraph (Default: <code>undef</code>)</dt>
+<dd>
+
+<p>If the JSXGraphOptions option is set directly, then you will also need to provide a function that will generate the corresponding hard copy graph. Otherwise the hard copy graph will still be generated using the above options, and will not look the same as the JavaScript graph.</p>
+
+</dd>
+<dt>cmpOptions (Default: <code>cmpOptions =&gt; {}</code>)</dt>
+<dd>
+
+<p>This is a hash of options that will be passed to the <code>cmp()</code> method. These options can also be passed as parameters directly to the GraphTool object&#39;s <code>cmp()</code> method.</p>
+
+</dd>
+<dt>texSize (Default: <code>texSize =&gt; 400</code>)</dt>
+<dd>
+
+<p>This is the size of the graph that will be output when a hard copy of the problem is generated.</p>
+
+</dd>
+<dt>showInStatic (Default: 1)</dt>
+<dd>
+
+<p>In &quot;static&quot; output forms (TeX, PTX) you may not want to print the graph if it is just taking space. In that case, set this to 0.</p>
+
+</dd>
+<dt>numberLine (Default: <code>numberLine =&gt; 0</code>)</dt>
+<dd>
+
+<p>If set to 0, then the graph will show both the horizontal and vertical axes. This is the default. If set to 1, then only the horizontal axis will be shown, and the graph can be interpreted as a number line. In this case the graph will also be displayed with a smaller height.</p>
+
+<p>Note that if this option is set to 1, then some of the options listed above have different default values. The options with different default values and their corresponding default values are:</p>
+
+<pre><code>bBox           =&gt; [ -10, 0.4, 10, -0.4 ],
+xAxisLabel     =&gt; &#39;&#39;,
+availableTools =&gt; [ &#39;IntervalTool&#39;, &#39;IncludeExcludePointTool&#39; ],</code></pre>
+
+<p>In addition, <code>bBox</code> may be provided as an array reference with only two entries which will be interpreted as a horizontal range. For example,</p>
+
+<pre><code>bBox =&gt; [ -12, 12 ]</code></pre>
+
+<p>will give a graph with horizontal extremes <code>-12</code> and <code>12</code>.</p>
+
+<p>Note that the horizontal extremes of the number line are interpreted as points at infinity. So in the above example, a point graphed at -12 will be interpreted to be a point at -infinity, and a point graphed at 12 will be interpreted to be a point at infinity.</p>
+
+<p>The only graph objects that will work well with this graphing mode are the &quot;point&quot; and &quot;interval&quot; objects, which are created by the &quot;PointTool&quot; and &quot;IntervalTool&quot; respectively. Usually the &quot;IncludeExcludePointTool&quot; will be desired to control when interval end points are included or excluded from an interval. Of course &quot;interval&quot;s and the &quot;IntervalTool&quot; will not work well if this graph mode is not used.</p>
+
+</dd>
+<dt>useBracketEnds (Default: <code>useBracketEnds =&gt; 0</code>)</dt>
+<dd>
+
+<p>If set to 1, then parentheses and brackets will be used for interval end point delimiters instead of open and closed dots. This option only has effect when <code>numberLine</code> is 1, and the <code>IntervalTool</code> is used.</p>
+
+</dd>
+<dt>vectorsArePositional (Default: <code>vectorsArePositional =&gt; 0</code>)</dt>
+<dd>
+
+<p>If set to 1, then the default checker will consider two vectors that have the same magnitude and direction but different initial points to be different vectors. Otherwise two vectors that have the same magnitude and direction will be considered equal. This option only has effect when a <code>vector</code> is part of the answer, and the <code>VectorTool</code> is used.</p>
+
+</dd>
+<dt>useFloodFill (Default: <code>useFloodFill =&gt; 0</code>)</dt>
+<dd>
+
+<p>If set to 1, then a flood fill algorithm is used for filling regions. The flood fill algorithm fills from the selected point outward and stops at boundaries created by the graphed objects. The alternate fill that is used if <code>useFloodFill</code> is 0 (the default) is an inequality fill. It shades all points that satisfy the same inequalities relative to the graphed objects. The inequality fill algorithm is highly efficient and more reliable, but does not work well and doesn&#39;t even make sense with some graph objects. For example, it is quite counter intuitive for quadrilaterals, triangles, line segments and vectors.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<dl>
+
+<dt>generateAnswerGraph</dt>
+<dd>
+
+<p>This method may be called for a GraphTool object to output a static version of the graph into the problem. The typical place where this might be desired is in the solution for the problem. For example</p>
+
+<pre><code>BEGIN_PGML_SOLUTION
+The correct graph is
+
+[@ $gt-&gt;generateAnswerGraph(ariaDescription =&gt; &#39;a better description than the default&#39;) @]*
+END_PGML_SOLUTION</code></pre>
+
+<p>The following options may be passed to this method.</p>
+
+<dl>
+
+<dt><code>showCorrect</code></dt>
+<dd>
+
+<p>Whether to show correct answers in the graph. This is 1 by default.</p>
+
+</dd>
+<dt><code>cssClass</code></dt>
+<dd>
+
+<p>A css class that will be added to the containing div. The default value is &#39;graphtool-solution-container&#39;. Note that this default class is provided in the graphtool.css file. A custom class may also be used, and injected into the header via HEADER_TEXT. It is recommended that this class be prefixed with the graph tool answer name to avoid possible conflict with other problems. This may be obtained with <code>$gt-&gt;ANS_NAME</code>. This class must set the width and height of the div.graphtool-graph contained within, or the div.graphtool-number-line contained within if numberLine is set. Note that this option is only used in HTML output.</p>
+
+</dd>
+<dt><code>ariaDescription</code></dt>
+<dd>
+
+<p>An aria description that will be added to the graph. The default value is &#39;graph of solution&#39;. Note that this option is only used in HTML output.</p>
+
+</dd>
+<dt><code>objects</code></dt>
+<dd>
+
+<p>Additional objects to display in the graph. The default value is the empty string.</p>
+
+</dd>
+<dt><code>width</code> and <code>height</code></dt>
+<dd>
+
+<p>The width and height of the answer graph in HTML output. If neither of these are given, then the css class will be used instead. If only one of these is given, then the other will be computed from the given value.</p>
+
+</dd>
+<dt><code>texSize</code></dt>
+<dd>
+
+<p>This is the size of the image that will be output when a hard copy of the problem is generated. The default value is the value of the graph tool object <code>texSize</code> option which defaults to 400.</p>
+
+</dd>
+</dl>
+
+</dd>
+</dl>
+
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>contexts/contextBoolean.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">contexts/contextBoolean.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#CONSTANTS">CONSTANTS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#VARIABLES">VARIABLES</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#OPERATORS">OPERATORS</a>
+        <ul class="nav flex-column w-100">
+          <li class="nav-item"><a class="nav-link p-0" href="#Aliases-and-Alternatives">Aliases and Alternatives</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link p-0" href="#OPERATOR-PRECEDENCE">OPERATOR PRECEDENCE</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#REDUCTION">REDUCTION</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#COMPARISON">COMPARISON</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextBoolean.pl - Implements a MathObject class for Boolean expressions</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Load this file:</p>
+
+<pre><code>loadMacros(&#39;contextBoolean.pl&#39;);</code></pre>
+
+<p>and then select the context:</p>
+
+<pre><code>Context(&#39;Boolean&#39;);</code></pre>
+
+<h2 id="CONSTANTS">CONSTANTS</h2>
+
+<p>This constant recognizes two constants by default, <code>T</code> and <code>F</code>. The following are all equivalent:</p>
+
+<pre><code>$T = Compute(&#39;1&#39;);
+$T = Boolean(&#39;T&#39;);
+$T = Context()-&gt;T;
+$T = context::Boolean-&gt;T;</code></pre>
+
+<h2 id="VARIABLES">VARIABLES</h2>
+
+<p>By default, this context has two variables, <code>p</code> and <code>q</code>. More variables can be added through the usual means of modifying context:</p>
+
+<pre><code>Context-&gt;variables-&gt;add( r =&gt; &#39;Boolean&#39; );</code></pre>
+
+<h2 id="OPERATORS">OPERATORS</h2>
+
+<p>Changing the LaTeX representations of the boolean operators is handled through the operators <code>or</code>, <code>and</code>, <code>xor</code>, and <code>not</code>. Note the extra space following the LaTeX command.</p>
+
+<pre><code>Context-&gt;operators-&gt;set( not =&gt; { TeX =&gt; &#39;\neg &#39; } );</code></pre>
+
+<h3 id="Aliases-and-Alternatives">Aliases and Alternatives</h3>
+
+<p>Modifications to the operators should be applied to the string versions of each operator: &#39;or&#39;, &#39;xor&#39;, &#39;and&#39;, and &#39;not&#39;; rather than to any of the following aliases or alternatives.</p>
+
+<dl>
+
+<dt>OR</dt>
+<dd>
+
+<p>The &#39;or&#39; operator is indicated by <code>or</code>, <code>+</code>, <code>\\/</code>, <code>wedge</code>, or unicode <code>x{2228}</code>.</p>
+
+</dd>
+<dt>AND</dt>
+<dd>
+
+<p>The &#39;and&#39; operator is indicated by <code>and</code>, <code>*</code>, whitespace (as with implicit multiplication), <code>/\\</code>, <code>vee</code>, or unicode <code>x{2227}</code>.</p>
+
+</dd>
+<dt>XOR</dt>
+<dd>
+
+<p>The &#39;xor&#39; operator is indicated by <code>xor</code>, <code>\</code>\&lt;&gt;, <code>oplus</code>, or unicodes <code>x{22BB}</code>, <code>x{2295}</code>.</p>
+
+</dd>
+<dt>NOT</dt>
+<dd>
+
+<p>The &#39;not&#39; operator is indicated by <code>not</code>, <code>-</code>, <code>!</code>, <code>~</code>, or unicodes <code>x{00AC}</code>, <code>x{223C}</code>.</p>
+
+<p>A right-associative version of the &#39;not&#39; operator is also available by using <code>&#39;</code> or <code>`</code> following the expression to be negated.</p>
+
+</dd>
+</dl>
+
+<h2 id="OPERATOR-PRECEDENCE">OPERATOR PRECEDENCE</h2>
+
+<dl>
+
+<dt><span style="white-space: nowrap;"><code>setPrecedence</code></span></dt>
+<dd>
+
+<p>This context supports two paradigms for operation precedence: <code>equal</code> (default) and <code>oxan</code>.</p>
+
+<p>The default setting, <code>equal</code>, gives all boolean operations the same priority, meaning that parenthesis are the only manner by which an expression will evaluate operations to the right before those to the left.</p>
+
+<pre><code>$a = Compute(&quot;T or T and F&quot;); # $a == F</code></pre>
+
+<p>The <code>oxan</code> setting priortizes <code>or</code> &lt; <code>xor</code> &lt; <code>and</code> &lt; <code>not</code>.</p>
+
+<pre><code>Context()-&gt;setPrecedence(&#39;oxan&#39;);
+$b = Compute(&quot;T or T and F&quot;); # $b == T</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="REDUCTION">REDUCTION</h2>
+
+<p>The context also handles <code>reduceConstants</code> with the following reduction rules:</p>
+
+<dl>
+
+<dt><code>&#39;x||1&#39;</code></dt>
+<dd>
+
+<pre><code>$f = Formula(&#39;p or T&#39;)-&gt;reduce; # $f == T</code></pre>
+
+</dd>
+<dt><code>&#39;x||0&#39;</code></dt>
+<dd>
+
+<pre><code>$f = Formula(&#39;p or F&#39;)-&gt;reduce; # $f == Formula(&#39;p&#39;)</code></pre>
+
+</dd>
+<dt><code>&#39;x&amp;&amp;1&#39;</code></dt>
+<dd>
+
+<pre><code>$f = Formula(&#39;p and T&#39;)-&gt;reduce; # $f == Formula(&#39;p&#39;)</code></pre>
+
+</dd>
+<dt><code>&#39;x&amp;&amp;0&#39;</code></dt>
+<dd>
+
+<pre><code>$f = Formula(&#39;p and F&#39;)-&gt;reduce; # $f == F</code></pre>
+
+</dd>
+<dt><code>&#39;!!x&#39;</code></dt>
+<dd>
+
+<pre><code>$f = Formula(&#39;not not p&#39;)-&gt;reduce; # $f == Formula(&#39;p&#39;);</code></pre>
+
+</dd>
+</dl>
+
+<h2 id="COMPARISON">COMPARISON</h2>
+
+<p>Boolean Formula objects are considered equal whenever the two expressions generate the same truth table.</p>
+
+<pre><code>$f = Formula(&#39;not (p or q)&#39;);
+$g = Formula(&#39;(not p) and (not q)&#39;);
+# $f == $g is true</code></pre>
+
+		</div>
+	</div>
+</body>
+</html>

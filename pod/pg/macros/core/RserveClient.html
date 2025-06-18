@@ -1,116 +1,197 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>core/RserveClient.pl</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>core/RserveClient.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>core/RserveClient.pl</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">core/RserveClient.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#SYNOPSIS">SYNOPSIS</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_start">rserve_start</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_finish">rserve_finish</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_eval">rserve_eval</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_query">rserve_query</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_start_plot">rserve_start_plot</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_finish_plot">rserve_finish_plot</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_get_file">rserve_get_file</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_plot">rserve_plot</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rserve_data_url">rserve_data_url</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
 
-
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#SYNPOSIS">SYNPOSIS</a></li>
-  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
-  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
-  <li><a href="#MACROS">MACROS</a></li>
-  <li><a href="#DEPENDENCIES">DEPENDENCIES</a></li>
-</ul>
 
 <a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
-<p>RserveClient.pl - Macros for evaluating R code on an Rserve server</p>
-
-<a href="#_podtop_"><h1 id="SYNPOSIS">SYNPOSIS</h1></a>
+<p>RserveClient.pl - Methods for evaluating R code on an Rserve server</p>
 
 <a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
 
-<pre><code>    loadMacros(&#39;RserveClient.pl&#39;);
-    
-    rserve_start();
-    my @rnorm = rserve_eval(&quot;rnorm(15, mean=$m, sd=$sd)&quot;);
-    rserve_eval(data(stackloss));
-    my @coeff = rserve_eval(&#39;lm(stack.loss ~ stack.x, stackloss)$coeff&#39;);
-    rserve_finish();</code></pre>
+<p>The basic way to call the R server is as follows:</p>
+
+<pre><code>loadMacros(&#39;RserveClient.pl&#39;);
+
+my @rnorm = rserve_eval(&quot;rnorm(15, mean = $m, sd = $sd)&quot;);
+rserve_eval(data(stackloss));
+my @coeff = rserve_eval(&#39;lm(stack.loss ~ stack.x, stackloss)$coeff&#39;);</code></pre>
 
 <a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
 
-<p>The macros in this file provide access to facilities of <a href="http://www.r-project.org">R statistical computing environment</a>, optionally located on another server, by using the <a href="http://www.rforge.net/Rserve/">Rserve</a> protocol.</p>
+<p>The methods in this macro provide access to facilities of the <a href="http://www.r-project.org">R statistical computing environment</a>, optionally located on another server, by using the <a href="http://www.rforge.net/Rserve/">Rserve</a> protocol.</p>
 
-<p><b>IMPORTANT:</b> Before you can use these macros, you will need to configure the location of your Rserve host by adding it to <code>$pg{specialPGEnvironmentVars}{Rserve}{host}</code>, for instance by appending the following line to <i>webwork2/conf/localOverrides.conf</i>:</p>
+<p><b>IMPORTANT:</b> Before this macro can be used, the server administrator will need to configure the location of the Rserve host by setting <code>$pg_envir-&gt;{specialPGEnvironmentVars}{Rserve}{host}</code>. For webwork2 this is accomplished by adding the following line to <i>webwork2/conf/localOverrides.conf</i>:</p>
 
-<pre><code>    $pg{specialPGEnvironmentVars}{Rserve} = {host =&gt; &quot;localhost&quot;};</code></pre>
+<pre><code>$pg{specialPGEnvironmentVars}{Rserve} = { host =&gt; &quot;localhost&quot; };</code></pre>
 
-<p>Without this configuration in place, Rserve macros will only print out a warning about missing configuration and return <code>undef</code>.</p>
+<p>If using PG directly, then uncomment the <code>Rserve:</code> and following <code>host:</code> lines in <i>pg/conf/pg_config.yml</i>.</p>
 
-<a href="#_podtop_"><h1 id="MACROS">MACROS</h1></a>
+<p>Without this configuration, the methods in this macro will display a warning about the missing configuration and return.</p>
 
-<p>The macros in this file set up a connection to the R server and pass a string parameter to R for evaluation. The resulting vector is returned as a perl array object.</p>
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
 
-<dl>
+<p>The methods in this file set up a connection to the R server and pass a string parameter to R for evaluation. The result is returned as a Perl object.</p>
 
-<dt>rserve_eval REXPR</dt>
-<dd>
+<h2 id="rserve_start">rserve_start</h2>
 
-<p>Evaluates an R expression, given as text string in REXPR, on the <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a Perl representation of the <a href="https://metacpan.org/pod/Statistics::R::REXP">Statistics::R::REXP</a> object. Multiple calls within the same problem share the R session and the object workspace.</p>
+<h2 id="rserve_finish">rserve_finish</h2>
 
-</dd>
-<dt>rserve_query</dt>
-<dd>
+<p>Start up and close the current connection to the Rserve server. In normal use, these functions are not needed because a call to any of the other methods will handle starting the session if one is not already open, and the session will be closed when processing of the current problem is complete.</p>
 
-<p>Evaluates an R expression, given as text string in REXPR, in a single-use session on the <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a Perl representation of the <a href="https://metacpan.org/pod/Statistics::R::REXP">Statistics::R::REXP</a> object.</p>
+<p>Other than for backward compatibility, the only reason for using these functions is to start a new clean session within a single problem. This shouldn&#39;t be a common occurrence.</p>
+
+<h2 id="rserve_eval">rserve_eval</h2>
+
+<pre><code>$result = rserve_eval($rexpr);</code></pre>
+
+<p>Evaluates an R expression, given as text string in <code>$rexpr</code>, on the <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a Perl representation of the <a href="https://metacpan.org/pod/Statistics::R::REXP">Statistics::R::REXP</a> object. Multiple calls within the same problem share the R session and the object workspace.</p>
+
+<h2 id="rserve_query">rserve_query</h2>
+
+<pre><code>$result = rserve_query($rexpr);</code></pre>
+
+<p>Evaluates an R expression, given as text string in <code>$rexpr</code>, in a single-use session on the <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a Perl representation of the <a href="https://metacpan.org/pod/Statistics::R::REXP">Statistics::R::REXP</a> object.</p>
 
 <p>This function is different from <code>rserve_eval</code> in that each call is completely self-enclosed and its R session is discarded after it returns.</p>
 
-</dd>
-<dt>rserve_start, rserve_finish</dt>
-<dd>
+<h2 id="rserve_start_plot">rserve_start_plot</h2>
 
-<p>Start up and close the current connection to the Rserve server. In normal use, these functions are completely optional because the first call to <code>rserve_eval</code> will call start the session if one is not already open. Similarly, the current session will be closed in its destructor when the current question goes out of scope.</p>
+<pre><code>$remoteFile = rserve_start_plot($imgType, $width, $height);</code></pre>
 
-<p>Other than backward compatibility, the only reason for using these functions is to start a new clean session within a single problem, which shouldn&#39;t be a common occurrence.</p>
+<p>Opens a new R graphics device to capture subsequent graphics output in a temporary file on the R server. The <code>$imgType</code>, <code>$width</code>, and <code>$height</code> arguments are optional. The argument <code>$imgType</code> can be one of &#39;png&#39;, &#39;jpg&#39;, or &#39;pdf&#39;, and is set to &#39;png&#39; if this argument is omitted. If <code>$width</code> and <code>$height</code> are unspecified, then the R graphics device&#39;s default size will be used. The name of the remote file is returned.</p>
 
-</dd>
-<dt>rserve_start_plot [IMG_TYPE, [WIDTH, HEIGHT]]</dt>
-<dd>
+<h2 id="rserve_finish_plot">rserve_finish_plot</h2>
 
-<p>Opens a new R graphics device to capture subsequent graphics output in a temporary file on the R server. IMG_TYPE can be &#39;png&#39;, &#39;jpg&#39;, or &#39;pdf&#39;, with &#39;png&#39; as the default. If left unspecified, WIDTH and HEIGHT, will use the R graphics device&#39;s default size. Returns the name of the remote file.</p>
+<pre><code>$localFile = rserve_finish_plot($remoteName);</code></pre>
 
-</dd>
-<dt>rserve_finish_plot REMOTE_NAME</dt>
-<dd>
+<p>Closes the R graphics capture to file <code>$remoteName</code>, transfers the file to the directory specified by <code>tempDirectory</code> in the PG environment, and returns the name of the local file that can then be used by the <code>image</code> method.</p>
 
-<p>Closes the R graphics capture to file REMOTE_NAME, transfers the file to WebWork&#39;s temporary file area, and returns the name of the local file that can then be used by the image macro.</p>
+<h2 id="rserve_get_file">rserve_get_file</h2>
 
-</dd>
-<dt>rserve_get_file REMOTE_NAME, [LOCAL_NAME]</dt>
-<dd>
+<pre><code>$localFile = rserve_get_file($remoteName);</code></pre>
 
-<p>Transfer the file REMOTE_NAME from the R server to WebWork&#39;s temporary file area, and returns the name of the local file that can then be used by the <code>htmlLink</code> macro. If LOCAL_NAME is not specified, the filename portion of the REMOTE_NAME is used.</p>
+<p>Transfer the file <code>$remoteName</code> from the R server to the directory specified by <code>tempDirectory</code> in the PG environment, and returns the name of the local file that can then be used by the <code>htmlLink</code> method.</p>
 
-</dd>
-</dl>
+<p>This method used to take an optional second argument that specified the local file name to save to. That parameter is deprecated, and is ignored if given.</p>
 
-<a href="#_podtop_"><h1 id="DEPENDENCIES">DEPENDENCIES</h1></a>
+<p>An example of using this method follows. It is recommended that the <code>rserve_data_url</code> method be used instead of using this method since it takes care of the gory details needed to use this method as seen in the example below.</p>
 
-<p>Requires perl 5.010 or newer and CPAN module Statistics::R::IO, which has to be loaded in WebWork&#39;s Safe compartment by adding it to ${pg}{modules}.</p>
+<pre><code>($intercept, $slope) = rserve_eval(&#39;coef(lm(log(dist) ~ log(speed), data = cars))&#39;);
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+($remoteFile) =
+    rserve_eval(&#39;filename &lt;- tempfile(fileext = &quot;.csv&quot;); &#39;
+        . &#39;write.csv(cars, filename); &#39;
+        . &#39;filename&#39;);
+$url = alias(rserve_get_file($remoteFile));
+
+BEGIN_PGML
+What is the slope of the linear regression of log-transformed stopping
+distance vs. car speed in the dataset linked below: [_]{$slope}{5}
+
+Download the [@ htmlLink($url, &#39;dataset&#39;, download =&gt; &#39;dataset.csv&#39;) @]*
+file.
+END_PGML</code></pre>
+
+<h2 id="rserve_plot">rserve_plot</h2>
+
+<pre><code>$image = rserve_plot($rCode, $width, $height, $imgType);</code></pre>
+
+<p>This method essentially combines <code>rserve_start_plot</code>, <code>rserve_eval</code>, and <code>rserve_finish_plot</code> into a single method. For example, calling</p>
+
+<pre><code>$image = rserve_plot(&quot;curve(dnorm(x, mean = $mean), xlim = c(-4, 4)); 0&quot;);</code></pre>
+
+<p>is equivalent to calling</p>
+
+<pre><code>$remoteImage = rserve_start_plot(&#39;png&#39;);
+rserve_eval(&quot;curve(dnorm(x, mean = $mean), xlim = c(-4, 4)); 0&quot;);
+$image = rserve_finish_plot($remoteImage);</code></pre>
+
+<p>The arguments <code>$width</code>, <code>$height</code>, and <code>$imgType</code> are optional. If <code>$width</code> and <code>$height</code> are unspecified, then the R graphics device&#39;s default size will be used. The argument <code>$imgType</code> can be one of &#39;png&#39;, &#39;jpg&#39;, or &#39;pdf&#39;, and is set to &#39;png&#39; if this argument is omitted or is not one of the allowed values.</p>
+
+<p>As with <code>rserve_finish_plot</code>, the file path that is returned that can be used via the <code>[!alt text!]{$image}</code> PGML construct or by the <code>image</code> method. For example,</p>
+
+<pre><code>BEGIN_PGML
+What is the mean of the normal distribution shown in the figure below: [_]{$mean}{5}
+
+[!normal distribution!]{$image}{300}
+END_PGML</code></pre>
+
+<h2 id="rserve_data_url">rserve_data_url</h2>
+
+<pre><code>$url = rserve_data_url($rDataName);</code></pre>
+
+<p>Creates a temporary CSV file on the R server with the data named by <code>$rDataName</code>, transfers it to the directory specified by <code>tempDirectory</code> in the PG environment, and returns a URL that can by used with the <code>htmlLink</code> method. For example,</p>
+
+<pre><code>($intercept, $slope) = rserve_eval(&#39;coef(lm(log(dist) ~ log(speed), data = cars))&#39;);
+$local_url = rserve_data_url(&#39;cars&#39;);
+
+BEGIN_PGML
+What is the slope of the linear regression of log-transformed stopping
+distance vs. car speed in the dataset linked below: [_]{$slope}{5}
+
+Download the [@ htmlLink($url, &#39;dataset&#39;, download =&gt; &#39;dataset.csv&#39;) @]*
+file.
+END_PGML</code></pre>
+
+<p>Note that it is recommended that the <code>download</code> attribute be added so that the download file name will be the value of that attribute rather than the lengthy alias name in the <code>$url</code>.</p>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

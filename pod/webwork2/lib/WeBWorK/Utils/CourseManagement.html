@@ -1,23 +1,50 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>WeBWorK::Utils::CourseManagement</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeBWorK::Utils::CourseManagement</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>WeBWorK::Utils::CourseManagement</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">WeBWorK::Utils::CourseManagement</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#FUNCTIONS">FUNCTIONS</a></li><li class="nav-item"><a class="nav-link p-0" href="#UTILITIES">UTILITIES</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
 
-
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#FUNCTIONS">FUNCTIONS</a></li>
-  <li><a href="#DATABASE-LAYOUT-SPECIFIC-HELPER-FUNCTIONS">DATABASE-LAYOUT SPECIFIC HELPER FUNCTIONS</a></li>
-  <li><a href="#UTILITIES">UTILITIES</a></li>
-</ul>
 
 <a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
@@ -44,40 +71,51 @@
 
 <p>%options must contain:</p>
 
-<pre><code> courseID =&gt; $courseID,
- ce =&gt; $ce,
- courseOptions =&gt; $courseOptions,
- dbOptions =&gt; $dbOptions,
- users =&gt; $users</code></pre>
+<pre><code>courseID      =&gt; course ID for the new course,
+ce            =&gt; a course environment for the new course,
+courseOptions =&gt; hash ref explained below
+users         =&gt; array ref explained below</code></pre>
 
 <p>%options may contain:</p>
 
-<pre><code> templatesFrom =&gt; $templatesCourseID,
- courseTitle =&gt; $courseTitle
- courseInstitution =&gt; $courseInstitution</code></pre>
+<pre><code>copyFrom          =&gt; some course ID to copy things from,
+courseTitle       =&gt; a title for the new course
+courseInstitution =&gt; institution for the new course
+copyTemplatesHtml =&gt; boolean
+copySimpleConfig  =&gt; boolean
+copyConfig        =&gt; boolean
+copyNonStudents   =&gt; boolean
+copySets          =&gt; boolean
+copyAchievements  =&gt; boolean
+copyTitle         =&gt; boolean
+copyInstitution   =&gt; boolean</code></pre>
 
-<p>Create a new course named $courseID.</p>
+<p>Create a new course with ID $courseID.</p>
 
 <p>$ce is a WeBWorK::CourseEnvironment object that describes the new course&#39;s environment.</p>
 
 <p>$courseOptions is a reference to a hash containing the following options:</p>
 
-<pre><code> dbLayoutName         =&gt; $dbLayoutName
- allowedRecipients    =&gt; $mail{allowedRecipients}
- feedbackRecipients   =&gt; $mail{feedbackRecipients}
- PRINT_FILE_NAMES_FOR =&gt; $pg{specialPGEnvironmentVars}-&gt;{PRINT_FILE_NAMES_FOR}</code></pre>
+<pre><code>PRINT_FILE_NAMES_FOR =&gt; $pg{specialPGEnvironmentVars}{PRINT_FILE_NAMES_FOR}</code></pre>
 
-<p><code>dbLayoutName</code> is required. <code>allowedRecipients</code>, <code>feedbackRecipients</code>, and <code>PRINT_FILE_NAMES_FOR</code> are references to arrays.</p>
-
-<p>$dbOptions is a reference to a hash containing information required to create a database for the course. Current database layouts do not require additional information, so specify a reference to an empty hash. If $dbOptions is undefined, addCourse() assumes that the database has already been created, and skips that step in the course creation process.</p>
+<p><code>PRINT_FILE_NAMES_FOR</code> is a reference to an array.</p>
 
 <p>$users is a list of arrayrefs, each containing a User, Password, and PermissionLevel record for a single user:</p>
 
-<pre><code> $users = [ $User, $Password, $PermissionLevel ]</code></pre>
+<pre><code>$users = [ $User, $Password, $PermissionLevel ]</code></pre>
 
 <p>These users are added to the course.</p>
 
-<p>$templatesCourseID indicates the ID of a course from which the contents of the templates directory will be copied to the new course.</p>
+<p><code>copyFrom</code> indicates the ID of a course from which various things may be copied into the new course. Which things are copied are controlled by the boolean options:</p>
+
+<pre><code>* copyTemplatesHtml (contents of Templates and HTML folders)
+* copySimpleConfig  (simple.conf file)
+* copyConfig        (course.conf file)
+* copyNonStudents   (all non-student users, their permission level, and password)
+* copySets          (all global sets, global set locations, and global problems)
+* copyAchievements  (all achievements)
+* copyTitle         (the course title, which will override courseTitle)
+* copyInstitution   (the course institution, which will override courseInstitution)</code></pre>
 
 </dd>
 <dt>renameCourse(%options)</dt>
@@ -85,22 +123,19 @@
 
 <p>%options must contain:</p>
 
-<pre><code> courseID =&gt; $courseID,
- ce =&gt; $ce,
- dbOptions =&gt; $dbOptions,
- newCourseID =&gt; $newCourseID,</code></pre>
+<pre><code>courseID =&gt; $courseID,
+ce =&gt; $ce,
+newCourseID =&gt; $newCourseID,</code></pre>
 
 <p>%options may also contain:</p>
 
-<pre><code> skipDBRename =&gt; $skipDBRename,
- courseTitle =&gt; $courseTitle
- courseInstitution =&gt; $courseInstitution</code></pre>
+<pre><code>skipDBRename =&gt; $skipDBRename,
+courseTitle =&gt; $courseTitle
+courseInstitution =&gt; $courseInstitution</code></pre>
 
 <p>Rename the course named $courseID to $newCourseID.</p>
 
 <p>$ce is a WeBWorK::CourseEnvironment object that describes the existing course&#39;s environment.</p>
-
-<p>$dbOptions is a reference to a hash containing information required to create the course&#39;s new database and delete the course&#39;s old database. Current database layouts do not require additional information, so specify a reference to an empty hash.</p>
 
 <p>The name of the course&#39;s directory is changed to $newCourseID.</p>
 
@@ -116,13 +151,12 @@
 <dt>retitleCourse</dt>
 <dd>
 
-<pre><code>        Simply changes the title and institution of the course.</code></pre>
+<pre><code>Simply changes the title and institution of the course.</code></pre>
 
 <p>Options must contain:</p>
 
-<pre><code> courseID =&gt; $courseID,
- ce =&gt; $ce,
- dbOptions =&gt; $dbOptions,</code></pre>
+<pre><code>courseID =&gt; $courseID,
+ce =&gt; $ce,</code></pre>
 
 <p>Options may contain newCourseTitle =&gt; $courseTitle, newCourseInstitution =&gt; $courseInstitution,</p>
 
@@ -132,13 +166,10 @@
 
 <p>Options must contain:</p>
 
-<pre><code> courseID =&gt; $courseID,
- ce =&gt; $ce,
- dbOptions =&gt; $dbOptions,</code></pre>
+<pre><code>courseID =&gt; $courseID,
+ce =&gt; $ce,</code></pre>
 
 <p>$ce is a WeBWorK::CourseEnvironment object that describes the course&#39;s environment. It is your responsability to pass a course environment object that describes the course to be deleted. Do not pass the course environment object associated with the request, unless you are deleting the course you&#39;re currently using.</p>
-
-<p>$dbOptions is a reference to a hash containing information required to delete the database for the course. Current database layouts do not require additional information, so specify a reference to an empty hash. If $dbOptions is undefined, addCourse() assumes that the database has already been deleted, and skips that step in the course deletion process.</p>
 
 <p>Deletes the course named $courseID. The course directory is removed.</p>
 
@@ -150,10 +181,10 @@
 
 <p>%options must contain:</p>
 
-<pre><code> courseID  =&gt; $courseID,
- ce        =&gt; $ce,</code></pre>
+<pre><code>courseID  =&gt; $courseID,
+ce        =&gt; $ce,</code></pre>
 
-<p>Creates a gzipped tar archive (.tar.gz) of the course $courseID in the WeBWorK courses directory. Before archiving, the course database is dumped into a subdirectory of the course&#39;s DATA directory.</p>
+<p>Creates a gzipped tar archive (.tar.gz) of the course $courseID and places it in the archives directory of the admin course or in the location given in the optional archive_path option. Before archiving, the course database is dumped into a subdirectory of the course&#39;s DATA directory.</p>
 
 <p>Only files and directories stored directly in the course directory are archived. The contents of linked files is not archived although the symbolic links themselves are saved.</p>
 
@@ -169,13 +200,13 @@
 
 <p>%options must contain:</p>
 
-<pre><code> oldCourseID =&gt; $oldCourseID,
- archivePath =&gt; $archivePath,
- ce          =&gt; $ce,</code></pre>
+<pre><code>oldCourseID =&gt; $oldCourseID,
+archivePath =&gt; $archivePath,
+ce          =&gt; $ce,</code></pre>
 
 <p>%options may also contain:</p>
 
-<pre><code> newCourseID =&gt; $newCourseID,</code></pre>
+<pre><code>newCourseID =&gt; $newCourseID,</code></pre>
 
 <p>Restores course $oldCourseID from a gzipped tar archive (.tar.gz) located at $archivePath. After unarchiving, the course database is restored from a subdirectory of the course&#39;s DATA directory.</p>
 
@@ -186,43 +217,7 @@
 <p>If an error occurs, an exception is thrown.</p>
 
 </dd>
-<dt>dbLayoutSQLSources($dbLayout)</dt>
-<dd>
-
-<p>Retrun a hash of database sources for the sql and sql_single database layouts. Each element of the hash takes this form:</p>
-
-<pre><code> dbi_source =&gt; {
-     tables =&gt; [ &#39;table1&#39;, &#39;table2&#39;, ... ],
-     username =&gt; &#39;username&#39;,
-     password =&gt; &#39;password&#39;,
- }</code></pre>
-
-<p>In the common case, there will only be one source returned.</p>
-
-</dd>
-</dl>
-
-<a href="#_podtop_"><h1 id="DATABASE-LAYOUT-SPECIFIC-HELPER-FUNCTIONS">DATABASE-LAYOUT SPECIFIC HELPER FUNCTIONS</h1></a>
-
-<p>These functions are used to perform database-layout specific operations.</p>
-
-<p>The implementations in this class do nothing, but if an appropriate function exists in a class with the name WeBWorK::Utils::CourseManagement::<i>$dbLayoutName</i>, it will be used instead.</p>
-
-<dl>
-
-<dt>archiveCourseHelper($courseID, $ce, $dbLayoutName, %options)</dt>
-<dd>
-
-<p>Perform database-layout specific operations for archiving the data in a course.</p>
-
-</dd>
-<dt>unarchiveCourseHelper($courseID, $ce, $dbLayoutName, %options)</dt>
-<dd>
-
-<p>Perform database-layout specific operations for unarchiving the data in a course and placing it in the database.</p>
-
-</dd>
-<dt>initNonNativeTables($ce, $db, $dbLayoutName, %options)</dt>
+<dt>initNonNativeTables($ce, $db, %options)</dt>
 <dd>
 
 <p>Perform database-layout specific operations for initializing non-native database tables that are not associated with a particular course</p>
@@ -236,18 +231,6 @@
 
 <dl>
 
-<dt>callHelperIfExists($helperName, $dbLayoutName, @args)</dt>
-<dd>
-
-<p>Call a database-specific helper function, if a database-layout specific helper class exists and contains a function named &quot;${helperName}Helper&quot;.</p>
-
-</dd>
-<dt>getHelperRef($helperName, $dbLayoutName)</dt>
-<dd>
-
-<p>Call a database-specific helper function, if a database-layout specific helper class exists and contains a function named &quot;${helperName}Helper&quot;.</p>
-
-</dd>
 <dt>protectQString($string)</dt>
 <dd>
 
@@ -262,18 +245,7 @@
 </dd>
 </dl>
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+		</div>
+	</div>
 </body>
 </html>
-
-

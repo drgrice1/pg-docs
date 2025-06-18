@@ -1,89 +1,163 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>parsers/parserPopUp.pl</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>parsers/parserPopUp.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>parsers/parserPopUp.pl</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">parsers/parserPopUp.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
 
-
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
-</ul>
 
 <a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
-<p>parserPopUp.pl - Pop-up menus compatible with Value objects.</p>
+<p>parserPopUp.pl - Drop-down lists compatible with MathObjects, specifically MultiAnswer objects.</p>
 
 <a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
 
-<p>This file implements a pop-up menu object that is compatible with MathObjects, and in particular, with the MultiAnswer object, and with PGML.</p>
+<p>This file implements drop-down select objects that are compatible with MathObjects, and in particular, with the MultiAnswer object, and with PGML.</p>
 
-<p>To create a PopUp object, use one of:</p>
+<p>To create a PopUp, DropDown, or DropDownTF object, use</p>
 
-<pre><code>        $popup = PopUp([choices,...], correct);
-        $dropdown = DropDown([choices,...], correct);
-        $truefalse = DropDownTF(correct);</code></pre>
+<pre><code>$popup     = PopUp([ choices, ... ], correct, options);
+$dropdown  = DropDown([ choices, ... ], correct, options);
+$truefalse = DropDownTF(correct, options);</code></pre>
 
-<p>where &quot;choices&quot; are the strings for the items in the popup menu, and &quot;correct&quot; is the choice that is the correct answer for the popup (or its index, with 0 being the first one).</p>
+<p>where &quot;choices&quot; are the items in the drop-down list, &quot;correct&quot; is the the correct answer for the group (or its index, with 0 being the first one), and options are chosen from among those listed below. If the correct answer is a number, it is interpreted as an index, even if the array of choices are also numbers. (See the <code>noindex</code> below for more details.)</p>
+
+<p>Note that drop-down menus cannot contain mathematical notation, only plain text. This is because the browser&#39;s native menus are used, and these can contain only text, not mathematics or graphics. That is unless the <code>useHTMLSelect</code> option is set to 0. See more about that option below.</p>
 
 <p>The difference between <code>PopUp()</code> and <code>DropDown() </code>is that in HTML, the latter will have an unselectable placeholder value. This value is &#39;?&#39; by default, but can be customized with a <code>placeholder</code> option.</p>
 
-<p><code>DropDownTF()</code> is like <code>DropDown</code> with options being localized versions of &quot;True&quot; and &quot;False&quot;. 1 is understood as &quot;True&quot; and 0 as &quot;False&quot;. The initial letter of the localized word is understood as that word if those letter are different. All of this is case-insensitive. Also, in static output (PDF, PTX) <code>showInStatic</code> is 0. It is assumed that context makes the menu redundant.</p>
+<p><code>DropDownTF()</code> is like <code>DropDown</code> with options being localized versions of &quot;True&quot; and &quot;False&quot;. 1 is understood as &quot;True&quot; and 0 as &quot;False&quot;. The initial letter of the localized word is understood as that word if those letter are different. All of this is not case sensitive. Also, in static output (PDF, PTX) <code>showInStatic</code> defaults to 0. It is assumed that text preceding the drop-down makes the menu redundant.</p>
+
+<p>The entries in the choices array can either be the actual strings to be used in the drop-down menu (which is known as a &quot;label&quot; for the option input in HTML) or <code>{ label =&gt; value }</code> where <code>label</code> is the text string to display in the drop-down list and <code>value</code> is the value to for the option input for this choice. The &quot;value&quot; is what is actually submitted when a student submits an answer, and this is what will appear in the past answers table, feedback messages, etc. If an option is not set as a hash in this way, the text of the option serves as both the label and the value.</p>
 
 <p>By default, the choices are left in the order that you provide them, but you can cause some or all of them to be ordered randomly by enclosing those that should be randomized within a second set of brackets. For example</p>
 
-<pre><code>        $radio = PopUp(
-                   [
-                     &quot;First Item&quot;,
-                     [&quot;Random 1&quot;,&quot;Random 2&quot;,&quot;Random 3&quot;],
-                     &quot;Last Item&quot;
-                   ],
-                   &quot;Random 3&quot;
-                 );</code></pre>
+<pre><code>$dropdown = DropDown(
+    [
+        &quot;First Item&quot;,
+        [ &quot;Random 1&quot;, &quot;Random 2&quot;, &quot;Random 3&quot; ],
+        &quot;Last Item&quot;
+    ],
+    &quot;Random 3&quot;
+);</code></pre>
 
-<p>will make a pop-up menu that has the first item always on top, the next three ordered randomly, and the last item always on the bottom. In this example</p>
+<p>will make a list of options that has the first item always on top, the next three ordered randomly, and the last item always on the bottom. In this example</p>
 
-<pre><code>        $radio = PopUp([[&quot;Random 1&quot;,&quot;Random 2&quot;,&quot;Random 3&quot;]],2);</code></pre>
+<pre><code>$dropdown = DropDown([ [ &quot;Random 1&quot;, &quot;Random 2&quot;, &quot;Random 3&quot; ] ], 2);</code></pre>
 
-<p>all the entries are randomized, and the correct answer is &quot;Random 3&quot; (the one with index 2 in the original, unrandomized list). You can have as many randomized groups, with as many static items in between, as you want.</p>
+<p>all the entries are randomized, and the correct answer is &quot;Random 3&quot; (the one with index 2 in the flattened list). You can have as many randomized groups as you want, with as many static items in between.</p>
 
-<p>Note that pop-up menus can not contain mathematical notation, only plain text. This is because the PopUp object uses the browser&#39;s native menus, and these can contain only text, not mathematics or graphics.</p>
+<p>The <code>options</code> are taken from the following list:</p>
 
-<p>To insert the pop-up menu into the problem text, use</p>
+<dl>
 
-<pre><code>        BEGIN_TEXT
-        \{$popup-&gt;menu\}
-        END_TEXT</code></pre>
+<dt><code><span style="white-space: nowrap;">values =&gt; array reference</span></code></dt>
+<dd>
 
-<p>and then</p>
+<p>Values are the form of the student answer that is actually submitted when the student submits an answer. They will be displayed in the past answers table for this answer, appear in feedback messages, etc. By default these are the option text (aka the option label). However, that can be changed either with this option or by specifying the choices as <code>{ label =&gt; value }</code> as described previously. If this option is used, then it must be set as a reference to an array containing the values for the options. For example:</p>
 
-<pre><code>        ANS($popup-&gt;cmp);</code></pre>
+<pre><code>values =&gt; [ &#39;first choice&#39;, &#39;second choice&#39;, ... ]</code></pre>
 
-<p>to get the answer checker for the popup.</p>
+<p>If a choice is not represented in the hash, then the option text will be used for the value instead.</p>
 
-<p>You can use the PopUp menu object in MultiAnswer objects. This is the reason for the pop-up menu&#39;s ans_rule method (since that is what MultiAnswer calls to get answer rules).</p>
+<p>These values can be any descriptive string that is unique for the choice, but care should be taken to ensure that these values do not indicate which choice is the correct answer.</p>
 
-<p>There is one option, <code>showInStatic</code>. It is 1 by default, except for <code>DropDownTF</code> it is 0. This option controls whether or not the menu is displayed in a static output format (PDF hardcopy or PTX).</p>
+<p>Note that values given via <code>{ label =&gt; value }</code> will override any values given by the <code>values</code> option if both are provided for a particular choice.</p>
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+</dd>
+<dt><code><span style="white-space: nowrap;">noindex =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>Determines whether or not a numeric value for the correct answer is interpreted as an index for the choice array or not. If set to 1, then the number is treated as the literal correct answer, not an index to it. Default: 0</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">placeholder =&gt; string</span></code></dt>
+<dd>
+
+<p>If nonempty, this will be the first option in the drop-down list. It will be unselectable and grayed out, indicating that it is not an option the user can/should actually select and submit. Default: &#39;&#39; for <code>PopUp</code>, &#39;?&#39; for <code>DropDown</code> and <code>DropDownTF</code></p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">showInStatic =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>In static output, such as PDF or PTX, this controls whether or not the list of answer options is displayed. (The text preceding the list of answer options might make printing the answer option list unnecessary in a static output format.) Default: 1, except 0 for DropDownTF.</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">inlineSize =&gt; number</span></code></dt>
+<dd>
+
+<p>In PDF output, this controls break point between printing the list of options as an inline list [A/B/C] or multiline bullet list. If the total number of characters (of all items combined) is greater than or equal to this setting, or an item contains a &#39;[&#39;, &#39;/&#39;, or &#39;]&#39; character, then the list of options is printed as a bullet list, otherwise an inline list is used. Default: 25</p>
+
+</dd>
+<dt><code><span style="white-space: nowrap;">useHTMLSelect =&gt; 0 or 1</span></code></dt>
+<dd>
+
+<p>If this is set to 1 (the default) then a native HTML select element will be used for the dropdown menu. However, if this is set to 0 then a Bootstrap Dropdown will be used instead. In this case, the answer labels must work directly in HTML, and must also work inside <code>\text{...}</code> in LaTeX. Note that math mode (<code>\(...\)</code> or <code>\[...\]</code>) can be used in these labels. In HTML those will be typeset by MathJax, and in hard copy will be typeset by LaTeX.</p>
+
+</dd>
+</dl>
+
+<p>To insert the drop-down into the problem text when using PGML:</p>
+
+<pre><code>BEGIN_PGML
+[_]{$dropdown}
+END_PGML</code></pre>
+
+<p>Or when not using PGML:</p>
+
+<pre><code>BEGIN_TEXT
+\{$dropdown-&gt;menu\}
+END_TEXT</code></pre>
+
+<p>and then to get the answer checker for the drop-down:</p>
+
+<pre><code>ANS($dropdown-&gt;cmp);</code></pre>
+
+<p>You can use the PopUp, DropDown, and DropDownTF object in MultiAnswer objects. This is the reason for the <code>ans_rule()</code> method (since that is what MultiAnswer calls to get answer rules). Just pass the object as one of the arguments of the MultiAnswer constructor.</p>
+
+<p>When writing a custom answer checker involving a PopUp, DropDown, or DropDownTF object (e.g. if it is part of a MultiAnswer and its answer depends on, or affects, the answers given to other parts), note that the actual answer strings associated to one of these objects (which are those appearing in the &quot;student answer&quot; argument passed to a custom answer checker) are not the supplied option text (aka the labels), but rather they the option values. These are the values given by the <code>values</code> option or <code>{ label =&gt; value }</code> choice format if provided. Otherwise they are an internal implementation detail whose format should not be depended on. In any case, you can convert these value strings to a choice string (aka label string) with the method <code>answerLabel</code>.</p>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

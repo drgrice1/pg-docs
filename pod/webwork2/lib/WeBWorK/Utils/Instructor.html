@@ -1,30 +1,68 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>WeBWorK::Utils::Instructor</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeBWorK::Utils::Instructor</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>WeBWorK::Utils::Instructor</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
-
-
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#METHODS">METHODS</a>
-    <ul>
-      <li><a href="#Primary-assignment-methods">Primary assignment methods</a></li>
-      <li><a href="#Secondary-assignment-methods">Secondary assignment methods</a></li>
-      <li><a href="#Utility-assignment-methods">Utility assignment methods</a></li>
-      <li><a href="#Utility-method-for-adding-problems-to-a-set">Utility method for adding problems to a set</a></li>
-      <li><a href="#Utility-methods">Utility methods</a></li>
-      <li><a href="#Methods-for-listing-various-types-of-files">Methods for listing various types of files</a></li>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">WeBWorK::Utils::Instructor</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#assignSetToUser">assignSetToUser</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignSetVersionToUser">assignSetVersionToUser</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignProblemToUser">assignProblemToUser</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignProblemToUserSetVersion">assignProblemToUserSetVersion</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignSetToAllUsers">assignSetToAllUsers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignSetToGivenUsers">assignSetToGivenUsers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#unassignSetFromAllUsers">unassignSetFromAllUsers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignAllSetsToUser">assignAllSetsToUser</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#unassignAllSetsFromUser">unassignAllSetsFromUser</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignSetsToUsers">assignSetsToUsers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#unassignSetsFromUsers">unassignSetsFromUsers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#assignProblemToAllSetUsers">assignProblemToAllSetUsers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#addProblemToSet">addProblemToSet</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#loadSetDefListFile">loadSetDefListFile</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#getDefList">getDefList</a></li>
     </ul>
-  </li>
-</ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
 
 <a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
@@ -32,108 +70,97 @@
 
 <a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
 
-<h2 id="Primary-assignment-methods">Primary assignment methods</h2>
+<h2 id="assignSetToUser">assignSetToUser</h2>
 
-<dl>
+<pre><code>assignSetToUser($db, $userID, $GlobalSet)</code></pre>
 
-<dt>assignSetToUser($db, $userID, $GlobalSet)</dt>
-<dd>
+<p>Assigns the set <code>$GlobalSet</code> and all problems contained therein to the user identified by <code>$userID</code>. If the assignment of the set or the assignment of any of the problems in the set fails, then an exception is thrown. Note that it is not considered a failure for the set or a problem in the set to have already been assigned to the user.</p>
 
-<p>Assigns the given set and all problems contained therein to the given user. If the set (or any problems in the set) are already assigned to the user, a list of failure messages is returned.</p>
+<h2 id="assignSetVersionToUser">assignSetVersionToUser</h2>
 
-</dd>
-<dt>assignMultipleProblemsToGivenUsers($db, $userIDsRef, $set_id, @globalProblemIDs)</dt>
-<dd>
+<pre><code>assignSetVersionToUser($db, $userID, $GlobalSet)</code></pre>
 
-<p>Assigns all the problems of the given $set_id to the given users. The list of users are sent as an array reference If any assignments fail, an error message is returned.</p>
+<p>Assigns a version of <code>$GlobalSet</code> to <code>$userID</code>.</p>
 
-</dd>
-<dt>assignProblemToUser($db, $userID, $GlobalProblem, $seed)</dt>
-<dd>
+<h2 id="assignProblemToUser">assignProblemToUser</h2>
 
-<p>Assigns the given problem to the given user. If the problem is already assigned to the user, an error string is returned. If $seed is defined, the UserProblem will be given that seed.</p>
+<pre><code>assignProblemToUser($db, $userID, $GlobalProblem, $seed)</code></pre>
 
-</dd>
-</dl>
+<p>Assigns the given problem to the given user. If $seed is defined, the user problem will be given that seed. If the assignment fails an exception is thrown. Note that it is not considered a failure for the problem to have already been assigned to the user.</p>
 
-<h2 id="Secondary-assignment-methods">Secondary assignment methods</h2>
+<h2 id="assignProblemToUserSetVersion">assignProblemToUserSetVersion</h2>
 
-<dl>
+<pre><code>assignProblemToUserSetVersion($db, $userID, $userSet, $GlobalProblem, $groupProbRef, $seed)</code></pre>
 
-<dt>assignSetToAllUsers($db, $ce, $setID)</dt>
-<dd>
+<p>Assigns a problem version to <code>$userID</code>. An exception is thrown in the case of a failure. It is not a failure for the problem to have already been assigned to the user.</p>
+
+<h2 id="assignSetToAllUsers">assignSetToAllUsers</h2>
+
+<pre><code>assignSetToAllUsers($db, $ce, $setID)</code></pre>
 
 <p>Assigns the set specified and all problems contained therein to all users in the course. This skips users whose status does not have the behavior include_in_assignment. This is more efficient than repeatedly calling assignSetToUser(). If any assignments fail, a list of failure messages is returned.</p>
 
-</dd>
-<dt>assignSetToGivenUsers($db, $ce, $setID, $alwaysInclude, @userRecords)</dt>
-<dd>
+<h2 id="assignSetToGivenUsers">assignSetToGivenUsers</h2>
 
-<p>Assigns the set specified and all problems contained therein to all users in the list provided. When $alwaysInclude is false, it will skip users whose status does not have the behavior include_in_assignment. This is more efficient than repeatedly calling assignSetToUser(). If any assignments fail, an error message is returned.</p>
+<pre><code>assignSetToGivenUsers($db, $ce, $setID, $alwaysInclude, @userRecords)</code></pre>
 
-</dd>
-<dt>unassignSetFromAllUsers($db, $setID)</dt>
-<dd>
+<p>Assigns the set specified and all problems contained therein to all users in the list provided. When <code>$alwaysInclude</code> is false, it will skip users whose status does not have the behavior include_in_assignment. This is more efficient than repeatedly calling <code>assignSetToUser</code>. If any assignments fail, an exception is thrown.</p>
+
+<h2 id="unassignSetFromAllUsers">unassignSetFromAllUsers</h2>
+
+<pre><code>unassignSetFromAllUsers($db, $setID)</code></pre>
 
 <p>Unassigns the specified sets and all problems contained therein from all users.</p>
 
-</dd>
-<dt>assignAllSetsToUser($db, $userID)</dt>
-<dd>
+<h2 id="assignAllSetsToUser">assignAllSetsToUser</h2>
 
-<p>Assigns all sets in the course and all problems contained therein to the specified user. If any assignments fail, a list of failure messages is returned.</p>
+<pre><code>assignAllSetsToUser($db, $userID)</code></pre>
 
-</dd>
-<dt>unassignAllSetsFromUser($db, $userID)</dt>
-<dd>
+<p>Assigns all sets in the course and all problems contained therein to the specified user. If any assignments fail, an exception is thrown. Note that it is not considered a failure for the set or a problem in the set to have already been assigned to the user.</p>
+
+<h2 id="unassignAllSetsFromUser">unassignAllSetsFromUser</h2>
+
+<pre><code>unassignAllSetsFromUser($db, $userID)</code></pre>
 
 <p>Unassigns all sets and all problems contained therein from the specified user.</p>
 
-</dd>
-</dl>
+<h2 id="assignSetsToUsers">assignSetsToUsers</h2>
 
-<h2 id="Utility-assignment-methods">Utility assignment methods</h2>
+<pre><code>assignSetsToUsers($db, $ce, $setIDsRef, $userIDsRef)</code></pre>
 
-<dl>
+<p>Assign each of the given sets to each of the given users. If any assignments fail, an exception is thrown. Note that it is not considered a failure for a set (or any problems therein) to have already been assigned to a user.</p>
 
-<dt>assignSetsToUsers($db, $ce, $setIDsRef, $userIDsRef)</dt>
-<dd>
+<h2 id="unassignSetsFromUsers">unassignSetsFromUsers</h2>
 
-<p>Assign each of the given sets to each of the given users. If any assignments fail, a list of failure messages is returned.</p>
+<pre><code>unassignSetsFromUsers($db, $setIDsRef, $userIDsRef)</code></pre>
 
-</dd>
-<dt>unassignSetsFromUsers($db, $setIDsRef, $userIDsRef)</dt>
-<dd>
+<p>Unassign each of the given sets from each of the given users. Note that this method returns a <code>Mojo::Promise</code> and so must be awaited.</p>
 
-<p>Unassign each of the given sets from each of the given users.</p>
+<h2 id="assignProblemToAllSetUsers">assignProblemToAllSetUsers</h2>
 
-</dd>
-<dt>assignProblemToAllSetUsers($GlobalProblem)</dt>
-<dd>
+<pre><code>assignProblemToAllSetUsers($GlobalProblem)</code></pre>
 
 <p>Assigns the problem specified to all users to whom the problem&#39;s set is assigned. If any assignments fail, a list of failure messages is returned.</p>
 
-</dd>
-</dl>
+<h2 id="addProblemToSet">addProblemToSet</h2>
 
-<h2 id="Utility-method-for-adding-problems-to-a-set">Utility method for adding problems to a set</h2>
+<pre><code>addProblemToSet($db, $problemDefaults, %args)</code></pre>
 
-<h2 id="Utility-methods">Utility methods</h2>
+<p>Adds a problem to a set. The paramters <code>setName</code> and <code>sourceFile</code><code>%args</code> must be specified in <code>%args</code>.</p>
 
-<h2 id="Methods-for-listing-various-types-of-files">Methods for listing various types of files</h2>
+<h2 id="loadSetDefListFile">loadSetDefListFile</h2>
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+<pre><code>loadSetDefListFile($file)</code></pre>
+
+<p>Returns the contents of the set definition list file specified in <code>$file</code>.</p>
+
+<h2 id="getDefList">getDefList</h2>
+
+<pre><code>getDefList($ce)</code></pre>
+
+<p>Returns a list of all set definition files found in a course&#39;s templates directory.</p>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

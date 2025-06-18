@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeBWorK::Utils::Logs</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">WeBWorK::Utils::Logs</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#writeLog">writeLog</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#writeCourseLog">writeCourseLog</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#writeTimingLogEntry">writeTimingLogEntry</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::Logs - contains utility subroutines for writing logs to files.</p>
+
+<h2 id="writeLog">writeLog</h2>
+
+<p>Usage: <code>writeLog($ce, $facility, $message)</code></p>
+
+<p>Write to the log file specified by <code>$facility</code>, where <code>$facility</code> is a key specified in the <code>$webworkFiles{logs}</code> hash from the course environment. A valid <code>WeBWorK::CourseEnvironment</code> object must be specified by <code>$ce</code>. The format of the message written to the log file is</p>
+
+<pre><code>[formatted date &amp; time] $message</code></pre>
+
+<h2 id="writeCourseLog">writeCourseLog</h2>
+
+<p>Usage: <code>writeCourseLog($ce, $facility, $message, $time)</code></p>
+
+<p>Write to the course log file specified by <code>$facility</code>, where <code>$facility</code> is a key in the <code>$courseFiles{logs}</code> hash from the course environment. A valid <code>$WeBWorK::CourseEnvironment</code> object must be specified in <code>$ce</code>. The <code>$time</code> argument is optional, and the current time will be used if it is not provided. The format of the message written to the log file is</p>
+
+<pre><code>[formatted date &amp; time] $message</code></pre>
+
+<h2 id="writeTimingLogEntry">writeTimingLogEntry</h2>
+
+<p>Usage: <code>writeTimingLogEntry($ce, $route, $details)</code></p>
+
+<p>Write to the timing log. A valid <code>$WeBWorK::CourseEnvironment</code> object must be specified in <code>$ce</code>. The <code>$route</code> should be the URL path for the current route. The format of the message written to the log file is</p>
+
+<pre><code>[formatted date &amp; time] processID unixTime - $route [$details]</code></pre>
+
+<p>Note that the <code>$details</code> argument should not be wrapped in brackets since that will be done by this method.</p>
+
+		</div>
+	</div>
+</body>
+</html>

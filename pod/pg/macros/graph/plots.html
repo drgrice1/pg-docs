@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>graph/plots.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">graph/plots.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#USAGE">USAGE</a></li><li class="nav-item"><a class="nav-link p-0" href="#PLOT-ELEMENTS">PLOT ELEMENTS</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#DATASETS">DATASETS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#PLOT-FUNCTIONS">PLOT FUNCTIONS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#PLOT-MULTIPATH-FUNCTIONS">PLOT MULTIPATH FUNCTIONS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#PLOT-CIRCLES">PLOT CIRCLES</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#PLOT-ARCS">PLOT ARCS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#PLOT-VECTOR-FIELDS">PLOT VECTOR FIELDS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#DATASET-OPTIONS">DATASET OPTIONS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#LABELS">LABELS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#STAMPS">STAMPS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#FILL-REGIONS">FILL REGIONS</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#COLORS">COLORS</a></li>
+    </ul>
+  </li><li class="nav-item"><a class="nav-link p-0" href="#TIKZ-DEBUGGING">TIKZ DEBUGGING</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>plots.pl - A macro to create dynamic graphs to include in PG problems.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This macro creates a Plots object that is used to add data of different elements of a 2D plot, then draw the plot. The plots can be drawn using different formats. Currently <code>TikZ</code> (using PGFplots), <code>JSXGraph</code>, and the legacy <code>GD</code> graphics format are available. Default is to use <code>JSXGraph</code> for HTML output and <code>TikZ</code> for hardcopy.</p>
+
+<p>Note, due to differences in features between <code>JSXGraph</code> and <code>TikZ</code>, not all options work with both.</p>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<p>First create a Plots object:</p>
+
+<pre><code>loadMacros(&#39;plots.pl&#39;);
+$plot = Plot(
+    xmin        =&gt; 0,
+    xmax        =&gt; 10,
+    ymin        =&gt; 0,
+    ymax        =&gt; 500,
+    xtick_delta =&gt; 2,
+    ytick_delta =&gt; 50,
+    xlabel      =&gt; &#39;\(t\)&#39;,
+    ylabel      =&gt; &#39;\(h(t)\)&#39;,
+    ariaLabel   =&gt; &#39;Height of an object as a function of time.&#39;,
+    axes_on_top =&gt; 1,
+);</code></pre>
+
+<p>This single call configures the <a href="//pg/lib/Plots/Axes.html">Axes Object</a> (see link for full list of options). Options that start with <code>x</code> configure the xaxis, options that start with <code>y</code> configure the yaxis, and all other options are Axes styles.</p>
+
+<p>Add a function and other objects to the plot.</p>
+
+<pre><code>$plot-&gt;add_function(&#39;-16t^2 + 80t + 384&#39;, &#39;t&#39;, 0, 8, color =&gt; &#39;blue&#39;, width =&gt; 3);</code></pre>
+
+<p>Insert the graph into the problem.</p>
+
+<pre><code>BEGIN_PGML
+[! Plot of a quadratic function !]{$plot}{500}
+END_PGML</code></pre>
+
+<a href="#_podtop_"><h1 id="PLOT-ELEMENTS">PLOT ELEMENTS</h1></a>
+
+<p>A plot consists of multiple <a href="//pg/lib/Plots/Data.html">Data objects</a>, which define datasets, functions, and labels to add to the graph. Data objects should be created though the Plots object, but can be access directly if needed</p>
+
+<h2 id="DATASETS">DATASETS</h2>
+
+<p>The core plot element is a dataset, which is a collection of points and options to plot the data. Datasets are added to a plot via <code>$plot-&gt;add_dataset</code>, and can be added individually, or multiple at once as shown:</p>
+
+<pre><code># Add a single dataset
+$plot-&gt;add_dataset([$x1, $y1], [$x2, $y2], ..., [$xn, $yn], @options);
+# Add multiple datasets with single call
+$plot-&gt;add_dataset(
+    [[$x11, $y11], [$x12, $y12], ..., [$x1n, $y1n], @options1],
+    [[$x21, $y21], [$x22, $y22], ..., [$x2m, $y2m], @options2],
+    ...
+);</code></pre>
+
+<p>For example, add a red line segment from (2,3) to (5,7):</p>
+
+<pre><code>$plot-&gt;add_dataset([2, 3], [5, 7], color =&gt; &#39;red&#39;, width =&gt; 2);</code></pre>
+
+<p>Add multiple arrows by setting the <code>end_mark</code> (or <code>start_mark</code>) of the dataset.</p>
+
+<pre><code>$plot-&gt;add_dataset(
+    [[0, 0], [2, 3],  color =&gt; &#39;green&#39;, end_mark   =&gt; &#39;arrow&#39;],
+    [[2, 3], [4, -1], color =&gt; &#39;blue&#39;,  end_mark   =&gt; &#39;arrow&#39;],
+    [[0, 0], [4, -1], color =&gt; &#39;red&#39;,   start_mark =&gt; &#39;arrow&#39;],
+);</code></pre>
+
+<p>If needed, the <code>$plot-&gt;add_dataset</code> method returns the <a href="#DATA-OBJECT">Data</a> object (or array of Data objects) which can be manipulated directly.</p>
+
+<pre><code>$data = $plot-&gt;add_dataset(...);</code></pre>
+
+<h2 id="PLOT-FUNCTIONS">PLOT FUNCTIONS</h2>
+
+<p>Functions can be used to generate a dataset to plot. Similar to datasets functions can be added individually or multiple at once:</p>
+
+<pre><code># Add a single function
+$plot-&gt;add_function($function, $variable, $min, $max, @options)
+# Add multiple functions
+$plot-&gt;add_function(
+    [$function1, $variable1, $min1, $max1, @options1],
+    [$function2, $variable2, $min2, $max2, @options2],
+    ...
+ );</code></pre>
+
+<p>This method can be used to add both single variable functions and parametric functions (an array of two functions) to the graph.</p>
+
+<pre><code># Add the function y = x^2 to the plot.
+$plot-&gt;add_function(&#39;x^2&#39;, &#39;x&#39;, -5, 5);
+# Add a parametric circle of radius 5 to the plot.
+$plot-&gt;add_function([&#39;5cos(t)&#39;, &#39;5sin(t)&#39;], &#39;t&#39;, 0, 2*pi);</code></pre>
+
+<p>Polar functions can be graphed using the <code>polar =&gt; 1</code> option with a single variable function. In this case the input variable (no matter what it is) is treated as a polar angle theta, and the function computes the radius for that angle.</p>
+
+<pre><code># Polar graph of r = 5cos(3theta).
+$plot-&gt;add_function(&quot;5cos(3x)&quot;, &#39;x&#39;, 0, &#39;pi&#39;, polar =&gt; 1);</code></pre>
+
+<p>Functions can also be added using function strings. Function strings are of the form:</p>
+
+<pre><code>&quot;$function for $variable in &lt;$min,$max&gt; using option1:value1 and option2:value2&quot;</code></pre>
+
+<p>This can be used to add either single variable functions or parametric functions:</p>
+
+<pre><code>&#39;x^2 for x in [-5,5) using color:red, weight:3 and steps:15&#39;
+&#39;(5cos(t), 5sin(t)) for t in &lt;2,2pi&gt; using color:blue, weight:2 and steps:20&#39;</code></pre>
+
+<p>The interval end points configure if an open_circle, <code>(</code> or <code>)</code>, closed_circle, <code>[</code> or <code>]</code>, arrow, <code>{</code> or <code>}</code>, or no marker, <code>&lt;</code> or <code>&gt;</code>, are added to the ends of the plot. Options are listed in the form <code>option:value</code> and can be separated by either commas or the word <code>and</code>. Multiple functions can be added at once using a list of function strings, which can be useful for creating piecewise functions.</p>
+
+<pre><code># Add two single variable functions and a parametric function to the graph.
+$plot-&gt;add_function(
+    &#39;x + 2 for x in [-4, 4] using color:blue and weight:3&#39;,
+    &#39;x^2 for x in {-4, 4} using color:red and weight:3&#39;,
+    &#39;(2cos(t), 2sin(t)) for t in &lt;0, 2pi&gt; using color:green and weight:2&#39;
+);
+# Add a piecewise function to the graph.
+$plot-&gt;add_function(
+    &#39;-3-x for x in {-5,-2.5)&#39;,
+    &#39;x^2-4 for x in [-2.5,2.5)&#39;,
+    &#39;8-2x for x in [2.5,5}&#39;
+);</code></pre>
+
+<p>Functions can be defined using strings (which are turned into MathObjects), MathObjects, or perl subroutines:</p>
+
+<pre><code># Add a function from a predefined MathObject.
+$f = Compute(&quot;$a x^2 + $b x + $c&quot;);
+$plot-&gt;add_function($f, &#39;x&#39;, -5, 5, width =&gt; 3);
+# Define a function using a perl subroutine.
+# The variable is undefined since it is not used.
+$plot-&gt;add_function(
+    [ sub { return $_[0]**2; }, sub { return $_[0]; } ],
+    undef,
+    -5,
+    5,
+    color =&gt; &#39;green&#39;,
+    width =&gt; 2
+);</code></pre>
+
+<p>It is preferred to use strings or MathObjects instead of perl subroutines.</p>
+
+<h2 id="PLOT-MULTIPATH-FUNCTIONS">PLOT MULTIPATH FUNCTIONS</h2>
+
+<p>A multipath function is defined using multiple parametric paths pieced together into into a single curve, whose primary use is to create a closed region to be filled using multiple boundaries. This is done by providing a list of parametric functions, the name of the parameter, and a list of options.</p>
+
+<pre><code>$plot-&gt;add_multipath(
+    [
+        [ $function_x1, $function_y1, $min1, $max1 ],
+        [ $function_x2, $function_y2, $min2, $max2 ],
+        ...
+    ],
+    $variable,
+    %options
+);</code></pre>
+
+<p>The paths have to be listed in the order they are followed, but the minimum/maximum values of the parameter can match the parametrization. The following example creates a sector of radius 5 between pi/4 and 3pi/4, by first drawing the line (0,0) to (5sqrt(2),5/sqrt(2)), then the arc of the circle of radius 5 from pi/4 to 3pi/4, followed by the final line from (-5sqrt(2), 5sqrt(2)) back to the origin.</p>
+
+<pre><code>$plot-&gt;add_multipath(
+    [
+        [ &#39;t&#39;,       &#39;t&#39;,       0,           &#39;5/sqrt(2)&#39; ],
+        [ &#39;5cos(t)&#39;, &#39;5sin(t)&#39;, &#39;pi/4&#39;,      &#39;3pi/4&#39; ],
+        [ &#39;-t&#39;,      &#39;t&#39;,       &#39;5/sqrt(2)&#39;, 0 ],
+    ],
+    &#39;t&#39;,
+    color =&gt; &#39;green&#39;,
+    fill  =&gt; &#39;self&#39;,
+);</code></pre>
+
+<h2 id="PLOT-CIRCLES">PLOT CIRCLES</h2>
+
+<p>Circles can be added to the plot by specifing its center and radius using the <code>$plot-&gt;add_circle</code> method. This can either be done either one at a time or multiple at once.</p>
+
+<pre><code>$plot-&gt;add_circle([$x, $y], $r, %options);
+$plot-&gt;add_circle(
+    [[$x1, $y1], $r1, %options1],
+    [[$x2, $y2], $r2, %options2],
+    ...
+);</code></pre>
+
+<h2 id="PLOT-ARCS">PLOT ARCS</h2>
+
+<p>Arcs (or a portion of a circle) can be plotted using the <code>$plot-&gt;add_arc</code> method. This method takes three points. The first point is where the arc starts, the second point is the center of the circle, and the third point specifies the ray from the center of the circle the arc ends. Arcs always go in the counter clockwise direction.</p>
+
+<pre><code>$plot-&gt;add_arc([$start_x, $start_y], [$center_x, $center_y], [$end_x, $end_y], %options);
+$plot-&gt;add_arc(
+    [[$start_x1, $start_y1], [$center_x1, $center_y1], [$end_x1, $end_y1], %options1],
+    [[$start_x2, $start_y2], [$center_x2, $center_y2], [$end_x2, $end_y2], %options2],
+    ...
+);</code></pre>
+
+<h2 id="PLOT-VECTOR-FIELDS">PLOT VECTOR FIELDS</h2>
+
+<p>Vector fields and slope fields can be plotted using the <code>$plot-&gt;add_vectorfield</code> method.</p>
+
+<pre><code>$plot-&gt;add_vectorfield(
+    Fx     =&gt; &#39;sin(y)&#39;,
+    Fy     =&gt; &#39;cos(x)&#39;,
+    xvar   =&gt; &#39;x&#39;,
+    yvar   =&gt; &#39;y&#39;,
+    xmin   =&gt; -4,
+    xmax   =&gt; 4,
+    ymin   =&gt; -4,
+    ymax   =&gt; 4,
+    xsteps =&gt; 20,
+    ysteps =&gt; 15,
+    color  =&gt; &#39;blue&#39;,
+    scale  =&gt; 0.5,
+);</code></pre>
+
+<p>This only works if <code>Fx</code> and <code>Fy</code> are strings or MathObjects (no perl functions allowed), because the functions are passed off to either JSXGraph or TikZ to do the computation. To make all the vectors the same length, add the <code>normalize =&gt; 1</code> option. To plot a slope field add <code>slopefield =&gt; 1</code> option (which removes the arrow heads and makes all the lines the same length), then set <code>Fx =&gt; 1</code> and <code>Fy</code> equal to the formula to produce the slope field.</p>
+
+<p>In addition to the dataset options below, the following additional options apply to vector fields.</p>
+
+<dl>
+
+<dt>xvar, yvar</dt>
+<dd>
+
+<p>Name of the x-axis and y-axis variables used. Default: x and y</p>
+
+</dd>
+<dt>xmin, xmax, ymin, ymax</dt>
+<dd>
+
+<p>Range of the x and y coordinates of the vector field. Default: -5 to 5</p>
+
+</dd>
+<dt>xsteps, ysteps</dt>
+<dd>
+
+<p>The number of arrows drawn in each direction. Note, that in TikZ output, this cannot be set individually so only <code>xsteps</code> is used. Default: 15</p>
+
+</dd>
+<dt>scale</dt>
+<dd>
+
+<p>A scale factor applied to the arrow length. Default: 1</p>
+
+</dd>
+<dt>normalize</dt>
+<dd>
+
+<p>Makes all the arrows the same length. This just turns <code>Fx</code> and <code>Fy</code> into <code>(Fx)/sqrt((Fx)^2 + (Fy)^2)</code> and <code>(Fy)/sqrt((Fx)^2 + (Fy)^2)</code> for convince. Default: 0</p>
+
+</dd>
+<dt>slopefield</dt>
+<dd>
+
+<p>This removes the arrow heads and implies normalized (so all the lines are the same length). Use this in combination with setting <code>Fx =</code> 1&gt; and <code>Fy</code> equal to the slope field formula to graph a slope field instead of a vector field. Default: 0</p>
+
+</dd>
+<dt>jsx_options</dt>
+<dd>
+
+<p>A hash reference of options to pass to the JSXGraph <code>vectorfield</code> object.</p>
+
+</dd>
+<dt>tikz_options</dt>
+<dd>
+
+<p>A string of TikZ options to append to the <code>\addplot3</code> which creates the vector field quiver.</p>
+
+</dd>
+</dl>
+
+<h2 id="DATASET-OPTIONS">DATASET OPTIONS</h2>
+
+<p>The following are the options that can be used to configure how datasets and functions are plotted.</p>
+
+<dl>
+
+<dt>color</dt>
+<dd>
+
+<p>The color of the plot. Default: &#39;default_color&#39;</p>
+
+</dd>
+<dt>width</dt>
+<dd>
+
+<p>The line width of the plot. Default: 1</p>
+
+</dd>
+<dt>linestyle</dt>
+<dd>
+
+<p>Linestyle can be one of &#39;solid&#39;, &#39;dashed&#39;, &#39;dotted&#39;, &#39;short dashes&#39;, &#39;long dashes&#39;, &#39;long medium dashes&#39; (alternates between long and medium dashes), or &#39;none&#39;. If set to &#39;none&#39;, only the points are shown (see marks for point options) For convince underscores can also be used, such as &#39;long_dashes&#39;. Default: &#39;solid&#39;</p>
+
+</dd>
+<dt>marks</dt>
+<dd>
+
+<p>Configures the symbol used for plotting the points in the dataset. Marks can be one of &#39;none&#39;, &#39;circle&#39; (or &#39;closed_circle&#39;), &#39;open_circle&#39;, &#39;square&#39;, &#39;open_square&#39;, &#39;plus&#39;, &#39;times&#39;, &#39;bar&#39;, &#39;dash&#39;, &#39;triangle&#39;, &#39;open_triangle&#39;, &#39;diamond&#39;, or &#39;open_diamond&#39;. Default: &#39;none&#39;</p>
+
+</dd>
+<dt>mark_size</dt>
+<dd>
+
+<p>Configure the size of the marks (if shown). The size is a natural number, and represents the point (pt) size of the mark. If the size is 0, the default size is used. Default: 0</p>
+
+</dd>
+<dt>start_mark</dt>
+<dd>
+
+<p>Place a mark at the start (left end) of the plot. This can be one of &#39;none&#39;, &#39;closed_circle&#39;, &#39;open_circle&#39;, or &#39;arrow&#39;. Default: &#39;none&#39;</p>
+
+</dd>
+<dt>end_mark</dt>
+<dd>
+
+<p>Place a mark at the end (right end) of the plot. This can be one of &#39;none&#39;, &#39;closed_circle&#39;, &#39;open_circle&#39;, or &#39;arrow&#39;. Default: &#39;none&#39;</p>
+
+</dd>
+<dt>arrow_size</dt>
+<dd>
+
+<p>Sets the arrow head size for <code>start_mark</code> or <code>end_mark</code> arrows. Default: 10</p>
+
+</dd>
+<dt>name</dt>
+<dd>
+
+<p>The name assigned to the curve to reference it for filling (see below). Each curve used to fill between curves or the xaxis must have a unique name. Default: undefined</p>
+
+</dd>
+<dt>fill</dt>
+<dd>
+
+<p>Sets the fill method to use. If set to &#39;none&#39;, no fill will be added. If set to &#39;self&#39;, the object fills within itself, best used with closed datasets. If set to &#39;xaxis&#39;, this will fill the area between the curve and the x-axis. If set to another non-empty string, this is the name of the other dataset to fill against. The <code>name</code> attribute must be set to fill between the &#39;xaxis&#39; or another curve.</p>
+
+<p>The following creates a filled rectangle:</p>
+
+<pre><code>$plot-&gt;add_dataset([1, 1], [2, 1], [2, 2], [1, 2], [1, 1],
+    color        =&gt; &#39;blue&#39;,
+    width        =&gt; 1.5,
+    fill         =&gt; &#39;self&#39;,
+    fill_color   =&gt; &#39;green&#39;,
+    fill_opacity =&gt; 0.1,
+);</code></pre>
+
+<p>The following fills the area under the curve y = 4 - x^2 over its whole domain.</p>
+
+<pre><code>$plot-&gt;add_function(&#39;4 - x^2&#39;, &#39;x&#39;, -2, 2,
+    color        =&gt; &#39;blue&#39;,
+    name         =&gt; &#39;A&#39;,
+    fill         =&gt; &#39;xaxis&#39;,
+    fill_color   =&gt; &#39;red&#39;,
+    fill_opacity =&gt; 0.2
+);</code></pre>
+
+<p>The following fills the area between the two curves y = 4 - x^2 and y = x^2 - 4, and only fills in the area between x=-2 and x=2:</p>
+
+<pre><code>$plot-&gt;add_function(&#39;4 - x^2&#39;, &#39;x&#39;, -3, 3,
+    color =&gt; &#39;blue&#39;,
+    name  =&gt; &#39;A&#39;
+);
+$plot-&gt;add_function(&#39;x^2 - 4&#39;, &#39;x&#39;, -3, 3,
+    color        =&gt; &#39;blue&#39;,
+    name         =&gt; &#39;B&#39;,
+    fill         =&gt; &#39;A&#39;,
+    fill_min     =&gt; -2,
+    fill_max     =&gt; 2,
+    fill_color   =&gt; &#39;green&#39;,
+    fill_opacity =&gt; 0.2,
+);</code></pre>
+
+</dd>
+<dt>fill_color</dt>
+<dd>
+
+<p>The color used when filling the region. Default: <code>color</code></p>
+
+</dd>
+<dt>fill_opacity</dt>
+<dd>
+
+<p>A number between 0 and 1 giving the opacity of the fill. Default: 0.5</p>
+
+</dd>
+<dt>fill_min, fill_max</dt>
+<dd>
+
+<p>The minimum and maximum x-value to fill between. If either of these are not defined, then the fill will use the full domain of the function. Default: undefined</p>
+
+</dd>
+<dt>steps</dt>
+<dd>
+
+<p>This defines the number of points to generate for a dataset from a function. Default: 30.</p>
+
+</dd>
+<dt>polar</dt>
+<dd>
+
+<p>If this option is set for a single variable function, the input variable is treated as an angle for the polar graph of <code>r = f(theta)</code>. Default: 0</p>
+
+</dd>
+<dt>tikz_smooth</dt>
+<dd>
+
+<p>Either 0 or 1 to add the TikZ option &quot;smooth&quot; to the plot, which will smooth out the plot making it look good with fewer steps. By default this is turned on for functions but off for other datasets. This alters the look of the plot and can mess with fills. For functions you will need to explicitly turn it off in cases it has undesirable side effects.</p>
+
+</dd>
+<dt>continue, continue_left, continue_right</dt>
+<dd>
+
+<p>If set to 1, the graph of a non-parametric function using JSXGraph will keep going both left and right beyond the bounds. This allows zooming out or panning the graph. This requires the <code>Plots::Axes</code> style <code>jsx_navigation</code> set to 1. This option implies both <code>continue_left</code> and <code>continue_right</code>, which can be used to extend the function only one direction. Default: 0</p>
+
+</dd>
+<dt>jsx_options</dt>
+<dd>
+
+<p>A hash reference of options to add to the JSXGraph output of the associated object.</p>
+
+</dd>
+<dt>tikz_options</dt>
+<dd>
+
+<p>Additional pgfplots <code>\addplot</code> options to be appeneded to the tikz output.</p>
+
+</dd>
+</dl>
+
+<h2 id="LABELS">LABELS</h2>
+
+<p>Labels can be added to the graph using the <code>$plot-&gt;add_label</code> method. Similar to datasets this can be added individually or multiple at once.</p>
+
+<pre><code># Add a label at the point ($x, $y).
+$plot-&gt;add_label($x, $y, label =&gt; $label, @options)&gt;
+# Add multiple labels at once.
+$plot-&gt;add_label(
+    [$x1, $y1, label =&gt; $label1, @options1],
+    [$x2, $y2, label =&gt; $label2, @options2],
+    ...
+ );</code></pre>
+
+<p>Labels can be configured using the following options:</p>
+
+<dl>
+
+<dt>label</dt>
+<dd>
+
+<p>The text to be added to the plot.</p>
+
+</dd>
+<dt>color</dt>
+<dd>
+
+<p>The color of the label. Default: &#39;default_color&#39;</p>
+
+</dd>
+<dt>fontsize</dt>
+<dd>
+
+<p>The font size of the label used. This can be one of &#39;tiny&#39;, &#39;small&#39;, &#39;medium&#39;, &#39;large&#39;, or &#39;giant&#39;. Default: &#39;medium&#39;</p>
+
+</dd>
+<dt>rotate</dt>
+<dd>
+
+<p>The rotation of the label in degrees. Default: 0</p>
+
+</dd>
+<dt>h_align</dt>
+<dd>
+
+<p>The horizontal alignment of the text relative to the position of the label, that states which end of the label is placed at the label&#39;s position. Can be one of &#39;right&#39;, &#39;center&#39;, or &#39;left&#39;. Default: &#39;center&#39;</p>
+
+</dd>
+<dt>v_align</dt>
+<dd>
+
+<p>The vertical alignment of the text relative to the position of the label, that states which end of the label is placed at the label&#39;s position. Can be one of &#39;top&#39;, &#39;middle&#39;, or &#39;bottom&#39;. Default: &#39;middle&#39;</p>
+
+</dd>
+<dt>jsx_options</dt>
+<dd>
+
+<p>An hash reference of options to pass to JSXGraph text object.</p>
+
+</dd>
+<dt>tikz_options</dt>
+<dd>
+
+<p>Additional TikZ options to be appended to <code>\node</code> when adding the label.</p>
+
+</dd>
+</dl>
+
+<h2 id="STAMPS">STAMPS</h2>
+
+<p>Stamps are a single point with a mark drawn at the given point. Stamps can be added individually or multiple at once:</p>
+
+<pre><code># Add a single stamp.
+$plot-&gt;add_stamp($x1, $y1, symbol =&gt; $symbol, color =&gt; $color, radius =&gt; $radius);
+# Add Multple stamps.
+$plot-&gt;add_stamp(
+    [$x1, $y1, symbol =&gt; $symbol1, color =&gt; $color1, radius =&gt; $radius1],
+    [$x2, $y2, symbol =&gt; $symbol2, color =&gt; $color2, radius =&gt; $radius2],
+    ...
+);</code></pre>
+
+<p>Stamps are here for backwards compatibility with WWplot and GD output, and are equivalent to creating a dataset with one point when not using GD output (with the small difference that stamps are added after all other datasets have been added).</p>
+
+<h2 id="FILL-REGIONS">FILL REGIONS</h2>
+
+<p>Fill regions define a point which GD will fill with a color until it hits a boundary curve. This is only here for backwards comparability with WWplot and GD output. This will not work with TikZ output, instead using the fill methods mentioned above.</p>
+
+<pre><code># Add a single fill region.
+$plot-&gt;add_fill_region($x1, $y1, $color);
+# Add multiple fill regions.
+$plot-&gt;add_fill_region(
+    [$x1, $y1, $color1],
+    [$x2, $y2, $color2],
+    ...
+);</code></pre>
+
+<h2 id="COLORS">COLORS</h2>
+
+<p>Colors are referenced by color names. The default color names, and their RGB definition are:</p>
+
+<pre><code>Color Name        Red Grn Blu
+white             255 255 255
+gray/grey         128 128 128
+black               0   0   0
+red               255   0   0
+green               0 128   0
+blue                0   0 255
+yellow            255 255   0
+cyan                0 255 255
+magenta           255   0 255
+orange            255 128   0
+purple            128   0 128</code></pre>
+
+<p>The default color used for all plotted elements is named <code>default_color</code>, and is initially black. Redefining this color will change the default color used for any plot object.</p>
+
+<p>New colors can be added, or existing colors can be modified, using the <code>$plot-&gt;add_color</code> method. Colors can be added individually or multiple using a single call.</p>
+
+<pre><code># Add a single color.
+$plot-&gt;add_color($color_name, $red, $green, $blue);
+# Add multiple colors.
+$plot-&gt;add_color(
+    [$color_name1, $red1, $green1, $blue1],
+    [$color_name2, $red2, $green2, $blue2],
+    ...
+);</code></pre>
+
+<a href="#_podtop_"><h1 id="TIKZ-DEBUGGING">TIKZ DEBUGGING</h1></a>
+
+<p>When using Tikz output, the pgfplots code used to create the plot is stored in <code>$plot-&gt;{tikzCode}</code>, after the image has been drawn (added to the problem with insertGraph). In addition there is a special debugging option <code>$plot-&gt;{tikzDebug}</code>, which if set will bypass building the graph with latex, allowing access to the tikz code (useful if there is an error in generating the plot). Last the method <code>$plot-&gt;tikz_code</code> will return the code in pre tags to format inside a problem. For instance to view the tikz code of a graph that is failing to build use:</p>
+
+<pre><code>$plot-&gt;{tikzDebug} = 1;
+$image = insertGraph($plot);
+BEGIN_PGML
+[@ $plot-&gt;tikz_code @]*
+END_PGML</code></pre>
+
+		</div>
+	</div>
+</body>
+</html>

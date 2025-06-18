@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>graph/LiveGraphicsRectangularPlot3D.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">graph/LiveGraphicsRectangularPlot3D.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#RectangularPlot3DRectangularDomain">RectangularPlot3DRectangularDomain</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#RectangularPlot3DAnnularDomain">RectangularPlot3DAnnularDomain</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>LiveGraphicsRectangularPlot3D.pl - provide an interactive 3D rectangular plot.</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This macro provides two methods for creating an interactive plot of a function of two variables <code>z = f(x, y)</code> in rectangular (Cartesian) coordinates via the <code>LiveGraphics3D</code> JavaScript applet. The routine <a href="#RectangularPlot3DRectangularDomain">&quot;RectangularPlot3DRectangularDomain&quot;</a> takes a <code>MathObject</code> Formula of two variables defined over a rectangular domain and some plot options as input and returns a string of plot data that can be displayed using the <code>Live3Ddata</code> routine of the <a href="//pg/macros/graph/LiveGraphics3D.html">LiveGraphics3D.pl</a> macro. The routine <a href="#RectangularPlot3DAnnularDomain">&quot;RectangularPlot3DAnnularDomain&quot;</a> works similarly for a function <code>z = f(x, y)</code> over an annular domain specified in polar coordinates by <code>rmin &lt; r &lt; rmax</code> and <code>tmin &lt; theta &lt; tmax</code> (polar coordinates are converted to rectangular for evaluation of the function).</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<h2 id="RectangularPlot3DRectangularDomain">RectangularPlot3DRectangularDomain</h2>
+
+<p>Usage: <code>RectangularPlot3DRectangularDomain(%options)</code></p>
+
+<p>The available options are as follows.</p>
+
+<dl>
+
+<dt><code>function =&gt; $f</code></dt>
+<dd>
+
+<p><code>$f</code> is a MathObject Formula. For example, in the setup section define</p>
+
+<pre><code>Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;);
+$a = random(1, 3);
+$f = Formula(&quot;$a * x^2 - 2 * y&quot;);    # Use double quotes!</code></pre>
+
+<p>before calling <code>RectangularPlot3DRectangularDomain</code>.</p>
+
+</dd>
+<dt><code>xvar =&gt; &#39;x&#39;</code></dt>
+<dd>
+
+<p>First independent variable name, default &#39;x&#39;. This must correspond to the first variable used in the <code>function</code>.</p>
+
+</dd>
+<dt><code>yvar =&gt; &#39;y&#39;</code></dt>
+<dd>
+
+<p>Second independent variable name, default &#39;y&#39;. This must correspond to the second variable used in the <code>function</code>.</p>
+
+</dd>
+<dt><code>xmin =&gt; -3</code></dt>
+<dd>
+
+<p>Lower bound for the domain of the first independent variable.</p>
+
+</dd>
+<dt><code>xmax =&gt; 3</code></dt>
+<dd>
+
+<p>Upper bound for the domain of the first independent variable.</p>
+
+</dd>
+<dt><code>ymin =&gt; -3</code></dt>
+<dd>
+
+<p>Lower bound for the domain of the second independent variable.</p>
+
+</dd>
+<dt><code>ymax =&gt; 3</code></dt>
+<dd>
+
+<p>Upper bound for the domain of the second independent variable.</p>
+
+</dd>
+<dt><code>xsamples =&gt; 20</code></dt>
+<dd>
+
+<p>The number of sample values for the first independent variable in the interval from <code>xmin</code> to <code>xmax</code> to use.</p>
+
+</dd>
+<dt><code>ysamples =&gt; 20</code></dt>
+<dd>
+
+<p>The number of sample values for the second independent variable in the interval from <code>ymin</code> to <code>ymax</code> to use.</p>
+
+</dd>
+<dt><code>axesframed =&gt; 1</code></dt>
+<dd>
+
+<p>If set to 1 then the framed axes are displayed. If set to 0, the framed axes are not shown. This is 1 by default.</p>
+
+</dd>
+<dt><code>xaxislabel =&gt; &#39;x&#39;</code></dt>
+<dd>
+
+<p>Label for the axis corresponding to the first independent variable.</p>
+
+</dd>
+<dt><code>yaxislabel =&gt; &#39;y&#39;</code></dt>
+<dd>
+
+<p>Label for the axis corresponding to the second independent variable.</p>
+
+</dd>
+<dt><code>zaxislabel =&gt; &#39;z&#39;</code></dt>
+<dd>
+
+<p>Label for the axis corresponding to the dependent variable.</p>
+
+</dd>
+<dt><code>outputtype =&gt; 1</code></dt>
+<dd>
+
+<p>This determines what is contained in the string that the method returns. The values of 1 through 4 are accepted, and have the following meaning.</p>
+
+<ol>
+
+<li><p>Return a string of only polygons (or edge mesh).</p>
+
+</li>
+<li><p>Return a string of only plot options.</p>
+
+</li>
+<li><p>Return a string of polygons (or edge mesh) and plot options.</p>
+
+</li>
+<li><p>Return the complete plot to be passed directly to the <code>Live3DData</code> method.</p>
+
+</li>
+</ol>
+
+</dd>
+</dl>
+
+<h2 id="RectangularPlot3DAnnularDomain">RectangularPlot3DAnnularDomain</h2>
+
+<p>Usage: <code>RectangularPlot3DAnnularDomain(%options)</code></p>
+
+<p>The available options are as follows.</p>
+
+<dl>
+
+<dt><code>function =&gt; $f</code></dt>
+<dd>
+
+<p><code>$f</code> is a MathObject Formula. For example, in the setup section define</p>
+
+<pre><code>Context()-&gt;variables-&gt;are(x =&gt; &#39;Real&#39;, y =&gt; &#39;Real&#39;);
+$a = random(1, 3);
+$f = Formula(&quot;$a * e^(-x^2 - y^2)&quot;);    # Use double quotes!</code></pre>
+
+<p>before calling <code>RectangularPlot3DRectangularDomain</code>.</p>
+
+</dd>
+<dt><code>xvar =&gt; &#39;x&#39;</code></dt>
+<dd>
+
+<p>First independent variable name, default &#39;x&#39;. This must correspond to the first variable used in the <code>function</code>.</p>
+
+</dd>
+<dt><code>yvar =&gt; &#39;y&#39;</code></dt>
+<dd>
+
+<p>Second independent variable name, default &#39;y&#39;. This must correspond to the second variable used in the <code>function</code>.</p>
+
+</dd>
+<dt><code>rmin =&gt; -3</code></dt>
+<dd>
+
+<p>Lower bound for the domain of radial coordinate.</p>
+
+</dd>
+<dt><code>rmax =&gt; 3</code></dt>
+<dd>
+
+<p>Upper bound for the domain of radial coordinate.</p>
+
+</dd>
+<dt><code>tmin =&gt; -3</code></dt>
+<dd>
+
+<p>Lower bound for the domain of angular coordinate.</p>
+
+</dd>
+<dt><code>tmax =&gt; 3</code></dt>
+<dd>
+
+<p>Upper bound for the domain of angular coordinate.</p>
+
+</dd>
+<dt><code>rsamples =&gt; 20</code></dt>
+<dd>
+
+<p>The number of radial values in the interval from <code>rmin</code> to <code>rmax</code> to use.</p>
+
+</dd>
+<dt><code>tsamples =&gt; 20</code></dt>
+<dd>
+
+<p>The number of angular values in the interval from <code>tmin</code> to <code>tmax</code> to use.</p>
+
+</dd>
+<dt><code>axesframed =&gt; 1</code></dt>
+<dd>
+
+<p>If set to 1 then the frames axes are displayed. If set to 0, the framed axes are not shown. This is 1 by default.</p>
+
+</dd>
+<dt><code>xaxislabel =&gt; &#39;x&#39;</code></dt>
+<dd>
+
+<p>Label for the axis corresponding to the first independent variable.</p>
+
+</dd>
+<dt><code>yaxislabel =&gt; &#39;y&#39;</code></dt>
+<dd>
+
+<p>Label for the axis corresponding to the second independent variable.</p>
+
+</dd>
+<dt><code>zaxislabel =&gt; &#39;z&#39;</code></dt>
+<dd>
+
+<p>Label for the axis corresponding to the dependent variable.</p>
+
+</dd>
+<dt><code>outputtype =&gt; 1</code></dt>
+<dd>
+
+<p>This determines what is contained in the string that the method returns. The values of 1 through 4 are accepted, and have the following meaning.</p>
+
+<ol>
+
+<li><p>Return a string of only polygons (or edge mesh).</p>
+
+</li>
+<li><p>Return a string of only plot options.</p>
+
+</li>
+<li><p>Return a string of polygons (or edge mesh) and plot options.</p>
+
+</li>
+<li><p>Return the complete plot to be passed directly to the <code>Live3DData</code> method.</p>
+
+</li>
+</ol>
+
+</dd>
+</dl>
+
+		</div>
+	</div>
+</body>
+</html>

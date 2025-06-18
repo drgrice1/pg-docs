@@ -1,35 +1,57 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>WeBWorK::DB</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeBWorK::DB</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>WeBWorK::DB</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
-
-
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#SYNOPSIS">SYNOPSIS</a></li>
-  <li><a href="#DESCRIPTION">DESCRIPTION</a></li>
-  <li><a href="#ARCHITECTURE">ARCHITECTURE</a>
-    <ul>
-      <li><a href="#Top-Layer:-DB">Top Layer: DB</a></li>
-      <li><a href="#Middle-Layer:-Schemas">Middle Layer: Schemas</a></li>
-      <li><a href="#Bottom-Layer:-Drivers">Bottom Layer: Drivers</a></li>
-      <li><a href="#Record-Types">Record Types</a></li>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">WeBWorK::DB</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#SYNOPSIS">SYNOPSIS</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#ARCHITECTURE">ARCHITECTURE</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#Top-Layer:-DB">Top Layer: DB</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Middle-Layer:-Schemas">Middle Layer: Schemas</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Bottom-Layer:-Database">Bottom Layer: Database</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Record-Types">Record Types</a></li>
     </ul>
-  </li>
-  <li><a href="#CONSTRUCTOR">CONSTRUCTOR</a>
-    <ul>
-      <li><a href="#dbLayout-Format">$dbLayout Format</a></li>
-    </ul>
-  </li>
-</ul>
+  </li><li class="nav-item"><a class="nav-link p-0" href="#CONSTRUCTOR">CONSTRUCTOR</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
 
 <a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
@@ -37,26 +59,26 @@
 
 <a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
 
-<pre><code> my $db = WeBWorK::DB-&gt;new($dbLayout);
+<pre><code>my $db = WeBWorK::DB-&gt;new($ce);
 
- my @userIDs = $db-&gt;listUsers();
- my $Sam = $db-&gt;{user}-&gt;{record}-&gt;new();
+my @userIDs = $db-&gt;listUsers();
+my $Sam = $db-&gt;{user}-&gt;{record}-&gt;new();
 
- $Sam-&gt;user_id(&quot;sammy&quot;);
- $Sam-&gt;first_name(&quot;Sam&quot;);
- $Sam-&gt;last_name(&quot;Hathaway&quot;);
- # etc.
+$Sam-&gt;user_id(&quot;sammy&quot;);
+$Sam-&gt;first_name(&quot;Sam&quot;);
+$Sam-&gt;last_name(&quot;Hathaway&quot;);
+# etc.
 
- $db-&gt;addUser($User);
- my $Dennis = $db-&gt;getUser(&quot;dennis&quot;);
- $Dennis-&gt;status(&quot;C&quot;);
- $db-&gt;putUser-&gt;($Dennis);
+$db-&gt;addUser($User);
+my $Dennis = $db-&gt;getUser(&quot;dennis&quot;);
+$Dennis-&gt;status(&quot;C&quot;);
+$db-&gt;putUser-&gt;($Dennis);
 
- $db-&gt;deleteUser(&quot;sammy&quot;);</code></pre>
+$db-&gt;deleteUser(&quot;sammy&quot;);</code></pre>
 
 <a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
 
-<p>WeBWorK::DB provides a consistent interface to a number of database backends. Access and modification functions are provided for each logical table used by the webwork system. The particular backend (&quot;schema&quot; and &quot;driver&quot;), record class, data source, and additional parameters are specified by the hash referenced by <code>$dbLayout</code>, usually taken from the course environment.</p>
+<p>WeBWorK::DB provides a database interface. Access and modification functions are provided for each logical table used by the webwork system. The particular schema, record class, and additional parameters are specified by the hash return by the <code>DBLayout::databaseLayout</code> method.</p>
 
 <a href="#_podtop_"><h1 id="ARCHITECTURE">ARCHITECTURE</h1></a>
 
@@ -66,102 +88,35 @@
 
 <p>The top layer of the architecture is the DB module. It provides the methods listed below, and uses schema modules (via tables) to implement those methods.</p>
 
-<pre><code>         / new* list* exists* add* get* get*s put* delete* \          &lt;- api
- +------------------------------------------------------------------+
- |                                DB                                |
- +------------------------------------------------------------------+
-  \ password permission key user set set_user problem problem_user /  &lt;- tables</code></pre>
+<pre><code>/ new* list* exists* add* get* get*s put* delete* \          &lt;- api
++------------------------------------------------------------------+
+|                                DB                                |
++------------------------------------------------------------------+
+\ password permission key user set set_user problem problem_user /  &lt;- tables</code></pre>
 
 <h2 id="Middle-Layer:-Schemas">Middle Layer: Schemas</h2>
 
 <p>The middle layer of the architecture is provided by one or more schema modules. They are called &quot;schema&quot; modules because they control the structure of the data for a table.</p>
 
-<p>The schema modules provide an API that matches the requirements of the DB layer, on a per-table basis. Each schema module has a style that determines which drivers it can interface with. For example, SQL is an &quot;dbi&quot; style schema.</p>
+<p>The schema modules provide an API that matches the requirements of the DB layer, on a per-table basis.</p>
 
-<h2 id="Bottom-Layer:-Drivers">Bottom Layer: Drivers</h2>
+<h2 id="Bottom-Layer:-Database">Bottom Layer: Database</h2>
 
-<p>Driver modules implement a style for a schema. They provide physical access to a data source containing the data for a table. The style of a driver determines what methods it provides. All drivers provide <code>connect(MODE)</code> and <code>disconnect()</code> methods. A dbi style driver provides a <code>handle()</code> method which returns the DBI handle.</p>
+<p>The <code>Database</code> module implements a DBI connection handle. It provides physical access to the database.</p>
 
 <h2 id="Record-Types">Record Types</h2>
 
-<p>In <code>%dblayout</code>, each table is assigned a record class, used for passing complete records to and from the database. The default record classes are subclasses of the WeBWorK::DB::Record class, and are named as follows: User, Password, PermissionLevel, Key, Set, UserSet, Problem, UserProblem. In the following documentation, a reference the the record class for a table means the record class currently defined for that table in <code>%dbLayout</code>.</p>
-
-<p>These exceptions will replace the ones in WeBWorK::DB::Schema and will be allowed to propagate out to calling code. The following callers will have to be changed to catch these exceptions instead of doing string matching:</p>
-
-<p>lib/WebworkSOAP.pm: if ($@ =~ m/user set exists/) { lib/WeBWorK/ContentGenerator/Instructor.pm: if ($@ =~ m/user set exists/) { lib/WeBWorK/ContentGenerator/Instructor.pm: if ( $@ =~ m/user set exists/ ) { lib/WeBWorK/ContentGenerator/Instructor.pm: if ($@ =~ m/user problem exists/) { lib/WeBWorK/ContentGenerator/Instructor.pm: if ($@ =~ m/user problem exists/) { lib/WeBWorK/ContentGenerator/Instructor.pm: next if $@ =~ m/user set exists/; lib/WeBWorK/Utils/DBImportExport.pm: if ($@ =~ m/exists/) { lib/WeBWorK/DB.pm: if ($@ and $@ !~ m/password exists/) { lib/WeBWorK/DB.pm: if ($@ and $@ !~ m/permission level exists/) {</p>
-
-<p>How these exceptions should be used:</p>
-
-<p>* RecordExists is thrown by the DBI error handler (handle_error in Schema::NewSQL::Std) when in INSERT fails because a record exists. Thus it can be thrown via addUser, addPassword, etc.</p>
-
-<p>* RecordNotFound should be thrown when we try to UPDATE and zero rows were affected. Problem: Frank Wolfs (UofR PAS) may have a MySQL server that returns 0 when updating even when a record was modified. What&#39;s up with that? There&#39;s some question as to where we should throw this: in this file&#39;s put* methods? In Std.pm&#39;s put method? Or in update_fields and update_fields_i?</p>
-
-<p>* DependencyNotFound should be throws when we check for a record that is needed to insert another record (e.g. password depends on user). These checks are done in this file, so we&#39;ll throw this exception from there.</p>
+<p>In the database layout, each table is assigned a record class, used for passing complete records to and from the database. The default record classes are subclasses of the WeBWorK::DB::Record class, and are named as follows: User, Password, PermissionLevel, Key, Set, UserSet, Problem, UserProblem. In the following documentation, a reference to the record class for a table means the record class currently defined for that table in the database layout.</p>
 
 <a href="#_podtop_"><h1 id="CONSTRUCTOR">CONSTRUCTOR</h1></a>
 
-<dl>
+<pre><code>my $db = WeBWorK::DB-&gt;new($ce)</code></pre>
 
-<dt>new($dbLayout)</dt>
-<dd>
+<p>The <code>new</code> method creates a DB object, connects to the database via the <code>Database</code> module, and brings up the underlying schema structure according to the hash referenced in the <a href="//webwork2/lib/WeBWorK/DB/Layout.html">database layout</a>. A course environment object is the only required argument (as it is used to construct the database layout).</p>
 
-<p>The <code>new</code> method creates a DB object and brings up the underlying schema/driver structure according to the hash referenced by <code>$dbLayout</code>.</p>
+<p>For each table defined in the database layout, <code>new</code> loads the record and schema modules.</p>
 
-</dd>
-</dl>
-
-<h2 id="dbLayout-Format"><code>$dbLayout</code> Format</h2>
-
-<p><code>$dbLayout</code> is a hash reference consisting of items keyed by table names. The value of each item is a reference to a hash containing the following items:</p>
-
-<dl>
-
-<dt>record</dt>
-<dd>
-
-<p>The name of a perl module to use for representing the data in a record.</p>
-
-</dd>
-<dt>schema</dt>
-<dd>
-
-<p>The name of a perl module to use for access to the table.</p>
-
-</dd>
-<dt>driver</dt>
-<dd>
-
-<p>The name of a perl module to use for access to the data source.</p>
-
-</dd>
-<dt>source</dt>
-<dd>
-
-<p>The location of the data source that should be used by the driver module. Depending on the driver, this may be a path, a url, or a DBI spec.</p>
-
-</dd>
-<dt>params</dt>
-<dd>
-
-<p>A reference to a hash containing extra information needed by the schema. Some schemas require parameters, some do not. Consult the documentation for the schema in question.</p>
-
-</dd>
-</dl>
-
-<p>For each table defined in <code>$dbLayout</code>, <code>new</code> loads the record, schema, and driver modules. It the schema module&#39;s <code>tables</code> method lists the current table (or contains the string &quot;*&quot;) and the output of the schema and driver modules&#39; <code>style</code> methods match, the table is installed. Otherwise, an exception is thrown.</p>
-
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+		</div>
+	</div>
 </body>
 </html>
-
-

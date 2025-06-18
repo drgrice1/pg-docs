@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Plots::Axes</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">Plots::Axes</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#AXES-OBJECT">AXES OBJECT</a></li><li class="nav-item"><a class="nav-link p-0" href="#USAGE">USAGE</a></li><li class="nav-item"><a class="nav-link p-0" href="#AXIS-CONFIGURATION-OPTIONS">AXIS CONFIGURATION OPTIONS</a></li><li class="nav-item"><a class="nav-link p-0" href="#STYLES">STYLES</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="AXES-OBJECT">AXES OBJECT</h1></a>
+
+<p>This is a hash to store information about the axes (ticks, range, grid, etc) with some helper methods. The hash is further split into three smaller hashes: xaxis, yaxis, and styles.</p>
+
+<dl>
+
+<dt>xaxis</dt>
+<dd>
+
+<p>Hash of data for the horizontal axis.</p>
+
+</dd>
+<dt>yaxis</dt>
+<dd>
+
+<p>Hash of data for the vertical axis.</p>
+
+</dd>
+<dt>styles</dt>
+<dd>
+
+<p>Hash of data for options for the general axis.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<p>The axes object should be accessed through a Plots object using <code>$plot-&gt;axes</code>. The axes object is used to configure and retrieve information about the axes, as in the following examples.</p>
+
+<p>Each axis and styles can be configured individually, such as:</p>
+
+<pre><code>$plot-&gt;axes-&gt;xaxis(min =&gt; -10, max =&gt; 10,  tick_delta =&gt; 4);
+$plot-&gt;axes-&gt;yaxis(min =&gt; 0,   max =&gt; 100, tick_delta =&gt; 20);
+$plot-&gt;axes-&gt;style(ariaLabel =&gt; &#39;Graph of function y = f(x).&#39;, show_grid =&gt; 0);</code></pre>
+
+<p>This can be combined using the set method by prepending either <code>x</code> or <code>y</code> in front of each key of the axes to configure (note keys that do not start with <code>x</code> or <code>y</code> sent to <code>$plot-&gt;axes-&gt;style</code>):</p>
+
+<pre><code>$plot-&gt;axes-&gt;set(
+    xmin        =&gt; -10,
+    xmax        =&gt; 10,
+    xtick_delta =&gt; 4,
+    ymin        =&gt; 0,
+    ymax        =&gt; 100,
+    ytick_delta =&gt; 20,
+    ariaLabel   =&gt; &#39;Graph of function y = f(x).&#39;,
+    show_grid   =&gt; 0,
+);</code></pre>
+
+<p>The same methods also get the value of a single option, such as:</p>
+
+<pre><code>$xmin        = $plot-&gt;axes-&gt;xaxis(&#39;min&#39;);
+$ytick_delta = $plot-&gt;axes-&gt;yaxis(&#39;tick_delta&#39;);
+$show_grid   = $plot-&gt;axes-&gt;style(&#39;show_grid&#39;);</code></pre>
+
+<p>The methods without any inputs return a reference to the full hash, such as:</p>
+
+<pre><code>$xaxis  = $plot-&gt;axes-&gt;xaxis;
+$styles = $plot-&gt;axes-&gt;style;</code></pre>
+
+<p>It is also possible to get multiple options for both axes using the get method, which returns a reference to a hash of requested keys, such as:</p>
+
+<pre><code>$bounds = $plot-&gt;axes-&gt;get(&#39;xmin&#39;, &#39;xmax&#39;, &#39;ymin&#39;, &#39;ymax&#39;);
+# The following is equivlant to $plot-&gt;axes-&gt;grid
+$grid = $plot-&gt;axes-&gt;get(&#39;xmajor&#39;, &#39;xminor&#39;, &#39;xtick_delta&#39;, &#39;ymajor&#39;, &#39;yminor&#39;, &#39;ytick_delta&#39;);</code></pre>
+
+<p>It is also possible to get the bounds as an array in the order xmin, ymin, xmax, ymax using the <code>$plot-&gt;axes-&gt;bounds</code> method.</p>
+
+<a href="#_podtop_"><h1 id="AXIS-CONFIGURATION-OPTIONS">AXIS CONFIGURATION OPTIONS</h1></a>
+
+<p>Each axis (the xaxis and yaxis) has the following configuration options:</p>
+
+<dl>
+
+<dt>min</dt>
+<dd>
+
+<p>The minimum value the axis shows. Default is -5.</p>
+
+</dd>
+<dt>max</dt>
+<dd>
+
+<p>The maximum value the axis shows. Default is 5.</p>
+
+</dd>
+<dt>tick_num</dt>
+<dd>
+
+<p>This is the number of major tick marks to include on the axis. This number is used to compute the <code>tick_delta</code> as the difference between the <code>max</code> and <code>min</code> values and the number of ticks. Default: 5.</p>
+
+</dd>
+<dt>tick_delta</dt>
+<dd>
+
+<p>This is the distance between each major tick mark, starting from the origin. If this is set to 0, this distance is set by using the number of ticks, <code>tick_num</code>. Default is 0.</p>
+
+</dd>
+<dt>tick_labels</dt>
+<dd>
+
+<p>This can be either 1 (show) or 0 (don&#39;t show) the labels for the major ticks. Default: 1</p>
+
+</dd>
+<dt>show_ticks</dt>
+<dd>
+
+<p>This can be either 1 (show) or 0 (don&#39;t show) the tick lines. If ticks are not shown then tick labels won&#39;t be shown either. Default: 1</p>
+
+</dd>
+<dt>label</dt>
+<dd>
+
+<p>The axis label. Defaults are <code>\(x\)</code> and <code>\(y\)</code>.</p>
+
+</dd>
+<dt>major</dt>
+<dd>
+
+<p>Show (1) or don&#39;t show (0) grid lines at the tick marks. Default is 1.</p>
+
+</dd>
+<dt>minor</dt>
+<dd>
+
+<p>This sets the number of minor grid lines per major grid line. If this is set to 0, no minor grid lines are shown. Default is 3.</p>
+
+</dd>
+<dt>visible</dt>
+<dd>
+
+<p>This sets if the axis is shown (1) or not (0) on the plot. Default is 1.</p>
+
+</dd>
+<dt>location</dt>
+<dd>
+
+<p>This sets the location of the axes relative to the graph. The possible options for each axis are:</p>
+
+<pre><code>xaxis  =&gt;  &#39;top&#39;, &#39;middle&#39;, &#39;bottom&#39;
+yaxis  =&gt;  &#39;left&#39;, &#39;center&#39;, &#39;right&#39;</code></pre>
+
+<p>This places the axis at the appropriate edge of the graph. If &#39;center&#39; or &#39;middle&#39; are used, the axes appear on the inside of the graph at the appropriate axis position. Default &#39;middle&#39; or &#39;center&#39;.</p>
+
+</dd>
+<dt>position</dt>
+<dd>
+
+<p>The position in terms of the appropriate variable to draw the axis if the location is set to &#39;middle&#39; or &#39;center&#39;. Default is 0.</p>
+
+</dd>
+<dt>jsx_options</dt>
+<dd>
+
+<p>A hash reference of options to be passed to the JSXGraph axis objects.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="STYLES">STYLES</h1></a>
+
+<p>The following styles configure aspects about the axes.</p>
+
+<dl>
+
+<dt>aspect_ratio</dt>
+<dd>
+
+<p>If this style is set, then the height of the graph will be computed using this aspect_ratio for the size of the image unless explicitly set. Default: &#39;&#39;</p>
+
+</dd>
+<dt>ariaLabel</dt>
+<dd>
+
+<p>The ARIA label in JSX graph output. Default is &#39;Graph&#39;.</p>
+
+</dd>
+<dt>ariaDescription</dt>
+<dd>
+
+<p>The ARIA description in JSX graph output. This will be set to the images alt tag. Default is &#39;Generated graph&#39;.</p>
+
+</dd>
+<dt>show_grid</dt>
+<dd>
+
+<p>Either draw (1) or don&#39;t draw (0) the grid lines for the axis. Default is 1.</p>
+
+</dd>
+<dt>grid_color</dt>
+<dd>
+
+<p>The color of the grid lines. Default is &#39;gray&#39;.</p>
+
+</dd>
+<dt>grid_alpha</dt>
+<dd>
+
+<p>The alpha value to use to draw the grid lines in Tikz. This is a number from 0 (fully transparent) to 100 (fully solid). Default is 40.</p>
+
+</dd>
+<dt>axis_on_top</dt>
+<dd>
+
+<p>Configures if the Tikz axis should be drawn on top of the graph (1) or below the graph (0). Useful when filling a region that covers an axis, if the axis are on top they will still be visible after the fill, otherwise the fill will cover the axis. Default: 0</p>
+
+</dd>
+<dt>jsx_navigation</dt>
+<dd>
+
+<p>Either allow (1) or don&#39;t allow (0) the user to pan and zoom the view port of the JSXGraph. Best used when plotting functions with the <code>continue</code> style. Note that if this option is 0, then the image can be clicked on to open a dialog showing a magnified version of the graph that can be zoomed in or out. Default: 0</p>
+
+</dd>
+<dt>jsx_options</dt>
+<dd>
+
+<p>A hash reference of options to be passed to the JSXGraph board object.</p>
+
+</dd>
+</dl>
+
+		</div>
+	</div>
+</body>
+</html>

@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>contexts/contextUnits.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">contexts/contextUnits.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#Custom-units">Custom units</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Adding-units-to-other-contexts">Adding units to other contexts</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Creating-unit-and-number-with-unit-objects">Creating unit and number-with-unit objects</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Working-with-numbers-with-units">Working with numbers with units</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Differentiation-of-numbers-with-units">Differentiation of numbers with units</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Answer-checking-for-units-and-numbers-with-units">Answer checking for units and numbers with units</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>contextUnits.pl - Implements a MathObject class for numbers with units</p>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This file implements a MathObject Unit class that provides the ability to use units within computations, within lists, and so on. There are two pre-defined units contexts, but you can add units to other existing contexts, if they are compatible with units.</p>
+
+<p>To load, use</p>
+
+<pre><code>loadMacros(&#39;contextUnits.pl&#39;);</code></pre>
+
+<p>and then select the <code>Units</code> or <code>LimitedUnits</code> context and enable the units that you want to use. E.g.,</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;withUnitsFor(&quot;length&quot;);</code></pre>
+
+<p>or</p>
+
+<pre><code>Context(&quot;LimitedUnits&quot;)-&gt;withUnitsFor(&quot;angles&quot;);</code></pre>
+
+<p>For the <code>LimitedUnits</code> context, you are not allowed to perform any operations, like addition or multiplication, or any function calls, so can only enter a single number, unit, or number with unit.</p>
+
+<p>You can include as many categories as you want, as in</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;withUnitsFor(&quot;length&quot;, &quot;volume&quot;);</code></pre>
+
+<p>The categories of units are the following:</p>
+
+<pre><code>angles           (fundamental units &quot;rad&quot;)
+time             (fundamental units &quot;s&quot;)
+length           (fundamental units &quot;m&quot;, except for those in &quot;atomics&quot; and &quot;astronomy&quot; below)
+metric-length    (same as length except no imperial lengths)
+imperial-length  (in, ft, mi, furlong, and their aliases)
+volume           (fundamental units &quot;m^3&quot;)
+velocity         (fundamental units &quot;m/s&quot;)
+mass             (fundamental units &quot;kg&quot;, except for those in &quot;astronomy&quot; below)
+temperature      (fundamental units &quot;defC&quot;, &quot;defF&quot;, &quot;K&quot;)
+frequency        (fundamental units &quot;rad/s&quot;)
+force            (fundamental units &quot;(kg m)/(s^2)&quot;)
+energy           (fundamental units &quot;(kg m^2)/(s^2)&quot;)
+power            (fundamental units &quot;(kg m^2)/(s^3)&quot; except for those in &quot;astronomy&quot; below)
+pressure         (fundamental units &quot;kg/(m s^2)&quot;)
+electricity      (fundamental units &quot;amp&quot;, &quot;amp/s&quot;, &quot;(kg m)/(amp s^-3)&quot;, &quot;(amp s^-3)/(kg m)&quot;,
+                                    &quot;(amp^2 s^4)/(kg m^2)&quot;, &quot;(kg m^2)/(amp^2 s^3)&quot;, and &quot;(amp^2 s^3)/(kg m^2)&quot;)
+magnetism        (fundamental units &quot;kg/(amp s^2)&quot; and &quot;(kg m)/(amp s^2)&quot;)
+luminosity       (fundamental units &quot;cd/(rad^2)&quot; and &quot;cd/(rad m)^2&quot;)
+atomics          (amu, me, barn, a0, dalton)
+radiation        (fundamental units &quot;(m^2)/(s^2)&quot; and &quot;s^-1&quot;)
+biochem          (fundamental units &quot;mol&quot; or &quot;mol/s&quot;)
+astronomy        (kpc, Mpc, solar-mass, solar-radii, solar-lum, light-year, AU, parsec)
+fundamental      (m, kg, s, rad, degC, degF, K, mol, amp, cd)</code></pre>
+
+<p>You can add specific named units via the <code>addUnits()</code> method of the context, as in</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;withUnitsFor(&quot;volume&quot;)-&gt;addUnits(&quot;m&quot;, &quot;cm&quot;);</code></pre>
+
+<p>or</p>
+
+<pre><code>$context = Context(&quot;Units&quot;);
+$context-&gt;withUnitsFor(&quot;volume&quot;);
+$context-&gt;addUnits(&quot;m&quot;, &quot;cm&quot;);</code></pre>
+
+<p>to get a units context with units for volume as well as <code>m</code> and <code>cm</code> and any aliases for these units (e.g., <code>meter</code>, <code>meters</code>, etc.). Use <code>addUnitsNotAliases()</code> in place of <code>addUnits()</code> to add just the named units without adding any aliases for them.</p>
+
+<p>You can remove individual units from the context using the <code>removeUnits()</code> method of the context. For example</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;withUnitsFor(&quot;length&quot;)-&gt;removeUnits(&quot;ft&quot;, &quot;inch&quot;, &quot;mile&quot;, &quot;furlong&quot;);</code></pre>
+
+<p>removes the English units and their aliases, leaving only the metric units. To remove a unit without removing its aliases, use <code>removeUnitsNotAliases()</code> instead.</p>
+
+<p>Note that the units are stored in the context as constants, so to list all the units, together with other constants, use</p>
+
+<pre><code>Context()-&gt;constants-&gt;names;</code></pre>
+
+<p>The constants that are units have the <code>isUnit</code> property set. So</p>
+
+<pre><code>grep {Context()-&gt;constants-&gt;get($_)-&gt;{isUnit}} (Context()-&gt;constants-&gt;names);</code></pre>
+
+<p>will get the list of units.</p>
+
+<h2 id="Custom-units">Custom units</h2>
+
+<p>You can define your own units in terms of the fundamental units. E.g., to define the unit <code>acres</code>, you could use</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;withUnitsFor(&quot;length&quot;)-&gt;addUnits(acres =&gt; {factor =&gt; 4046.86, m =&gt; 2});</code></pre>
+
+<p>which indicates that 1 acre is equal to 4046.86 square meters.</p>
+
+<p>You can even make up your own fundamental units. For example, to define <code>apples</code> and <code>oranges</code> as units, you could do</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;addUnits(
+  apples =&gt; { apples =&gt; 1, aliases =&gt; [&quot;apple&quot;] },
+  oranges =&gt; { oranges =&gt; 1, aliases =&gt; [&quot;orange&quot;] }
+);
+
+BEGIN_PGML
+If you have 5 apples and give your friend 2 of them,
+what do you have left? [___________]{&quot;3 apples&quot;}
+END_PGML</code></pre>
+
+<p>and the student can answer <code>3 oranges</code> but will be marked incorrect (with a message about the units being incorrect). Note that <code>apples</code> and <code>apple</code> are synonymous in this context, and that <code>1 apple</code> is accepted, but is displayed as <code>1 apples</code>, as no attempt is made to handle plurals.</p>
+
+<p>On the other hand, you could also do</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;addUnits(
+  apples =&gt; { fruit =&gt; 1, aliases =&gt; [&quot;apple&quot;] },
+  oranges =&gt; { fruit =&gt; 1, aliases =&gt; [&quot;orange&quot;] }
+);
+
+Compute(&quot;3 apples&quot;) == Compute(&quot;3 oranges&quot;); # returns 1</code></pre>
+
+<p>will consider apple and oranges as the same unit (both are the fundamental unit of <code>fruit</code>).</p>
+
+<p>Finally,</p>
+
+<pre><code>Context(&quot;Units&quot;)-&gt;addUnits(
+  apples =&gt; { fruit =&gt; 1, aliases =&gt; [&quot;apple&quot;] },
+  oranges =&gt; { fruit =&gt; 1, aliases =&gt; [&quot;orange&quot;], factor =&gt; 2 }
+);
+
+Compute(&quot;2 apples&quot;) == Compute(&quot;1 orange&quot;); # returns 1</code></pre>
+
+<p>will make an orange equivalent to two apples by making both <code>apples</code> and <code>oranges</code> be examples of the fundamental unit <code>fruit</code>, but with <code>oranges</code> having a factor of 2 times the fundamental unit, so an <code>orange</code> is considered to be 2 <code>fruit</code>, while an <code>apple</code> is one <code>fruit</code>.</p>
+
+<h2 id="Adding-units-to-other-contexts">Adding units to other contexts</h2>
+
+<p>The <code>Units</code> and <code>LimitedUnits</code> contexts are based on the <code>Numeric</code> and <code>LimitedNumeric</code> contexts. You can add units to other contexts using the <code>context::Units::extends()</code> function. For example,</p>
+
+<pre><code>loadMacros(&quot;contextUnits.pl&quot;, &quot;contextFraction.pl&quot;);
+Context(context::Units::extending(&quot;Fraction&quot;)-&gt;withUnitsFor(&quot;length&quot;));</code></pre>
+
+<p>would allow you to use fractions with units.</p>
+
+<p>In addition to the name of the context to extend, you can pass options to <code>context::Units::extending()</code>, as in</p>
+
+<pre><code>loadMacros(&quot;contextUnits.pl&quot;, &quot;contextFraction.pl&quot;);
+$context = Context(context::Units::extending(&quot;LimitedFraction&quot;, limited =&gt; 1));
+$context-&gt;addUnitsFor(&quot;length&quot;);</code></pre>
+
+<p>In this case, the <code>&lt;limited =</code> 1&gt;&gt; option indicates that no operations are allowed between numbers with units, and since the <code>LimitedFraction</code> context doesn&#39;t allow operations otherwise, you will only be able to enter fractions or whole numbers, with or without units, or a unit without a number.</p>
+
+<p>The available options and their defaults are</p>
+
+<pre><code>keepNegativePowers =&gt; 1,     Preserve use of negative powers so C&lt;m s^-1&gt; will
+                             not be shown as C&lt;m/s&gt; (but will still match it).
+useNegativePowers =&gt; 0       Always use negative powers instead of fractions?
+limited =&gt; 0                 Don&#39;t allow operations on numbers with units.
+exactUnits =&gt; 0              Require student units to exactly match correct ones
+                               in both order and use of negative powers
+sameUnits =&gt; 0               Require student units to match correct ones
+                               not scaled versions
+partialCredit =&gt; .5          Partial credit if answer is right but units
+                               are not correct
+factorUnits =&gt; 1             Factor the units out of sums and differences of
+                               formulas with the same units</code></pre>
+
+<p>The first two and last three can also be set as context flags after the context is created. There is a <code>limitedOperators</code> flag that is set by the <code>limited</code> option that controls whether operations are allowed on numbers with units, but if you set it, you might also need to do</p>
+
+<pre><code>Context()-&gt;parens-&gt;set( &#39;(&#39; =&gt; { close =&gt; &#39;)&#39;, type =&gt; &#39;Units&#39; } );</code></pre>
+
+<p>to allow parentheses around units if the parentheses have been removed from the original context (as they are in the <code>LimitedNumeric</code> context, for instance). This makes it possible to enter units of the form <code>kg/(m s)</code> in such contexts.</p>
+
+<h2 id="Creating-unit-and-number-with-unit-objects">Creating unit and number-with-unit objects</h2>
+
+<p>In the units contexts, units are first-class citizens, and unit and number-with-unit objects can be created just like any other MathObject. So you can use</p>
+
+<pre><code>$n = Compute(&quot;3 m/s&quot;);</code></pre>
+
+<p>to get a number-with-units object for 3 meters per second. You can also use the word <code>per</code> in place of <code>/</code>, as in</p>
+
+<pre><code>$n = Compute(&quot;3 meters per second&quot;);</code></pre>
+
+<p>You can use the words <code>squared</code> and <code>cubed</code> with units in place of <code>^2</code> and <code>^3</code>, so that</p>
+
+<pre><code>$n = Compute(&quot;3 meters per second squared&quot;);</code></pre>
+
+<p>will produce an equivalent result to</p>
+
+<pre><code>$n = Compute(&quot;3 m/s^2&quot;);</code></pre>
+
+<p>There are also <code>square</code> and <code>cubic</code> that can be used to precede a unit, such as</p>
+
+<pre><code>$n = Compute(&quot;3 square meters&quot;);</code></pre>
+
+<p>as an alternative to <code>Compute(&quot;3 m^2&quot;)</code>.</p>
+
+<p>Note that the space between the number and units is not strictly necessary, and neither is the space between units, unless the combined unit names have a different meaning. For example</p>
+
+<pre><code>$n = Compute(&quot;3m&quot;);     # instead of &quot;3 m&quot;
+$n = Compute(&quot;3 kgm&quot;);  # instead of &quot;3 kg m&quot;</code></pre>
+
+<p>are both fine, but</p>
+
+<pre><code>$n = Compute(&quot;3 ms&quot;);</code></pre>
+
+<p>would treat <code>ms</code> as the single unit for milliseconds, rather than meter-seconds, in a context that includes both length and time units.</p>
+
+<p>In order to have more than one unit in the denominator, you can either use multiple division signs (or <code>per</code> operations), or enclose the denominator in parentheses, as in</p>
+
+<pre><code>$n = Compute(&quot;3 kg/m/s&quot;);
+$n = Compute(&quot;3 kg/(m s)&quot;);
+$n = Compute(&quot;3 kg per meter per second&quot;);</code></pre>
+
+<p>Units can be preceded by formulas as well as numbers. For example</p>
+
+<pre><code>$f = Compute(&quot;2x meters&quot;);</code></pre>
+
+<p>makes <code>$f</code> be a Formula returning a Number-with-Unit. Note, however, that since the space before the unit has the same precedence as multiplication (just as it does within a formula), if the expression before the unit includes addition or subtraction, you need to enclose it in parentheses:</p>
+
+<pre><code>$n = Compute(&quot;(1+4) meters&quot;);
+$f = Compute(&quot;(1+2x) meters&quot;);</code></pre>
+
+<p>Using <code>Compute()</code> is not the only way to produce a number or formula with units; there are also constructor functions that are sometimes useful when writing a problem involving units.</p>
+
+<pre><code>$n = NumberWithUnits(3, &quot;m/s&quot;);
+$f = FormulaWithUnits(&quot;1+2x&quot;, &quot;meters&quot;);</code></pre>
+
+<p>These are most useful when the numeric part is the result of a computation or a value held in a variable:</p>
+
+<pre><code>$n = NumberWithUnits(random(1,5), &quot;m&quot;);</code></pre>
+
+<p>Since units are themselves MathObjects, you can work with units without a preceding number. These can be created through <code>Compute()</code> just as with other MathObject, or you can use the <code>Unit()</code> constructor.</p>
+
+<pre><code>$u = Compute(&quot;meters per second per second&quot;);
+$u = Unit(&quot;m/s^2&quot;);</code></pre>
+
+<p>This allows you to ask a student to say what units should be used for a particular setting, without the need for a quantity.</p>
+
+<h2 id="Working-with-numbers-with-units">Working with numbers with units</h2>
+
+<p>Because units and numbers with units are full-fledged MathObjects, you can do computations with them, just as with other MathObejcts. For example, you can do</p>
+
+<pre><code>$n = Compute(&quot;3 m + 10 cm&quot;);</code></pre>
+
+<p>to get the equivalent of <code>3.1 m</code>. Similarly, you can do</p>
+
+<pre><code>$velocity = Compute(&quot;100 miles / (2 hours)&quot;);  # equals &quot;50 mi/h&quot;
+$area = Compute(&quot;(5 m) * (3 m)&quot;);              # equals &quot;15 m^2&quot;</code></pre>
+
+<p>to get numbers with compound units.</p>
+
+<p>As with other MathObjects, units and numbers with units can be combined using perl operations:</p>
+
+<pre><code>$distance = Compute(&quot;100 miles&quot;);
+$time = Compute(&quot;2 hours&quot;);
+$velocity = $distance / $time;  # equivalent to &quot;50 miles/hour&quot;
+
+$m = Compute(&quot;m&quot;);
+$s = Compute(&quot;s&quot;);
+$a = 9.8 * $m / $s**2;
+
+$x = Compute(&quot;x&quot;);
+$f = (3 * $x**2 - 2) * $m;  # equivalent to Compute(&quot;(3x^2 - 2) m&quot;);</code></pre>
+
+<p>The units objects provide functions for converting from one set of units to another (compatible) set via the <code>toUnits()</code> and <code>toBaseUnits()</code> methods. For example:</p>
+
+<pre><code>$m = Compute(&quot;5 m&quot;);
+$ft = $m-&gt;toUnits(&quot;ft&quot;);                 # returns &quot;16.4042 ft&quot;
+
+$cm = Compute(&quot;5.21 m&quot;)-&gt;toUnits(&quot;cm&quot;);  # returns &quot;521 cm&quot;
+
+$a = Compute(&quot;32 ft/s^2&quot;)-&gt;toBaseUnits;  # returns &quot;9.7536 m/s^2&quot;</code></pre>
+
+<p>For a given number with units, you may wish to obtain the numeric portion or the units portion separately. This can be done using the <code>number</code> and <code>unit</code> methods:</p>
+
+<pre><code>$n = Compute(&quot;5 m&quot;);
+$r = $n-&gt;number;         # returns 5 as a Real MathObject
+$u = $n-&gt;unit;           # returns &quot;m&quot; as a Unit MathObject</code></pre>
+
+<p>You can also use the <code>Real()</code> and <code>Unit()</code> constructors to do the same thing:</p>
+
+<pre><code>$n = Compute(&quot;5 m&quot;);
+$r = Real($n);           # returns 5 as a Real MathObject
+$u = Unit($n);           # returns &quot;m&quot; as a Unit MathObject</code></pre>
+
+<p>You can get the numeric portion of the number-with-units object relative to the base units using the <code>quantity</code> method:</p>
+
+<pre><code>$q = Compute(&quot;3 ft&quot;)-&gt;quantity;    # returns .9144</code></pre>
+
+<p>Using <code>$m-&gt;quantity</code> is equivalent to calling <code>$m-&gt;toBaseUnits-&gt;number</code>.</p>
+
+<p>Finally, you can get the factor by which the given units must be multiplied to obtain the quantity in the fundamental base units using the <code>factor</code> method:</p>
+
+<pre><code>$f = Compute(&quot;3 ft&quot;)-&gt;factor;    # returns 0.3048</code></pre>
+
+<p>Similarly, you can use the <code>factor</code> method of a unit object to get the factor for that unit.</p>
+
+<p>Most functions, such as <code>sqrt()</code> and <code>ln()</code>, will report an error if they are passed a number with units (or a bare unit). Important exceptions are the trigonometric and hyperbolic functions, which accept a number with units provided the units are angular units. For example,</p>
+
+<pre><code>$v = Compute(&quot;sin(30 deg)&quot;);</code></pre>
+
+<p>will return 0.5, and so will</p>
+
+<pre><code>$a = Compute(&quot;60 deg&quot;);
+$sin_a = sin($a);</code></pre>
+
+<p>as the perl functions have been overloaded to handle numbers with units when the units are angular units.</p>
+
+<p>The other exception is <code>abs()</code>, which can be applied to numbers with units, and returns a number with units having the same units, but the quantity is the absolute value of the original quantity.</p>
+
+<h2 id="Differentiation-of-numbers-with-units">Differentiation of numbers with units</h2>
+
+<p>In order to be able to differentiate a formula that returns a number with units, the MathObjects library needs to know the units of the variable you are differentiating by. For example, if you have</p>
+
+<pre><code>$s = Compute(&quot;(3t^2 - 2t) m&quot;);</code></pre>
+
+<p>as a function of time, <code>t</code>, then you would like</p>
+
+<pre><code>$v = $s-&gt;D(&quot;t&quot;);</code></pre>
+
+<p>to be equivalent to <code>Compute(&quot;(6t - 2) m/s&quot;)</code>.</p>
+
+<p>To enable this, you must tell the <code>Units</code> context that <code>t</code> has units of seconds. That is done using the <code>assignUnits()</code> function of the context:</p>
+
+<pre><code>Context(&quot;Units&quot;)
+  -&gt;withUnitsFor(&quot;length&quot;, &quot;time&quot;)
+  -&gt;assignUnits(t =&gt; &quot;s&quot;);</code></pre>
+
+<p>You can pass as many unit assignments to a single <code>assignUnits()</code> call as you like. E.g.</p>
+
+<pre><code>Context(&quot;Units&quot;)
+  -&gt;withUnitsFor(&quot;length&quot;, &quot;time&quot;)
+  -&gt;assignUnits(
+    t =&gt; &quot;s&quot;,
+    s =&gt; &quot;m&quot;
+  );</code></pre>
+
+<p>to assign the variable <code>t</code> units of seconds and <code>s</code> units of meters. These values are only used in differentiation, so don&#39;t affect other formulas, and aren&#39;t involved in type-checking or other operations.</p>
+
+<p>If you assign units to a variable that hasn&#39;t yet been added to the context, <code>assignUnits</code> will first add the variable as a real-valued one and then assign the units to it.</p>
+
+<h2 id="Answer-checking-for-units-and-numbers-with-units">Answer checking for units and numbers with units</h2>
+
+<p>You can use units and numbers with units within PGML or <code>ANS()</code> calls in the same way that you use any other MathObject. For example</p>
+
+<pre><code>BEGIN_PGML
+What are the units for acceleration? [_______]{&quot;m/sec^2&quot;}
+END_PGML</code></pre>
+
+<p>Here, the student can answer any equivalent units, such as <code>ft/s^2</code> or even <code>mi/h^2</code>, and get full credit. If you wish to require the units to being the same as the correct answer, you can use the <code>sameUnits</code> option on the answer checker (or set the <code>sameUnits</code> flag in the units context):</p>
+
+<pre><code>$u = Compute(&quot;m/s^2&quot;);
+BEGIN_PGML
+What are the metric units for acceleration? [_______]{$u-&gt;cmp(sameUnits =&gt; 1)}
+END_PGML</code></pre>
+
+<p>If the student entered <code>ft/sec^2</code>, they would get partial credit, and a message indicating that their units are correct but are not the same as the expected units. The amount of partial credit is determined by the <code>partialCredit</code> answer-checker option (or context flag), whose default value is .5 for half credit. So you can use</p>
+
+<pre><code>$u-&gt;cmp(sameUnits =&gt; 1, partialCredit =&gt; .75)</code></pre>
+
+<p>to increase the credit to 75%, or</p>
+
+<pre><code>$u-&gt;cmp(sameUnits =&gt; 1, partialCredit =&gt; 0)</code></pre>
+
+<p>to give no partial credit.</p>
+
+<p>Similarly, if the correct answer is given with units of <code>m</code>, then when <code>sameUnits =&gt; 1</code> is set, an answer using <code>cm</code> instead will be given only partial credit.</p>
+
+<p>In the case where the units include products of units, like <code>m s</code>, the <code>sameUnits</code> option requires both be present, but they can be in either order. So a student can enter <code>s m</code> and still get full credit. If you want to require the order to be the same as in the correct answer, then use the <code>exactUnits</code> option. Again, partial credit is given for answers that have the right units but not in the right order.</p>
+
+<p>If the correct answer is <code>m/s^2</code>, a student usually can enter <code>m s^-2</code> and their answer will be counted as correct. Similarly, if the correct answer is given as <code>m s^-2</code>, then <code>m/s^2</code> is also marked as correct. When <code>exactUnits =&gt; 1</code> is set, however, in addition to using the units in the same order, the student&#39;s answer must use the same form (either fraction or negative power) for units in the denominator, and will only get the <code>particalCredit</code> value for using the other form.</p>
+
+<p>Answers that are numbers with units are treated in a similar manner, and can use the <code>sameUnits</code>, <code>exactUnits</code>, and <code>partialCredit</code> flags to control what answers are given full credit.</p>
+
+<p>Note that in the <code>Units</code> context, students can perform operations on numbers with units, as described in the previous section. For example, if the correct answer is <code>3.02 m</code>, then a student can enter <code>3 m + 2 cm</code> and be marked correct. Similarly, for the answer <code>50 mi/h</code> a student could enter <code>(100 miles) / (2 hours)</code>.</p>
+
+<p>If you want to prevent students from performing such computations, then set the <code>limitedOperations</code> flag in the context or in the <code>cmp()</code> call. So</p>
+
+<pre><code>$ans = Compute(&quot;50 mi/h&quot;)-&gt;cmp(limitedOperations =&gt; 1);
+BEGIN_PGML
+If you travel 100 miles in 2 hours, then your
+average velocity is [_______]{$ans}
+END_PGML</code></pre>
+
+<p>will prevent the student from dividing two numbers with units, though they can still enter <code>(100/2) mi/h</code>. To prevent any operations at all, use the <code>LimitedUnits</code> context instead of the <code>Units</code> context.</p>
+
+<p>Note that you can add the <code>limitedOperations</code> and other flags to the MathObject itself, rather than the context or answer checker, as in</p>
+
+<pre><code>$av = Compute(&quot;50 mi/h&quot;)-&gt;with(limitedOperations =&gt; 1, sameUnits =&gt; 1);
+BEGIN_PGML
+If you travel 100 miles in 2 hours, then your
+average velocity is [_______]{$av}
+END_PGML</code></pre>
+
+<p>and still be able to use the result in computations in the perl code. Note that the flags will be passed on to any results involving the original that had the flags set.</p>
+
+		</div>
+	</div>
+</body>
+</html>

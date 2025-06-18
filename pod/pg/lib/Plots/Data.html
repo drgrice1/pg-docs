@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Plots::Data</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">Plots::Data</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#DATA-OBJECT">DATA OBJECT</a></li><li class="nav-item"><a class="nav-link p-0" href="#USAGE">USAGE</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="DATA-OBJECT">DATA OBJECT</h1></a>
+
+<p>This object holds data about the different types of elements that can be added to a Plots graph. This is a hash with some helper methods. Data objects are created and modified using the Plots methods, and do not need to generally be modified in a PG problem. Each PG add method returns the related data object which can be used if needed.</p>
+
+<p>Each data object contains the following:</p>
+
+<dl>
+
+<dt>name</dt>
+<dd>
+
+<p>The name is used to identify what type of data is being stored, such as a function, dataset, label, etc.</p>
+
+</dd>
+<dt>x</dt>
+<dd>
+
+<p>The array of the data points x-value.</p>
+
+</dd>
+<dt>y</dt>
+<dd>
+
+<p>The array of the data points y-value.</p>
+
+</dd>
+<dt>function</dt>
+<dd>
+
+<p>A function (stored as a hash) to generate the x and y data points.</p>
+
+</dd>
+<dt>styles</dt>
+<dd>
+
+<p>An hash of different style options and values that can be used to store additional data for things like color, width, etc.</p>
+
+</dd>
+</dl>
+
+<a href="#_podtop_"><h1 id="USAGE">USAGE</h1></a>
+
+<p>The main methods for adding data and accessing the data are:</p>
+
+<dl>
+
+<dt><code>$data-&gt;name</code></dt>
+<dd>
+
+<p>Sets, <code>$data-&gt;name($string)</code>, or gets <code>$data-&gt;name</code> the name of the data object.</p>
+
+</dd>
+<dt><code>$data-&gt;add</code></dt>
+<dd>
+
+<p>Adds a single data point, <code>$data-&gt;add($x, $y)</code>, or adds multiple data points, <code>$data-&gt;add([$x1, $y1], [$x2, $y2], ..., [$xn, $yn])</code>.</p>
+
+</dd>
+<dt><code>$data-&gt;set_function</code></dt>
+<dd>
+
+<p>Configures a function to generate data points. <code>Fx</code> and <code>Fy</code> are strings (which are turned into MathObjects), MathObjects, or per subroutines. The core function data is stored in the <code>$data-&gt;{function}</code> hash, though other data is stored as a style.</p>
+
+<pre><code>$data-&gt;set_function(
+    $self-&gt;context,
+    Fx    =&gt; Formula(&#39;t&#39;),
+    Fy    =&gt; Formula(&#39;t^2&#39;),
+    var   =&gt; &#39;t&#39;,
+    min   =&gt; -5,
+    max   =&gt;  5,
+    steps =&gt; 50,
+);</code></pre>
+
+<p>Note, the first argument must be $self-&gt;context when called from <code>Plots::Plot</code> to use a single context for all <code>Plost::Data</code> objects.</p>
+
+<p>This is also used to set a two variable function (used for slope or vector fields):</p>
+
+<pre><code>$data-&gt;set_function(
+    $self-&gt;context,
+    Fx     =&gt; Formula(&#39;x^2 + y^2&#39;),
+    Fy     =&gt; Formula(&#39;x - y&#39;),
+    xvar   =&gt; &#39;x&#39;,
+    yvar   =&gt; &#39;y&#39;,
+    xmin   =&gt; -5,
+    xmax   =&gt;  5,
+    ymin   =&gt; -5,
+    ymax   =&gt;  5
+    xsteps =&gt; 15,
+    ysteps =&gt; 15,
+);</code></pre>
+
+<p>Note a function always stores the coordinate variables as <code>xmin</code>, <code>xmax</code>, <code>xvar</code>, etc. When using a single variable function just use the x-coordinate values. <code>min</code>, <code>max</code>, <code>var</code>, <code>steps</code>, will set the x-coordinate values and will override any <code>xmin</code>, <code>xmax</code>, etc settings.</p>
+
+</dd>
+<dt><code>$data-&gt;gen_data</code></dt>
+<dd>
+
+<p>Generate the data points from a function. This can only be done when there is no data, so once the data has been generated this will do nothing (to avoid generating data again).</p>
+
+</dd>
+<dt><code>$data-&gt;size</code></dt>
+<dd>
+
+<p>Returns the current number of points being stored.</p>
+
+</dd>
+<dt><code>$data-&gt;x</code> and <code>$data-&gt;y</code></dt>
+<dd>
+
+<p>Without any inputs, these return either the x array or y array of data points being stored. A single input can be used to return only the n-th data point, <code>$data-&gt;x($n)</code>.</p>
+
+</dd>
+<dt><code>$data-&gt;style</code></dt>
+<dd>
+
+<p>Sets or gets style information. Use <code>$data-&gt;style($name)</code> to get the style value of a single style name. <code>$data-&gt;style</code> will returns a reference to the full style hash. Last, input a hash to add / change the styles.</p>
+
+<pre><code>$data-&gt;style(color =&gt; &#39;blue&#39;, width =&gt; 3);</code></pre>
+
+</dd>
+<dt><code>$str = $data-&gt;function_string($formula, $type, $xvar, $yvar);</code></dt>
+<dd>
+
+<p>Takes a MathObject <code>$formula</code> and replaces the function with either a JavaScript or PGF function string. If the function contains any function tokens not supported, a warning and empty string is returned.</p>
+
+<pre><code>$formula   The mathobject formula object, either $self-&gt;{function}{Fx} or $self-&gt;{function}{Fy}.
+$type      &#39;js&#39; or &#39;PGF&#39; (falls back to js for any input except &#39;PGF&#39;).
+$xvar      The x-variable name, $self-&gt;{function}{xvar}.
+$yvar      The y-variable name, $self-&gt;{function}{yvar}, for vector fields.
+           Leave undefined for single variable functions.</code></pre>
+
+</dd>
+<dt><code>$data-&gt;update_min_max</code></dt>
+<dd>
+
+<p>Updates a functions <code>xmin</code>, <code>xmax</code>, <code>ymin</code>, and <code>ymax</code> values to reals using MathObjects. This allows end points like &#39;pi&#39;, &#39;e&#39;, etc.</p>
+
+</dd>
+<dt><code>$data-&gt;get_start_point</code></dt>
+<dd>
+
+<p>Gets the starting (left end) point of a function. This should be used when using function strings to avoid generating the function data.</p>
+
+</dd>
+<dt><code>$data-&gt;get_end_point</code></dt>
+<dd>
+
+<p>Gets the ending (right end) point of a function. This should be used when using function strings to avoid generating the function data.</p>
+
+</dd>
+</dl>
+
+		</div>
+	</div>
+</body>
+</html>

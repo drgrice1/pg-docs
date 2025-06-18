@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rserve::REXP::List</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">Rserve::REXP::List</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#SYNOPSIS">SYNOPSIS</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a></li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>Rserve::REXP::List - an R generic vector (list)</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>use Rserve::REXP::List
+
+my $vec = Rserve::REXP::List-&gt;new([
+    1, &#39;&#39;, &#39;foo&#39;, [&#39;x&#39;, 22]
+]);
+print $vec-&gt;elements;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>An object of this class represents an R list, also called a generic vector (<code>VECSXP</code>). List elements can themselves be lists, and so can form a tree structure.</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<p><code>Rserve::REXP:List</code> inherits from <a href="//pg/lib/Rserve/REXP/Vector.html">Rserve::REXP::Vector</a>, with no added restrictions on the value of its elements. Missing values (<code>NA</code> in R) have value <code>undef</code>.</p>
+
+<dl>
+
+<dt>sexptype</dt>
+<dd>
+
+<p>SEXPTYPE of generic vectors is <code>VECSXP</code>.</p>
+
+</dd>
+<dt>to_perl</dt>
+<dd>
+
+<p>Perl value of the list is an array reference to the Perl values of its <code>elements</code>, but using a scalar value to represent elements that are atomic vectors of length 1, rather than a one-element array reference.</p>
+
+<p>The idea is that in R, <code>1:3</code>, and <code>list(1, 2, 3)</code> can often be used interchangeably, even though the list is really composed of three integer vectors, each of length one. Now, both will have native Perl representation of <code>[1, 2, 3]</code>.</p>
+
+<p>This only applies to elements that are atomic vectors. An element of type list will always be represented as an array reference. For example,</p>
+
+<p><code>list(list(1), list(2), list(3))-&gt;to_perl</code> will be represented as <code>[ [ 1 ], [ 2 ], [ 3 ] ]</code></p>
+
+</dd>
+</dl>
+
+		</div>
+	</div>
+</body>
+</html>

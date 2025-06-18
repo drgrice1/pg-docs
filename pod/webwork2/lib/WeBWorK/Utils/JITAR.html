@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeBWorK::Utils::JITAR</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">WeBWorK::Utils::JITAR</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#seq_to_jitar_id">seq_to_jitar_id</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#jitar_id_to_seq">jitar_id_to_seq</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#is_jitar_problem_hidden">is_jitar_problem_hidden</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#is_jitar_problem_closed">is_jitar_problem_closed</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#jitar_problem_finished">jitar_problem_finished</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#jitar_problem_adjusted_status">jitar_problem_adjusted_status</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#prob_id_sort">prob_id_sort</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>WeBWorK::Utils::JITAR - contains utility subroutines for JITAR problems.</p>
+
+<h2 id="seq_to_jitar_id">seq_to_jitar_id</h2>
+
+<p>Usage: <code>seq_to_jitar_id(@seq)</code></p>
+
+<p>This method takes the tree sequence <code>@seq</code> and returns the jitar id. This id is a specially crafted signed 32 bit integer of the form</p>
+
+<pre><code>SAAAAAAABBBBBBCCCCCCDDDDEEEEFFFF</code></pre>
+
+<p>in binary. Here A is the level 1 index, B is the level 2 index, and C, D, E and F are the indexes for levels 3 through 6.</p>
+
+<p>Note: Level 1 can contain indexes up to 125. Levels 2 and 3 can contain indxes up to 63. For levels 4 through six you are limited to 15.</p>
+
+<h2 id="jitar_id_to_seq">jitar_id_to_seq</h2>
+
+<p>Usage: <code>jitar_id_to_seq($id)</code></p>
+
+<p>Takes a jitar_id and returns the tree sequence. Jitar ids have the format described above.</p>
+
+<h2 id="is_jitar_problem_hidden">is_jitar_problem_hidden</h2>
+
+<p>Usage: <code>is_jitar_problem_hidden($db, $userID, $setID, $problemID)</code></p>
+
+<p>Returns 1 if the problem is hidden. The problem is hidden if the number of attempts on the parent problem is greater than att_to_open_children, or if the user has run out of attempts. Everything is opened up after the due date.</p>
+
+<h2 id="is_jitar_problem_closed">is_jitar_problem_closed</h2>
+
+<p>Usage: <code>is_jitar_problem_closed($db, $ce, $userID, $setID, $problemID)</code></p>
+
+<p>Returns 1 if the jitar problem is closed. JITAR problems are closed if the restrict_prob_progression variable is set on the set, and if the previous problem is closed, or hasn&#39;t been finished yet. The first problem in a level is always open.</p>
+
+<h2 id="jitar_problem_finished">jitar_problem_finished</h2>
+
+<p>Usage: <code>jitar_problem_finished($userProblem, $db)</code></p>
+
+<p>This returns 1 if the given problem is &quot;finished&quot;. This happens when the problem attempts have been maxed out, and the attempts of any children with the &quot;counts_to_parent_grade&quot; also have their attemtps maxed out. (In other words if the grade can&#39;t be raised any more.)</p>
+
+<h2 id="jitar_problem_adjusted_status">jitar_problem_adjusted_status</h2>
+
+<p>Usage: <code>jitar_problem_adjusted_status($userProblem, $db)</code></p>
+
+<p>This returns the adjusted status for a jitar problem. This is either the problems status, or it is the greater of the status and the score generated by taking the weighted average of all child problems that have the &quot;counts_parent_grade&quot; flag set.</p>
+
+<h2 id="prob_id_sort">prob_id_sort</h2>
+
+<p>Usage: <code>prob_id_sort(@ids)</code></p>
+
+<p>Sorts problem ID&#39;s so that the usual integral problem ids are first and just-in-time ids after that. For example,</p>
+
+<pre><code>1, 1.1, 1.1.1, 2, 2.1, 2.2, 3, 4</code></pre>
+
+		</div>
+	</div>
+</body>
+</html>

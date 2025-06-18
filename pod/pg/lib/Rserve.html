@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rserve</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">Rserve</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#SYNOPSIS">SYNOPSIS</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#CONSTRUCTOR">CONSTRUCTOR</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#ACCESSORS">ACCESSORS</a>
+        <ul class="nav flex-column w-100">
+          <li class="nav-item"><a class="nav-link p-0" href="#server">server</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#port">port</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#fh">fh</a></li>
+        </ul>
+      </li>
+      <li class="nav-item"><a class="nav-link p-0" href="#METHODS1">METHODS</a>
+        <ul class="nav flex-column w-100">
+          <li class="nav-item"><a class="nav-link p-0" href="#eval">eval</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#try_eval">try_eval</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#get_file">get_file</a></li>
+          <li class="nav-item"><a class="nav-link p-0" href="#close">close</a></li>
+        </ul>
+      </li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>Rserve - Supply object methods for Rserve communication</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>use Rserve;
+
+my $rserve = Rserve-&gt;new(&#39;someserver&#39;);
+my $var = $rserve-&gt;eval(&#39;1 + 1&#39;);
+print $var-&gt;to_perl;
+$rserve-&gt;close;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p><code>Rserve</code> provides an object-oriented interface to communicate with the <a href="http://www.rforge.net/Rserve/">Rserve</a> binary R server.</p>
+
+<p>This allows Perl programs to access all facilities of R without the need to have a local install of R or link to an R library.</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<h2 id="CONSTRUCTOR">CONSTRUCTOR</h2>
+
+<dl>
+
+<dt>Rserve-&gt;new($server)</dt>
+<dd>
+
+<p>The single-argument constructor can be invoked with a scalar containing the host name of the Rserve server. The method will immediately open a socket connection to the server and perform the initial steps prescribed by the protocol. The method will raise an exception if the connection cannot be established or if the remote host does not appear to run the correct version of Rserve.</p>
+
+</dd>
+<dt>Rserv-&gt;new($handle)</dt>
+<dd>
+
+<p>The single-argument constructor can be invoked with an instance of <a href="https://metacpan.org/pod/IO::Handle">IO::Handle</a> containing the connection to the Rserve server, which becomes the &#39;fh&#39; attribute. The caller is responsible for ensuring that the connection is established and ready for submitting client requests.</p>
+
+</dd>
+<dt>Rserve-&gt;new(ATTRIBUTE_HASH_OR_HASH_REF)</dt>
+<dd>
+
+<p>The constructor&#39;s arguments can also be given as a hash or hash reference, specifying values of the object attributes. The caller passing the handle is responsible for ensuring that the connection is established and ready for submitting client requests.</p>
+
+</dd>
+<dt>new</dt>
+<dd>
+
+<p>The no-argument constructor uses the default server name &#39;localhost&#39; and port 6311 and immediately opens a socket connection to the server, performing the initial steps prescribed by the protocol. The method will raise an exception if the connection cannot be established or if the remote host does not appear to run the correct version of Rserve.</p>
+
+</dd>
+</dl>
+
+<h2 id="ACCESSORS">ACCESSORS</h2>
+
+<h3 id="server">server</h3>
+
+<p>Name of the Rserve server.</p>
+
+<h3 id="port">port</h3>
+
+<p>Port of the Rserve server.</p>
+
+<h3 id="fh">fh</h3>
+
+<p>A connection handle (stored as a reference to the <a href="https://metacpan.org/pod/IO::Handle">IO::Handle</a>) to the Rserve server.</p>
+
+<h2 id="METHODS1">METHODS</h2>
+
+<h3 id="eval">eval</h3>
+
+<pre><code>$rserve-&gt;eval($rexpr)</code></pre>
+
+<p>Evaluates the R expression, given as text string in <code>$rexpr</code>, on an <a href="http://www.rforge.net/Rserve/">Rserve</a> server and returns its result as a <a href="//pg/lib/Rserve/REXP.html">Rserve::REXP</a> object.</p>
+
+<h3 id="try_eval">try_eval</h3>
+
+<pre><code>$rserve-&gt;try_eval($rexpr)</code></pre>
+
+<p>This is the same as <code>eval</code> except that <code>$rexpr</code> is guarded by the R <code>try</code> function. The result is returned as an REXP if no exceptions are raised.</p>
+
+<h3 id="get_file">get_file</h3>
+
+<pre><code>$rserve-&gt;get_file($remote_file_name)</code></pre>
+
+<p>Transfers a file named <code>$remote_file_name</code> from the Rserve server to the local machine. Returns the contents of the file as a scalar.</p>
+
+<h3 id="close">close</h3>
+
+<p>Closes the object&#39;s filehandle. This method is automatically invoked when the object is destroyed if the connection was opened by the constructor, but not if it was passed in as a pre-opened handle.</p>
+
+		</div>
+	</div>
+</body>
+</html>

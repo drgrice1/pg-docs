@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Rserve::QapEncoding</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
+</head>
+<body>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">Rserve::QapEncoding</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#SYNOPSIS">SYNOPSIS</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#SUBROUTINES">SUBROUTINES</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#decode">decode</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#decode_sexp">decode_sexp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#decode_int">decode_int</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#dt_sexp_data">dt_sexp_data</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#unpack_sexp_info">unpack_sexp_info</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#sexp_data">sexp_data</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#intsxp">intsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#langsxp">langsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#lglsxp">lglsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#listsxp">listsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#rawsxp">rawsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#dblsxp">dblsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#cplxsxp">cplxsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#strsxp">strsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#symsxp">symsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#vecsxp">vecsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#expsxp">expsxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#nosxp">nosxp</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#maybe_attributes">maybe_attributes</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#tagged_pairlist">tagged_pairlist</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#tagged_pairlist_to_rexp_hash">tagged_pairlist_to_rexp_hash</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#tagged_pairlist_to_attribute_hash">tagged_pairlist_to_attribute_hash</a></li>
+    </ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
+
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
+
+<p>Rserve::QapEncoding - Functions for parsing Rserve packets</p>
+
+<a href="#_podtop_"><h1 id="SYNOPSIS">SYNOPSIS</h1></a>
+
+<pre><code>use Rserve::QapEncoding qw(decode);
+
+# Assume $data comes from an Rserve response body.
+my ($rexp, $state) = @{ decode($data) } or die &quot;couldn&#39;t parse&quot;;
+
+# If reading a QAP response, there should be no data left unparsed.
+die &#39;Unread data remaining&#39; unless $state-&gt;eof;
+
+# The result of the unserialization is a REXP.
+say $rexp;
+
+# REXPs can be converted to the closest native Perl data type
+print $rexp-&gt;to_perl;</code></pre>
+
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>This module implements the actual reading of serialized R objects encoded with Rserve&#39;s QAP protocol and their conversion to a <a href="//pg/lib/Rserve/REXP.html">Rserve::REXP</a>. You are not expected to use it directly, as it&#39;s normally wrapped by <a href="//pg/lib/Rserve.html#eval">&quot;eval&quot; in Rserve</a>.</p>
+
+<a href="#_podtop_"><h1 id="SUBROUTINES">SUBROUTINES</h1></a>
+
+<h2 id="decode">decode</h2>
+
+<pre><code>decode($data)</code></pre>
+
+<p>Constructs a <a href="//pg/lib/Rserve/REXP.html">Rserve::REXP</a> object from its serialization in <code>$data</code>. Returns a pair of the object and the <a href="//pg/lib/Rserve/ParserState.html">Rserve::ParserState</a> at the end of serialization.</p>
+
+<h2 id="decode_sexp">decode_sexp</h2>
+
+<h2 id="decode_int">decode_int</h2>
+
+<p>Parsers for Rserve&#39;s <code>DT_SEXP</code> and <code>DT_INT</code> data types, respectively.</p>
+
+<h2 id="dt_sexp_data">dt_sexp_data</h2>
+
+<p>Parses the body of an RServe <code>DT_SEXP</code> object by parsing its header (<code>XT_</code> type and length) and content (done by sequencing <a href="#unpack_sexp_info">&quot;unpack_sexp_info&quot;</a> and <a href="#sexp_data">&quot;sexp_data&quot;</a>.</p>
+
+<h2 id="unpack_sexp_info">unpack_sexp_info</h2>
+
+<p>Parser for the header (consisting of the <code>XT_*</code> type, flags, and object length) of a serialized SEXP. Returns a hash with keys &quot;object_type&quot;, &quot;has_attributes&quot;, and &quot;length&quot;, each corresponding to the field in R serialization described in <a href="http://www.rforge.net/Rserve/dev.html">QAP1 protocol description</a>.</p>
+
+<h2 id="sexp_data">sexp_data</h2>
+
+<pre><code>sexp_data($obj_info)</code></pre>
+
+<p>Parser for a QAP-serialized R object, using the object type stored in <code>$obj_info</code> hash&#39;s &quot;object_type&quot; key to use the correct parser for the particular type.</p>
+
+<h2 id="intsxp">intsxp</h2>
+
+<h2 id="langsxp">langsxp</h2>
+
+<h2 id="lglsxp">lglsxp</h2>
+
+<h2 id="listsxp">listsxp</h2>
+
+<h2 id="rawsxp">rawsxp</h2>
+
+<h2 id="dblsxp">dblsxp</h2>
+
+<h2 id="cplxsxp">cplxsxp</h2>
+
+<h2 id="strsxp">strsxp</h2>
+
+<h2 id="symsxp">symsxp</h2>
+
+<h2 id="vecsxp">vecsxp</h2>
+
+<h2 id="expsxp">expsxp</h2>
+
+<p>Parsers for the corresponding R SEXP-types.</p>
+
+<h2 id="nosxp">nosxp</h2>
+
+<p>Parser for the Rserve&#39;s <code>XT_UNKNOWN</code> type, encoding an R SEXP-type that does not have a corresponding representation in QAP.</p>
+
+<h2 id="maybe_attributes">maybe_attributes</h2>
+
+<pre><code>maybe_attributes($object_info)</code></pre>
+
+<p>Convenience parser for SEXP attributes, which are serialized as a tagged pairlist <code>XT_LIST_TAG</code> followed by a SEXP for the object value. Attributes are stored only if <code>$object_info</code> indicates their presence. Returns a pair of <code>$object_info</code> and a hash reference to the attributes, as returned by <a href="#tagged_pairlist_to_attribute_hash">&quot;tagged_pairlist_to_attribute_hash&quot;</a>.</p>
+
+<h2 id="tagged_pairlist">tagged_pairlist</h2>
+
+<p>Parses a pairlist (optionally tagged) and returns an array where each element is a hash containing keys <code>value</code> (the REXP of the pairlist element) and, optionally, <code>tag</code>.</p>
+
+<h2 id="tagged_pairlist_to_rexp_hash">tagged_pairlist_to_rexp_hash</h2>
+
+<p>Converts a pairlist to a REXP hash whose keys are the pairlist&#39;s element tags and values the pairlist elements themselves.</p>
+
+<h2 id="tagged_pairlist_to_attribute_hash">tagged_pairlist_to_attribute_hash</h2>
+
+<p>Converts object attributes, which are serialized as a pairlist with attribute name in the element&#39;s tag, to a hash that can be used as the <code>attributes</code> argument to <a href="//pg/lib/Rserve/REXP.html">Rserve::REXP</a> constructors.</p>
+
+<p>Some attributes are serialized using a compact encoding (for instance, when a table&#39;s row names are just integers 1:nrows), and this function will decode them to a complete REXP.</p>
+
+		</div>
+	</div>
+</body>
+</html>

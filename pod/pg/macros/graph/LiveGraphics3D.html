@@ -1,99 +1,144 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>graph/LiveGraphics3D.pl</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>graph/LiveGraphics3D.pl</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>graph/LiveGraphics3D.pl</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
-
-
-<ul id="index">
-  <li>
-    <ul>
-      <li><a href="#LiveGraphics3D.pl">LiveGraphics3D.pl</a></li>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">graph/LiveGraphics3D.pl</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a></li><li class="nav-item"><a class="nav-link p-0" href="#DESCRIPTION">DESCRIPTION</a></li><li class="nav-item"><a class="nav-link p-0" href="#METHODS">METHODS</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#LiveGraphics3D">LiveGraphics3D</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Live3Dfile">Live3Dfile</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#Live3Ddata">Live3Ddata</a></li>
     </ul>
-  </li>
-</ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
 
-<h2 id="LiveGraphics3D.pl">LiveGraphics3D.pl</h2>
 
-<pre><code> ###########################################################################
- #
- #   Macros for handling interactive 3D graphics via the LiveGraphics3D
- #   Java applet.  The applet needs to be in the course html directory.
- #   (If it is in the system html area, you will need to change the
- #   default below or supply the jar option explicitly).
- #
- #   The LiveGraphics3D applet displays a mathematica Graphics3D object
- #   that is stored in a .m file (or a compressed one).  Use Mathematica
- #   to create one.  (In the future, I plan to write a perl class that
- #   will create these for you on the fly. -- DPVC)
- #
- #   The main routines are
- #
- #      Live3Dfile          load a data file
- #      Live3Ddata          load raw Graphics3D data
- #      LiveGraphics3D      access to all parameters
- #
+<a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
- #
- #  LiveGraphics3D(options)
- #
- #  Options are from:
- #
- #     file =&gt; name           name of .m file to load
- #
- #     archive =&gt; name        name of a .zip file to load
- #
- #     input =&gt; 3Ddata        string containing Graphics3D data to
- #                            be displayed by the applet
- #
- #     size =&gt; [w,h]          width and height of applet
- #
- #     vars =&gt; [vars]         hash of variables to pass as independent
- #                            variables to the applet, togther with
- #                            their initial values
- #                              e.g., vars =&gt; [a=&gt;1,b=&gt;1]
- #
- #     depend =&gt; [list]       list of dependent variables to pass to
- #                            the applet with their replacement strings
- #                            (see LiveGraphics3D documentation)
- #
- #     background=&gt;&quot;#RRGGBB&quot;  the background color to use (default is white)
- #
- #     scale =&gt; n             scaling factor for applet (default is 1.)
- #
- #     image =&gt; file          a file containing an image to use in TeX mode
- #                            or when Java is disabled
- #
- #     tex_size =&gt; ratio      a scaling factor for the TeX image (as a portion
- #                            of the line width).
- #                                1000 is 100%, 500 is 50%, etc.
- #
- #     tex_center =&gt; 0 or 1   center the image in TeX mode or not
- #
- #     Live3D =&gt; [params]     hash of additional parameters to pass to
- #                            the Live3D applet.
- #                              e.g. Live3D =&gt; [VISIBLE_FACES =&gt; &quot;FRONT&quot;]
- #</code></pre>
+<p>LiveGraphics3D.pl - provides the ability to have an interactive 3D plot.</p>
 
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
+<a href="#_podtop_"><h1 id="DESCRIPTION">DESCRIPTION</h1></a>
+
+<p>Macros for handling interactive 3D graphics.</p>
+
+<p>This parses LiveGraphics3D data into <a href="https://plotly.com/javascript">Plotly</a> traces. See <a href="https://www-users.cse.umn.edu/~rogness/lg3d/mma_syntax.html">https://www-users.cse.umn.edu/~rogness/lg3d/mma_syntax.html</a> for information about the Mathematica syntax of the LiveGraphics3D format. Note that not all of the syntax is supported by this macro. Instead of creating this data directly, it is recommended to use one of the other LiveGraphics PG macros that generate this data. See <a href="//pg/macros/graph/LiveGraphicsCylindricalPlot3D.html">LiveGraphicsCylindricalPlot3D.pl</a>, <a href="//pg/macros/graph/LiveGraphicsParametricCurve3D.html">LiveGraphicsParametricCurve3D.pl</a>, <a href="//pg/macros/graph/LiveGraphicsParametricSurface3D.html">LiveGraphicsParametricSurface3D.pl</a>, <a href="//pg/macros/graph/LiveGraphicsRectangularPlot3D.html">LiveGraphicsRectangularPlot3D.pl</a>, <a href="//pg/macros/graph/LiveGraphicsVectorField2D.html">LiveGraphicsVectorField2D.pl</a>, and <a href="//pg/macros/graph/LiveGraphicsVectorField3D.html">LiveGraphicsVectorField3D.pl</a>.</p>
+
+<a href="#_podtop_"><h1 id="METHODS">METHODS</h1></a>
+
+<p>The following methods are provided.</p>
+
+<h2 id="LiveGraphics3D">LiveGraphics3D</h2>
+
+<p>Usage: <code>LiveGraphics3D(options)</code></p>
+
+<p>The following options can be given.</p>
+
 <ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
+
+<li><p><code>file =&gt; name</code></p>
+
+<p>Name of the <code>.m</code> file to load.</p>
+
+</li>
+<li><p><code>archive =&gt; name</code></p>
+
+<p>Name of a <code>.zip</code> file to load. If this is set, then the <code>file</code> option must also be given, and must be set to the name of the file in the zip archive that contains the data.</p>
+
+</li>
+<li><p><code>input =&gt; 3Ddata</code></p>
+
+<p>String containing Graphics3D data to be displayed by the applet.</p>
+
+</li>
+<li><p><code>size =&gt; [w, h]</code></p>
+
+<p>Width and height of applet.</p>
+
+</li>
+<li><p><code>max_ticks =&gt; n</code></p>
+
+<p>Maximum number of ticks to show on the <code>x</code>, <code>y</code>, and <code>z</code> axes. This can be given as a single positive integer, or can be a reference to an array of three positive integers.</p>
+
+</li>
+<li><p><code>vars =&gt; [vars]</code></p>
+
+<p>Hash of variables to pass as independent variables to the applet, together with their initial values, e.g., <code>vars =&gt; [ a =&gt; 1, b =&gt; 1 ]</code>.</p>
+
+</li>
+<li><p><code>background =&gt; &quot;#RRGGBB&quot;</code></p>
+
+<p>The background color to use (default is white).</p>
+
+</li>
+<li><p><code>image =&gt; file</code></p>
+
+<p>A file containing an image to use in TeX mode.</p>
+
+</li>
+<li><p><code>tex_size =&gt; ratio</code></p>
+
+<p>A scaling factor for the TeX image (as a portion of the line width). 1000 is 100%, 500 is 50%, etc.</p>
+
+</li>
+<li><p><code>tex_center =&gt; 0 or 1</code></p>
+
+<p>Whether to center the image in TeX mode.</p>
+
+</li>
 </ul>
-</div>
-</div>
+
+<h2 id="Live3Dfile">Live3Dfile</h2>
+
+<p>Usage: <code>Live3Dfile($file, options)</code></p>
+
+<p>Load a data file. This just calls <code>LiveGraphics3D</code> with the <code>file</code> option set to <code>$file</code>. All other options supported by <code>LiveGraphics3D</code> can also be given.</p>
+
+<h2 id="Live3Ddata">Live3Ddata</h2>
+
+<p>Usage: <code>Live3Ddata($input, options)</code></p>
+
+<p>Load raw Graphics3D data. This just calls <code>LiveGraphics3D</code> with the <code>input</code> option set to <code>$input</code>. All other options supported by <code>LiveGraphics3D</code> can also be given.</p>
+
+		</div>
+	</div>
 </body>
 </html>
-
-

@@ -1,131 +1,285 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-<meta charset='UTF-8'>
-<link rel="icon" href="/favicon.ico">
-<title>WeBWorK::Utils</title>
+	<meta charset='UTF-8'>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>WeBWorK::Utils</title>
+	<link rel="shortcut icon" href="/favicon.ico">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="//assets/podviewer.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" defer></script>
+	<script src="//assets/podviewer.js" defer></script>
 </head>
 <body>
-<h1>WeBWorK::Utils</h1>
-<div style="margin-left:20px">Jump to: <a href="#column-one">Site Navigation</a></div>
-<hr>
-<div id="_podtop_">
-
-
-<ul id="index">
-  <li><a href="#NAME">NAME</a></li>
-  <li><a href="#FUNCTIONS">FUNCTIONS</a>
-    <ul>
-      <li><a href="#Filesystem-interaction">Filesystem interaction</a></li>
-      <li><a href="#Date-time-processing">Date/time processing</a></li>
+	<div class="pod-header navbar navbar-dark bg-primary px-3 position-fixed border-bottom border-dark">
+		<div class="container-fluid d-flex flex-column d-md-block">
+			<h1 class="navbar-brand fw-bold fs-5 me-auto me-md-0 mb-2 mb-md-0">WeBWorK::Utils</h1>
+			<button class="navbar-toggler d-md-none me-auto" type="button" data-bs-toggle="offcanvas"
+				data-bs-target="#sidebar" aria-controls="sidebar" aria-label="Toggle Sidebar">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+		</div>
+	</div>
+	<aside class="offcanvas-md offcanvas-start border-end border-dark position-fixed" tabindex="-1"
+		id="sidebar" aria-labelledby="sidebar-label">
+		<div class="offcanvas-header">
+			<h2 class="offcanvas-title" id="sidebar-label">Index</h2>
+			<button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#sidebar"
+			   	aria-label="Close">
+			</button>
+		</div>
+		<div class="offcanvas-body p-md-3 w-100">
+			<nav>
+				<ul class="nav flex-column w-100">
+					<li class="nav-item">
+						<a href="/" class="nav-link p-0">WeBWorK POD Home</a>
+					</li>
+					<li class="nav-item">
+						<a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page" class="nav-link p-0">WeBWorK Wiki</a>
+					</li>
+					<li><hr></li>
+<li class="nav-item"><a class="nav-link p-0" href="#NAME">NAME</a>
+    <ul class="nav flex-column w-100">
+      <li class="nav-item"><a class="nav-link p-0" href="#runtime_use">runtime_use</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#trim_spaces">trim_spaces</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#fix_newlines">fix_newlines</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#encodeAnswers">encodeAnswers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#decodeAnswers">decodeAnswers</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#encode_utf8_base64">encode_utf8_base64</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#decode_utf8_base64">decode_utf8_base64</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#nfreeze_base64">nfreeze_base64</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#thaw_base64">thaw_base64</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#min">min</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#max">max</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#wwRound">wwRound</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#cryptPassword">cryptPassword</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#utf8Crypt">utf8Crypt</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#undefstr">undefstr</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#sortByName">sortByName</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#sortAchievements">sortAchievements</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#not_blank">not_blank</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#role_and_above">role_and_above</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#fetchEmailRecipients">fetchEmailRecipients</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#processEmailMessage">processEmailMessage</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#createEmailSenderTransportSMTP">createEmailSenderTransportSMTP</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#generateURLs">generateURLs</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#getAssetURL">getAssetURL</a></li>
+      <li class="nav-item"><a class="nav-link p-0" href="#x">x</a></li>
     </ul>
-  </li>
-</ul>
+  </li>				</ul>
+			</nav>
+		</div>
+	</aside>
+	<div class="pod-page-container d-flex">
+		<div class="container-fluid p-3 h-100" id="_podtop_">
+
 
 <a href="#_podtop_"><h1 id="NAME">NAME</h1></a>
 
-<p>WeBWorK::Utils - useful utilities used by other WeBWorK modules.</p>
+<p>WeBWorK::Utils - General utility methods.</p>
 
-<a href="#_podtop_"><h1 id="FUNCTIONS">FUNCTIONS</h1></a>
+<h2 id="runtime_use">runtime_use</h2>
 
-<h2 id="Filesystem-interaction">Filesystem interaction</h2>
+<p>Usage: <code>runtime_use($module, @import_list)</code></p>
+
+<p>This is like use, except it happens at runtime. The module name must be quoted, and a comma after it if an import list is specified. Also, to specify an empty import list (as opposed to no import list) use an empty array reference instead of an empty array.</p>
+
+<p>The following demonstrates equivalent usage of <code>runtime_use</code> to that of <code>use</code>.</p>
+
+<pre><code>use Xyzzy;               =&gt;    runtime_use &#39;Xyzzy&#39;;
+use Foo qw(pine elm);    =&gt;    runtime_use &#39;Foo&#39;, qw(pine elm);
+use Foo::Bar ();         =&gt;    runtime_use &#39;Foo::Bar&#39;, [];</code></pre>
+
+<h2 id="trim_spaces">trim_spaces</h2>
+
+<p>Usage: <code>trim_spaces($string)</code></p>
+
+<p>Returns a string with whitespace trimmed from the start and end of <code>$string</code>.</p>
+
+<h2 id="fix_newlines">fix_newlines</h2>
+
+<p>Usage: <code>fix_newlines($string)</code></p>
+
+<p>Converts carriage returns followed by new lines into just a new line. In other words, converts non-unix like new lines into unix new lines.</p>
+
+<h2 id="encodeAnswers">encodeAnswers</h2>
+
+<p>Usage: <code>encodeAnswers($hash, $order)</code></p>
+
+<p>Give a reference to a hash whose keys are answer names and values are student answers in <code>$hash</code>, and a reference to an array of answer names in the order the answers appear in the problem in <code>$order</code>, this returns a JSON encoded array of answer name/student answer pairs where the pairs appear in the array in the order provided by <code>$order</code>.</p>
+
+<h2 id="decodeAnswers">decodeAnswers</h2>
+
+<p>Usage: <code>decodeAnswers($serialized)</code></p>
+
+<p>Returns an array of answers decoded from the given <code>$serialized</code> string.</p>
+
+<p>This method attempts to detect if <code>$serialized</code> is a JSON encoded array, or is a <a href="https://metacpan.org/pod/Storable::nfreeze">Storable::nfreeze</a> encoded hash (the old method), and decodes using the appropriate method.</p>
+
+<h2 id="encode_utf8_base64">encode_utf8_base64</h2>
+
+<p>Usage: <code>encode_utf8_base64($in)</code></p>
+
+<p>UTF-8 encodes, and then base 64 endcodes the input and returns the result.</p>
+
+<h2 id="decode_utf8_base64">decode_utf8_base64</h2>
+
+<p>Usage: <code>decode_utf8_base64($in)</code></p>
+
+<p>Base 64 decodes, and then UTF-8 decodes the input and returns the result.</p>
+
+<h2 id="nfreeze_base64">nfreeze_base64</h2>
+
+<p>Usage: <code>nfreeze_base64($in)</code></p>
+
+<p>This <code>Storable::nfreeze</code> encodes and then base 64 encodes <code>$in</code> and returns the result.</p>
+
+<h2 id="thaw_base64">thaw_base64</h2>
+
+<p>Usage: <code>thaw_base64($in)</code></p>
+
+<p>This base 64 decodes and then <code>Storable::thaw</code> decodes <code>$in</code> and returns result.</p>
+
+<h2 id="min">min</h2>
+
+<p>Usage: <code>min(@items)</code></p>
+
+<p>Return the minimum element in <code>@items</code>.</p>
+
+<h2 id="max">max</h2>
+
+<p>Usage: <code>max(@items)</code></p>
+
+<p>Return the maximum element in <code>@items</code>.</p>
+
+<h2 id="wwRound">wwRound</h2>
+
+<p>Usage: <code>wwRound($places, $float)</code></p>
+
+<p>Returns <code>$float</code> rounded to <code>$places</code> decimal places.</p>
+
+<h2 id="cryptPassword">cryptPassword</h2>
+
+<p>Usage: <code>cryptPassword($clearPassword)</code></p>
+
+<p>Returns the crypted form of <code>$clearPassword</code> using a random 16 character salt.</p>
+
+<h2 id="utf8Crypt">utf8Crypt</h2>
+
+<p>Usage: <code>utf8Crypt($clearPassword, $hash)</code></p>
+
+<p>Attempts to call <code>crypt</code> on <code>$clearPassword</code>. If that fails, then <code>crypt</code> is called on the UTF-8 encoded version of <code>$clearPassword</code>.</p>
+
+<p>Note that <code>$hash</code> can be a salt or a password hash generated by a previous call of this method with a salt..</p>
+
+<h2 id="undefstr">undefstr</h2>
+
+<p>Usage: <code>undefstr($default, @values)</code></p>
+
+<p>Returns a copy of <code>@values</code> whose undefined entries are replaced with <code>$default</code>.</p>
+
+<h2 id="sortByName">sortByName</h2>
+
+<p>Usage: <code>sortByName($field, @items)</code></p>
+
+<p>If <code>$field</code> is a string naming a single field, then this returns the elements in <code>@items</code> sorted by that field.</p>
+
+<p>If <code>$field</code> is a reference to an array of strings each naming a field, then this returns the entries of <code>@items</code> sorted first by the first name field, then by second, etc.</p>
+
+<p>A natural sort algorithm is used for sorting, i.e., numeric parts are sorted numerically, and alphabetic parts sorted lexicographically.</p>
+
+<h2 id="sortAchievements">sortAchievements</h2>
+
+<p>Usage: <code>sortAchievements(@achievements)</code></p>
+
+<p>Returns <code>@achievements</code> sorted first by achievement id, then by number or category (if the achievement does not have a number).</p>
+
+<h2 id="not_blank">not_blank</h2>
+
+<p>Usage: <code>not_blank($str)</code></p>
+
+<p>Returns true if <code>$str</code> is defined and does not consist entirely of white space.</p>
+
+<h2 id="role_and_above">role_and_above</h2>
+
+<p>Usage: <code>role_and_above($userRoles, $role)</code></p>
+
+<p>Given a reference to a hash <code>$userRoles</code> whose keys are roles and values are permission levels, returns a reference to an array of roles that are at or above that of the permission level of the role specified in <code>$role</code>.</p>
+
+<h2 id="fetchEmailRecipients">fetchEmailRecipients</h2>
+
+<p>Usage: <code>fetchEmailRecipients($c, $permissionType, $sender)</code></p>
+
+<p>Given a <code>WeBWorK::ContentGenerator</code> object <code>$c</code> and permission type <code>$permissionType</code>, this returns a list of feedback email recipients for the course. If <code>$sender</code> is provided, then this list is filtered by the section of that sender.</p>
+
+<h2 id="processEmailMessage">processEmailMessage</h2>
+
+<p>Usage: <code>processEmailMessage($text, $user_record, $STATUS, $merge_data, $for_preview)</code></p>
+
+<p>Process the email message in <code>$text</code> and replace macros with values from the <code>$user_record</code>, the <code>$STATUS</code>, and <code>$merge_data</code>. If <code>$for_prevew</code> is true then the result is formatted to be display in HTML.</p>
+
+<p>The replaceable macros and what they will be replaced with are</p>
+
+<pre><code>$SID        =&gt; $user_record-&gt;student_id
+$FN         =&gt; $user_record-&gt;first_name
+$LN         =&gt; $user_record-&gt;last_name
+$SECTION    =&gt; $user_record-&gt;section
+$RECITATION =&gt; $user_record-&gt;recitation
+$EMAIL      =&gt; $user_record-&gt;email_address
+$LOGIN      =&gt; $user_record-&gt;user_id
+$STATUS     =&gt; $STATUS
+$COL[n]     =&gt; nth column of $merge_data
+$COL[-1]    =&gt; last column of $merge_data</code></pre>
+
+<h2 id="createEmailSenderTransportSMTP">createEmailSenderTransportSMTP</h2>
+
+<p>Usage: <code>createEmailSenderTransportSMTP($ce)</code></p>
+
+<p>This returns an <code>Email::Sender::Transport::SMTP</code> object for use in sending emails. A valid <code>WeBWorK::CourseEnvironment</code> object must be provided in <code>$ce</code>.</p>
+
+<h2 id="generateURLs">generateURLs</h2>
+
+<p>Usage: <code>generateURLs($c, %params)</code></p>
+
+<p>The parameter <code>$c</code> must be a <code>WeBWorK::Controller</code> object.</p>
+
+<p>The following optional parameters may be passed:</p>
 
 <dl>
 
-<dt>@matches = listFilesRecusive($dir, $match_qr, $prune_qr, $match_full, $prune_full)</dt>
+<dt>set_id</dt>
 <dd>
 
-<p>Traverses the directory tree rooted at $dir, returning a list of files, named pipes, and sockets matching the regular expression $match_qr. Directories matching the regular expression $prune_qr are not visited.</p>
-
-<p>$match_full and $prune_full are boolean values that indicate whether $match_qr and $prune_qr, respectively, should be applied to the bare directory entry (false) or to the path to the directory entry relative to $dir.</p>
-
-<p>@matches is a list of paths relative to $dir.</p>
+<p>A problem set name.</p>
 
 </dd>
-<dt>path_is_subdir($path, $dir, $allow_relative)</dt>
+<dt>problem_id</dt>
 <dd>
 
-<p>Ensures that $path refers to a location &quot;inside&quot; $dir. If $allow_relative is true and $path is not absoulte, it is assumed to be relative to $dir.</p>
+<p>Problem id of a problem in the set.</p>
 
-<p>The method of checking is rather rudimentary at the moment. First, upreferences (&quot;..&quot;) are disallowed, in $path, then it is checked to make sure that some prefix of it matches $dir.</p>
+</dd>
+<dt>url_type</dt>
+<dd>
 
-<p>If either of these checks fails, a false value is returned. Otherwise, a true value is returned.</p>
+<p>This should a string with the value &#39;relative&#39; or &#39;absolute&#39; to return a single URL, or undefined to return an array containing both URLs this subroutine could be expanded to.</p>
 
 </dd>
 </dl>
 
-<h2 id="Date-time-processing">Date/time processing</h2>
+<h2 id="getAssetURL">getAssetURL</h2>
 
-<dl>
+<p>Usage: <code>getAssetURL($ce, $file, $isThemeFile)</code></p>
 
-<dt>$dateTime = parseDateTime($string, $display_tz)</dt>
-<dd>
+<p>Returns the URL for the asset specified in <code>$file</code>. If <code>$isThemeFile</code> is true, then the asset will be assumed to be located in a theme directory. The parameter <code>$ce</code> must be a valid <code>WeBWorK::CourseEnvironment</code> object.</p>
 
-<p>Parses $string as a datetime. If $display_tz is given, $string is assumed to be in that timezone. Otherwise, the server&#39;s timezone is used. The result, $dateTime, is an integer UNIX datetime (epoch) in the server&#39;s timezone.</p>
+<h2 id="x">x</h2>
 
-</dd>
-<dt>$string = formatDateTime($dateTime, $display_tz, $format_string, $locale)</dt>
-<dd>
+<p>Usage: <code>x(@args)</code></p>
 
-<p>Formats the UNIX datetime $dateTime in the custom format provided by $format_string. If $format_string is not provided, the standard WeBWorK datetime format is used. $dateTime is assumed to be in the server&#39;s time zone. If $display_tz is given, the datetime is converted from the server&#39;s timezone to the timezone specified. If $format_string is a method of the $dt-&gt;locale instance, then format_cldr is used, and otherwise strftime is used. The available patterns for $format_string can be found in the documentation for the perl DateTime package under the heading of strftime Patterns. The available methods for the $dt-&gt;locale instance are documented at <a href="https://metacpan.org/pod/DateTime::Locale::FromData">https://metacpan.org/pod/DateTime::Locale::FromData</a>. $dateTime is assumed to be in the server&#39;s time zone. If $display_tz is given, the datetime is converted from the server&#39;s timezone to the timezone specified. If $locale is provided, the string returned will be in the format of that locale, which is useful for automatically translating things like days of the week and month names. If $locale is not provided, perl defaults to en_US.</p>
+<p>This is a dummy function used to mark constant strings for localization. It just returns <code>@args</code>.</p>
 
-</dd>
-<dt>$string = textDateTime($string_or_dateTime)</dt>
-<dd>
-
-<p>Accepts a UNIX datetime or a formatted string, returns a formatted string.</p>
-
-</dd>
-<dt>$dateTIme = intDateTime($string_or_dateTime)</dt>
-<dd>
-
-<p>Accepts a UNIX datetime or a formatted string, returns a UNIX datetime.</p>
-
-</dd>
-<dt>verify_timezone($display_tz)</dt>
-<dd>
-
-<p>If $display_tz is not a legal time zone then replace it with America/New_York and issue warning.</p>
-
-</dd>
-<dt>$timeinsec = timeToSec($time)</dt>
-<dd>
-
-<p>Makes a stab at converting a time (with a possible unit) into a number of seconds.</p>
-
-</dd>
-<dt>before($time, $now)</dt>
-<dd>
-
-<p>True if $now is less than $time. If $now is not specified, the value of time() is used.</p>
-
-</dd>
-<dt>after($time, $now)</dt>
-<dd>
-
-<p>True if $now is greater than $time. If $now is not specified, the value of time() is used.</p>
-
-</dd>
-<dt>between($start, $end, $now)</dt>
-<dd>
-
-<p>True if $now is greater than or equal to $start and less than or equal to $end. If $now is not specified, the value of time() is used.</p>
-
-</dd>
-</dl>
-
-</div>
-<hr>
-<div id="column-one">
-<h5>Site Navigation</h5>
-<div>
-<ul>
-<li><a href="/pod">WeBWorK POD Home</a></li>
-<li><a href="http://webwork.maa.org/wiki/WeBWorK_Main_Page">WeBWorK Wiki</a></li>
-</ul>
-</div>
-</div>
+		</div>
+	</div>
 </body>
 </html>
-
-
